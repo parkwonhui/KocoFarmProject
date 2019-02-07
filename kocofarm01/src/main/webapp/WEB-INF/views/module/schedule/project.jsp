@@ -1,12 +1,12 @@
 
-<%@ page import="kosta.model.module.vo.ScheduleCategory"%>
-<%@ page import="kosta.model.module.vo.ScheduleCalender"%>
+<%@ page import="org.kocofarm.domain.schedule.ScheduleCategory"%>
+<%@ page import="org.kocofarm.domain.schedule.ScheduleCalender"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<jsp:include page="/jsp/comm/top.jsp" flush="false"></jsp:include>
+<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false"></jsp:include>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.lang.Integer"%>
 
@@ -55,7 +55,7 @@ $( function() {
 });
 </script>
 
-<link href="/KocoFarmPro/css/module/schedule.css" rel="stylesheet"
+<link href="/resources/css/module/schedule.css" rel="stylesheet"
 	type="text/css">
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css"
 	rel="stylesheet" type="text/css">

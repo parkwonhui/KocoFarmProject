@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:include page="/jsp/comm/top.jsp" flush="false" ></jsp:include>
-<link rel="stylesheet" type="text/css" href="/KocoFarmPro/css/module/rent.css" />
+<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
+<link rel="stylesheet" type="text/css" href="/resources/css/module/rent.css" />
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
@@ -125,6 +125,6 @@
 		</div>
 	</div>
 
-<script type="text/javascript" src="/KocoFarmPro/js/module/rent.js"></script>
+<script type="text/javascript" src="/resources/js/module/rent.js"></script>
 
-<jsp:include page="/jsp/comm/bottom.jsp" flush="false" ></jsp:include>
+<jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

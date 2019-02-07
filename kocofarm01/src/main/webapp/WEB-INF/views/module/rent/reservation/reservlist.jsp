@@ -3,8 +3,7 @@
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<jsp:include page="/jsp/comm/top.jsp" flush="false" ></jsp:include>
-<!-- <link rel="stylesheet" type="text/css" href="/Kocofarm/css/module/rent.css" /> -->
+<<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include><!-- <link rel="stylesheet" type="text/css" href="/Kocofarm/css/module/rent.css" /> -->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />  -->
 
 	<div class="cont_wrap">
@@ -80,5 +79,5 @@
 			</table>
 		</div>
 	</div>
-<!-- <script type="text/javascript" src="/Kocofarm/js/module/rent.js"></script> -->
-<jsp:include page="/jsp/comm/bottom.jsp" flush="false" ></jsp:include>
+<script type="text/javascript" src="/resources/js/module/rent.js"></script>
+<jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

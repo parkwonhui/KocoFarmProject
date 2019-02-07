@@ -25,7 +25,7 @@
 		})
 	});
 </script> 
-<jsp:include page="/jsp/comm/top.jsp" flush="false" ></jsp:include>
+<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/KocoFarmPro/css/module/approval.css" />
 
 	<div class="cont_wrap">
@@ -74,5 +74,5 @@
 		
 		</div>
 	</div>
-<script type="text/javascript" src="/KocoFarmPro/js/module/approval.js"></script>
-<jsp:include page="/jsp/comm/bottom.jsp" flush="false" ></jsp:include>
+<script type="text/javascript" src="/resources/js/module/approval.js"></script>
+<jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

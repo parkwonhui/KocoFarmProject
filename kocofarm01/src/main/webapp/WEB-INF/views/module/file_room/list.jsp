@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="/KocoFarmPro/css/module/fileRoom.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/module/fileRoom.css" />
 
 </head>
 <body>

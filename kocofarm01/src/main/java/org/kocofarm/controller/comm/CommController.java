@@ -10,8 +10,6 @@ public class CommController {
 
 	@GetMapping("/test")
 	public void test(){
-		
-		System.out.println("dasfds");
 	
 	}
 	

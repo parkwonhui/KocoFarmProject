@@ -1,8 +1,9 @@
+<%@page import="org.json.simple.JSONArray"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="kosta.model.module.vo.ScheduleCalenderList" %>
+<%@page import="org.kocofarm.domain.schedule.ScheduleCalenderList" %>
 <%@page import="java.util.List"%>
-<%@page import="net.sf.json.JSONArray"%>
+<%-- <%@page import="net.sf.json.JSONArray"%> --%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -11,5 +12,5 @@
 %>
 <% 
 	category_list = (List<ScheduleCalenderList>)request.getAttribute("calenderList");
-	out.println(JSONArray.fromObject(category_list).toString());
+	//out.println(JSONArray.fromObject(category_list).toString());
 %>

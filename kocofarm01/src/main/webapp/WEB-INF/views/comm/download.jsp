@@ -1,5 +1,5 @@
 <%@page import="java.net.URLEncoder"%>
-<%@page import="kosta.action.comm.FileDownloadHelper"%>
+<%-- <%@page import="kosta.action.comm.FileDownloadHelper"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -28,7 +28,7 @@
 	out=pageContext.pushBody();
 	
 	try{
-		FileDownloadHelper.copy(path, response.getOutputStream());
+		/* FileDownloadHelper.copy(path, response.getOutputStream()); */
 		response.getOutputStream().close();
 	}catch(Exception e){
 		System.out.println("ok");

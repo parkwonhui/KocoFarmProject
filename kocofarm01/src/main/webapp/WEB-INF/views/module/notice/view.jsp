@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="/jsp/comm/top.jsp" flush="false" ></jsp:include>
-<link rel="stylesheet" type="text/css" href="/KocoFarmPro/css/module/notice.css" />
+<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
+<link rel="stylesheet" type="text/css" href="/resources/css/module/notice.css" />
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
@@ -71,5 +71,5 @@
 			</div>
 		</div>
 	</div>
-<script type="text/javascript" src="/KocoFarmPro/js/module/notice.js"></script>
-<jsp:include page="/jsp/comm/bottom.jsp" flush="false" ></jsp:include>
+<script type="text/javascript" src="/resources/js/module/notice.js"></script>
+<jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>
