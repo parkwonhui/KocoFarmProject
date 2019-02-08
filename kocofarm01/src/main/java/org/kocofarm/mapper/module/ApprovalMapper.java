@@ -1,5 +1,8 @@
 package org.kocofarm.mapper.module;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Select;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
@@ -17,6 +20,9 @@ public interface ApprovalMapper {
 	public void InsertExpenceCont(ApprExpenceContVO expenceCont);
 	//양식출력
 	
+	//전체기안서출력
+	@Select("select * from DRAFT where DRAFT_ID > 0")
+	List<ApprDraftVO> getListDraft();
 	
 
 //	/*양식 출력*/

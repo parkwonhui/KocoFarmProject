@@ -10,13 +10,13 @@
 	</insert>
 	
 	<!-- 휴가 신청서 입력  -->
- 	<insert id = "insertVacation" parameterType = "ApprovalVacation">
+ 	<insert id = "insertVacation" >
 		insert into Vacation_Form values(seq_vacation.nextval,${draftId},${formId},#{vacationStartDt},#{vacationEndDt},#{vacationType},#{vacationDays},
 		#{vacationReason},#{replacementId})
 	</insert> 
 	
 	<!-- 지출 결의서 입력  -->
- 	<insert id = "insertExpence" parameterType = "ApprovalExpence">
+ 	<insert id = "insertExpence" >
 
 		insert into EXPENCE_FORM values(seq_expence.nextval,${draftId},${formId},#{expenceDt},#{expenceType},#{sumPrice})
 	</insert> 
@@ -75,7 +75,7 @@
 	 </select>
 	 
 	 <!-- 등록된 기안서 불러오기 -->
-	 <select id = "listDraft" resultType = "ApprovalDraft">
+	 <select id = "listDraft" >
 		 select * from draft
 	 </select>
 
