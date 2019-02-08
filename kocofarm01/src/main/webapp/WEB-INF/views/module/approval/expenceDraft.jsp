@@ -26,7 +26,7 @@ function expenceAdd() {
 </script>
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
-<link rel="stylesheet" type="text/css" href="/KocoFarmPro/css/module/approval.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->

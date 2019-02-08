@@ -131,9 +131,10 @@
 	<select id="getCommentCount" parameterType="map" resultType="java.lang.Integer">
 		select count(*) from DRAFT_COMMENT where DRAFT_ID = #{draftId}
 	</select>
-	<select id="getDraftCommentList"  parameterType="map" resultType="DraftComment">
+	<!-- <select id="getDraftCommentList"  parameterType="map" resultType="DraftComment">
 		select  * from
 		(select comment_id, draft_id, emp_id, comment_contents, comment_dt 
 			from DRAFT_COMMENT where DRAFT_ID=#{draftId} order by COMMENT_ID DESC) 
 		 order by COMMENT_ID ASC
-	</select>
+	</select> -->
+	</mapper>

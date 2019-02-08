@@ -27,7 +27,7 @@
 				<div class="sch_wrap">
 					<p class="tit">검색</p>
 					<div class="sch_slide_btn">
-						<img id="slideBtnImg" class="upBtn" src="/KocoFarmPro/img/comm/list_up_btn.png" alt="메뉴 접기" />
+						<img id="slideBtnImg" class="upBtn" src="/resources/img/comm/list_up_btn.png" alt="메뉴 접기" />
 					</div>
 					<div class="sch_toggle_wrap">
 						<div class="sch_box_wrap">

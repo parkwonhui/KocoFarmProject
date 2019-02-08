@@ -184,6 +184,6 @@ $( function() {
 			</div><!-- modal-content -->
 		</div><!-- modal-dialog -->
 	</div>
-	<script src="/KocoFarmPro/js/module/schedule.js"></script>
+	<script src="/resources/js/module/schedule.js"></script>
 </body>
 </html>
