@@ -1,4 +1,5 @@
-package kosta.model.module.vo;
+package org.kocofarm.domain.schedule;
+
 
 import java.io.Serializable;
 import java.util.Date;
