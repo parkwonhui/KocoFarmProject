@@ -8,7 +8,7 @@ import org.kocofarm.domain.rentCar.RentCarVO;
 public interface RentCarMapper {
 	
 	//목록
-	@Select("select * from RENTCAR_DETAIL")
+	//@Select("select * from RENTCAR_DETAIL")
 	public List<RentCarVO> getRentCarDetailList();	
 	/*//등록
 	public void setRentCarDetail(RentCarVO rentCar);

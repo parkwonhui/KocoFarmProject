@@ -1,5 +1,9 @@
 package org.kocofarm.service.module;
 
-public interface ScheduleService {
+import java.util.List;
 
+import org.kocofarm.domain.schedule.ScheduleProject;
+
+public interface ScheduleService {
+	public List<ScheduleProject> getProjectList();
 }
