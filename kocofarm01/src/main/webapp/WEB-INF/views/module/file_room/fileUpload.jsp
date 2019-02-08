@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false"></jsp:include>
-<!-- <link rel="stylesheet" type="text/css" href="/KocoFarmPro/css/module/fileRoom.css" /> -->
+ <link rel="stylesheet" type="text/css" href="/resources/css/module/fileRoom.css" /> 
 	<!-- SubTitle Area -->
 	<div class="sub_title">
 		<div class="sub_title_top">

@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<link rel="stylesheet" type="text/css"href="/KocofarmPro/css/common.css" />
-<link rel="stylesheet" type="text/css"href="/KocofarmPro/css/approval.css" />
+<link rel="stylesheet" type="text/css"href="/resources/css/common.css" />
+<link rel="stylesheet" type="text/css"href="/resources/css/approval.css" />
 <link rel="stylesheet"href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

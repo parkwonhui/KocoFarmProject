@@ -31,7 +31,7 @@
 			<p class="tit">검색</p>
 			<div class="sch_slide_btn">
 				<img id="slideBtnImg" class="upBtn"
-					src="/KocoFarmPro/img/comm/list_up_btn.png" alt="메뉴 접기" />
+					src="/resources/img/comm/list_up_btn.png" alt="메뉴 접기" />
 			</div>
 			<div class="sch_toggle_wrap">
 				<div class="sch_box_wrap">
@@ -81,19 +81,19 @@
 
 					<td>
 						<c:if test="${list.fileExtention eq null}">
-						<img alt="" src="/KocoFarmPro/img/extention_image/pdf.png">
+						<img alt="" src="/resources/img/extention_image/pdf.png">
 						</c:if>
 						<c:if test="${list.fileExtention eq 'jpg'}">
-						<img alt="" src="/KocoFarmPro/img/extention_image/jpg.png">
+						<img alt="" src="/resources/img/extention_image/jpg.png">
 						</c:if>
 						<c:if test="${list.fileExtention eq 'doc'}">
-						<img alt="" src="/KocoFarmPro/img/extention_image/doc.png">
+						<img alt="" src="/resources/img/extention_image/doc.png">
 						</c:if>
 						<c:if test="${list.fileExtention eq 'txt'}">
-						<img alt="" src="/KocoFarmPro/img/extention_image/txt.png">
+						<img alt="" src="/resources/img/extention_image/txt.png">
 						</c:if>
 						<c:if test="${list.fileExtention eq 'pdf'}">
-						<img alt="" src="/KocoFarmPro/img/extention_image/pdf.png">
+						<img alt="" src="/resources/img/extention_image/pdf.png">
 						</c:if>
 						<div>${list.fileId}</div>
 						<div>${list.fileName}</div>

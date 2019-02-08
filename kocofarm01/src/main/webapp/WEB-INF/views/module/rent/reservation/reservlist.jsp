@@ -3,7 +3,7 @@
  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include><!-- <link rel="stylesheet" type="text/css" href="/Kocofarm/css/module/rent.css" /> -->
+<<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include><!-- <link rel="stylesheet" type="text/css" href="/resources/css/module/rent.css" /> -->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />  -->
 
 	<div class="cont_wrap">

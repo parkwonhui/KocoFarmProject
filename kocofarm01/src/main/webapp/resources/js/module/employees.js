@@ -51,12 +51,12 @@ $(function(){
 		if($slideBtnImg.attr("class") == "upBtn"){
 			$slideBtnImg.removeClass();
 			$slideBtnImg.addClass("downBtn");
-			$("#slideBtnImg").attr("src", "/KocoFarmPro/img/comm/list_down_btn.png");
+			$("#slideBtnImg").attr("src", "/resources/img/comm/list_down_btn.png");
 			$("#slideBtnImg").attr("alt", "메뉴 펼치기");
 		}else{
 			$slideBtnImg.removeClass();
 			$slideBtnImg.addClass("upBtn");
-			$("#slideBtnImg").attr("src", "/KocoFarmPro/img/comm/list_up_btn.png");
+			$("#slideBtnImg").attr("src", "/resources/img/comm/list_up_btn.png");
 			$("#slideBtnImg").attr("alt", "메뉴 접기");
 		}
 	});

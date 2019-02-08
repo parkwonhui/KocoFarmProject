@@ -82,7 +82,7 @@ $(function(){
 	$("#checkCar_Id").click(function() {
 		$.ajax({
 			type : "POST",
-			url : 'KocoFarmPro/rentCarDetailWriteForm.do',
+			url : '/resources/rentCarDetailWriteForm.do',
 			dataType : "json",
 			error : function(){
 				alert("통신실패");
