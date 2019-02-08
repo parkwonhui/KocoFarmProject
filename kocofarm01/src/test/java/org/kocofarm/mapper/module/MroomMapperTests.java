@@ -20,10 +20,10 @@ public class MroomMapperTests {
 	@Setter(onMethod_ =  @Autowired )
 	private MeetingRoomMapper mapper;
 	
-	/*@Test
+	@Test
 	public void testGetList(){
 		mapper.getList().forEach(meetingroom -> log.info(meetingroom));
-	}*/
+	}
 
 	/*@Test
 	public void testInsert(){

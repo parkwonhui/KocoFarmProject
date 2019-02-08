@@ -18,11 +18,11 @@ public class ReservationMapperTests {
 	@Setter(onMethod_ = { @Autowired })
 	private ReservationMapper mapper;
 	
-	/*@Test
+	@Test
 	public void testGetList(){
 		mapper.getList().forEach(reservation -> log.info(reservation));
 	}
-	*/
+	
 	
 	
 

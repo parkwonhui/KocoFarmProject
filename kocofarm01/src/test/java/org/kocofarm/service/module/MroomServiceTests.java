@@ -22,11 +22,11 @@ public class MroomServiceTests {
 		@Setter(onMethod_ = { @Autowired })
 		private MeetingRoomService service;
 		
-		/*@Test
+		@Test
 		public void testExist(){
 			log.info(service);
 			assertNotNull(service);
-		}*/
+		}
 		
 		/*@Test
 		public void testRegister(){
@@ -59,7 +59,7 @@ public class MroomServiceTests {
 			log.info(service.remove(1));
 		}*/
 		
-		@Test
+		/*@Test
 		public void testUpate(){
 			MeetingRoomVO mroom = service.get(3);
 			
@@ -69,5 +69,5 @@ public class MroomServiceTests {
 			
 			mroom.setMName("회의실7");
 			log.info(service.modify(mroom));
-		}
+		}*/
 }
