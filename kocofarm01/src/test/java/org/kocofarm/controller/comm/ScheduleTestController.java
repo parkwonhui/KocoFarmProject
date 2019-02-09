@@ -1,8 +1,13 @@
 package org.kocofarm.controller.comm;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kocofarm.domain.schedule.ScheduleProject;
+import org.kocofarm.mapper.module.ScheduleMapper;
+import org.kocofarm.service.module.ScheduleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,20 +28,16 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ScheduleTestController {
 	@Setter(onMethod_ = {@Autowired})
-	private WebApplicationContext context;
-	private MockMvc dumyMvc;
+	private ScheduleMapper mapper;
 	
 	@Before
 	public void setup(){
-		this.dumyMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 	
 	@Test
 	public void testList() throws Exception{
-		log.info(dumyMvc.perform(MockMvcRequestBuilders.get("/schedule/"))
-		.andReturn()
-		.getModelAndView()
-		.getModelMap());		
+		List<ScheduleProject> list = mapper.getProjectList();	
+		log.info(list);
 	}
 
 }
