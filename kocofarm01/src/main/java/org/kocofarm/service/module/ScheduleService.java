@@ -10,8 +10,11 @@ import org.kocofarm.domain.schedule.ScheduleCategoryMove;
 import org.kocofarm.domain.schedule.ScheduleProject;
 import org.springframework.ui.Model;
 
+import net.sf.json.JSONArray;
+
 public interface ScheduleService {
 	public List<ScheduleProject> getProjectList();
+	public JSONArray getProjectJsonArray();
 	public List<ScheduleCalenderList> getProjectCalenderList(int projectId);
 	public int setCalender(ScheduleCalender calender);
 	public int setUpCalender(ScheduleCalender scheduleCalender);

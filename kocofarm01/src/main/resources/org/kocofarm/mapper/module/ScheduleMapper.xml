@@ -3,7 +3,9 @@
 
 <mapper namespace="org.kocofarm.mapper.module.ScheduleMapper">
 <select id="getProjectList" resultType="ScheduleProject">
-	select * from Project
+	select
+	/*+ INDEX_ASC(project PROJECT_ID_PK) */
+	 * from project
 </select>
 <select id="getProjectCalenderList" resultType="ScheduleCalenderList" parameterType="int">
 	select *

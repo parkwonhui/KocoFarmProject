@@ -38,7 +38,12 @@
 		<property name="configLocation" value="classpath:/org/kocofarm/mapper/comm/mybatis-config.xml" />
 	</bean>
 	
-	<tx:annotation-driven />	
+	<tx:annotation-driven />
+	<bean id="transactionManager"
+	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
 	<mybatis-spring:scan base-package="org.kocofarm.mapper.comm" />
 	<mybatis-spring:scan base-package="org.kocofarm.mapper.module" />
 	

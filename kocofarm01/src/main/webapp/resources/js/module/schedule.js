@@ -170,7 +170,7 @@ function categoryMoveAjax(moveCategory){
     
     // ajax 요청
     var data = { projectId:add_project_id, moveCategoryId:drag_category_categoryId, moveCategoryX:drag_category_x, oriCategoryId:categoryId, oriCategoryX:x };
-    var url = "editCategoryMove.do";
+    var url = "editCategoryPos";
  
     ajaxRequest(url, data);
 }
@@ -194,16 +194,21 @@ function calenderMoveAjax(moveCalender){
 	if(1 == isSameCategory){
 		var size = $(moveCalender).parent().children().length - 1; // 인덱스는 길이보다 1작다
 		var y = 0;
+		data += "[";
 		for(var index = size; index >= 1; --index){
     	    var calenderId = $(moveCalender).parent().children().eq(index).children(".this_calender_id").val();
     	    if(undefined == calenderId)
     			continue;
-    	    	            	    
-    	    data += drag_before_calender_category_id+",";
-    	    data += calenderId+",";
-    	    data += y + "|";
+    	    	
+    	    data += '{ "categoryId":';
+    	    data += drag_before_calender_category_id+', "calenderId":';
+    	    data += calenderId+', "yPos":';
+    	    data += y+'}';
+    	    if(index-1 >= 1)
+    	    	data += ", ";
     		$(moveCalender).parent().children().eq(index).children(".this_calender_yPos").val(y++);
-    	}            		
+    	} 
+		data += "]";
 	}else{
 		// y값 갱신
     	//이동한 곳 밑에 노드가 있으면 y값 구하고 1 더해줌. 아니면 0넣어줌
@@ -214,14 +219,17 @@ function calenderMoveAjax(moveCalender){
     	// 이동한 곳 처리. y값 전체 재설정
     	var size = $(moveCalender).parent().children().length - 1; // 인덱스는 길이보다 1작다
     	var otherY = 0;
+    	data += "[";
     	for(var index = size; index >= 1; --index){
     	    var calenderId = $(moveCalender).parent().children().eq(index).children(".this_calender_id").val();
     	    if(undefined == calenderId)
     			continue;
-    	    
-    	    data += drag_after_calender_category_id+",";
-    	    data += calenderId+",";
-    	    data += otherY + "|";
+    	    data += '{ "categoryId":';
+    	    data += drag_after_calender_category_id+', "calenderId":';
+    	    data += calenderId+', "yPos":';
+    	    data += otherY+'}';
+      	    if(index-1 >= 1)
+    	    	data += ", ";
     		$(moveCalender).parent().children().eq(index).children(".this_calender_yPos").val(otherY++);	            		
     	}
     
@@ -233,16 +241,32 @@ function calenderMoveAjax(moveCalender){
     		if(undefined == calenderId)
     			continue;
     		
-    		data += drag_before_calender_category_id+",";
-        	data += calenderId+",";
-        	data += beforeY+"|";            	    
+    		data += '{"categoryId":';
+    		data += drag_before_calender_category_id+', "calenderId":';
+        	data += calenderId+', "yPos":';
+        	data += beforeY+'}';        
+      	    if(index-1 >= 1)
+    	    	data += ", ";
+      	    
     		$(list).parent().children().eq(index).children(".this_calender_yPos").val(beforeY++);
     	}
+    	
+    	data += "]";
 	}
-	
-	var textData = {data_parameter:data};
-	var url = "editCalenderPos.do";
-	ajaxRequest(url, textData);
+
+	var url = "editCalenderPos";
+	$.ajax({
+	    type:"POST",
+	    data : data,
+	    dataType:"json",
+	    url:url,
+	    contentType : 'application/json',
+	    success: function(data) {
+	    	calenderList();
+	    },
+	    error : function(error) {
+	    },	// error
+	  });// ajax
 }
 
 /* 드래그 창 */
@@ -292,7 +316,7 @@ function addDynamicHtml(data){
       		html += '<ul class="connected li1">';
       		html += '<li class="calender_info">';
       		html += '<input class="category-name-input" type="text" readonly="true" value="'+data[i].categoryName+'"></input>';
-      		html += '<img src="/KocoFarmPro/img/schedule/dustbin.png" class="category-delete-btn" data-toggle="modal" data-target="#categoryDeleteModal"/>';
+      		html += '<img src="/resources/img/schedule/dustbin.png" class="category-delete-btn" data-toggle="modal" data-target="#categoryDeleteModal"/>';
 			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal">새 일정 추가</button>';
 			html += '<input type="hidden" class="this_project_id" value='+data[i].projectId+' />';
       		html += '<input type="hidden" class="this_category_id" value='+data[i].categoryId+' />';
@@ -310,7 +334,7 @@ function addDynamicHtml(data){
             	html += '<div class="calender-detail-color" style="background-color:#'+data[i].backgroundColor +'";>'+'&nbsp;'+'</div>';
             }
             
-            html += '<div><img src="/KocoFarmPro/img/schedule/settings.png" class="calender-modify-btn" data-toggle="modal" data-target="#calenderModify"/></div>';
+            html += '<div><img src="/resources/img/schedule/settings.png" class="calender-modify-btn" data-toggle="modal" data-target="#calenderModify"/></div>';
             html += '<div class="calender_detail_title ">'+data[i].title+'</div>';
             /*html += '<div>calender:id'+data[i].calenderId+'</div>';*/
             html += '<input type="hidden" class="this_calender_id" value='+data[i].calenderId+' />';
@@ -336,7 +360,7 @@ function addDynamicHtml(data){
     	// 새  카테고리
 		html += '<ul class="connected li1">';
 		html += '<li class="calender_info">';
-  		html += '<div><input class="category-name-input add-category-name-input" type="text"></input><div>';
+  		html += '<div><input class="add-category-name-input" type="text"></input><div>';
         html += '<button type="button" class="btn btn-light btn-block add-category-button">새 카테고리 추가</button>';
 		html += '<input type="hidden" class="this_project_id" value='+projectId+' />';
 		html += '</li>';
@@ -402,7 +426,7 @@ function addDynamicHtml(data){
 		   var categoryName = par.children('.category-name-input').val();
 		   
 		   var data =  { "categoryId":categoryId, "categoryName":categoryName };
-		   var url = "editCategoryName.do";
+		   var url = "editCategory";
 		   ajaxRequest(url, data);		   
 	   });
 	   
@@ -415,7 +439,7 @@ function addDynamicHtml(data){
 		  
 		  var xPos = $('.category-name-input').length+1;
 		  var data = { "projectId":add_project_id, "xPos":xPos, "categoryName":text };
-		  var url = "insertCategory.do";
+		  var url = "insertCategory";
 		  		   
 		  ajaxRequest(url, data);
 	   });
@@ -443,11 +467,12 @@ function ajaxRequest(sendUrl, sendData){
 }
 
 function calenderList(){
+	
 	$.ajax({
 	    type:"POST",
 	    data : {"projectId":add_project_id},
 	    dataType:"json",
-	    url:"listCalender.do",
+	    url:"listCalender",
 	    success: function(data) {
 	    	addDynamicHtml(data);
 	    },
@@ -458,7 +483,7 @@ function calenderList(){
 
 // 카테고리 삭제 모달 버튼
 $('#delete-project-button').click(function(){
-	var url = "delCategory.do";
+	var url = "delCategory";
 	var data = {projectId:add_project_id, categoryId:add_category_id};
 
     ajaxRequest(url, data);
@@ -482,13 +507,20 @@ $('#calender_add').click(function() {
 		 return;
 	 }
 	 
+	 if("" == completion_per){
+		 completion_per = 0;
+	 }
+	 
+	 if("" == color){
+		 color = "";
+	 }
+	 
 	 $('#calenderAddModal').modal('toggle');
 	 clearAddDlg($(this).parent());
 	 
-	 var data = { projectId:add_project_id, categoryId:add_category_id, write:write,color:color, completionPer:completion_per,tag:tag,y:y,startDt:startDt,endDt:endDt  };
-	 var url = "insertCalender.do";
 	 
-	 ajaxRequest(url, data);
+	 var data = { projectId:add_project_id, categoryId:add_category_id, title:write,backgroundColor:color, completionPer:completion_per,tag:tag,y:y,startDt:startDt,endDt:endDt  };
+	 var url = "insertCalender";
   
 });//click
 
@@ -502,8 +534,8 @@ $('#calender_edit').click(function(){
 	 var endDt 			= par.children("input[name=editDatepickerEnd]").val();
 	 var tag 			= par.children("input[name=tag]").val();
 
-	 var data = { projectId:add_project_id, categoryId:add_category_id,calenderId:add_calender_id ,write:write,color:color, completionPer:completion_per,tag:tag,startDt:startDt,endDt:endDt  };
-	 var url = "editCalender.do";
+	 var data = { projectId:add_project_id, categoryId:add_category_id,calenderId:add_calender_id ,title:write,backgroundColor:color, completionPer:completion_per,tag:tag,startDt:startDt,endDt:endDt  };
+	 var url = "editCalender";
 	  
 	 $('#calenderModify').modal('toggle');
 	  
@@ -515,7 +547,7 @@ $('#calender_del').click(function(){
 	
 	$('#calenderModify').modal('toggle');
 	var data = { calenderId:add_calender_id };
-	var url = "delCalender.do";
+	var url = "delCalender";
 	
 	 ajaxRequest(url, data);	
 });

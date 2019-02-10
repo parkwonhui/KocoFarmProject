@@ -43,7 +43,7 @@ $( function() {
 });
 </script>
 
-<link href="/KocoFarmPro/css/module/schedule.css" rel="stylesheet"
+<link href="/resources/css/module/schedule.css" rel="stylesheet"
 	type="text/css">
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css"
 	rel="stylesheet" type="text/css">
@@ -105,10 +105,11 @@ $( function() {
 		var projectId = "${projectId}";
 		add_project_id = projectId;
 		$.ajax({
-			url : 'listCalender.do',
+			url : 'listCalender',
 			data : {
 				"projectId" : projectId
 			},
+			type:"POST",
 			dataType : 'json',
 			success : function(data) {
 
@@ -236,4 +237,4 @@ $( function() {
 			</div>
 		</div>
 	</div>
-	<script src="/KocoFarmPro/js/module/schedule.js"></script>
+	<script src="/resources/js/module/schedule.js"></script>

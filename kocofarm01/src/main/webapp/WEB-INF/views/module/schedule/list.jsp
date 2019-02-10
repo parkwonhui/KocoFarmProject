@@ -35,7 +35,7 @@
 			<p class="tit">검색</p>
 			<div class="sch_slide_btn">
 				<img id="slideBtnImg" class="upBtn"
-					src="/KocoFarmPro/img/comm/list_up_btn.png" alt="메뉴 접기" />
+					src="/resources/img/comm/list_up_btn.png" alt="메뉴 접기" />
 			</div>
 			<div class="sch_toggle_wrap">
 				<div class="sch_box_wrap">
@@ -144,6 +144,7 @@
 </div>
 <!-- cont_wrap -->
 <script>
+
 // 변수 모음
 var selectProjectId = 0;
 
@@ -153,14 +154,14 @@ $(function(){
 
 // modal 창의 create 버튼
 $("#create-project-button").on("click", function(){
-	var sendData = {projectName:$('#create-project-input').val()};
-	ajaxListRequest("insertProject.do",sendData);
+	var sendData = {title:$('#create-project-input').val()};
+	ajaxListRequest("insertProject",sendData);
 	$("#create-project-input").val("");
 });
 
 //modal 창의 delete 버튼
 $("#delete-project-button").on("click", function(){	
-	var sendUrl = "deleteProject.do";
+	var sendUrl = "delProject";
 	var sendData = {projectId:selectProjectId};
 	ajaxListRequest(sendUrl, sendData);
 });
@@ -168,7 +169,7 @@ $("#delete-project-button").on("click", function(){
 // modal 창의 modify 버튼
 $("#modify-project-button").on("click", function(){	
 	var title = $("#modify-project-input").val();
-	var sendUrl = "editProject.do";	
+	var sendUrl = "editProject";	
 	var sendData = {projectId:selectProjectId, title:title};
 	
 	ajaxListRequest(sendUrl, sendData);
@@ -191,10 +192,10 @@ function ajaxListRequest(sendUrl, sendData){
 
 function projectListAjaxRequest(){
 	$.ajax({
-	    type:"POST",
+	    type:"GET",
 	    data : {},
 	    dataType:"json",
-	    url: "listProjectAjax.do",
+	    url: "list",
 	    success: function(data) {
 	    	projectList(data);
 	    },
@@ -209,25 +210,15 @@ function projectList(data){
     	 
          $('.contents').append(        	
          	'<div class="project-info-style">'+
-         	'<form name="enterProject" method="post" action="sendProjectId.do">'+	
+         	'<form name="enterProject" method="post" action="sendProjectId">'+	
 	         	'<input type="hidden" name ="project_id" value='+project.projectId+' />'+
-				'<div name="projectId" class="sub_title_inner h4 responeProjectId">'+project.title+'</div>'+				
-					/*'<button type="submit" name="projectId" form="responeProjectId" class="sub_title_inner h2" value="'+ project.projectId +'">'+project.title+'</button>'+*/
-				/* 	'</form>'+ */
-					/* '</div>'+ */
-					/* '<div>projectLeader:'+project.projectLeader+'</div>'+
-					'<div>projectStartDt:'+project.projectStartDt+'</div>'+
-					'<div>projectEndDt:'+project.projectEndDt+'</div>'+
-					'<div>projectRegDt:'+project.projectRegDt+'</div>'+
-					'<div>projectCompletion:'+project.projectCompletion+'</div>'+
-					'<div>publicProject:'+project.publicProject+'</div>'+
-					 */
+				'<div name="projectId" class="sub_title_inner h4 responeProjectId">'+project.title+'</div>'+
 			'</form>'+
 			'<div>'+
-			'<img src ="/KocoFarmPro/img/schedule/settings.png" class="project-setting" id="project-modify-modal-button" data-toggle="modal" data-target="#modify-project-modal" />'+
+			'<img src ="/resources/img/schedule/settings.png" class="project-setting" id="project-modify-modal-button" data-toggle="modal" data-target="#modify-project-modal" />'+
 			'</div>'+	
 			'<div>'+
-			'<img src = "/KocoFarmPro/img/schedule/dustbin.png" id="project-delete-modal-button" class="project-setting" data-toggle="modal" data-target="#delete-project-modal" />'+	
+			'<img src = "/resources/img/schedule/dustbin.png" id="project-delete-modal-button" class="project-setting" data-toggle="modal" data-target="#delete-project-modal" />'+	
 			'</div>'+
 			'</div>'
          );

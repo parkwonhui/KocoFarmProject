@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import net.sf.json.JSONArray;
 
 @Log4j
 @Service
@@ -29,6 +30,15 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
+	public JSONArray getProjectJsonArray(){
+		JSONArray jsonArr = new JSONArray();
+		List<ScheduleProject> projectList = mapper.getProjectList();
+		jsonArr = JSONArray.fromObject(projectList);
+		return jsonArr;
+	}
+
+
+	@Override
 	public List<ScheduleCalenderList> getProjectCalenderList(int projectId) {
 		List<ScheduleCalenderList> list = mapper.getProjectCalenderList(projectId);
 		return list;
@@ -36,12 +46,14 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Override
 	public int setCalender(ScheduleCalender calender) {
+		initCalender(calender);
 		int re = mapper.setCalender(calender);
 		return re;
 	}
 	
 	@Override
 	public int setUpCalender(ScheduleCalender calender){
+		initCalender(calender);
 		int re = mapper.setUpCalender(calender);
 		return re;
 	}
@@ -54,7 +66,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Override
 	public int setUpCalenderPos(List<ScheduleCalenderMove> calenderMoveList){
-		int size = calenderMoveList.size();
 		int re = 0;
 		for(ScheduleCalenderMove calenderMove : calenderMoveList){
 			re = mapper.setUpCalenderPos(calenderMove);
@@ -78,6 +89,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Override	
 	public int setProject(ScheduleProject project){
+		project.setProjectLeader("");
+		project.setProjectStartDt("");
+		project.setProjectEndDt("");
 		int re = mapper.setProject(project);
 		return re;
 	}
@@ -111,5 +125,17 @@ public class ScheduleServiceImpl implements ScheduleService{
 		re = mapper.delCaltegoryWithProject(projectId);
 		re = mapper.delProject(projectId);
 		return re;
+	}
+	
+	public ScheduleCalender initCalender(ScheduleCalender calender){
+		if(null == calender.getBackgroundColor()){
+			calender.setBackgroundColor("");
+		}else if(null == calender.getStartDt()){
+			calender.setStartDt("");
+		}else if(null == calender.getEndDt()){
+			calender.setEndDt("");
+		}
+		
+		return calender;
 	}
 }
