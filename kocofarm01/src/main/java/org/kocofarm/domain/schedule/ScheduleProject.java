@@ -13,14 +13,14 @@ public class ScheduleProject implements Serializable{
 	private String projectEndDt;
 	private int projectRegDt;
 	private int projectCompletion;
-	private boolean publicProject;
+	private boolean publicUse;
 	
 	public ScheduleProject() {
 	
 	}
 
 	public ScheduleProject(long projectId, String title, String projectLeader, String projectStartDt,
-			String projectEndDt, int projectRegDt, int projectCompletion, boolean publicProject) {
+			String projectEndDt, int projectRegDt, int projectCompletion, boolean publicUse) {
 		super();
 		this.projectId = projectId;
 		this.title = title;
@@ -29,7 +29,7 @@ public class ScheduleProject implements Serializable{
 		this.projectEndDt = projectEndDt;
 		this.projectRegDt = projectRegDt;
 		this.projectCompletion = projectCompletion;
-		this.publicProject = publicProject;
+		this.publicUse = publicUse;
 	}
 
 	public long getProjectId() {
@@ -55,7 +55,7 @@ public class ScheduleProject implements Serializable{
 	public void setProjectLeader(String projectLeader) {
 		this.projectLeader = projectLeader;
 	}
-	
+
 	public String getProjectStartDt() {
 		return projectStartDt;
 	}
@@ -88,20 +88,19 @@ public class ScheduleProject implements Serializable{
 		this.projectCompletion = projectCompletion;
 	}
 
-	public boolean isPublicProject() {
-		return publicProject;
+	public boolean isPublicUse() {
+		return publicUse;
 	}
 
-	public void setPublicProject(boolean publicProject) {
-		this.publicProject = publicProject;
+	public void setPublicUse(boolean publicUse) {
+		this.publicUse = publicUse;
 	}
 
 	@Override
 	public String toString() {
 		return "ScheduleProject [projectId=" + projectId + ", title=" + title + ", projectLeader=" + projectLeader
-				+", projectStartDt=" + projectStartDt + ", projectEndDt=" + projectEndDt
-				+ ", projectRegDt=" + projectRegDt + ", projectCompletion=" + projectCompletion + ", publicProject="
-				+ publicProject + "]";
+				+ ", projectStartDt=" + projectStartDt + ", projectEndDt=" + projectEndDt + ", projectRegDt="
+				+ projectRegDt + ", projectCompletion=" + projectCompletion + ", publicUse=" + publicUse + "]";
 	}
 
 	
