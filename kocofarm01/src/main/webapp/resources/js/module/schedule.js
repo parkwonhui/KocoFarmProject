@@ -169,7 +169,7 @@ function categoryMoveAjax(moveCategory){
     });
     
     // ajax 요청
-    var data = { projectId:add_project_id, moveCategoryId:drag_category_categoryId, moveCategoryX:drag_category_x, oriCategoryId:categoryId, oriCategoryX:x };
+    var data = { "projectId":add_project_id, "moveCategoryId":drag_category_categoryId, "moveCategoryX":drag_category_x, "oriCategoryId":categoryId, "oriCategoryX":x };
     var url = "editCategoryPos";
  
     ajaxRequest(url, data);
@@ -519,8 +519,10 @@ $('#calender_add').click(function() {
 	 clearAddDlg($(this).parent());
 	 
 	 
-	 var data = { projectId:add_project_id, categoryId:add_category_id, title:write,backgroundColor:color, completionPer:completion_per,tag:tag,y:y,startDt:startDt,endDt:endDt  };
+	 var data = { projectId:add_project_id, categoryId:add_category_id, title:write,backgroundColor:color, completionPer:completion_per,tag:tag,yPos:y,startDt:startDt,endDt:endDt  };
 	 var url = "insertCalender";
+	 
+	 ajaxRequest(url, data);
   
 });//click
 
