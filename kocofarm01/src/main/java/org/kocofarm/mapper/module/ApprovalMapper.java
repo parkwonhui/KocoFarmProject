@@ -4,18 +4,21 @@ import java.util.List;
 
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprFormVO;
+import org.kocofarm.domain.approval.ApprVacationVO;
 
 public interface ApprovalMapper {
 
-	/*? „ì²? ê¸°ì•ˆ?„œ ëª©ë¡ ë¶ˆëŸ¬?˜¤ê¸?*/
+	/*ÀüÃ¼ ±â¾È¼­ Ãâ·Â*/
 	public List<ApprDraftVO> getDraftList();
-	/*? „ì²? ?–‘?‹ ëª©ë¡ ë¶ˆëŸ¬?˜¤ê¸? */
+	/*¾ç½Ä Ãâ·Â*/
 	public List<ApprFormVO> getFormList();
-	/*ìµœê·¼ ê¸°ì•ˆ?„œ ë²ˆí˜¸ ê°?? ¸?˜¤ê¸?*/
+	/*ÃÖ±Ù ±â¾È¼­ ¹øÈ£ ºÒ·¯¿À±â*/
 	public int getDraftNo();
-	/* ?Š¹? • ê¸°ì•ˆ?„œ ë¶ˆëŸ¬?˜¤ê¸? */
+	/* Æ¯Á¤ ±â¾È¼­ ºÒ·¯¿À±â */
 	public ApprDraftVO getDraft(int draftId);
-	/*ê¸°ì•ˆ?„œ ?…? ¥?•˜ê¸? */
+	/*±âº» ±â¾È¼­ Á¤º¸ ÀÔ·ÂÇÏ±â */
 	public void setDraft(ApprDraftVO draft);
+	/*ÈŞ°¡ Á¤º¸ ÀÔ·Â*/
+	public void setInsertVacation(ApprVacationVO vacation);
 	
 }

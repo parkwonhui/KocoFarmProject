@@ -53,6 +53,12 @@
 		values (seq_draft.nextval,#{draftName},#{draftDt},#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
 	</insert>
 	
+	<!-- 휴가 신청서 입력  -->
+ 	<insert id = "setInsertVacation" parameterType = "org.kocofarm.domain.approval.ApprVacationVO">
+		insert into Vacation_Form values(SEQ_VACATION.nextval,${draftId},${formId},SYSDATE,SYSDATE,#{vacationType},#{vacationDays},
+		#{vacationReason},#{replacementId})
+	</insert>
+	
 	
 </mapper>
 	
