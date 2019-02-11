@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleCalenderList implements Serializable {
+public class ScheduleCalenderListVO implements Serializable {
 
 	private int 	categoryId;
 	private String 	categoryName;

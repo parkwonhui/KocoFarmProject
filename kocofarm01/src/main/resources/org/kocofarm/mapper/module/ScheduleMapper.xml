@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.kocofarm.mapper.module.ScheduleMapper">
-<select id="getProjectList" resultType="ScheduleProject">
+<select id="getProjectList" resultType="ScheduleProjectVO">
 	select
 	/*+ INDEX_ASC(project PROJECT_ID_PK) */
 	 * from project
 </select>
-<select id="getProjectCalenderList" resultType="ScheduleCalenderList" parameterType="int">
+<select id="getProjectCalenderList" resultType="ScheduleCalenderListVO" parameterType="int">
 	select *
 	from (select cat.x_pos, cat.category_id, cat.category_name, cat.project_id,  cal.calender_id, cal.title, cal.start_dt, cal.end_dt,
 	cal.background_color, cal.completion_per, cal.y_pos
@@ -17,10 +17,10 @@
 	where c.project_id = #{projectId}
 	order by c.x_pos asc, c.y_pos desc       
 </select>
-<insert id="setCalender" parameterType="ScheduleCalender">
+<insert id="setCalender" parameterType="ScheduleCalenderVO">
 	insert into Calender values(calender_id_seq.nextval, #{title}, TO_DATE(#{startDt}, 'yy-mm-dd') , TO_DATE(#{endDt}, 'yy-mm-dd') , #{backgroundColor}, #{completionPer}, #{yPos}, #{categoryId})
 </insert>
-<update id = "setUpCalender" parameterType="ScheduleCalender">
+<update id = "setUpCalender" parameterType="ScheduleCalenderVO">
 	 update calender
      <trim prefix="SET" suffixOverrides=",">
        <if test="title != null">
@@ -44,34 +44,34 @@
 <delete id="delCalender" parameterType="int">
 	delete from calender where calender_id = #{calenderId}
 </delete>
-<update id="setUpCalenderPos" parameterType="ScheduleCalenderMove" >
+<update id="setUpCalenderPos" parameterType="ScheduleCalenderMoveVO" >
 	update calender set category_id = #{categoryId} , y_pos = #{yPos} where calender_id = #{calenderId}
 </update>
-<insert id="setCategory" parameterType="ScheduleCategory">
+<insert id="setCategory" parameterType="ScheduleCategoryVO">
 	insert into Category values(category_id_seq.nextval , #{categoryName}, #{projectId}, #{xPos})
 </insert>
-<update id="setUpCategory" parameterType="ScheduleCategory">
+<update id="setUpCategory" parameterType="ScheduleCategoryVO">
 	update Category set category_name = #{categoryName} where category_id = #{categoryId}
 </update>
-<insert id="setProject" parameterType="ScheduleProject">
+<insert id="setProject" parameterType="ScheduleProjectVO">
 	insert into project values(project_id_seq.nextval , #{title}, TO_DATE(#{projectStartDt}, 'yy-mm-dd') , TO_DATE(#{projectEndDt}, 'yy-mm-dd'), #{projectRegDt}, #{projectCompletion}, #{publicProject}, #{projectLeader})
 </insert>
-<update id="setUpProject" parameterType="ScheduleProject">
+<update id="setUpProject" parameterType="ScheduleProjectVO">
 	update project set title = #{title} where project_id = #{projectId}
 </update>
 <delete id="delCategory" parameterType="int">
 	delete from category where category_id = #{categoryId}
 </delete>
-<delete id="delCalenderWithCategory" parameterType="ScheduleCategory">
+<delete id="delCalenderWithCategory" parameterType="ScheduleCategoryVO">
 	delete calender where calender_id IN(select cal.calender_id from
 	category cat, calender cal
 	where cat.category_id = cal.category_id and
 	cat.project_id = #{projectId} and cal.category_id = #{categoryId})
 </delete>
-<update id="setMoveCategoryPosX" parameterType="ScheduleCategoryMove">
+<update id="setMoveCategoryPosX" parameterType="ScheduleCategoryMoveVO">
 	update category set  x_pos = #{oriCategoryX} where category_id = #{moveCategoryId} and project_id = #{projectId}
 </update>
-<update id="setOriCategoryPosX" parameterType="ScheduleCategoryMove">
+<update id="setOriCategoryPosX" parameterType="ScheduleCategoryMoveVO">
 	update category set  x_pos = #{moveCategoryX} where category_id = #{oriCategoryId} and project_id = #{projectId}
 </update>
 <!-- 프로젝트 삭제 시 하위 카테고리, 일정이 같이 삭제되어야 함 -->

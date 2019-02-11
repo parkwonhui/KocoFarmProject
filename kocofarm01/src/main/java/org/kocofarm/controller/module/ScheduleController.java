@@ -3,15 +3,14 @@ package org.kocofarm.controller.module;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.kocofarm.domain.schedule.ScheduleCalender;
-import org.kocofarm.domain.schedule.ScheduleCalenderList;
-import org.kocofarm.domain.schedule.ScheduleCalenderMove;
-import org.kocofarm.domain.schedule.ScheduleCategory;
-import org.kocofarm.domain.schedule.ScheduleCategoryMove;
-import org.kocofarm.domain.schedule.ScheduleProject;
+import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
+import org.kocofarm.domain.schedule.ScheduleProjectVO;
 import org.kocofarm.service.module.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
@@ -36,7 +34,7 @@ public class ScheduleController {
 	@GetMapping("/")
 	private String getProjectList(Model model){
 		log.info("/..........");
-		List<ScheduleProject> list = service.getProjectList();
+		List<ScheduleProjectVO> list = service.getProjectList();
 		model.addAttribute("project", list);
 		return "/module/schedule/list";
 	}
@@ -48,6 +46,7 @@ public class ScheduleController {
 		// ControllerAdvice로 처리 안되나??
 		try {
 			JSONArray list = service.getProjectJsonArray();
+			log.info(list);
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().print(list);
 		} catch (IOException e) {
@@ -69,16 +68,16 @@ public class ScheduleController {
 		
 	@PostMapping("/listCalender")
 	private String getProjectCalenderList(int projectId, Model model){
-		log.info("/listCalender..........");
+		log.info("/listCalender111111..........");
 		log.info("listCalender projectId:"+projectId);
-		List<ScheduleCalenderList> list = service.getProjectCalenderList(projectId);
+		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
 		log.info("list.............."+list);
 		model.addAttribute("calenderList", list);
 		return "/module/schedule/calenderListJsonParse";
 	}
 	
 	@PostMapping("/insertCalender")
-	private String setCalender(ScheduleCalender calender){
+	private String setCalender(ScheduleCalenderVO calender){
 		log.info("/insertCalender..........");
 		service.setCalender(calender);
 		return "/module/schedule/project";
@@ -86,14 +85,14 @@ public class ScheduleController {
 	
 	
 	@PostMapping("/editCalender")
-	public String setUpCalender(ScheduleCalender calender){
+	public String setUpCalender(ScheduleCalenderVO calender){
 		log.info("/editCalender..........");
 		int re = service.setUpCalender(calender);
 		return "/module/schedule/project";
 	}
 	
 	@PostMapping("/insertCategory")
-	public String setCategory(ScheduleCategory category){
+	public String setCategory(ScheduleCategoryVO category){
 		log.info("/insertCategory..........");
 		log.info("insertCategory:"+category);
 		int re = service.setCategory(category);
@@ -101,14 +100,14 @@ public class ScheduleController {
 	}
 	
 	@PostMapping("/editCategory")
-	public String setUpCategory(ScheduleCategory category){
+	public String setUpCategory(ScheduleCategoryVO category){
 		log.info("/editCategory..........");
 		int re = service.setUpCategory(category);
 		return "/module/schedule/project";
 	}
 	
 	@PostMapping("/insertProject")
-	public String setProject(ScheduleProject project){
+	public String setProject(ScheduleProjectVO project){
 		log.info("/insertProject..........");
 		log.info("project!!!!!"+project);
 		int re = service.setProject(project);
@@ -116,7 +115,7 @@ public class ScheduleController {
 	}
 	
 	@PostMapping("/editProject")
-	public String setUpProject(ScheduleProject project){
+	public String setUpProject(ScheduleProjectVO project){
 		log.info("/editProject..........");
 		log.info("project정보:"+project);
 		int re = service.setUpProject(project);
@@ -124,7 +123,7 @@ public class ScheduleController {
 	}
 	
 	@PostMapping("/editCalenderPos")
-	public String setUpCalenderPos(@RequestBody List<ScheduleCalenderMove> data){
+	public String setUpCalenderPos(@RequestBody List<ScheduleCalenderMoveVO> data){
 		log.info("/editCalenderPos..........");		
 		int re = service.setUpCalenderPos(data);
 		return "/module/schedule/project";
@@ -132,7 +131,7 @@ public class ScheduleController {
 	
 	
 	@PostMapping("/editCategoryPos")
-	public String setCategoryPos(ScheduleCategoryMove category){
+	public String setCategoryPos(ScheduleCategoryMoveVO category){
 		log.info("/editCategoryPos..........");
 		int re = service.setMoveCategory(category);
 		return "/module/schedule/project";	
@@ -146,7 +145,7 @@ public class ScheduleController {
 	}
 	
 	@PostMapping("/delCategory")
-	public String delCategory(ScheduleCategory category){
+	public String delCategory(ScheduleCategoryVO category){
 		log.info("/delCategory..........");
 		int re = service.delCategory(category);
 		return "/module/schedule/project";

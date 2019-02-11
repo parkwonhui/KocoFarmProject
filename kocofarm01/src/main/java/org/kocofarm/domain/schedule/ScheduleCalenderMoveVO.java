@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleCalenderMove implements Serializable{
+public class ScheduleCalenderMoveVO implements Serializable{
 	private int 	categoryId;
 	private int 	calenderId;
 	private int 	yPos;				// 일정의 Y좌표

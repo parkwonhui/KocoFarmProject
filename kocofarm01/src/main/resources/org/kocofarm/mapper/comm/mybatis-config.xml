@@ -9,11 +9,11 @@
 	
 	<typeAliases>
 		<!-- 스케쥴 -->
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProject" alias="ScheduleProject" />
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategory" alias="ScheduleCategory" />	
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalender" alias="ScheduleCalender" />
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderList" alias="ScheduleCalenderList" />
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderMove" alias="ScheduleCalenderMove" />
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryMove" alias="ScheduleCategoryMove" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProjectVO" alias="ScheduleProjectVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryVO" alias="ScheduleCategoryVO" />	
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderVO" alias="ScheduleCalenderVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderListVO" alias="ScheduleCalenderListVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderMoveVO" alias="ScheduleCalenderMoveVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryMoveVO" alias="ScheduleCategoryMoveVO" />
 	</typeAliases>
 </configuration>

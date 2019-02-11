@@ -2,10 +2,8 @@ package org.kocofarm.domain.schedule;
 
 
 import java.io.Serializable;
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +14,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleProject implements Serializable{
+public class ScheduleProjectVO implements Serializable{
 
 	private long projectId;
 	private String title;

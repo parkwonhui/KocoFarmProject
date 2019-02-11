@@ -1,6 +1,6 @@
 
-<%@ page import="org.kocofarm.domain.schedule.ScheduleCategory"%>
-<%@ page import="org.kocofarm.domain.schedule.ScheduleCalender"%>
+<%@ page import="org.kocofarm.domain.schedule.ScheduleCategoryVO"%>
+<%@ page import="org.kocofarm.domain.schedule.ScheduleCalenderVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

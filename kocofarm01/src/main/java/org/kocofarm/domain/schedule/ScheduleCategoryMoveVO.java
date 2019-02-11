@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleCategoryMove implements Serializable{
+public class ScheduleCategoryMoveVO implements Serializable{
 
 	private int projectId;
 	private int oriCategoryId;

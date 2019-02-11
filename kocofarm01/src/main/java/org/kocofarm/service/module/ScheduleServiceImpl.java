@@ -2,16 +2,15 @@ package org.kocofarm.service.module;
 
 import java.util.List;
 
-import org.kocofarm.domain.schedule.ScheduleCalender;
-import org.kocofarm.domain.schedule.ScheduleCalenderList;
-import org.kocofarm.domain.schedule.ScheduleCalenderMove;
-import org.kocofarm.domain.schedule.ScheduleCategory;
-import org.kocofarm.domain.schedule.ScheduleCategoryMove;
-import org.kocofarm.domain.schedule.ScheduleProject;
+import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
+import org.kocofarm.domain.schedule.ScheduleProjectVO;
 import org.kocofarm.mapper.module.ScheduleMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -24,35 +23,36 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private ScheduleMapper mapper;
 	
 	@Override
-	public List<ScheduleProject> getProjectList() {
-		List<ScheduleProject> list = mapper.getProjectList();
+	public List<ScheduleProjectVO> getProjectList() {
+		List<ScheduleProjectVO> list = mapper.getProjectList();
 		return list;
 	}
 
 	@Override
 	public JSONArray getProjectJsonArray(){
 		JSONArray jsonArr = new JSONArray();
-		List<ScheduleProject> projectList = mapper.getProjectList();
+		List<ScheduleProjectVO> projectList = mapper.getProjectList();
+		log.info("..........getProjectJsonArray:"+projectList);
 		jsonArr = JSONArray.fromObject(projectList);
 		return jsonArr;
 	}
 
 
 	@Override
-	public List<ScheduleCalenderList> getProjectCalenderList(int projectId) {
-		List<ScheduleCalenderList> list = mapper.getProjectCalenderList(projectId);
+	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId) {
+		List<ScheduleCalenderListVO> list = mapper.getProjectCalenderList(projectId);
 		return list;
 	}
 
 	@Override
-	public int setCalender(ScheduleCalender calender) {
+	public int setCalender(ScheduleCalenderVO calender) {
 		initCalender(calender);
 		int re = mapper.setCalender(calender);
 		return re;
 	}
 	
 	@Override
-	public int setUpCalender(ScheduleCalender calender){
+	public int setUpCalender(ScheduleCalenderVO calender){
 		initCalender(calender);
 		int re = mapper.setUpCalender(calender);
 		return re;
@@ -65,9 +65,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 	
 	@Override
-	public int setUpCalenderPos(List<ScheduleCalenderMove> calenderMoveList){
+	public int setUpCalenderPos(List<ScheduleCalenderMoveVO> calenderMoveList){
 		int re = 0;
-		for(ScheduleCalenderMove calenderMove : calenderMoveList){
+		for(ScheduleCalenderMoveVO calenderMove : calenderMoveList){
 			re = mapper.setUpCalenderPos(calenderMove);
 			if(0 >= re)
 				return -1;
@@ -76,19 +76,19 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 	
 	@Override
-	public int setCategory(ScheduleCategory category){
+	public int setCategory(ScheduleCategoryVO category){
 		int re = mapper.setCategory(category);
 		return re;
 	}
 	
 	@Override
-	public int setUpCategory(ScheduleCategory category){
+	public int setUpCategory(ScheduleCategoryVO category){
 		int re = mapper.setUpCategory(category);
 		return re;
 	}
 	
 	@Override	
-	public int setProject(ScheduleProject project){
+	public int setProject(ScheduleProjectVO project){
 		project.setProjectLeader("");
 		project.setProjectStartDt("");
 		project.setProjectEndDt("");
@@ -97,14 +97,14 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public int setUpProject(ScheduleProject project){
+	public int setUpProject(ScheduleProjectVO project){
 		int re = mapper.setUpProject(project);
 		return re;
 	}
 
 	@Transactional
 	@Override
-	public int delCategory(ScheduleCategory category){
+	public int delCategory(ScheduleCategoryVO category){
 		int re = mapper.delCalenderWithCategory(category);
 		re = mapper.delCategory(category.getCategoryId());
 		return re;
@@ -112,7 +112,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Transactional
 	@Override
-	public int setMoveCategory(ScheduleCategoryMove category){
+	public int setMoveCategory(ScheduleCategoryMoveVO category){
 		int re = mapper.setMoveCategoryPosX(category);
 		re = mapper.setOriCategoryPosX(category);
 		return re;
@@ -127,7 +127,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return re;
 	}
 	
-	public ScheduleCalender initCalender(ScheduleCalender calender){
+	public ScheduleCalenderVO initCalender(ScheduleCalenderVO calender){
 		if(null == calender.getBackgroundColor()){
 			calender.setBackgroundColor("");
 		}else if(null == calender.getStartDt()){
