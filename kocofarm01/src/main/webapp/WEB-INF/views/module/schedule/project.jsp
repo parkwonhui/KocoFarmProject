@@ -9,13 +9,6 @@
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false"></jsp:include>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.lang.Integer"%>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -35,11 +28,6 @@ $( function() {
 	        yearSuffix: '년'
 	    });
 	 
-	 jb( ".addDatepickerStart" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
-	 jb( ".addDatepickerEnd" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
-	 jb( ".editDatepickerStart" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
-	 jb( ".editDatepickerEnd" ).datepicker( "option", "dateFormat", 'yy-mm-dd' );
-
 	  jb( "#addDatepickerStart").datepicker({
 		  dateFormat: "yy-mm-dd"
 	  });
@@ -67,13 +55,61 @@ $( function() {
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	$(function() {		  
+	$(function() {		
+		/* 일정 추가 진행상황% 슬라이더  */
+		var calenderCompletionSlider = document.getElementById("calenderCompletionPerRang");
+		var calenderCompletionOutput = document.getElementById("calenderCompletionPerVal");
+
+		calenderCompletionSlider.oninput = function() {
+			calenderCompletionOutput.value = this.value;
+		}
+		/* 일정 추가 진행상황% textbox */
+		$('#calenderCompletionPerVal').change(function(){
+			var value = $(calenderCompletionOutput).val() ;
+			if(false == isNaN(value)){
+				if(0 > value) value = 0;
+				if(100 < value) value = 100;
+				$(calenderCompletionSlider).val($(this).val());
+				$(calenderCompletionOutput).val($(this).val());
+			}else{
+				$(calenderCompletionSlider).val(0);
+				$(calenderCompletionOutput).val(0);
+			}
+		});
+
+
+		/* 일정 수정 진행상황% 슬라이더  */
+		var editCalenderCompletionSlider = document.getElementById("editCalenderCompletionPerRang");
+		var editCalenderCompletionOutput = document.getElementById("editCalenderCompletionPerVal");
+
+		editCalenderCompletionSlider.oninput = function() {
+			editCalenderCompletionOutput.value = this.value;
+		}
+
+		/* 일정 수정 진행상황% textbox */
+		$('#editCalenderCompletionPerVal').change(function(){
+			var value = $(editCalenderCompletionOutput).val() ;
+			if(false == isNaN(value)){
+				if(0 > value) value = 0;
+				if(100 < value) value = 100;
+				
+				$(editCalenderCompletionSlider).val($(this).val());
+				$(editCalenderCompletionOutput).val($(this).val());
+				
+			}else{
+				$(editCalenderCompletionSlider).val(0);
+				$(editCalenderCompletionOutput).val(0);
+			}
+		});
+			
 		var projectId = "${projectId}";
+		add_project_id = projectId;
 		$.ajax({
-			url : 'listCalender.do',
+			url : 'listCalender',
 			data : {
 				"projectId" : projectId
 			},
+			type:"POST",
 			dataType : 'json',
 			success : function(data) {
 
@@ -83,13 +119,10 @@ $( function() {
 		});// ajax
 	});
 </script>
-</head>
-<body> 
 
 	<div class="con">
-		<!-- 동적으로 엘레먼트가 생성된다 -->
 	</div>
-
+	
 	<!-- 일정 추가 -->
 	<div class="modal fade" id="calenderAddModal" role="dialog">
 		<div class="modal-dialog">
@@ -184,6 +217,24 @@ $( function() {
 			</div><!-- modal-content -->
 		</div><!-- modal-dialog -->
 	</div>
+	
+	<!-- 카테고리 삭제. 하위 일정도 같이 삭제됨 -->
+	<div class="modal fade" id="categoryDeleteModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">카테고리 삭제</h4>
+				</div>
+				<div class="modal-body">
+					<p>카테고리 하위 일정이 전부 삭제됩니다.</p>
+					<p>정말 삭제하시겠습니까?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal" id="delete-project-button">삭제</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="/resources/js/module/schedule.js"></script>
-</body>
-</html>
