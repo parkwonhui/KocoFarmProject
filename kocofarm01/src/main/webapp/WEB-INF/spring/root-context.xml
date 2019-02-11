@@ -33,9 +33,11 @@
 	
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:/org/kocofarm/mapper/comm/mybatis-config.xml" />
 	</bean>
 	
+
 	<mybatis-spring:scan base-package="org.kocofarm.mapper.comm" />
 	<mybatis-spring:scan base-package="org.kocofarm.mapper.module" />
 	

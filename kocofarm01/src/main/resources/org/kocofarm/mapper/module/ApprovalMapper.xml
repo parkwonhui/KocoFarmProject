@@ -1,35 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.kocofarm.mapper.module.ApprovalMapper">
-	<!-- 기본 기안서 정보 입력 -->
-	<insert id="insertDraft" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
-		insert into Draft
-		values(seq_draft.nextval,#{draftName},SYSDATE,#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
+	<!-- 전체 기안서 불러오기  -->
+	<select id = "getDraftList" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
+		select 	draft_id as draftId,
+				draft_name as draftName,
+				draft_dt as draftDt,
+				draft_title as draftTitle,
+				emp_id as empId,
+				draft_year as draftYear,
+				form_id as formId,
+				approve_state as approveState
+		from draft
+	</select>
+	<!-- 전체 양식 불러오기  -->
+	<select id = "getFormList" resultType = "org.kocofarm.domain.approval.ApprFormVO">
+		select 	form_id as formId,
+				sort_id as sortId,
+				mode_id as modeId,
+				sort_name as sortName,
+				mode_name as modeName
+		from form
+	</select>
+	
+	<!-- 최근 기안서 번호 불러오기 -->
+	<select id = "getDraftNo" resultType = "Integer">
+		SELECT draft_id as draftId from draft
+		where ROWNUM = 1
+		order by draft_id DESC
+	</select>
+	
+	<!-- 특정 기안서 불러오기 -->
+	<select id="getDraft" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
+		select draft_id as draftId,
+				draft_name as draftName,
+				draft_dt as draftDt,
+				draft_title as draftTitle,
+				emp_id as empId,
+				draft_year as draftYear,
+				form_id as formId,
+				approve_state as approveState
+		from draft
+		where draft_id = #{draftId}
+	</select>
+	
+	<!-- 기본 기안서 정보 입력하기  -->
+	<insert id = "setDraft" parameterType = "org.kocofarm.domain.approval.ApprDraftVO">
+		insert into draft (draft_id,draft_name,draft_Dt,draft_title,emp_id,draft_year,form_id,approve_state)
+		values (seq_draft.nextval,#{draftName},#{draftDt},#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
 	</insert>
-	<insert id="insertDraftSelectKey" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
-		<selectKey keyProperty="draftId" order="BEFORE" resultType="long">
-			insert into Draft
-			values(#{draftId},#{draftName},SYSDATE,#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
-		</selectKey>
-	</insert>
-<!-- 휴가 신청서 입력  -->
- 	<insert id = "insertVacation" parameterType = "org.kocofarm.domain.approval.ApprVacationVO">
-		insert into Vacation_Form values(seq_vacation.nextval,${draftId},${formId},SYSDATE,SYSDATE,#{vacationType},#{vacationDays},
-		#{vacationReason},#{replacementId})
-	</insert>
-
-	<!-- 기안서 양식 list -->
-	<select id = "listForm" resultType = "org.kocofarm.domain.approval.ApprFormVO"> 
-		select FORM_ID AS formId, SORT_ID AS sortId, SORT_NAME AS sortName, MODE_ID 
-		AS modeId, MODE_NAME AS modeName from FORM order by FORM_ID </select>
-
-
-	<!-- 기본 draft 불러오기 -->
-	<select id="listDraft" resultType="org.kocofarm.domain.approval.ApprDraftVO"> 
-		SELECT DRAFT_ID AS draftId, DRAFT_NAME AS draftName, DRAFT_DT AS draftDt, 
-		DRAFT_TITLE AS draftTitle, EMP_ID AS empId, DRAFT_YEAR AS draftYear, FORM_ID 
-		AS formId, APPROVE_STATE AS approveState FROM DRAFT WHERE DRAFT_ID = #{draftId} 
-		</select>
-
+	
+	
 </mapper>
+	

@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class ApprDraftVO {
-
 	private int draftId;
 	private String draftName;
 	private String draftDt;
@@ -13,5 +12,4 @@ public class ApprDraftVO {
 	private int draftYear;
 	private int formId;
 	private String approveState;
-	
 }

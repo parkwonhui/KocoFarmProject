@@ -1,9 +1,9 @@
-package org.kocofarm.service.module;
+package org.kocofarm.mapper.module;
 
 import java.util.List;
 
 import org.kocofarm.domain.schedule.ScheduleProject;
 
-public interface ScheduleService {
+public interface ScheduleMapper {
 	public List<ScheduleProject> getProjectList();
 }
