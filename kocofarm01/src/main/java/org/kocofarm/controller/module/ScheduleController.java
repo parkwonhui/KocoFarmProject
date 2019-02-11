@@ -28,13 +28,14 @@ import lombok.extern.log4j.Log4j;
 import net.sf.json.JSONArray;
 @Log4j
 @Controller
-@RequestMapping("/schedule/*")
+@RequestMapping("/module/schedule/*")
 @AllArgsConstructor
 public class ScheduleController {
 	private ScheduleService service;
 	
 	@GetMapping("/")
 	private String getProjectList(Model model){
+		log.info("/..........");
 		List<ScheduleProject> list = service.getProjectList();
 		model.addAttribute("project", list);
 		return "/module/schedule/list";
@@ -42,6 +43,8 @@ public class ScheduleController {
 	
 	@GetMapping("/list")
 	private String getProjectListAjax(HttpServletResponse response){
+		log.info("/list..........");
+		
 		// ControllerAdvice로 처리 안되나??
 		try {
 			JSONArray list = service.getProjectJsonArray();
@@ -56,6 +59,7 @@ public class ScheduleController {
 	
 	@PostMapping("/sendProjectId")
 	private ModelAndView getProjectListAjax(@ModelAttribute("project_id") int projectId){
+		log.info("/sendProjectId..........");
 		log.info("project_id:"+projectId);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectId", projectId);
@@ -65,14 +69,17 @@ public class ScheduleController {
 		
 	@PostMapping("/listCalender")
 	private String getProjectCalenderList(int projectId, Model model){
+		log.info("/listCalender..........");
 		log.info("listCalender projectId:"+projectId);
 		List<ScheduleCalenderList> list = service.getProjectCalenderList(projectId);
+		log.info("list.............."+list);
 		model.addAttribute("calenderList", list);
 		return "/module/schedule/calenderListJsonParse";
 	}
 	
 	@PostMapping("/insertCalender")
 	private String setCalender(ScheduleCalender calender){
+		log.info("/insertCalender..........");
 		service.setCalender(calender);
 		return "/module/schedule/project";
 	}
@@ -80,12 +87,14 @@ public class ScheduleController {
 	
 	@PostMapping("/editCalender")
 	public String setUpCalender(ScheduleCalender calender){
+		log.info("/editCalender..........");
 		int re = service.setUpCalender(calender);
 		return "/module/schedule/project";
 	}
 	
 	@PostMapping("/insertCategory")
 	public String setCategory(ScheduleCategory category){
+		log.info("/insertCategory..........");
 		log.info("insertCategory:"+category);
 		int re = service.setCategory(category);
 		return "/module/schedule/project";
@@ -93,12 +102,14 @@ public class ScheduleController {
 	
 	@PostMapping("/editCategory")
 	public String setUpCategory(ScheduleCategory category){
+		log.info("/editCategory..........");
 		int re = service.setUpCategory(category);
 		return "/module/schedule/project";
 	}
 	
 	@PostMapping("/insertProject")
 	public String setProject(ScheduleProject project){
+		log.info("/insertProject..........");
 		log.info("project!!!!!"+project);
 		int re = service.setProject(project);
 		return "/module/schedule/list";
@@ -106,6 +117,7 @@ public class ScheduleController {
 	
 	@PostMapping("/editProject")
 	public String setUpProject(ScheduleProject project){
+		log.info("/editProject..........");
 		log.info("project정보:"+project);
 		int re = service.setUpProject(project);
 		return "/module/schedule/list";
@@ -113,7 +125,7 @@ public class ScheduleController {
 	
 	@PostMapping("/editCalenderPos")
 	public String setUpCalenderPos(@RequestBody List<ScheduleCalenderMove> data){
-		
+		log.info("/editCalenderPos..........");		
 		int re = service.setUpCalenderPos(data);
 		return "/module/schedule/project";
 	}
@@ -121,24 +133,28 @@ public class ScheduleController {
 	
 	@PostMapping("/editCategoryPos")
 	public String setCategoryPos(ScheduleCategoryMove category){
+		log.info("/editCategoryPos..........");
 		int re = service.setMoveCategory(category);
 		return "/module/schedule/project";	
 	}
 	
 	@PostMapping("/delCalender")
 	public String delCalender(int calenderId){
+		log.info("/delCalender..........");
 		int re = service.delCalender(calenderId);
 		return "/module/schedule/project";
 	}
 	
 	@PostMapping("/delCategory")
 	public String delCategory(ScheduleCategory category){
+		log.info("/delCategory..........");
 		int re = service.delCategory(category);
 		return "/module/schedule/project";
 	}
 	
 	@PostMapping("/delProject")
 	public String delProject(int projectId){
+		log.info("/delProject..........");
 		log.info("projectId:"+projectId);
 		int re = service.delProject(projectId);
 		return "/module/schedule/list";
