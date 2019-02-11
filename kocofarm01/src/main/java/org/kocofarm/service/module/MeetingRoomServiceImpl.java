@@ -26,33 +26,34 @@ public class MeetingRoomServiceImpl implements MeetingRoomService{
 
 	//조회
 	@Override
-	public MeetingRoomVO get(int mId) {
+	public MeetingRoomVO getMroomList(int mId) {
 		log.info("get" + mId);
 		
-		return mapper.read(mId);
+		return mapper.getMroom(mId);
 	}
 
 	//수정
 	@Override
-	public boolean modify(MeetingRoomVO mroom) {
+	public boolean setUpMroom(MeetingRoomVO mroom) {
 		log.info("modify" + mroom);
 		
-		return mapper.update(mroom) == 1;
+		return mapper.setUpMroom(mroom) == 1;
 	}
 
+	//삭제
 	@Override
-	public boolean remove(int mId) {
+	public boolean delMroom(int mId) {
 		log.info("remove" + mId);
 		
-		return mapper.delete(mId) == -1;
+		return mapper.delMroom(mId) == -1;
 	}
 
 	//목록
 	@Override
-	public List<MeetingRoomVO> getList() {
+	public List<MeetingRoomVO> getMroomList() {
 		log.info("getList");
 		
-		return mapper.getList();
+		return mapper.getMroomList();
 	}
 	
 	

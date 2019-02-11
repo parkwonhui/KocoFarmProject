@@ -8,14 +8,14 @@ public interface MeetingRoomService {
 	//public void register(MeetingRoomVO mroom);
 	
 	//조회
-	public MeetingRoomVO get(int mId);
+	public MeetingRoomVO getMroomList(int mId);
 	
 	//수정
-	public boolean modify(MeetingRoomVO mroom);
+	public boolean setUpMroom(MeetingRoomVO mroom);
 	
 	//삭제
-	public boolean remove(int mId);
+	public boolean delMroom(int mId);
 	
 	//목록
-	public List<MeetingRoomVO> getList();
+	public List<MeetingRoomVO> getMroomList();
 }

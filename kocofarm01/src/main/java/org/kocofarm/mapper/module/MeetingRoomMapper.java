@@ -7,18 +7,18 @@ import org.kocofarm.domain.meetingRoom.MeetingRoomVO;
 public interface MeetingRoomMapper {
 
 	//@Select("select m_id AS mId from meetingroom where m_id > 0")
-	public List<MeetingRoomVO> getList();
+	public List<MeetingRoomVO> getMroomList();
 	
 	//등록
-	public void insert(MeetingRoomVO mroom);
+	public void setMroom(MeetingRoomVO mroom);
 	
 	/*//키를 찾아서 등록
 	public void insertSelectKey(MeetingRoomVO mroom);*/
 	
 	//조회
-	public MeetingRoomVO read(int mId);
+	public MeetingRoomVO getMroom(int mId);
 	//삭제
-	public int delete(int mId);
+	public int delMroom(int mId);
 	//수정
-	public int update(MeetingRoomVO mroom);
+	public int setUpMroom(MeetingRoomVO mroom);
 }

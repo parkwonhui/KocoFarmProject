@@ -22,17 +22,17 @@ public class MroomMapperTests {
 	
 	@Test
 	public void testGetList(){
-		mapper.getList().forEach(meetingroom -> log.info(meetingroom));
+		mapper.getMroomList().forEach(meetingroom -> log.info(meetingroom));
 	}
 
 	/*@Test
-	public void testInsert(){
+	public void testsetMroom(){
 		MeetingRoomVO mroom = new MeetingRoomVO();
 		mroom.setMId(3);
 		mroom.setMName("회의실3");
 		mroom.setPNum(9);
 		
-		mapper.insert(mroom);
+		mapper.setMroom(mroom);
 		
 		log.info(mroom);
 	}*/
@@ -57,7 +57,7 @@ public class MroomMapperTests {
 	}*/
 	
 	/*@Test
-	public void testDelete(){
+	public void testDelMroom(){
 		log.info("DELETE COUNT: " + mapper.delete(2));
 	}*/
 	

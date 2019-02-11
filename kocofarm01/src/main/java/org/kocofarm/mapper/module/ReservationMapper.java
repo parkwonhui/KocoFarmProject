@@ -2,24 +2,23 @@ package org.kocofarm.mapper.module;
 
 import java.util.List;
 
+import org.kocofarm.domain.meetingRoom.MeetingRoomVO;
 import org.kocofarm.domain.meetingRoom.ReservationVO;
 
 public interface ReservationMapper {
 
-	//@Select("select m_id AS mId from meetingroom where m_id > 0")
-	public List<ReservationVO> getList();
+	//조회
+	public List<ReservationVO> getReservList();
 	
 	//등록
-	public void insert(ReservationVO reserv);
+	public void setReserv(ReservationVO reserv);
 	
-	/*//키를 찾아서 등록
-	public void insertSelectKey(MeetingRoomVO mroom);*/
+	//회의실 이름 불러오기
+	//public MeetingRoomVO getMroomNm(int mId); 
 	
-	//조회
-	public ReservationVO read(int rvId);
+	//삭제
+	public int delReserv(int rvId);
 	
-	/*//삭제
-	public int delete(int rvId);
 	//수정
-	public int update(ReservationVO reserv);*/
+	//public int setUpReserv(ReservationVO reserv);*/
 }
