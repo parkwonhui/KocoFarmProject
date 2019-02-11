@@ -5,8 +5,14 @@ import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-@Data
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScheduleCalenderMove implements Serializable{
