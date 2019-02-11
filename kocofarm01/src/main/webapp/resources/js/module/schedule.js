@@ -482,7 +482,7 @@ function calenderList(){
 }
 
 // 카테고리 삭제 모달 버튼
-$('#delete-project-button').click(function(){
+$('#project-delete-project-button').click(function(){
 	var url = "delCategory";
 	var data = {projectId:add_project_id, categoryId:add_category_id};
 

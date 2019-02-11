@@ -232,7 +232,7 @@ $( function() {
 					<p>정말 삭제하시겠습니까?</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal" id="delete-project-button">삭제</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" id="project-delete-project-button">삭제</button>
 				</div>
 			</div>
 		</div>
