@@ -20,11 +20,11 @@ public class RentCarServiceTests {
 	@Setter(onMethod_= {@Autowired})
 	private RentCarService rentCarService;
 	
-	/*@Test
+	@Test
 	public void testExist(){
 		log.info(rentCarService);
 		assertNotNull(rentCarService);
-	}*/
+	}
 	
 	/*@Test
 	public void testsetRentCarDetail(){
@@ -66,10 +66,10 @@ public class RentCarServiceTests {
 		log.info("setUp result : " + rentCarService.setUpRentCarDetail(rentCar));
 	}*/
 	
-	@Test
+	/*@Test
 	public void testdelRentCarDetail(){
 		log.info("delete result : " + rentCarService.delRentCarDetail("사1234"));
-	}
+	}*/
 	
 	
 }//RentCarServiceTests
