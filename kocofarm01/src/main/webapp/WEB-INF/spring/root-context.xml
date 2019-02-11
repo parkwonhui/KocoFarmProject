@@ -21,7 +21,7 @@
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
-		<property name="username" value="kosta192"></property>
+		<property name="username" value="kocofarm"></property>
 		<property name="password" value="1234"></property>
 	</bean>
 	
@@ -36,6 +36,7 @@
 		<property name="configLocation" value="classpath:/org/kocofarm/mapper/comm/mybatis-config.xml" />
 	</bean>
 	
+
 	<mybatis-spring:scan base-package="org.kocofarm.mapper.comm" />
 	<mybatis-spring:scan base-package="org.kocofarm.mapper.module" />
 	

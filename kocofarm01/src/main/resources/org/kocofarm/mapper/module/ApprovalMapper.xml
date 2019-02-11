@@ -1,1 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kocofarm.mapper.module.ApprovalMapper">
+	<!-- 전체 기안서 불러오기  -->
+	<select id = "getDraftList" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
+		select 	draft_id as draftId,
+				draft_name as draftName,
+				draft_dt as draftDt,
+				draft_title as draftTitle,
+				emp_id as empId,
+				draft_year as draftYear,
+				form_id as formId,
+				approve_state as approveState
+		from draft
+	</select>
+	<!-- 전체 양식 불러오기  -->
+	<select id = "getFormList" resultType = "org.kocofarm.domain.approval.ApprFormVO">
+		select 	form_id as formId,
+				sort_id as sortId,
+				mode_id as modeId,
+				sort_name as sortName,
+				mode_name as modeName
+		from form
+	</select>
+	
+	<!-- 최근 기안서 번호 불러오기 -->
+	<select id = "getDraftNo" resultType = "Integer">
+		SELECT draft_id as draftId from draft
+		where ROWNUM = 1
+		order by draft_id DESC
+	</select>
+	
+	<!-- 특정 기안서 불러오기 -->
+	<select id="getDraft" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
+		select draft_id as draftId,
+				draft_name as draftName,
+				draft_dt as draftDt,
+				draft_title as draftTitle,
+				emp_id as empId,
+				draft_year as draftYear,
+				form_id as formId,
+				approve_state as approveState
+		from draft
+		where draft_id = #{draftId}
+	</select>
+	
+	<!-- 기본 기안서 정보 입력하기  -->
+	<insert id = "setDraft" parameterType = "org.kocofarm.domain.approval.ApprDraftVO">
+		insert into draft (draft_id,draft_name,draft_Dt,draft_title,emp_id,draft_year,form_id,approve_state)
+		values (seq_draft.nextval,#{draftName},#{draftDt},#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
+	</insert>
+	
+	
+</mapper>
+	
