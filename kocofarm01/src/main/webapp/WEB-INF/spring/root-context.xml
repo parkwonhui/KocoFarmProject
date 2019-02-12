@@ -11,8 +11,10 @@
 	
 	<context:component-scan base-package="org.kocofarm.domain.rentCar"/>
 	<context:component-scan base-package="org.kocofarm.domain.meetingRoom"/>
+	<context:component-scan base-package="org.kocofarm.domain.approval"/>
 	<context:component-scan base-package="org.kocofarm.service.module" />
 	<context:component-scan base-package="org.kocofarm.service.comm" />
+
 	
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> 
