@@ -23,7 +23,7 @@
 		
 		<div class="contents_wrap">		
 			<ul>
-			    <li><a href="rentCarDetailList.do">차량목록(관리자)</a>
+			    <li><a href="/rent/rentCarDetailList">차량목록(관리자)</a>
 				<li><a href="">차량정비일지</a>
 				<li><a href="">차량예약</a>
 				<li><a href="">차량운행일지</a>

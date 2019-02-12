@@ -68,7 +68,7 @@
 						</tr>
 					</thead>
 					<tbody id="contentsTbBody">
-						<c:forEach var="RCdetail" items="${rentCarDetailListModel.list}"> 
+						<c:forEach var="RCdetail" items="${list}"> 
 						<!-- RentCarDetailService에서 RentCarDetailListModel 중에서 list만 불러오는 것이다. -->
 							<tr>
 								<td>${RCdetail.carId }</td> 
@@ -114,7 +114,7 @@
 			<div class="flt_r">
 				<!-- <input type="button" class="list_btn" value="목록" />
 				<input type="button" class="view_btn" value="상세보기" /> -->
-				<a href="rentCarDetailWriteForm.do">
+				<a href="/rent/rentCarDetailWriteForm">
 					<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
 				</a>
 				<!-- <input type="button" class="edit_btn" value="수정" />
