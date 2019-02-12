@@ -117,7 +117,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		if(null == categoryName)
 			return -1;
 		
-		if(categoryName.length() > 5){
+		if(categoryName.length() > 5 || categoryName.length() <= 0){
 			return 1001;
 		}
 		
@@ -159,7 +159,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		if(null == title)
 			return -1;
 	
-		if(title.length() > 5){
+		if(title.length() > 5 || title.length() <= 0){
 			return 1000;
 		}
 		
@@ -213,7 +213,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 			return -1;
 		
 		System.out.println("title.length() :"+title.length() );
-		if(title.length() > 10){
+		if(title.length() > 10 || title.length() <= 0){
 			return 1002;
 		}
 		

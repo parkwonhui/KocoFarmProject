@@ -64,16 +64,6 @@
 		<div class="contents">
 				
 		</div>
-		<!-- btn -->
-		<div class="btn_wrap">
-			<div class="flt_r">
-				<input type="button" class="list_btn" value="목록" /> <input
-					type="button" class="view_btn" value="상세보기" /> <input
-					type="button" class="write_btn" value="등록" /> <input type="button"
-					class="edit_btn" value="수정" /> <input type="button"
-					class="del_btn" value="삭제" />
-			</div>
-		</div>	<!-- btn_wrap -->
 		
 		<!-- 생성 -->
 		<div class="modal fade" id="create-project-modal" role="dialog">
@@ -169,12 +159,25 @@ $("#delete-project-button").on("click", function(){
 // modal 창의 modify 버튼
 $("#modify-project-button").on("click", function(){	
 	var title = $("#modify-project-input").val();
+	if(0 == title.length){
+		alert('프로젝트명을 입력해주세요');
+		return;
+	}
+	
 	var sendUrl = "editProject";	
 	var sendData = {projectId:selectProjectId, title:title};
 	
 	ajaxListRequest(sendUrl, sendData);
 });
 
+// 검색 버튼
+$("#schBtn").on("click", function(){
+	var searchData = $("#schWord").val();
+	if(0 == searchData.length){
+		alert('검색할 문자를 입력해주세요');
+		return;
+	}
+});
 
 function ajaxListRequest(sendUrl, sendData){
 	$.ajax({

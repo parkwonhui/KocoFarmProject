@@ -460,10 +460,10 @@ function ajaxRequest(sendUrl, sendData){
 	    url:sendUrl,
 	    success: function(data) {
     		if(1001 == data){
-    			alert('[실패]카테고리 이름이 50자 초과했습니다');
+    			alert('[실패] 카테고리 이름을 확인해주세요(1~50자)');
     	    
     		}else if(1002 == data){
-    			alert('[실패] 글자수가 100자 초과했습니다');
+    			alert('[실패] 일정의 글자수가 너무 많거나 없습니다(1~100자)');
     		
     		}else if(1003 == data){
     			alert('[실패] 시작날짜가 잘못되었습니다');
