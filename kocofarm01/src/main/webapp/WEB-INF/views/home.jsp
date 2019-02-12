@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!-- 현재 페이지의 데이터는 세션에 담지 않는다.  -->
 <%@ page session="false" %>
 <html>
 <head>

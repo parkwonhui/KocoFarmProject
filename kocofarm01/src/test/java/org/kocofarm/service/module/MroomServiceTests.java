@@ -40,11 +40,11 @@ public class MroomServiceTests {
 		
 		}*/
 		
-		/*@Test
-		public void testGetList(){
+		@Test
+		public void testGetMroomList(){
 			
-			service.getList().forEach(meetingroom -> log.info(meetingroom));
-		}*/
+			service.getMroomList().forEach(meetingroom -> log.info(meetingroom));
+		}
 		
 		
 		/*//조회

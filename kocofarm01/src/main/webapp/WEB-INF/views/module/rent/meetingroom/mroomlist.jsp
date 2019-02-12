@@ -42,10 +42,12 @@
 					<c:choose>
 						<c:when test="${not empty list}">
 							<c:forEach var="mroom" items="${list}" varStatus="status">
+							<c:out value="${list}" />
 								<tr>
 									<td>${mroom.mId}</td>
+									
 									<td class="cursorP">
-										<a href="mroomdetail.do?mId=${mroom.mId}">${mroom.mName}</a>
+										<a href="mroomdetail?mId=${mroom.mId}">${mroom.mName}</a>
 									</td>
 									<td>${mroom.pNum}</td>
 								</tr>

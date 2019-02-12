@@ -23,10 +23,10 @@ public class ReservationMapperTests {
 	private ReservationMapper mapper;
 	
 	//회의실 예약 목록
-	/*@Test
+	@Test
 	public void testGetReservList(){
 		mapper.getReservList().forEach(reservation -> log.info(reservation));
-	}*/
+	}
 	
 	//예약 등록
 	/*	@Test

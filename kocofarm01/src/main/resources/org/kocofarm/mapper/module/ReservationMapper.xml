@@ -46,15 +46,15 @@
 		left join emp b on a.rv_user = b.emp_id
 		left join emp c on a.RV_WRITER = b.emp_id
 		left join departments d on a.dept = d.dept_id
-		<if test="area">
+		<!-- <if test="area">
 			<where>
-				<!-- title LIKE %aa% OR writer LIKE %aa% -->
+				title LIKE %aa% OR writer LIKE %aa%
 				<foreach collection="area" item="item" separator="OR" open="("
 					close=")">
 					${item} LIKE #{searchKey}
 				</foreach>
 			</where>
-		</if>
+		</if> -->
 		ORDER BY a.reg_dt DESC
 	</select>
 	
