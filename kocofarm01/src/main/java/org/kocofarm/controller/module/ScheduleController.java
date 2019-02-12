@@ -133,41 +133,45 @@ public class ScheduleController {
 		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/editCalenderPos")
-	public String setUpCalenderPos(@RequestBody List<ScheduleCalenderMoveVO> data){
+	public int setUpCalenderPos(@RequestBody List<ScheduleCalenderMoveVO> data){
 		log.info("/editCalenderPos..........");		
 		int re = service.setUpCalenderPos(data);
-		return "/module/schedule/project";
+		return re;
 	}
 	
-	
+	@ResponseBody
 	@PostMapping("/editCategoryPos")
-	public String setCategoryPos(ScheduleCategoryMoveVO category){
+	public int setCategoryPos(ScheduleCategoryMoveVO category){
 		log.info("/editCategoryPos..........");
 		int re = service.setMoveCategory(category);
-		return "/module/schedule/project";	
+		return re;	
 	}
 	
+	@ResponseBody
 	@PostMapping("/delCalender")
-	public String delCalender(int calenderId){
+	public int delCalender(int calenderId){
 		log.info("/delCalender..........");
 		int re = service.delCalender(calenderId);
-		return "/module/schedule/project";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/delCategory")
-	public String delCategory(ScheduleCategoryVO category){
+	public int delCategory(ScheduleCategoryVO category){
 		log.info("/delCategory..........");
 		int re = service.delCategory(category);
-		return "/module/schedule/project";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/delProject")
-	public String delProject(int projectId){
+	public int delProject(int projectId){
 		log.info("/delProject..........");
 		log.info("projectId:"+projectId);
 		int re = service.delProject(projectId);
-		return "/module/schedule/list";
+		return re;
 	}
 	
 	
