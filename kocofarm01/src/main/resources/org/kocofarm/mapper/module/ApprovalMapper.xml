@@ -90,6 +90,76 @@
 		insert into draft (draft_id,draft_name,draft_Dt,draft_title,emp_id,draft_year,form_id,approve_state)
 		values (seq_draft.nextval,#{draftName},#{draftDt},#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
 	</insert>
- 
+
+	<!-- 기본 기안서 정보 입력하기 -->
+	<insert id="setDraft" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
+		insert into draft
+		(draft_id,draft_name,draft_Dt,draft_title,emp_id,draft_year,form_id,approve_state)
+		values
+		(seq_draft.nextval,#{draftName},#{draftDt},#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
+	</insert>
+
+	<!-- 휴가 신청서 입력 -->
+	<insert id="setInsertVacation" parameterType="org.kocofarm.domain.approval.ApprVacationVO">
+		insert into
+		Vacation_Form
+		values(SEQ_VACATION.nextval,${draftId},${formId},SYSDATE,SYSDATE,#{vacationType},#{vacationDays},
+		#{vacationReason},#{replacementId})
+	</insert>
+
+	<!-- 지출 결의서 입력 -->
+	<insert id="setInsertExpence" parameterType="org.kocofarm.domain.approval.ApprExpenceVO">
+		insert into
+		EXPENCE_FORM
+		values(seq_expence.nextval,${draftId},${formId},SYSDATE,#{expenceType},#{sumPrice},#{contId})
+	</insert>
+
+	<!-- 지출 내역 입력 -->
+	<insert id="setInsertExpenceCont" parameterType="org.kocofarm.domain.approval.ApprExpenceContVO">
+		insert into
+		EXPENCE_CONT
+		values(${expenceId},#{contSeq},#{customerName},#{expencePrice},#{commissionOption},#{commissionPrice}
+		)
+	</insert>
+
+	<!-- 기본 기안서 정보 수정 -->
+	<update id="updateDraft" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
+		update DRAFT
+		set draft_title = #{draftTitle} ,
+		DRAFT_DT= SYSDATE,
+		draft_year = #{draftYear}
+		where draft_id = #{draftId}
+	</update>
+
+	<!-- 휴가 신청서 정보 수정 -->
+	<update id="updateVacation" parameterType="org.kocofarm.domain.approval.ApprVacationVO">
+		update vacation_form
+		set vacation_type = #{vacationType} ,
+		vacation_start_dt = SYSDATE ,
+		vacation_end_dt = SYSDATE ,
+		vacation_days = #{vacationDays} ,
+		replacement_id = #{replacementId}
+		where draft_id = #{draftId}
+	</update>
+
+	<!-- 기본 기안서 정보 삭제  -->
+	<delete id = "deleteDraft" parameterType = "int">
+		delete from draft where draft_id = #{draftId}
+	</delete>
+
+<!-- 휴가신청서 정보 삭제 -->
+	<delete id = "deleteVacation" parameterType = "int">
+		delete from vacation_form where draft_id = #{draftId}
+	</delete>
+	
+	<!-- 지출 결의서 정보 삭제 -->
+	<delete id = "deleteExpence" parameterType = "int">
+		delete from Expence_form where draft_id = #{draftId}
+	</delete>
+
+
+
+
+
 </mapper>
 	

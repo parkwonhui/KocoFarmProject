@@ -9,6 +9,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<context:component-scan base-package="org.kocofarm.domain.approval"/>
 	<context:component-scan base-package="org.kocofarm.domain.rentCar"/>
 	<context:component-scan base-package="org.kocofarm.domain.meetingRoom"/>
 	<context:component-scan base-package="org.kocofarm.domain.approval"/>
@@ -23,7 +24,7 @@
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
-		<property name="username" value="kocofarm"></property>
+		<property name="username" value="midproject"></property>
 		<property name="password" value="1234"></property>
 	</bean>
 	
