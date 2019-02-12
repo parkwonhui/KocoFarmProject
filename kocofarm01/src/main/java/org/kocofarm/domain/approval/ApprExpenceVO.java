@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class ApprExpenceVO {
-
 	private int expenceId;
 	private int draftId;
 	private int formId;

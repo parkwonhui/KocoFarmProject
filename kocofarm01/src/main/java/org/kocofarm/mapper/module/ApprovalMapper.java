@@ -10,21 +10,21 @@ import org.kocofarm.domain.approval.ApprVacationVO;
 
 public interface ApprovalMapper {
 
-	/*��ü ��ȼ� ���*/
+	/*전체 기안서 목록 불러오기*/
 	public List<ApprDraftVO> getDraftList();
-	/*��� ���*/
+	/*전체 양식 목록 불러오기 */
 	public List<ApprFormVO> getFormList();
-	/*�ֱ� ��ȼ� ��ȣ �ҷ�����*/
+	/*최근 기안서 번호 가져오기*/
 	public int getDraftNo();
-	/* Ư�� ��ȼ� �ҷ����� */
+	/* 특정 기안서 불러오기 */
 	public ApprDraftVO getDraft(int draftId);
-	/*�⺻ ��ȼ� ���� �Է��ϱ� */
+	/*기안서 입력하기 */
 	public void setDraft(ApprDraftVO draft);
-	/*�ް� ���� �Է�*/
+	/*휴가입력하기*/
 	public void setInsertVacation(ApprVacationVO vacation);
-	/*���� ���� �Է�*/
+	/*지출 입력하기*/
 	public void setInsertExpence(ApprExpenceVO expence);
-	/*���� ��� �Է�*/
+	/**/
 	public void setInsertExpenceCont(ApprExpenceContVO expenceCont);
 	/*분류된 기안서 출력*/ 
 	List<ApprDraftVO> getListStateDraft();
@@ -34,12 +34,12 @@ public interface ApprovalMapper {
 	public void getDraftId();
 	/*지출결의서 번호 불러오기*/
 	public void getExpenceId();
-	/*휴가 신청서 불러오기*/
-	ApprVacationVO getVacation(int draftId);
-	/*지출 결의서 불러오기 */
-	ApprExpenceVO getExpence(int draftId);
-	/*지출 내용 정보 불러오기*/
-	List<ApprExpenceContVO> getExpenceCont(int expenceId);
+	/*휴가 신청서 정보 가져오기*/
+	public ApprVacationVO getVacation(int draftId);
+	/*지출 결의서 정보 가져오기*/
+	public ApprExpenceVO getExpence(int draftId);
+	/*지출 결의서 내역 가져오기*/
+	public List<ApprExpenceContVO> getExpenceCont(int expenceId);
 	/*기본 기안서 정보 수정*/
 	public int updateDraft(ApprDraftVO draft);
 	/*휴가 신청서 정보 수정*/

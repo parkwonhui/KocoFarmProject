@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class ApprExpenceContVO {
-
 	private int expenceId;
 	private int contSeq;
 	private String customerName;
