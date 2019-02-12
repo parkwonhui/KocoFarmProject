@@ -10,7 +10,7 @@ import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
 
 public interface ScheduleMapper {
-	public List<ScheduleProjectVO> getProjectList();
+	public List<ScheduleProjectVO> getProjectList(ScheduleProjectVO project);
 	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId);
 	public int setCalender(ScheduleCalenderVO scheduleCalender);
 	public int setUpCalender(ScheduleCalenderVO scheduleCalender);

@@ -173,10 +173,21 @@ $("#modify-project-button").on("click", function(){
 // 검색 버튼
 $("#schBtn").on("click", function(){
 	var searchData = $("#schWord").val();
-	if(0 == searchData.length){
-		alert('검색할 문자를 입력해주세요');
-		return;
-	}
+	
+	var sendUrl = "getProjectListSearch";
+	var sendData = {title:searchData};
+	
+	$.ajax({
+	    type:"GET",
+	    data : sendData,
+	    dataType:"json",
+	    url:sendUrl,
+	    success: function(data) {
+	    	projectList(data);
+	    },
+	    error : function(error) {	    	
+	    },	// error
+	  });// ajax
 });
 
 function ajaxListRequest(sendUrl, sendData){

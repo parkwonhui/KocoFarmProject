@@ -35,21 +35,34 @@ public class ScheduleController {
 	private ScheduleService service;
 	
 	@GetMapping("/")
-	private String getProjectList(Model model){
+	private String getProjectList(Model model, ScheduleProjectVO project){
 		log.info("/..........");
-		List<ScheduleProjectVO> list = service.getProjectList();
+		log.info(project);
+		List<ScheduleProjectVO> list = service.getProjectList(project);
 		model.addAttribute("project", list);
 		model.addAttribute("moduleNm", "schedule");
 		return "/module/schedule/list";
 	}
 	
+	@ResponseBody
+	@GetMapping("/getProjectListSearch")
+	private List<ScheduleProjectVO> getProjectListSearch(Model model, ScheduleProjectVO project){
+		log.info("/getProjectListSearch..........");
+		log.info(project);
+		List<ScheduleProjectVO> list = service.getProjectList(project);
+		System.out.println("list:"+list);
+		/*model.addAttribute("project", list);
+		model.addAttribute("moduleNm", "schedule");*/
+		return list;
+	}
+	
 	@GetMapping("/list")
-	private String getProjectListAjax(HttpServletResponse response){
+	private String getProjectListAjax(HttpServletResponse response, ScheduleProjectVO project){
 		log.info("/list..........");
 		
 		// ControllerAdvice로 처리 안되나??
 		try {
-			JSONArray list = service.getProjectJsonArray();
+			JSONArray list = service.getProjectJsonArray(project);
 			log.info(list);
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().print(list);
@@ -173,7 +186,4 @@ public class ScheduleController {
 		int re = service.delProject(projectId);
 		return re;
 	}
-	
-	
-
 }

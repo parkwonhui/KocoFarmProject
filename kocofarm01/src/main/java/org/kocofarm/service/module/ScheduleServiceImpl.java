@@ -25,15 +25,15 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private ScheduleMapper mapper;
 	
 	@Override
-	public List<ScheduleProjectVO> getProjectList() {
-		List<ScheduleProjectVO> list = mapper.getProjectList();
+	public List<ScheduleProjectVO> getProjectList(ScheduleProjectVO project) {
+		List<ScheduleProjectVO> list = mapper.getProjectList(project);
 		return list;
 	}
 
 	@Override
-	public JSONArray getProjectJsonArray(){
+	public JSONArray getProjectJsonArray(ScheduleProjectVO project){
 		JSONArray jsonArr = new JSONArray();
-		List<ScheduleProjectVO> projectList = mapper.getProjectList();
+		List<ScheduleProjectVO> projectList = mapper.getProjectList(project);
 		log.info("..........getProjectJsonArray:"+projectList);
 		jsonArr = JSONArray.fromObject(projectList);
 		return jsonArr;
