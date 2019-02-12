@@ -46,8 +46,7 @@
 				
 				<div class="btn_wrap">
 					<div class="flt_r">
-							
-							
+					
 						<a href="/reservation/reservInsertForm?mId=${mroom.mId}">
 							<input type="button" class="auto_wth_btn_b" value="회의실 예약" />
 						</a>

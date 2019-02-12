@@ -2,11 +2,6 @@ package org.kocofarm.domain.meetingRoom;
 
 import java.util.Date;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-@Data
 public class MeetingRoomVO {
 	private int mId;
 	private String mName;

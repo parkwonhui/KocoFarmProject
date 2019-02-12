@@ -3,6 +3,7 @@ package org.kocofarm.mapper.module;
 import java.util.List;
 
 import org.kocofarm.domain.approval.EmpCategoryVO;
+import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.emp.EmpVO;
 
 public interface EmpMapper {
@@ -14,7 +15,7 @@ public interface EmpMapper {
 	EmpVO getEmp(String empId);
 	
 	/* 부서 목록 */
-	List<EmpCategoryVO> getDeptList();
+	List<DepartmentsVO> getDeptList();
 	
 
 }

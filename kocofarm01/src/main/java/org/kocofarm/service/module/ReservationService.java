@@ -2,6 +2,9 @@ package org.kocofarm.service.module;
 
 import java.util.List;
 
+import org.kocofarm.domain.approval.EmpCategoryVO;
+import org.kocofarm.domain.emp.DepartmentsVO;
+import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.meetingRoom.MeetingRoomVO;
 import org.kocofarm.domain.meetingRoom.ReservationVO;
 
@@ -21,4 +24,13 @@ public interface ReservationService {
 	
 	//목록
 	public List<ReservationVO> getReservList();
+	
+	//회의실 이름
+	public MeetingRoomVO getMroomNm(int mId); 
+	
+	//사원 목록
+	public List<EmpVO> getEmpList();
+	
+	//부서 목록
+	public List<DepartmentsVO> getDeptList();
 }

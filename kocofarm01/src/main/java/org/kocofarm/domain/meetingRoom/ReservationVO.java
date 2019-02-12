@@ -1,9 +1,5 @@
 package org.kocofarm.domain.meetingRoom;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 public class ReservationVO {
 
 	private int rvId;
@@ -16,6 +12,7 @@ public class ReservationVO {
 	private String regDt;
 	private String upDt;
 	private int mId;
+	
 	public int getRvId() {
 		return rvId;
 	}

@@ -49,7 +49,7 @@ public class MeetingRoomController {
 	private String mroomInsert(@ModelAttribute("mroom") MeetingRoomVO mroom) {
 		service.setMroom(mroom);
 
-		return "redirect:/module/rent/meetingroom/mroomlist";
+		return "redirect:/meetingroom/mroomlist";
 	}
 
 	//삭제
@@ -58,7 +58,7 @@ public class MeetingRoomController {
 		if (service.delMroom(mId)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/module/rent/meetingroom/mroomlist";
+		return "redirect:/meetingroom/mroomlist";
 	}
 
 	//수정폼
@@ -76,7 +76,7 @@ public class MeetingRoomController {
 			rttr.addFlashAttribute("result", "success");
 		}
 
-		return "redirect:/module/rent/meetingroom/mroomlist";
+		return "redirect:/meetingroom/mroomlist";
 	}
 
 }
