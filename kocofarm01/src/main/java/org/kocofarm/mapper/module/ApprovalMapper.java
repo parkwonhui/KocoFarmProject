@@ -10,20 +10,44 @@ import org.kocofarm.domain.approval.ApprVacationVO;
 
 public interface ApprovalMapper {
 
-	/*ÀüÃ¼ ±â¾È¼­ Ãâ·Â*/
+	/*ï¿½ï¿½Ã¼ ï¿½ï¿½È¼ï¿½ ï¿½ï¿½ï¿½*/
 	public List<ApprDraftVO> getDraftList();
-	/*¾ç½Ä Ãâ·Â*/
+	/*ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½*/
 	public List<ApprFormVO> getFormList();
-	/*ÃÖ±Ù ±â¾È¼­ ¹øÈ£ ºÒ·¯¿À±â*/
+	/*ï¿½Ö±ï¿½ ï¿½ï¿½È¼ï¿½ ï¿½ï¿½È£ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½*/
 	public int getDraftNo();
-	/* Æ¯Á¤ ±â¾È¼­ ºÒ·¯¿À±â */
+	/* Æ¯ï¿½ï¿½ ï¿½ï¿½È¼ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	public ApprDraftVO getDraft(int draftId);
-	/*±âº» ±â¾È¼­ Á¤º¸ ÀÔ·ÂÇÏ±â */
+	/*ï¿½âº» ï¿½ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï±ï¿½ */
 	public void setDraft(ApprDraftVO draft);
-	/*ÈŞ°¡ Á¤º¸ ÀÔ·Â*/
+	/*ï¿½Ş°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½*/
 	public void setInsertVacation(ApprVacationVO vacation);
-	/*ÁöÃâ ³»¿ª ÀÔ·Â*/
+	/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½*/
 	public void setInsertExpence(ApprExpenceVO expence);
-	/*ÁöÃâ ¾ç½Ä ÀÔ·Â*/
+	/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½*/
 	public void setInsertExpenceCont(ApprExpenceContVO expenceCont);
+	/*ë¶„ë¥˜ëœ ê¸°ì•ˆì„œ ì¶œë ¥*/ 
+	List<ApprDraftVO> getListStateDraft();
+	/*ê¸°ì•ˆì„œ ìƒì„¸ ì…ë ¥ í¼ ì´ë™*/
+	ApprFormVO getDetailForm(int formId);
+	/*empì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°*/
+	public void getDraftId();
+	/*ì§€ì¶œê²°ì˜ì„œ ë²ˆí˜¸ ë¶ˆëŸ¬ì˜¤ê¸°*/
+	public void getExpenceId();
+	/*íœ´ê°€ ì‹ ì²­ì„œ ë¶ˆëŸ¬ì˜¤ê¸°*/
+	ApprVacationVO getVacation(int draftId);
+	/*ì§€ì¶œ ê²°ì˜ì„œ ë¶ˆëŸ¬ì˜¤ê¸° */
+	ApprExpenceVO getExpence(int draftId);
+	/*ì§€ì¶œ ë‚´ìš© ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°*/
+	List<ApprExpenceContVO> getExpenceCont(int expenceId);
+	/*ê¸°ë³¸ ê¸°ì•ˆì„œ ì •ë³´ ìˆ˜ì •*/
+	public int updateDraft(ApprDraftVO draft);
+	/*íœ´ê°€ ì‹ ì²­ì„œ ì •ë³´ ìˆ˜ì •*/
+	public int updateVacation(ApprVacationVO vacation);
+	/*ê¸°ë³¸ ê¸°ì•ˆì„œ ì •ë³´ ì‚­ì œ*/
+	public int deleteDraft(int draftId);
+	/*íœ´ê°€ ì‹ ì²­ì„œ ì‚­ì œ*/
+	public int deleteVacation(int draftId);
+	/*ì§€ì¶œ ê²°ì˜ì„œ ì‚­ì œ*/
+	public int deleteExpence(int draftId);
 }

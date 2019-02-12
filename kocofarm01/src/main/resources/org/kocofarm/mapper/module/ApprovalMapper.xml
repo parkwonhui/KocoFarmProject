@@ -4,79 +4,119 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.kocofarm.mapper.module.ApprovalMapper">
-	<!-- 전체 기안서 불러오기  -->
-	<select id = "getDraftList" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
-		select 	draft_id as draftId,
-				draft_name as draftName,
-				draft_dt as draftDt,
-				draft_title as draftTitle,
-				emp_id as empId,
-				draft_year as draftYear,
-				form_id as formId,
-				approve_state as approveState
+	<!-- 전체 기안서 불러오기 -->
+	<select id="getDraftList" resultType="org.kocofarm.domain.approval.ApprDraftVO">
+		select draft_id as draftId,
+		draft_name as draftName,
+		draft_dt as draftDt,
+		draft_title as draftTitle,
+		emp_id as empId,
+		draft_year as draftYear,
+		form_id as formId,
+		approve_state as approveState
 		from draft
 	</select>
-	<!-- 전체 양식 불러오기  -->
-	<select id = "getFormList" resultType = "org.kocofarm.domain.approval.ApprFormVO">
-		select 	form_id as formId,
-				sort_id as sortId,
-				mode_id as modeId,
-				sort_name as sortName,
-				mode_name as modeName
+	<!-- 전체 양식 불러오기 -->
+	<select id="getFormList" resultType="org.kocofarm.domain.approval.ApprFormVO">
+		select form_id as formId,
+		sort_id as sortId,
+		mode_id as modeId,
+		sort_name as sortName,
+		mode_name as modeName
 		from form
 	</select>
-	
+
 	<!-- 최근 기안서 번호 불러오기 -->
-	<select id = "getDraftNo" resultType = "Integer">
-		SELECT draft_id as draftId from draft
+	<select id="getDraftNo" resultType="Integer">
+		SELECT draft_id as draftId
+		from draft
 		where ROWNUM = 1
 		order by draft_id DESC
 	</select>
-	
+
 	<!-- 특정 기안서 불러오기 -->
-	<select id="getDraft" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
+	<select id="getDraft" resultType="org.kocofarm.domain.approval.ApprDraftVO">
 		select draft_id as draftId,
-				draft_name as draftName,
-				draft_dt as draftDt,
-				draft_title as draftTitle,
-				emp_id as empId,
-				draft_year as draftYear,
-				form_id as formId,
-				approve_state as approveState
+		draft_name as draftName,
+		draft_dt as draftDt,
+		draft_title as draftTitle,
+		emp_id as empId,
+		draft_year as draftYear,
+		form_id as formId,
+		approve_state as approveState
 		from draft
 		where draft_id = #{draftId}
 	</select>
-	
-	<!-- 기본 기안서 정보 입력하기  -->
-	<insert id = "setDraft" parameterType = "org.kocofarm.domain.approval.ApprDraftVO">
-		insert into draft (draft_id,draft_name,draft_Dt,draft_title,emp_id,draft_year,form_id,approve_state)
-		values (seq_draft.nextval,#{draftName},#{draftDt},#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
+
+	<!-- 기본 기안서 정보 입력하기 -->
+	<insert id="setDraft" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
+		insert into draft
+		(draft_id,draft_name,draft_Dt,draft_title,emp_id,draft_year,form_id,approve_state)
+		values
+		(seq_draft.nextval,#{draftName},#{draftDt},#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
 	</insert>
-	
-	<!-- 휴가 신청서 입력  -->
- 	<insert id = "setInsertVacation" parameterType = "org.kocofarm.domain.approval.ApprVacationVO">
-		insert into Vacation_Form values(SEQ_VACATION.nextval,${draftId},${formId},SYSDATE,SYSDATE,#{vacationType},#{vacationDays},
+
+	<!-- 휴가 신청서 입력 -->
+	<insert id="setInsertVacation" parameterType="org.kocofarm.domain.approval.ApprVacationVO">
+		insert into
+		Vacation_Form
+		values(SEQ_VACATION.nextval,${draftId},${formId},SYSDATE,SYSDATE,#{vacationType},#{vacationDays},
 		#{vacationReason},#{replacementId})
 	</insert>
-	
-	<!-- 지출 결의서 입력  -->
- 	<insert id = "setInsertExpence" parameterType = "org.kocofarm.domain.approval.ApprExpenceVO">
-		insert into EXPENCE_FORM values(seq_expence.nextval,${draftId},${formId},SYSDATE,#{expenceType},#{sumPrice},#{contId})
-	</insert> 
-	
-	<!-- 지출 내역 입력  --> 
- 	<insert id= "setInsertExpenceCont" parameterType = "org.kocofarm.domain.approval.ApprExpenceContVO">
-		insert into EXPENCE_CONT values(${expenceId},#{contSeq},#{customerName},#{expencePrice},#{commissionOption},#{commissionPrice} )
+
+	<!-- 지출 결의서 입력 -->
+	<insert id="setInsertExpence" parameterType="org.kocofarm.domain.approval.ApprExpenceVO">
+		insert into
+		EXPENCE_FORM
+		values(seq_expence.nextval,${draftId},${formId},SYSDATE,#{expenceType},#{sumPrice},#{contId})
 	</insert>
+
+	<!-- 지출 내역 입력 -->
+	<insert id="setInsertExpenceCont" parameterType="org.kocofarm.domain.approval.ApprExpenceContVO">
+		insert into
+		EXPENCE_CONT
+		values(${expenceId},#{contSeq},#{customerName},#{expencePrice},#{commissionOption},#{commissionPrice}
+		)
+	</insert>
+
+	<!-- 기본 기안서 정보 수정 -->
+	<update id="updateDraft" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
+		update DRAFT
+		set draft_title = #{draftTitle} ,
+		DRAFT_DT= SYSDATE,
+		draft_year = #{draftYear}
+		where draft_id = #{draftId}
+	</update>
+
+	<!-- 휴가 신청서 정보 수정 -->
+	<update id="updateVacation" parameterType="org.kocofarm.domain.approval.ApprVacationVO">
+		update vacation_form
+		set vacation_type = #{vacationType} ,
+		vacation_start_dt = SYSDATE ,
+		vacation_end_dt = SYSDATE ,
+		vacation_days = #{vacationDays} ,
+		replacement_id = #{replacementId}
+		where draft_id = #{draftId}
+	</update>
+
+	<!-- 기본 기안서 정보 삭제  -->
+	<delete id = "deleteDraft" parameterType = "int">
+		delete from draft where draft_id = #{draftId}
+	</delete>
+
+<!-- 휴가신청서 정보 삭제 -->
+	<delete id = "deleteVacation" parameterType = "int">
+		delete from vacation_form where draft_id = #{draftId}
+	</delete>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 지출 결의서 정보 삭제 -->
+	<delete id = "deleteExpence" parameterType = "int">
+		delete from Expence_form where draft_id = #{draftId}
+	</delete>
+
+
+
+
+
 </mapper>
 	

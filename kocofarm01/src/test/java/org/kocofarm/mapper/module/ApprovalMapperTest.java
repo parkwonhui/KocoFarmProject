@@ -73,7 +73,7 @@ public class ApprovalMapperTest {
 		log.info(expence);
 	}*/
 	
-	public void testSetInsertExpenceCont(){
+	/*public void testSetInsertExpenceCont(){
 		ApprExpenceContVO expenceCont = new ApprExpenceContVO();
 		expenceCont.setExpenceId(1);
 		expenceCont.setContSeq(2);
@@ -84,5 +84,37 @@ public class ApprovalMapperTest {
 		
 		mapper.setInsertExpenceCont(expenceCont);
 		log.info(expenceCont);
+	}*/
+	
+	/*public void testUpdateDraft(){
+		ApprDraftVO draft = new ApprDraftVO();
+		draft.setDraftId(30);
+		draft.setDraftTitle("업데이트");
+		draft.setDraftYear(2);
+		
+		int count = mapper.updateDraft(draft);
+		log.info("UPDATE COUNT : " + count);
+	}*/
+	
+	/*public void testUpdateVacation(){
+				ApprVacationVO vacation = new ApprVacationVO();
+				vacation.setVacationType("연차");
+				vacation.setVacationId(4);
+				vacation.setVacationDays(7);
+				vacation.setReplacementId("EMP_001");
+				
+				int count = mapper.updateVacation(vacation);
+						log.info("UPDATE COUNT : " + count);
+	}*/
+	
+	/*public void testDeleteDraft(){
+		log.info("DELETE COUNT : " + mapper.deleteDraft(0));
+	}*/
+	/*public void testDeleteVacation(){
+		log.info("DELETE COUNT : " + mapper.deleteVacation(30));
+	}*/
+	public void testDeleteExpence(){
+		log.info("DELETE COUNT : " + mapper.deleteExpence(30));
 	}
+	
 }
