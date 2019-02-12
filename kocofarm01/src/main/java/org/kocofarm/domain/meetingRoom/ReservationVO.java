@@ -1,6 +1,8 @@
 package org.kocofarm.domain.meetingRoom;
 
-public class ReservationVO {
+import java.io.Serializable;
+
+public class ReservationVO implements Serializable {
 
 	private int rvId;
 	private String mTitle;
@@ -12,7 +14,9 @@ public class ReservationVO {
 	private String regDt;
 	private String upDt;
 	private int mId;
-	
+	private String rvUserNm;
+	private String rvWriterNm;
+	private String deptNm;
 	public int getRvId() {
 		return rvId;
 	}
@@ -73,7 +77,24 @@ public class ReservationVO {
 	public void setmId(int mId) {
 		this.mId = mId;
 	}
+	public String getRvUserNm() {
+		return rvUserNm;
+	}
+	public void setRvUserNm(String rvUserNm) {
+		this.rvUserNm = rvUserNm;
+	}
+	public String getRvWriterNm() {
+		return rvWriterNm;
+	}
+	public void setRvWriterNm(String rvWriterNm) {
+		this.rvWriterNm = rvWriterNm;
+	}
+	public String getDeptNm() {
+		return deptNm;
+	}
+	public void setDeptNm(String deptNm) {
+		this.deptNm = deptNm;
+	}
 
-	
 	
 }

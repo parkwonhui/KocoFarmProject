@@ -1,6 +1,8 @@
 package org.kocofarm.domain.emp;
 
-public class EmpVO {
+import java.io.Serializable;
+
+public class EmpVO implements Serializable {
 	private String empId;
 	private String korNm;
 	private String engNm;

@@ -1,8 +1,9 @@
 package org.kocofarm.domain.meetingRoom;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class MeetingRoomVO {
+public class MeetingRoomVO implements Serializable {
 	private int mId;
 	private String mName;
 	private int pNum;
