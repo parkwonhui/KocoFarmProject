@@ -59,6 +59,24 @@
 		#{vacationReason},#{replacementId})
 	</insert>
 	
+	<!-- 지출 결의서 입력  -->
+ 	<insert id = "setInsertExpence" parameterType = "org.kocofarm.domain.approval.ApprExpenceVO">
+		insert into EXPENCE_FORM values(seq_expence.nextval,${draftId},${formId},SYSDATE,#{expenceType},#{sumPrice},#{contId})
+	</insert> 
+	
+	<!-- 지출 내역 입력  --> 
+ 	<insert id= "setInsertExpenceCont" parameterType = "org.kocofarm.domain.approval.ApprExpenceContVO">
+		insert into EXPENCE_CONT values(${expenceId},#{contSeq},#{customerName},#{expencePrice},#{commissionOption},#{commissionPrice} )
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>
 	

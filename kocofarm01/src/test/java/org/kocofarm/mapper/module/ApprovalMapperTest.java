@@ -3,6 +3,8 @@ package org.kocofarm.mapper.module;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprExpenceContVO;
+import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -46,7 +48,7 @@ public class ApprovalMapperTest {
 		mapper.setDraft(draft);
 		log.info(draft);
 	}*/
-	public void testSetInsertVacation(){
+	/*public void testSetInsertVacation(){
 		ApprVacationVO vacation = new ApprVacationVO();
 		vacation.setDraftId(30);
 		vacation.setFormId(4);
@@ -57,7 +59,30 @@ public class ApprovalMapperTest {
 		
 		mapper.setInsertVacation(vacation);
 		log.info(vacation);
+	}*/
+	
+	/*public void testSetInsertExpence(){
+		ApprExpenceVO expence = new ApprExpenceVO();
+		expence.setDraftId(30);
+		expence.setFormId(4);
+		expence.setExpenceType("¡ˆ√‚");
+		expence.setSumPrice("20000");
+		expence.setContId(1);
+		
+		mapper.setInsertExpence(expence);
+		log.info(expence);
+	}*/
+	
+	public void testSetInsertExpenceCont(){
+		ApprExpenceContVO expenceCont = new ApprExpenceContVO();
+		expenceCont.setExpenceId(1);
+		expenceCont.setContSeq(1);
+		expenceCont.setCustomerName("kosta");
+		expenceCont.setExpencePrice("2000");
+		expenceCont.setCommissionOption("Option");
+		expenceCont.setCommissionPrice("200");
+		
+		mapper.setInsertExpenceCont(expenceCont);
+		log.info(expenceCont);
 	}
-	
-	
 }

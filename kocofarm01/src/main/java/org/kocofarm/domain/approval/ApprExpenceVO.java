@@ -11,5 +11,6 @@ public class ApprExpenceVO {
 	private String expenceDt;
 	private String expenceType;
 	private String sumPrice;
+	private int contId;
 	
 }

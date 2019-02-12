@@ -3,6 +3,8 @@ package org.kocofarm.mapper.module;
 import java.util.List;
 
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprExpenceContVO;
+import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
 
@@ -20,5 +22,8 @@ public interface ApprovalMapper {
 	public void setDraft(ApprDraftVO draft);
 	/*휴가 정보 입력*/
 	public void setInsertVacation(ApprVacationVO vacation);
-	
+	/*지출 내역 입력*/
+	public void setInsertExpence(ApprExpenceVO expence);
+	/*지출 양식 입력*/
+	public void setInsertExpenceCont(ApprExpenceContVO expenceCont);
 }
