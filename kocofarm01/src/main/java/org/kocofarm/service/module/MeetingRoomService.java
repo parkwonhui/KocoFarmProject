@@ -5,10 +5,12 @@ import java.util.List;
 import org.kocofarm.domain.meetingRoom.MeetingRoomVO;
 
 public interface MeetingRoomService {
-	//public void register(MeetingRoomVO mroom);
+	
+	//등록
+	public void setMroom(MeetingRoomVO mroom);
 	
 	//조회
-	public MeetingRoomVO getMroomList(int mId);
+	public MeetingRoomVO getMroom(int mId);
 	
 	//수정
 	public boolean setUpMroom(MeetingRoomVO mroom);

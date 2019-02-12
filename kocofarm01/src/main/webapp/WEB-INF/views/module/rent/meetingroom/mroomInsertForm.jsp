@@ -21,7 +21,7 @@
 		
 			<div class="contents">
 				<!-- 등록 -->
-				<form action="mroomInsert.do" method="post">
+				<form action="/meetingroom/mroomInsert" method="post">
 					<table class="contents_tb wr" id="contTb">
 						<colgroup>
 							<col width="15%">

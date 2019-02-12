@@ -28,30 +28,31 @@ public class MroomServiceTests {
 			assertNotNull(service);
 		}
 		
-		/*@Test
-		public void testRegister(){
-		MeetingRoomVO mroom = new MeetingRoomVO();
-		mroom.setMId(3);
-		mroom.setMName("회의실7");
-		mroom.setPNum(5);
-		
-		service.register(mroom);
-		log.info(mroom.getMId());
-		
-		}*/
-		
 		@Test
+		public void testsetMroom(){
+		MeetingRoomVO mroom = new MeetingRoomVO();
+		mroom.setmId(1);
+		mroom.setmName("회의실1");
+		mroom.setpNum(3);
+		
+		service.setMroom(mroom);
+		log.info(mroom.getmId());
+		
+		}
+		
+		//목록
+		/*@Test
 		public void testGetMroomList(){
 			
 			service.getMroomList().forEach(meetingroom -> log.info(meetingroom));
-		}
+		}*/
 		
 		
 		/*//조회
 		@Test
-		public void testGet(){
+		public void testGetMroomList(){
 			
-			log.info(service.get(1));
+			log.info(service.getMroom(3));
 		}*/
 		
 		/*@Test

@@ -46,19 +46,33 @@
 				
 				<div class="btn_wrap">
 					<div class="flt_r">
-						<c:if test="${loginVO.authority == 99}">
-							<a href="mroomUpdateForm.do?mId=${mroom.mId}">
+							<a href="/meetingroom/mroomupdateForm?mId=${mroom.mId}">
 								<input type="button" class="auto_wth_btn_y" value="수정" />
 							</a>
-							<a href="mroomDelete.do?mId=${mroom.mId}">
+							<a href="/meetingroom/delMroom?mId=${mroom.mId}">
 								<input type="button" class="auto_wth_btn_r" value="삭제" />
 							</a>
-						</c:if>
-						<a href="reservInsertForm.do?mId=${mroom.mId}">
+						<a href="/meetingroom/reservinsertForm?mId=${mroom.mId}">
 							<input type="button" class="auto_wth_btn_b" value="회의실 예약" />
 						</a>
 					</div>
 				</div>
+				
+				<%-- <div class="btn_wrap">
+					<div class="flt_r">
+						<c:if test="${loginVO.authority == 99}">
+							<a href="/meetingroom/mroomUpdateForm?mId=${mroom.mId}">
+								<input type="button" class="auto_wth_btn_y" value="수정" />
+							</a>
+							<a href="/meetingroom/delMroom?mId=${mroom.mId}">
+								<input type="button" class="auto_wth_btn_r" value="삭제" />
+							</a>
+						</c:if>
+						<a href="/meetingroom/mroomUpdateForm?mId=${mroom.mId}">
+							<input type="button" class="auto_wth_btn_b" value="회의실 예약" />
+						</a>
+					</div>
+				</div> --%>
 			</div>
 		</div>
 	</div>

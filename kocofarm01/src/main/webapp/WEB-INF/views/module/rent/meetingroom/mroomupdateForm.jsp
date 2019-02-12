@@ -20,7 +20,7 @@
 		<div class="contents_wrap">
 			<div class="contents">
 				<!-- 수정 -->
-				<form action="mroomUpdate.do" method="post">
+				<form action="/meetingroom/mroomUpdate" method="post">
 					<input type="hidden" name="mId" value="${mroom.mId}">
 				
 					<table class="contents_tb wr" id="contTb">
