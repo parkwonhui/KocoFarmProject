@@ -180,12 +180,20 @@ function ajaxListRequest(sendUrl, sendData){
 	$.ajax({
 	    type:"POST",
 	    data : sendData,
-	    dataType:"text",
+	    dataType:"json",
 	    url:sendUrl,
-	    success: function(data) {
+	    success: function(data) {	
+    		if(1000 == data){
+    			alert('[실패] 프로젝트 이름이 50자 초과했습니다');
+    	    	return;
+    		}else if(-1 == data){
+    			alert('[실패] 알 수 없는 에러');
+    	    	return;	
+    		}
+    	
 	    	projectListAjaxRequest();
 	    },
-	    error : function(error) {
+	    error : function(error) {	    	
 	    },	// error
 	  });// ajax
 }

@@ -456,10 +456,30 @@ function ajaxRequest(sendUrl, sendData){
 	$.ajax({
 	    type:"POST",
 	    data : sendData,
-	    dataType:"text",
+	    dataType:"json",
 	    url:sendUrl,
 	    success: function(data) {
-	    	calenderList();
+    		if(1001 == data){
+    			alert('[실패]카테고리 이름이 50자 초과했습니다');
+    	    
+    		}else if(1002 == data){
+    			alert('[실패] 글자수가 100자 초과했습니다');
+    		
+    		}else if(1003 == data){
+    			alert('[실패] 시작날짜가 잘못되었습니다');
+    		
+    		}else if(1004 == data){
+    			alert('[실패] 종료날짜가 잘못되었습니다');
+    		
+    		}else if(1005 == data){
+    			alert('[실패] 완료상황은 0과 100 사이 값만 가능합니다');
+        		
+    		}else if(-1 == data){
+    			alert('[실패] 알 수 없는 에러');
+    	    
+    		}else{
+    			calenderList();
+    		}
 	    },
 	    error : function(error) {
 	    },	// error

@@ -12,6 +12,8 @@ import org.kocofarm.domain.schedule.ScheduleCategoryVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
 import org.kocofarm.service.module.ScheduleService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
@@ -26,7 +29,7 @@ import lombok.extern.log4j.Log4j;
 import net.sf.json.JSONArray;
 @Log4j
 @Controller
-@RequestMapping("/module/schedule/*")
+@RequestMapping("/schedule/*")
 @AllArgsConstructor
 public class ScheduleController {
 	private ScheduleService service;
@@ -36,6 +39,7 @@ public class ScheduleController {
 		log.info("/..........");
 		List<ScheduleProjectVO> list = service.getProjectList();
 		model.addAttribute("project", list);
+		model.addAttribute("moduleNm", "schedule");
 		return "/module/schedule/list";
 	}
 	
@@ -62,6 +66,7 @@ public class ScheduleController {
 		log.info("project_id:"+projectId);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectId", projectId);
+		mv.addObject("moduleNm", "schedule");
 		mv.setViewName("/module/schedule/project");
 		return mv;
 	}
@@ -76,50 +81,56 @@ public class ScheduleController {
 		return "/module/schedule/calenderListJsonParse";
 	}
 	
+	@ResponseBody
 	@PostMapping("/insertCalender")
-	private String setCalender(ScheduleCalenderVO calender){
+	private int setCalender(ScheduleCalenderVO calender){
 		log.info("/insertCalender..........");
-		service.setCalender(calender);
-		return "/module/schedule/project";
+		int re = service.setCalender(calender);
+		return re;
 	}
 	
-	
+	@ResponseBody
 	@PostMapping("/editCalender")
-	public String setUpCalender(ScheduleCalenderVO calender){
+	public int setUpCalender(ScheduleCalenderVO calender){
 		log.info("/editCalender..........");
 		int re = service.setUpCalender(calender);
-		return "/module/schedule/project";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/insertCategory")
-	public String setCategory(ScheduleCategoryVO category){
+	public int setCategory(ScheduleCategoryVO category){
 		log.info("/insertCategory..........");
 		log.info("insertCategory:"+category);
 		int re = service.setCategory(category);
-		return "/module/schedule/project";
+		return re;
 	}
-	
+
+	@ResponseBody
 	@PostMapping("/editCategory")
-	public String setUpCategory(ScheduleCategoryVO category){
+	public int setUpCategory(ScheduleCategoryVO category){
 		log.info("/editCategory..........");
 		int re = service.setUpCategory(category);
-		return "/module/schedule/project";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/insertProject")
-	public String setProject(ScheduleProjectVO project){
+	public int setProject(ScheduleProjectVO project){
 		log.info("/insertProject..........");
 		log.info("project!!!!!"+project);
 		int re = service.setProject(project);
-		return "/module/schedule/list";
+		
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/editProject")
-	public String setUpProject(ScheduleProjectVO project){
+	public int setUpProject(ScheduleProjectVO project){
 		log.info("/editProject..........");
 		log.info("project정보:"+project);
 		int re = service.setUpProject(project);
-		return "/module/schedule/list";
+		return re;
 	}
 	
 	@PostMapping("/editCalenderPos")
