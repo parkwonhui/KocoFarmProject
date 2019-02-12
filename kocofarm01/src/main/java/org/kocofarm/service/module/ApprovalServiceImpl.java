@@ -3,7 +3,10 @@ package org.kocofarm.service.module;
 import java.util.List;
 
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprExpenceContVO;
+import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
+import org.kocofarm.domain.approval.ApprVacationVO;
 import org.kocofarm.mapper.module.ApprovalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,5 +46,22 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public void setDraft(ApprDraftVO draft) {
 		mapper.setDraft(draft);
 	}
+
+	@Override
+	public ApprExpenceVO getExpence(int draftId) {
+		return mapper.getExpence(draftId);
+	}
+
+	@Override
+	public List<ApprExpenceContVO> getExpenceCont(int expenceId) {
+		return mapper.getExpenceCont(expenceId);
+	}
+
+	@Override
+	public ApprVacationVO getVacation(int draftId) {
+		return mapper.getVacation(draftId);
+	}
+
+	
 
 }

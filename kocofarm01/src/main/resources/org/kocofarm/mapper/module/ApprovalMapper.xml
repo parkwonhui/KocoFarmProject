@@ -47,12 +47,49 @@
 		where draft_id = #{draftId}
 	</select>
 	
+	<!-- 지출결의서 정보 불러오기 -->
+	<select id = "getExpence" resultType = "org.kocofarm.domain.approval.ApprExpenceVO">
+		select 	expence_id as expenceId,
+				draft_id as draftId,
+				form_id as draftId,
+				expence_dt as expenceDt,
+				expence_type as expenceType,
+				sum_price as sumPrice
+		from expence_form
+		where draft_id = #{draftId}
+	</select>
+	
+	<!-- 지출 결의서 내역 불러오기 -->
+	<select id="getExpenceCont" resultType = "org.kocofarm.domain.approval.ApprExpenceContVO">
+		select	expence_id as expenceId,
+				cont_seq as contSeq,
+				customer_name as customerName,
+				expence_price as expencePrice,
+				commission_option as commissionOption,
+				commission_price as commissionPrice
+		from expence_cont
+		where expence_id = #{expenceId}
+	</select>
+	
+	<!-- 휴가 신청서 정보 불러오기 -->
+	<select id = "getVacation" resultType = "org.kocofarm.domain.approval.ApprVacationVO">
+		select 	vacation_id as vacationId,
+				draft_id as draftId,
+				form_id as formId,
+				vacation_start_dt as vacationStartDt,
+				vacation_end_dt as vacationEndDt,
+				vacation_type as vacationType,
+				vacation_days as vacationDays,
+				vacation_reason as vacationReason,
+				replacement_id as replacementId
+		from vacation_form
+		where draft_id = #{draftId}
+	</select>
 	<!-- 기본 기안서 정보 입력하기  -->
 	<insert id = "setDraft" parameterType = "org.kocofarm.domain.approval.ApprDraftVO">
 		insert into draft (draft_id,draft_name,draft_Dt,draft_title,emp_id,draft_year,form_id,approve_state)
 		values (seq_draft.nextval,#{draftName},#{draftDt},#{draftTitle},#{empId},#{draftYear},#{formId},#{approveState})
 	</insert>
-	
-	
+ 
 </mapper>
 	

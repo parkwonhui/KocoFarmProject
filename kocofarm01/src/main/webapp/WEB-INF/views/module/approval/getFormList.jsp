@@ -59,7 +59,7 @@
 					<c:forEach var="ApprFormVO" items="${formList }">
 						<tr>
 							<td>${ApprFormVO.formId }</td>
-							<td><a href = "detailDraftform.do?formId=${ApprFormVO.formId }">${ApprFormVO.modeName }</a></td>
+							<td><a href = "getForm?formId=${ApprFormVO.formId }">${ApprFormVO.modeName }</a></td>
 							<td>${ApprFormVO.sortName }</td>
 						</tr>
 					</c:forEach>

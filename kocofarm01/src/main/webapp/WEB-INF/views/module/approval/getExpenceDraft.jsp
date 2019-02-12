@@ -115,13 +115,13 @@ h1 {
 							<td>수수료 여부</td>
 							<td>수수료 금액</td>
 						</tr>
-						<c:forEach var="ApprovalExpenceCont" items="${list }">
+						<c:forEach var="ApprExpenceCont" items="${expenceCont }">
 							<tr>
-								<td>${ApprovalExpenceCont.contSeq }</td>
-								<td>${ApprovalExpenceCont.customerName }</td>
-								<td>${ApprovalExpenceCont.expencePrice }</td>
-								<td>${ApprovalExpenceCont.commissionOption }</td>
-								<td>${ApprovalExpenceCont.commissionPrice }</td>
+								<td>${ApprExpenceCont.contSeq }</td>
+								<td>${ApprExpenceCont.customerName }</td>
+								<td>${ApprExpenceCont.expencePrice }</td>
+								<td>${ApprExpenceCont.commissionOption }</td>
+								<td>${ApprExpenceCont.commissionPrice }</td>
 							</tr>
 						</c:forEach>
 

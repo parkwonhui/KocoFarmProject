@@ -52,8 +52,10 @@ function expenceAdd() {
 						<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}</p>
 						<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }</p>
 						<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }</p>
+					</div>
 					<p></p>
 					<p></p>
+					
 				</div>
 
 			<!-- list -->
@@ -144,7 +146,7 @@ function expenceAdd() {
 						
 						</form>		
 				</div>	
-		</div>
+	
 	</div>
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

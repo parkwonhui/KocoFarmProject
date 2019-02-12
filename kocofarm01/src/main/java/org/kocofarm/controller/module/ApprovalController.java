@@ -15,19 +15,22 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/module/approval/*")
+@RequestMapping("/approval/*")
 @AllArgsConstructor
 public class ApprovalController {
 	private ApprovalService service;
-	
+	/*전체 기안서 리스트 가져오기*/
 	@GetMapping("/getDraftList")
 	public String getDraftList(Model model){
+		model.addAttribute("moduleNm", "approval");//leftbar띄우기
 		model.addAttribute("draftList", service.getDraftList());
 		return "module/approval/getDraftList";
 	}
+	/*전체 양식 리스트 가져오기*/
 	@GetMapping("/getFormList")
 	public String getFormList(Model model){
-		model.addAttribute("formList",service.getFormList());
+		model.addAttribute("moduleNm", "approval");//leftbar띄우기
+		model.addAttribute("formList",service.getFormList()); 
 		return "/module/approval/getFormList";
 	}
 	
@@ -36,12 +39,44 @@ public class ApprovalController {
 	public String setDraft(ApprDraftVO draft, RedirectAttributes rttr){
 		service.setDraft(draft);
 		rttr.addFlashAttribute("draftNo",service.getDraftNo());
+		rttr.addAttribute("moduleNm", "approval");
 		return "redirect:/module/approval/getDraftList";
 	}
 	
+	/*특정 기안서 가져오기*/
 	@GetMapping("/getDraft")
 	public String getDraft(@RequestParam("draftId") int draftId, Model model){
+		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
 		model.addAttribute("draft",service.getDraft(draftId));
-		return "/module/approval/getDraft";
+		
+		int formId = service.getDraft(draftId).getFormId();
+		if(formId == 2){
+			model.addAttribute("expence",service.getExpence(draftId));
+			int expenceId = service.getExpence(draftId).getExpenceId();
+			model.addAttribute("expenceCont",service.getExpenceCont(expenceId));
+			return  "/module/approval/getExpenceDraft";
+		}else if(formId == 4){
+			model.addAttribute("vacation", service.getVacation(draftId));
+			return "module/approval/getVacationDraft";
+		}else{
+			return "module/approval/defaultDraft";
+		}
 	}
+	
+
+	/*기안서 양식 가져오기 */
+	@GetMapping("/getForm")
+	public String getForm(@RequestParam("formId") int formId, Model model){
+		model.addAttribute("moduleNm", "approval");
+		
+		if(formId == 2){
+			
+			return  "module/approval/setExpenceDraft";
+		}else if(formId == 4){
+			return "module/approval/setVacationDraft";
+		}else{
+			return "module/approval/defaultDraft";
+		}
+	}
+
 }
