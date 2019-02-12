@@ -38,12 +38,12 @@ public class ApprovalMapperTest {
 	/*public void testSetDraft(){
 		ApprDraftVO draft = new ApprDraftVO();
 		draft.setDraftDt("2018-02-11");
-		draft.setDraftName("¿¹½Ã");
-		draft.setDraftTitle("¿¹½ÃÀÔ´Ï´Ù");
+		draft.setDraftName("ï¿½ï¿½ï¿½ï¿½");
+		draft.setDraftTitle("ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
 		draft.setDraftYear(3);
 		draft.setFormId(1);
 		draft.setEmpId("EMP_004");
-		draft.setApproveState("¾Æ¸ô¶û");
+		draft.setApproveState("ï¿½Æ¸ï¿½ï¿½ï¿½");
 		
 		mapper.setDraft(draft);
 		log.info(draft);
@@ -52,9 +52,9 @@ public class ApprovalMapperTest {
 		ApprVacationVO vacation = new ApprVacationVO();
 		vacation.setDraftId(30);
 		vacation.setFormId(4);
-		vacation.setVacationType("½¬±â");
+		vacation.setVacationType("ï¿½ï¿½ï¿½ï¿½");
 		vacation.setVacationDays(1);
-		vacation.setVacationReason("¾Æ¸ô¶û½¯²¨¾ß");
+		vacation.setVacationReason("ï¿½Æ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		vacation.setReplacementId("EMP_001");
 		
 		mapper.setInsertVacation(vacation);
@@ -65,7 +65,7 @@ public class ApprovalMapperTest {
 		ApprExpenceVO expence = new ApprExpenceVO();
 		expence.setDraftId(30);
 		expence.setFormId(4);
-		expence.setExpenceType("ÁöÃâ");
+		expence.setExpenceType("ï¿½ï¿½ï¿½ï¿½");
 		expence.setSumPrice("20000");
 		expence.setContId(1);
 		
@@ -76,7 +76,7 @@ public class ApprovalMapperTest {
 	public void testSetInsertExpenceCont(){
 		ApprExpenceContVO expenceCont = new ApprExpenceContVO();
 		expenceCont.setExpenceId(1);
-		expenceCont.setContSeq(1);
+		expenceCont.setContSeq(2);
 		expenceCont.setCustomerName("kosta");
 		expenceCont.setExpencePrice("2000");
 		expenceCont.setCommissionOption("Option");
