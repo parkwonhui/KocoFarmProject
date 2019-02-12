@@ -16,8 +16,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScheduleCategoryVO implements Serializable {
+	
 	private int categoryId;
 	private String categoryName;
 	private int projectId;
-	private int xPos;		
+	private int xPos;
+	
+	public int getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}		
 }

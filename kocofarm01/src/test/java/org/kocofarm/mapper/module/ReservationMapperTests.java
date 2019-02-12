@@ -20,7 +20,7 @@ public class ReservationMapperTests {
 	
 	@Test
 	public void testGetList(){
-		mapper.getList().forEach(reservation -> log.info(reservation));
+		mapper.getReservList().forEach(reservation -> log.info(reservation));
 	}
 	
 	

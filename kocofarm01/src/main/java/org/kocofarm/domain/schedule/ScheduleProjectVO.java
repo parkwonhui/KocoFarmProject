@@ -24,4 +24,5 @@ public class ScheduleProjectVO implements Serializable{
 	private int projectRegDt;
 	private int projectCompletion;
 	private boolean publicProject;
+	
 }

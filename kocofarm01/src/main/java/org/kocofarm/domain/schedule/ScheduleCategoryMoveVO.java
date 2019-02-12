@@ -17,10 +17,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScheduleCategoryMoveVO implements Serializable{
-
+	
 	private int projectId;
 	private int oriCategoryId;
 	private int oriCategoryX;
 	private int moveCategoryId;
 	private int moveCategoryX;
+	
 }

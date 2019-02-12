@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ScheduleCalenderListVO implements Serializable {
-
+	
 	private int 	categoryId;
 	private String 	categoryName;
 	private int 	projectId;
@@ -29,19 +29,20 @@ public class ScheduleCalenderListVO implements Serializable {
 	private int 	xPos;				// 일정의 X좌표
 	private int 	yPos;				// 일정의 Y좌표
 	
-    public int getxPos() {
-        return xPos;
-    }
 
-    public void setxPos(int xPos) {
-        this.xPos = xPos;
-    }
+	public int getxPos() {
+		return xPos;
+	}
 
-    public int getyPos() {
-        return yPos;
-    }
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
 
-    public void setyPos(int yPos) {
-        this.yPos = yPos;
-    }
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
 }

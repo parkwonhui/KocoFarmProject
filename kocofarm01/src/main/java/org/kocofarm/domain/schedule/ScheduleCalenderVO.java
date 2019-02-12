@@ -26,5 +26,20 @@ public class ScheduleCalenderVO implements Serializable{
 	private int xPos;
 	private int yPos;
 	private int categoryId;
-			
+		
+	public int getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
 }

@@ -59,7 +59,6 @@ public class ScheduleController {
 	@GetMapping("/list")
 	private String getProjectListAjax(HttpServletResponse response, ScheduleProjectVO project){
 		log.info("/list..........");
-		
 		// ControllerAdvice로 처리 안되나??
 		try {
 			JSONArray list = service.getProjectJsonArray(project);
@@ -86,7 +85,7 @@ public class ScheduleController {
 		
 	@PostMapping("/listCalender")
 	private String getProjectCalenderList(int projectId, Model model){
-		log.info("/listCalender111111..........");
+		log.info("/listCalender.............");
 		log.info("listCalender projectId:"+projectId);
 		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
 		log.info("list.............."+list);
@@ -149,7 +148,7 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/editCalenderPos")
 	public int setUpCalenderPos(@RequestBody List<ScheduleCalenderMoveVO> data){
-		log.info("/editCalenderPos..........");		
+		log.info("/editCalenderPos..........");
 		int re = service.setUpCalenderPos(data);
 		return re;
 	}

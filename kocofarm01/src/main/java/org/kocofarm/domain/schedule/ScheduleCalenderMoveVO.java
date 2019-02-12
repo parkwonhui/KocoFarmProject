@@ -19,4 +19,12 @@ public class ScheduleCalenderMoveVO implements Serializable{
 	private int 	categoryId;
 	private int 	calenderId;
 	private int 	yPos;				// 일정의 Y좌표
+
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
 }
