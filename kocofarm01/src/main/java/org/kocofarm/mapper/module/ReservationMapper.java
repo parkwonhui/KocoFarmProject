@@ -14,11 +14,14 @@ public interface ReservationMapper {
 	public void setReserv(ReservationVO reserv);
 	
 	//회의실 이름 불러오기
-	//public MeetingRoomVO getMroomNm(int mId); 
+	public MeetingRoomVO getMroomNm(int mId); 
 	
 	//삭제
 	public int delReserv(int rvId);
+
+	//조회
+	public ReservationVO getReserv(int rvId);
 	
 	//수정
-	//public int setUpReserv(ReservationVO reserv);*/
+	public int setUpReserv(ReservationVO reserv);
 }

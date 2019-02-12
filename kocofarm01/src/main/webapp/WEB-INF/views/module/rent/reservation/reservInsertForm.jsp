@@ -86,7 +86,7 @@
 			<!-- 회의실 수정 -->
 			<div class="contents">
 				<!-- 등록 -->
-				<form action="reservInsert.do" method="post" >
+				<form action="/reservation/reservInsert" method="post" >
 					<h1 class="txt_c">${mroom.mName}</h1>
 					<table class="contents_tb wr" id="contTb">
 						<colgroup>
@@ -134,7 +134,6 @@
 										 </c:forEach>
 									</select>
 								</td>
-								<input type="hidden" name="mId" value="${mroom.mId }" >
 							</tr>
 						</tbody>
 					</table>

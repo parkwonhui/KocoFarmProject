@@ -18,7 +18,6 @@
 		</div>
 		
 		<div class="contents_wrap">
-		
 			<div class="contents">
 				<!-- 등록 -->
 				<form action="/meetingroom/mroomInsert" method="post">
@@ -36,14 +35,13 @@
 							<tr>
 								<th scope="col">회의실 이름</th>
 								<td class="left">
-									<input type="text" name="mName">
+									<input type="text" name="mName"  />
 								</td>
 							</tr>
 							<tr>
 								<th scope="col">인원</th>
 								<td class="left">
-									<input type="text" name="pNum">
-									<input type="hidden" name="regDt">
+									<input type="text" name="pNum" />
 								</td>
 							</tr>
 						</tbody>

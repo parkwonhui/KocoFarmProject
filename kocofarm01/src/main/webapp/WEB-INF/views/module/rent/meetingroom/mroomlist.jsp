@@ -59,13 +59,13 @@
 					</c:choose>
 				</tbody>
 			</table>
-			<a href="/meetingroom/mroomInsertForm">
-							<input type="button" class="auto_wth_btn_b" value="회의실 등록" />
-						</a>
+			
 			<div class="btn_wrap">
 				<div class="flt_r">
 					<c:if test="${loginVO.authority == 99}">
-						
+						<a href="/meetingroom/mroomInsertForm">
+							<input type="button" class="auto_wth_btn_b" value="회의실 등록" />
+						</a>
 					</c:if>
 				</div>
 			</div>

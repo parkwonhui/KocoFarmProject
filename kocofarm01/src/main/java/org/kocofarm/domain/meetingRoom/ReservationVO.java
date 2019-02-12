@@ -1,8 +1,9 @@
 package org.kocofarm.domain.meetingRoom;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-//@Data
 public class ReservationVO {
 
 	private int rvId;
@@ -75,6 +76,7 @@ public class ReservationVO {
 	public void setmId(int mId) {
 		this.mId = mId;
 	}
+
 	
 	
 }

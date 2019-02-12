@@ -38,7 +38,6 @@
 								<th scope="col">인원</th>
 								<td class="left">
 									<input type="text" name="pNum" value="${mroom.pNum}">
-									<input type="hidden" name="upDt" >
 								</td>
 							</tr>
 						</tbody>

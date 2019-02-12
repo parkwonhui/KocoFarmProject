@@ -3,8 +3,10 @@ package org.kocofarm.domain.meetingRoom;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-//@Data
+@Data
 public class MeetingRoomVO {
 	private int mId;
 	private String mName;
@@ -41,6 +43,6 @@ public class MeetingRoomVO {
 	public void setUpDt(Date upDt) {
 		this.upDt = upDt;
 	}
-	
+
 	
 }

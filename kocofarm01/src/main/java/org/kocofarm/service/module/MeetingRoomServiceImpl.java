@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@Log4j
 @Service
 @AllArgsConstructor
 public class MeetingRoomServiceImpl implements MeetingRoomService{
@@ -18,9 +17,9 @@ public class MeetingRoomServiceImpl implements MeetingRoomService{
 
 	//등록
 	@Override
-	public void setMroom(MeetingRoomVO mroom) {
+	public void setMroom(MeetingRoomVO mroom){
 		
-		mapper.setMroom(mroom);
+	 	mapper.setMroom(mroom);
 		
 	}
 
