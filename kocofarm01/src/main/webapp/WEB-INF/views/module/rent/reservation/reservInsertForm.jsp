@@ -86,7 +86,7 @@
 			<!-- 회의실 수정 -->
 			<div class="contents">
 				<!-- 등록 -->
-				<form action="reservInsert.do" method="post" >
+				<form action="/reservation/reservInsert" method="post" >
 					<h1 class="txt_c">${mroom.mName}</h1>
 					<table class="contents_tb wr" id="contTb">
 						<colgroup>
@@ -101,8 +101,8 @@
 								<th scope="col">부서</th>
 								<td class="left">
 									<select class="form-control" name="dept" >
-										<c:forEach items="${deptList }" var="dept" >
-										  <option value="${dept.deptId}">${dept.deptNm }</option>
+										<c:forEach items="${deptList}" var="dept" >
+										  <option value="${dept.deptId}">${dept.deptNm}</option>
 										 </c:forEach>
 									</select>
 								</td>
@@ -121,7 +121,7 @@
 								<th scope="col">사용자</th>
 								<td class="left">
 									<select class="form-control" name="rvUser" >
-										<c:forEach items="${empList }" var="emp" varStatus="status">
+										<c:forEach items="${empList}" var="emp" varStatus="status">
 										  <option value="${emp.empId}">${emp.korNm}</option>
 										 </c:forEach>
 									</select>
@@ -134,7 +134,6 @@
 										 </c:forEach>
 									</select>
 								</td>
-								<input type="hidden" name="mId" value="${mroom.mId }" >
 							</tr>
 						</tbody>
 					</table>

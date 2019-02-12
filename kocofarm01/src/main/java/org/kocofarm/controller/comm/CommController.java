@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CommController {
 
 	@GetMapping("/test")
-	public void test(){
+	public String test(){
 	
+		return "/comm/test";
 	}
 	
 	
