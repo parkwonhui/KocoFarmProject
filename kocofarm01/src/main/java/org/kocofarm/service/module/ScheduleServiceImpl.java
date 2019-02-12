@@ -220,12 +220,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 		// calender 날짜 체크
 		String startDt = calender.getStartDt();
 		if(null == startDt){
-			System.out.println("null이다");
 			return -1;
 		}
 		
 		if(startDt.length() >= 1){
-			if(8 != startDt.length() || false == dataCheck(startDt))
+			if(10 != startDt.length() || false == dataCheck(startDt))
 				return 1003;
 		}
 		
@@ -234,7 +233,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 			return -1;
 
 		if(startDt.length() >= 1){
-			if(8 != endDt.length() || false == dataCheck(endDt))
+			if(10 != endDt.length() || false == dataCheck(endDt))
 				return 1004;
 		}
 		
