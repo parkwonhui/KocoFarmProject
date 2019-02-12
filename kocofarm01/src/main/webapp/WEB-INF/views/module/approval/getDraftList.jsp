@@ -71,13 +71,13 @@
 					</table>
 				 	<section id = "content1">
 				 		<table class="contents_tb" id="contTb">
-							<c:forEach var="ApprovalDraft" items="${list }">
+							<c:forEach var="ApprDraftVO" items="${draftList }">
 								<tr>
-									<td width = 10%>${ApprovalDraft.draftId }</td>
-									<td width = 40%><a href = "DetailDraft.do?draftId=${ApprovalDraft.draftId }" >${ApprovalDraft.draftName}</a></td>
-									<td width = 10%>${ApprovalDraft.formId}</td>
-									<td width = 20%>${ApprovalDraft.draftDt }</td>
-									<td width = 10%>${ApprovalDraft.approveState }</td>
+									<td width = 10%>${ApprDraftVO.draftId }</td>
+									<td width = 40%><a href = "DetailDraft.do?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+									<td width = 10%>${ApprDraftVO.formId}</td>
+									<td width = 20%>${ApprDraftVO.draftDt }</td>
+									<td width = 10%>${ApprDraftVO.approveState }</td>
 								</tr>
 							</c:forEach>
 						</table>

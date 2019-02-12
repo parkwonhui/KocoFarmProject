@@ -23,14 +23,15 @@ public class ApprovalController {
 	@GetMapping("/getDraftList")
 	public String getDraftList(Model model){
 		model.addAttribute("draftList", service.getDraftList());
-		return "redirect:/module/approval/getDraftList";
+		return "module/approval/getDraftList";
 	}
 	@GetMapping("/getFormList")
 	public String getFormList(Model model){
 		model.addAttribute("formList",service.getFormList());
-		return "redirect:/module/approval/getFormList";
+		return "/module/approval/getFormList";
 	}
 	
+	//이 두 부분은 expence랑 vacation Test 다 해보고 수정할게요.
 	@PostMapping("/setDraft")
 	public String setDraft(ApprDraftVO draft, RedirectAttributes rttr){
 		service.setDraft(draft);
@@ -41,6 +42,6 @@ public class ApprovalController {
 	@GetMapping("/getDraft")
 	public String getDraft(@RequestParam("draftId") int draftId, Model model){
 		model.addAttribute("draft",service.getDraft(draftId));
-		return "redirect:/module/approval/getDraft";
+		return "/module/approval/getDraft";
 	}
 }
