@@ -21,8 +21,6 @@
 			<div class="contents">
 				<!-- 수정 -->
 				<form action="/meetingroom/mroomUpdate" method="post">
-					<input type="hidden" name="mId" value="${mroom.mId}">
-				
 					<table class="contents_tb wr" id="contTb">
 						<colgroup>
 							<col width="15%">

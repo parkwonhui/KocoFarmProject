@@ -16,18 +16,18 @@
 				<div class="gnb">
 					<nav class="gnb_inner">
 						<div class="logo">
-							<a href="main.do"><img class="logo_img" /></a>
+							<a href="/main"><img class="logo_img" /></a>
 						</div>
 						<div class="gnb_top">
 							<ul class="gnb_top_ul">
 								<c:choose>
 									<c:when test="${not empty loginVO}">
 										<li>${loginVO.korNm}님 환영 합니다.</li>
-										<li><a href="signIn.do?mode=signOut">로그아웃</a></li>
+										<li><a href="/signIn/out">로그아웃</a></li>
 									</c:when>
 									<c:otherwise>
 										<li>방문을 환영 합니다.</li>
-										<li><a href="signIn.do?mode=signInPage">로그인</a></li>
+										<li><a href="/signIn/page">로그인</a></li>
 									</c:otherwise>
 								</c:choose>
 							</ul>

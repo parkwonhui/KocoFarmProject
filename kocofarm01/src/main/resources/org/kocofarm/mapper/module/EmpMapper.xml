@@ -18,6 +18,17 @@
 		ORDER BY A.REG_DT DESC
 	</select>
 
+	<!-- 상세정보 -->
+	<select id="getEmp" resultType="EmpVO">
+		SELECT
+	  		*
+	 	FROM EMP A
+	     LEFT JOIN DEPARTMENTS B ON A.DEPT_ID = B.DEPT_ID
+	     LEFT JOIN JOBS C ON A.JOB_ID = C.JOB_ID
+	     LEFT JOIN POSITION D ON A.POSITION_ID = D.POSITION_ID
+	  	WHERE A.EMP_ID = #{empId}
+	</select>
+
 	<!-- 부서 목록 -->
 	<select id="getDeptList" resultType="org.kocofarm.domain.emp.DepartmentsVO">
 		SELECT

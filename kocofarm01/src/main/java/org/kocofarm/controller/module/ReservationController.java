@@ -1,11 +1,6 @@
 package org.kocofarm.controller.module;
 
-import org.kocofarm.domain.approval.EmpCategoryVO;
-import org.kocofarm.domain.emp.DepartmentsVO;
-import org.kocofarm.domain.emp.EmpVO;
-import org.kocofarm.domain.meetingRoom.MeetingRoomVO;
 import org.kocofarm.domain.meetingRoom.ReservationVO;
-import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.service.module.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.Setter;
 
@@ -48,5 +42,9 @@ public class ReservationController {
 
 		return "redirect:/reservation/reservlist";
 	}
+	
+	//삭제
+	
+	//취소
 
 }
