@@ -55,11 +55,6 @@
 		<servlet-name>appServlet</servlet-name>
 	</filter-mapping>
 
-	<!-- encoding -->	
-	<filter-mapping>
-		<filter-name>encoding</filter-name>
-		<servlet-name>appServlet</servlet-name>
-	</filter-mapping> 
-	<!-- end encoding  -->
+
 	
 </web-app>
