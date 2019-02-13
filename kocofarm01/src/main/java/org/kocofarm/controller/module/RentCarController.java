@@ -45,16 +45,22 @@ public class RentCarController {
 	//목록
 	@GetMapping("/rentCarDetailList")
 	private String rentCarDetailList(Model model){
-		//log.info("rentCarDetailList");
+		log.info("rentCarDetailList");
 		model.addAttribute("list", rentCarService.getRentCarDetailList());
 		return "module/rent/car/rentCarDetailList";
+	}
+	
+	//등록페이지 이동
+	@GetMapping("/rentCarDetailWrite")
+	public String rentCarDetailWrite(){
+		return "module/rent/car/rentCarDetailWrite";
 	}
 	
 	//등록
 	@PostMapping("/rentCarDetailWrite")
 	public String rentCarDetailWrite(RentCarVO rentCar, RedirectAttributes rttr){
 		
-		//log.info("rentCarDetailWrite : " + rentCar);
+		log.info("rentCarDetailWrite : " + rentCar);
 		rentCarService.setRentCarDetail(rentCar);
 		rttr.addFlashAttribute("result", rentCar.getCarId());
 		
@@ -63,17 +69,30 @@ public class RentCarController {
 	
 	//조회
 	@GetMapping("/rentCarDetailView")
-	public String rentCarDetailView(@RequestParam("carId") String carId, Model model ){
+	public String rentCarDetailView(@RequestParam("car_id") String carId, Model model ){
 		
-		//log.info("rentCarDetailView");
-		model.addAttribute("rentCar", rentCarService.getRentCarDetail(carId));
+		log.info("rentCarDetailView...");
+		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
 		return "module/rent/car/rentCarDetailView";
+	}
+	
+	//수정페이지 이동
+	@GetMapping("/rentCarDetailEdit")
+	public String rentCarDetailEdit(@RequestParam("car_id") String carId, Model model){
+		log.info("rentCarDetailEdit...수정페이지");
+		log.info("rentCarDetailEdit : " +rentCarService.getRentCarDetail(carId));
+		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
+		
+		return "module/rent/car/rentCarDetailUpdate";
 	}
 	
 	//수정
 	@PostMapping("/rentCarDetailEdit")
-	public String rentCarDetailEdit(RentCarVO rentCar, RedirectAttributes rttr){
-		//log.info("rentCarDetailEdit :" + rentCar);
+	//@GetMapping("/rentCarDetailEdit")
+	public String rentCarDetailEdit(@RequestParam("car_id") String carId,RentCarVO rentCar, RedirectAttributes rttr){
+		log.info("rentCarDetailEdit...수정처리:"+carId);
+		log.info("rentCarDetailEdit :" + rentCar);
+		log.info("rentCarDetailEdit2 : " + rentCarService.getRentCarDetail(carId));
 		
 		if(rentCarService.setUpRentCarDetail(rentCar)){
 			rttr.addFlashAttribute("result", "success");
@@ -84,7 +103,7 @@ public class RentCarController {
 	
 	//삭제
 	@PostMapping("/rentCarDetailDel")
-	public String rentCarDetailDel(@RequestParam("carId") String carId, RedirectAttributes rttr){
+	public String rentCarDetailDel(@RequestParam("car_id") String carId, RedirectAttributes rttr){
 		log.info("rentCarDetailDel.." + carId);
 		
 		if(rentCarService.delRentCarDetail(carId)){

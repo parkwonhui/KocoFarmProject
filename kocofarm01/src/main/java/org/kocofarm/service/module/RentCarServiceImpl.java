@@ -47,7 +47,7 @@ public class RentCarServiceImpl implements RentCarService {
 	@Override
 	public boolean delRentCarDetail(String carId) {
 		log.info("delRentCarDetail....." + carId);
-		return rentCarMapper.delRentCarDetail(carId)==1;
+		return rentCarMapper.delRentCarDetail(carId)==-1;
 	}
 
 	//수정

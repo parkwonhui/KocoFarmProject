@@ -18,10 +18,10 @@ public class RentCarMapperTests {
 	@Setter(onMethod_ = @Autowired)
 	private RentCarMapper rentCarMapper;
 	
-	@Test
+	/*@Test
 	public void testgetRentCarDetailList(){
 		rentCarMapper.getRentCarDetailList().forEach(rentCar->log.info(rentCar));
-	}
+	}*/
 	
 	/*@Test
 	public void testsetRentCarDetail(){
@@ -46,7 +46,7 @@ public class RentCarMapperTests {
 	
 	/*@Test
 	public void testdelRentCarDetail(){
-		log.info("DELETE COUNT : " + rentCarMapper.delRentCarDetail("묘1234"));
+		log.info("DELETE COUNT : " + rentCarMapper.delRentCarDetail("사1234"));
 	}*/
 	
 	/*@Test

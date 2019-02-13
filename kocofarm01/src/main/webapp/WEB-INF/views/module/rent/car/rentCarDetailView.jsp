@@ -17,11 +17,11 @@
 			</div>
 		</div>
 	 
-	
+	${rentCarDetail.carId}
 		<!-- Contents Area -->
 		<div class="contents_wrap">
 			<!-- view -->
-			<form action="" id ="rentCarDetailForm" >
+			<form action="" id ="rentCarDetailForm" method = "get">
 				<input type = "hidden" name = "mode" id = "mode" value = "${param.mode}}" /> 
 				<input type = "hidden" name = "car_id" id = "car_id" value = "${rentCarDetail.carId}" />
 				

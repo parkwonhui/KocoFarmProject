@@ -58,11 +58,11 @@ public class RentCarServiceTests {
 	//수정
 	/*@Test
 	public void testsetUpRentCarDetail(){
-		RentCarVO rentCar = rentCarService.getRentCarDetail("사1234");
+		RentCarVO rentCar = rentCarService.getRentCarDetail("호1234");
 		if(rentCar == null){
 			return;
 		}
-		rentCar.setCondition("중고차");
+		rentCar.setCondition("새차새차");
 		log.info("setUp result : " + rentCarService.setUpRentCarDetail(rentCar));
 	}*/
 	

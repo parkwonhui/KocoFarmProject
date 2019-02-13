@@ -20,7 +20,8 @@
 	
 		<div class="contents_wrap">
 			<!-- write -->
-			<form action="" method="post" id = "rentCarWriteForm">
+			<!-- <form action="" method="post" id = "rentCarWriteForm"> -->
+			<form action="/rent/rentCarDetailWrite" method="post" id = "rentCarWriteForm">			
 				<input type="hidden" name="mode" id="mode" value="write" />
 				
 				<div class="contents">
@@ -83,7 +84,7 @@
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r">
-					<input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = 'rentCarDetailList.do'" />
+					<input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = '/rent/rentCarDetailList'" />
 <%-- 					 <c:if test="${param.mode eq 'write'}"> --%>
 						 <input type="button" class="write_btn" value="등록" id = "enroll" >
 					<%-- </c:if>

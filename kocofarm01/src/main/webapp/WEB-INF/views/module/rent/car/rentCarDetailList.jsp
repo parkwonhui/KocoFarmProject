@@ -21,7 +21,7 @@
 	
 		<!-- Contents Area -->
 		<div class="contents_wrap">
-			<form action="rentCarDetailList.do" method="post">
+			<form action="/rent/rentCarDetailList" method="GET">
 				<div class="sch_wrap">
 					<p class="tit">검색</p>
 					<div class="sch_slide_btn">
@@ -72,7 +72,7 @@
 						<!-- RentCarDetailService에서 RentCarDetailListModel 중에서 list만 불러오는 것이다. -->
 							<tr>
 								<td>${RCdetail.carId }</td> 
-								<td><a href="rentCarDetailView.do?carId=${RCdetail.carId}">${RCdetail.modelName }</a></td>
+								<td><a href="/rent/rentCarDetailView?car_id=${RCdetail.carId}">${RCdetail.modelName }</a></td>
 								<td>${RCdetail.carModel }</td>
 								<td>${RCdetail.condition }</td>
 								<td>${RCdetail.price }</td>
@@ -114,7 +114,7 @@
 			<div class="flt_r">
 				<!-- <input type="button" class="list_btn" value="목록" />
 				<input type="button" class="view_btn" value="상세보기" /> -->
-				<a href="/rent/rentCarDetailWriteForm">
+				<a href="/rent/rentCarDetailWrite">
 					<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
 				</a>
 				<!-- <input type="button" class="edit_btn" value="수정" />
