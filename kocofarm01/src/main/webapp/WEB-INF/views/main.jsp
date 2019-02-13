@@ -32,16 +32,16 @@
 									<x:set var="wfEn" select="$weatherContents/description/body/data[1]/wfEn"/>
 									
 									<x:if select="'Clear'=$wfEn">
-										<img class="weather_img" src="img/comm/Clear.png" alt="Clear.png" />
+										<img class="weather_img" src="/resources/img/comm/Clear.png" alt="Clear.png" />
 									</x:if>
 									<x:if select="'Partly Cloudy'=$wfEn or 'Mostly Cloudy'=$wfEn or 'Cloudy'=$wfEn">
-										<img class="weather_img" src="img/comm/Cloudy.png" alt="Cloudy.png" />
+										<img class="weather_img" src="/resources/img/comm/Cloudy.png" alt="Cloudy.png" />
 									</x:if>
 									<x:if select="'Rain'=$wfEn">
-										<img class="weather_img" src="img/comm/Rain.png" alt="Rain.png" />
+										<img class="weather_img" src="/resources/img/comm/Rain.png" alt="Rain.png" />
 									</x:if>
 									<x:if select="'Snow'=$wfEn or 'Snow/Rain'=$wfEn">
-										<img class="weather_img" src="img/comm/Snow.png" alt="Snow.png" />
+										<img class="weather_img" src="/resources/img/comm/Snow.png" alt="Snow.png" />
 									</x:if>
 								</div>
 								<div class="weather_info">

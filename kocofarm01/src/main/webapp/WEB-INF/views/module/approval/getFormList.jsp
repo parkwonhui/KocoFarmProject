@@ -56,11 +56,11 @@
 						<th>구분  </th>
 					</tr>
 					
-					<c:forEach var="ApprovalForm" items="${list }">
+					<c:forEach var="ApprFormVO" items="${formList }">
 						<tr>
-							<td>${ApprovalForm.formId }</td>
-							<td><a href = "detailDraftform.do?formId=${ApprovalForm.formId }">${ApprovalForm.modeName }</a></td>
-							<td>${ApprovalForm.sortName }</td>
+							<td>${ApprFormVO.formId }</td>
+							<td><a href = "getForm?formId=${ApprFormVO.formId }">${ApprFormVO.modeName }</a></td>
+							<td>${ApprFormVO.sortName }</td>
 						</tr>
 					</c:forEach>
 				</table>
