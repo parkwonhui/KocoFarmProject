@@ -154,16 +154,15 @@ h1 {
 				</div>
 				<!-- expence table 끝 -->
 
-		
-
 				<input type = "hidden" name="draftId" id="draftId" value ="${draft.draftId}" />
-				
+				<input type = "hidden" name="formId" id="formId" value ="2" />
+									
 				<!-- btn -->
 					<div class="btn_wrap">
 						<div class="flt_r">
-							<input type="button" class="list_btn" value="목록" />
-							<input type="button" class="expEdit_btn" value="수정" />
-							<input type="button" class="expDel_btn" value="삭제" />
+							<input type="button" data-oper = "list" class="list_btn" value="목록" />
+							<input type="button" data-oper = "setUp" class="expEdit_btn" value="수정" />
+							<input type="button" data-oper = "delete" class="expDel_btn" value="삭제" />
 						</div>
 					</div>					
 					

@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/comm/comm.css" />
+
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
@@ -18,6 +20,10 @@
 			</div>
 		</div>
 	
+		<form id = 'actionForm' action = "/approval/getDraftList" method = 'get'>
+			<input type = 'hidden' name = 'pageNum' value = '${pageMaker.cri.pageNum }'>
+			<input type = 'hidden' name = 'amount' value = '${pageMaker.cri.amount }'>
+		</form>
 		<!-- Contents Area -->
 		<div class="contents_wrap">
 			<!-- sch_top -->
@@ -146,15 +152,33 @@
 							</c:forEach>
 						</table>
 				 	</section>
-				
+						
+					<!-- pagination start -->
+					<div class = 'pull-right '>
+						<ul class = "pagination">
+							<c:if test = "${pageMaker.prev }">
+								<li class = "paginate_button previous"><a href = "${pageMaker.startPage - 1 }">Previous</a></li>
+							</c:if>
+							
+							<c:forEach var = "num" begin ="${pageMaker.startPage }" end = "${pageMaker.endPage }">
+								<li class = "paginate_button ${pageMaker.cri.pageNum == num ? "active" : ""}"><a href="${num }">${num }</a></li>
+							</c:forEach>
+						
+							<c:if test = "${pageMaker.next }">
+								<li class = "paginate_button next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+							</c:if>
+						</ul>
+					</div>
+					<!-- pagination end -->
 				 </div>
 
-				<!-- 목록 보기 -->
 			
 			</div>
 		
 		</div>
+
 	</div>
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
+<script type="text/javascript" src="/resources/js/comm/comm.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>
 
