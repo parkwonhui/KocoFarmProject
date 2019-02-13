@@ -1,5 +1,7 @@
 package org.kocofarm.service.comm;
 
-public interface SignInOutService {
+import org.kocofarm.domain.comm.LoginVO;
 
+public interface SignInOutService {
+	public LoginVO getLoginUserInfo(String userId);
 }

@@ -64,16 +64,6 @@
 		<div class="contents">
 				
 		</div>
-		<!-- btn -->
-		<div class="btn_wrap">
-			<div class="flt_r">
-				<input type="button" class="list_btn" value="목록" /> <input
-					type="button" class="view_btn" value="상세보기" /> <input
-					type="button" class="write_btn" value="등록" /> <input type="button"
-					class="edit_btn" value="수정" /> <input type="button"
-					class="del_btn" value="삭제" />
-			</div>
-		</div>	<!-- btn_wrap -->
 		
 		<!-- 생성 -->
 		<div class="modal fade" id="create-project-modal" role="dialog">
@@ -169,23 +159,55 @@ $("#delete-project-button").on("click", function(){
 // modal 창의 modify 버튼
 $("#modify-project-button").on("click", function(){	
 	var title = $("#modify-project-input").val();
+	if(0 == title.length){
+		alert('프로젝트명을 입력해주세요');
+		return;
+	}
+	
 	var sendUrl = "editProject";	
 	var sendData = {projectId:selectProjectId, title:title};
 	
 	ajaxListRequest(sendUrl, sendData);
 });
 
+// 검색 버튼
+$("#schBtn").on("click", function(){
+	var searchData = $("#schWord").val();
+	
+	var sendUrl = "getProjectListSearch";
+	var sendData = {title:searchData};
+	
+	$.ajax({
+	    type:"GET",
+	    data : sendData,
+	    dataType:"json",
+	    url:sendUrl,
+	    success: function(data) {
+	    	projectList(data);
+	    },
+	    error : function(error) {	    	
+	    },	// error
+	  });// ajax
+});
 
 function ajaxListRequest(sendUrl, sendData){
 	$.ajax({
 	    type:"POST",
 	    data : sendData,
-	    dataType:"text",
+	    dataType:"json",
 	    url:sendUrl,
-	    success: function(data) {
+	    success: function(data) {	
+    		if(1000 == data){
+    			alert('[실패] 프로젝트 이름이 50자 초과했습니다');
+    	    	return;
+    		}else if(-1 == data){
+    			alert('[실패] 알 수 없는 에러');
+    	    	return;	
+    		}
+    	
 	    	projectListAjaxRequest();
 	    },
-	    error : function(error) {
+	    error : function(error) {	    	
 	    },	// error
 	  });// ajax
 }

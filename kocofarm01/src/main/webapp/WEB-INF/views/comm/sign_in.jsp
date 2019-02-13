@@ -21,7 +21,7 @@
 		<!-- Contents Area -->
 		<div class="contents_wrap">
 			<div class="sign_in_inner">
-				<form action="signIn.do" id="signInForm" method="post">
+				<form action="/signIn/in" id="signInForm" method="post">
 					<div class="sign_in_div">
 						<input type="hidden" name="mode" id="mode" value="${param.mode}" />
 						<input type="text" name="userId" id="userId" placeholder="아이디를 입력 해 주세요." />
