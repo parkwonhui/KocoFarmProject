@@ -200,6 +200,12 @@
 			<version>1.16</version>
 		</dependency>
 
+		<!-- jsp에서 사용하는 json version check -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 		<!-- service에서 list -> json 데이터 변환 시 사용 -->
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
@@ -214,8 +220,9 @@
 			<version>0.4.8</version>
 		</dependency>
 
-
 	</dependencies>
+
+
 	<build>
 		<plugins>
 			<plugin>

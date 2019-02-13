@@ -35,7 +35,7 @@
 			<div class="contents">
 				
 				<!-- 기안서 보기 -->
-				<form action="insertDraft.do" method="post">
+				
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1>휴 가 신 청 서</h1>
@@ -132,21 +132,23 @@
 						<!-- vacation table 끝 -->
 						
 						<input type = "hidden" name="draftId" id="draftId" value ="${draft.draftId}" />
+						<input type = "hidden" name="formId" id="formId" value ="4" />
 						
 						<!-- btn -->
+						
 						<div class="btn_wrap">
 							<div class="flt_r">
 								<input type="button" class="list_btn" value="목록" />
-								<input type="button" class="vacEdit_btn" value="수정" />
+								<input type="button" class="vacEdit_btn" value="수정" /> 
 								<input type="button" class="vacDel_btn" value="삭제" />
 								
 							</div>
 						</div>			
 					</div>
-				</form>
 			</div>
 		
 		</div>
+		
 <!-- 댓글달기 -->
 <!-- 댓글 부분 -->
     <div id="comment" align="center" >
