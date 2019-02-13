@@ -106,15 +106,14 @@ public class ApprovalMapperTest {
 				int count = mapper.updateVacation(vacation);
 						log.info("UPDATE COUNT : " + count);
 	}*/
-	
-	/*public void testDeleteDraft(){
-		log.info("DELETE COUNT : " + mapper.deleteDraft(0));
-	}*/
-	/*public void testDeleteVacation(){
-		log.info("DELETE COUNT : " + mapper.deleteVacation(30));
-	}*/
-	public void testDeleteExpence(){
-		log.info("DELETE COUNT : " + mapper.deleteExpence(30));
+	public void testDeleteDraft(){
+		log.info("DELETE COUNT : " + mapper.delDraft(204));
 	}
+	/*public void testDeleteVacation(){
+		log.info("DELETE COUNT : " + mapper.delVacation(30));
+	}
+	public void testDeleteExpence(){
+		log.info("DELETE COUNT : " + mapper.delExpence(44));
+	}*/
 	
 }

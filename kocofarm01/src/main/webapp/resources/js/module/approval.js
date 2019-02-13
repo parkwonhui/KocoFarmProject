@@ -40,7 +40,7 @@ $(function() {
 			
 			$(".expenceId").each(function(index,item){
 				var radioValue = null;
-				radioValue = $("input[name='vacationType"+$(this).val()+"']:checked").val();
+				radioValue = $("input[name='commissionType"+$(this).val()+"']:checked").val();
 
 				for(var i = $(this).val(); i<=$(this).val(); i++){
 					if(radioValue == 'no'){
@@ -72,7 +72,7 @@ $(function() {
 		});
 		
 		$(".vacDel_btn").click(function(){
-			location.href="DeleteAction.do?draftId="+$("#draftId").val();
+			location.href="/approval/delVacDraft?draftId="+$("#draftId").val();
 			return false;
 		});
 		
@@ -82,9 +82,10 @@ $(function() {
 		});
 		
 		$(".expDel_btn").click(function(){
-			location.href="";
+			location.href="/approval/delExpDraft?draftId="+$("#draftId").val();
 			return false;
 		});
+		
 		
 		
 });	

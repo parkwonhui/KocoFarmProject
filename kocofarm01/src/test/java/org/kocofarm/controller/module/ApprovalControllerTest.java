@@ -58,12 +58,18 @@ public class ApprovalControllerTest {
 	}*/
 	
 	@Test
-	public void testGetDraft() throws Exception{
+/*	public void testGetDraft() throws Exception{
 		log.info(mockMvc.perform(MockMvcRequestBuilders
 				.get("/module/approval/getDraft")
 				.param("draftId", "165"))
 				.andReturn()
 				.getModelAndView().getModelMap());
+	}*/
+	public void testDelete() throws Exception{
+		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/approval/delDraft")
+				.param("draftId","165")
+				).andReturn().getModelAndView().getViewName();
+		
+		log.info(resultPage);
 	}
-	
 }
