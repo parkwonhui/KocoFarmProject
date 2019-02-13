@@ -88,8 +88,7 @@ public class ApprovalController {
 			return "module/approval/defaultDraft";
 		}
 	}
-
-	//이 두 부분은 expence랑 vacation Test 다 해보고 수정할게요.
+	
 	@PostMapping("/setExpence")
 	public String setDraft(ApprDraftVO draft,ApprExpenceVO expence,HttpServletRequest request){
 			
