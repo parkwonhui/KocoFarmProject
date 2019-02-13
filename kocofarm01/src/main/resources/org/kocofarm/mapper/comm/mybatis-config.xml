@@ -8,7 +8,21 @@
 	</settings>
 	
 	<typeAliases>
+		<!-- 공통 > 로그인 -->
+		<typeAlias type="org.kocofarm.domain.comm.LoginVO" alias="LoginVO" />
+	
 		<!-- 스케쥴 -->
+
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProject" alias="ScheduleProject" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategory" alias="ScheduleCategory" />	
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalender" alias="ScheduleCalender" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderList" alias="ScheduleCalenderList" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderMove" alias="ScheduleCalenderMove" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryMove" alias="ScheduleCategoryMove" />
+		  
+		<!-- 인사 관리 -->
+		<typeAlias type="org.kocofarm.domain.emp.EmpVO" alias="EmpVO" />
+
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProjectVO" alias="ScheduleProjectVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryVO" alias="ScheduleCategoryVO" />	
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderVO" alias="ScheduleCalenderVO" />
