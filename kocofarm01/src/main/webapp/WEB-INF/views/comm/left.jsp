@@ -24,12 +24,12 @@
 									<li><a href="">기타 추가</a></li>
 								</c:when>
 								<c:when test="${'rent' eq moduleNm}">
-									<li><a href="rentCarDetailList.do">차량 관리</a></li>
+									<li><a href="rentCarDetailList">차량 관리</a></li>
 									<li><a href="">차량 예약</a></li>
 									<li><a href="">차량 운행 일지</a></li>
 									<li><a href="">차량 정비 일지</a></li>
-									<li><a href="mroomlist.do">회의실</a></li>
-									<li><a href="reservList.do">회의실 예약 목록</a></li>
+									<li><a href="/meetingroom/mroomlist">회의실</a></li>
+									<li><a href="/meetingroom/reservList">회의실 예약 목록</a></li>
 								</c:when>
 								<c:when test="${'schedule' eq moduleNm}">
 									<li><a href="schedule.do">일정 관리</a></li>

@@ -1,7 +1,10 @@
 package org.kocofarm.controller.module;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
-
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
@@ -46,7 +49,7 @@ public class ApprovalController {
 		return "module/approval/getDraftList";
 	}
 	
-	/*전체 양식 리스트 가져오기*/
+	/* 전체 양식 리스트 가져오기 */
 	@GetMapping("/getFormList")
 	public String getFormList(Model model){
 		model.addAttribute("moduleNm", "approval");//leftbar띄우기
@@ -54,7 +57,7 @@ public class ApprovalController {
 		return "/module/approval/getFormList";
 	}
 	
-	/*특정 기안서 가져오기*/
+	/* 특정 기안서 가져오기 */
 	@GetMapping("/getDraft")
 	public String getDraft(@RequestParam("draftId") int draftId, Model model){
 		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
@@ -75,7 +78,7 @@ public class ApprovalController {
 	}
 	
 
-	/*기안서 양식 가져오기 */
+	/* 기안서 양식 가져오기 */
 	@GetMapping("/getForm")
 	public String getForm(@RequestParam("formId") int formId, Model model,RedirectAttributes rttr){
 		model.addAttribute("moduleNm", "approval");
@@ -89,6 +92,7 @@ public class ApprovalController {
 		}
 	}
 	
+	/* 지출 명세서 입력하기 */
 	@PostMapping("/setExpence")
 	public String setDraft(ApprDraftVO draft,ApprExpenceVO expence,HttpServletRequest request){
 			
@@ -99,14 +103,16 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
-
+	/* 휴가 신청서 입력하기 */
 	@PostMapping("/setVacation")
 	public String setVacation(ApprDraftVO draft, ApprVacationVO vacation){
 		service.setDraft(draft);
 		service.setVacation(vacation);
+		log.info("여기탄다");
 		return "redirect:/approval/getDraftList";
 	}
 	
+	/* 휴가 신청서 삭제하기 */
 	@GetMapping("/delVacDraft")
 	public String delVacDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
@@ -116,6 +122,8 @@ public class ApprovalController {
 		
 		return "redirect:/approval/getDraftList";
 	}
+	
+	/* 지츨 명세서 삭제하기 */
 	@GetMapping("/delExpDraft")
 	public String delExpDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
@@ -125,7 +133,19 @@ public class ApprovalController {
 		service.delExpence(draftId);
 		service.delDraft(draftId);
 			
-		
 		return "redirect:/approval/getDraftList";
+	}
+	
+	/* 휴가 신청서 수정 하기 */
+	@GetMapping("/setUpVacation")
+	public String setUpVacation(@RequestParam("draftId") int draftId, Model model) throws Exception{
+		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
+		model.addAttribute("draftId",service.getDraft(draftId));
+		ApprVacationVO vacation = service.getVacation(draftId);
+		String SDt = vacation.getVacationStartDt();
+		String EDt = vacation.getVacationEndDt();
+
+		model.addAttribute("vacation",service.setUpVacation(vacation));
+		return "approval/setUpVacation";
 	}
 }

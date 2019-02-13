@@ -45,7 +45,7 @@
 								<tr>
 									<td>${mroom.mId}</td>
 									<td class="cursorP">
-										<a href="mroomdetail.do?mId=${mroom.mId}">${mroom.mName}</a>
+										<a href="/meetingroom/mroomdetail?mId=${mroom.mId}">${mroom.mName}</a>
 									</td>
 									<td>${mroom.pNum}</td>
 								</tr>
@@ -63,7 +63,7 @@
 			<div class="btn_wrap">
 				<div class="flt_r">
 					<c:if test="${loginVO.authority == 99}">
-						<a href="mroomInsertForm.do">
+						<a href="/meetingroom/mroomInsertForm">
 							<input type="button" class="auto_wth_btn_b" value="회의실 등록" />
 						</a>
 					</c:if>

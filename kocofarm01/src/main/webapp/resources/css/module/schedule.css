@@ -18,10 +18,19 @@
 
 .connected li, .sortable li, .exclude li, .handles li, .dropme li, li_common_style li {
   list-style: none;
-  border: 2px solid #CCC;
+  border-left : 1px solid #CCC;
+  border-right : 1px solid #CCC;
+  border-bottom : 1px solid #CCC;
+ 
   color: black;
-  margin: 20px;
-  padding: 5px;
+  
+  margin-left: 10px;
+  margin-right: 10px;
+  
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 5px;
+
 /*  height: 35px;*/
 }
 
@@ -41,8 +50,8 @@
 
 
 li.drop-replacer {
-  border: 1px dashed #CCC;
-  background: none;
+  border:none;
+  background: #ddd;
 }
 
 .dragIcon {
@@ -614,7 +623,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 1100; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
@@ -727,14 +736,14 @@ footer{margin-top: 30px; text-align: center; color: #333}
   appearance: none;
   width: 25px;
   height: 25px;
-  background: #4CAF50;
+  background: #0049A3;
   cursor: pointer;
 }
 
 .add-calender-slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: #4CAF50;
+  background: #0049A3;
   cursor: pointer;
 }
 
@@ -764,25 +773,139 @@ footer{margin-top: 30px; text-align: center; color: #333}
   appearance: none;
   width: 25px;
   height: 25px;
-  background: #4CAF50;
+  background: #0049A3;
   cursor: pointer;
 }
 
 .edit-calender-slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: #4CAF50;
+  background: #0049A3;
   cursor: pointer;
 }
 
-/* 카테고리 입력 박스 */
+/* 카테고리 박스 */
+.calender_info{
+	background-color: #0049A3;
+}
 
+/* 카테고리 입력 박스 */
 .category-name-input{
+  width: 90%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  background-color: #0085F9;
+  color: white;
+  display:inline-block;
+  float:left;
+}
+ /* 새 카테고리 입력 박스 */
+ .add-category-name-input{
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border: none;
-  background-color: #3ADF00;
+  background-color: #0085F9;
   color: white;
+  display:inline-block;
+  float:left;
+}
+/* 카테고리 삭제 버튼 */
+.calenderDeleteBtn{
+	width:5%;
+	padding: 12px 20px;
+ 	margin: 8px 0;
+	display:inline-block;
+	float:right;	
+}
+
+/* 카테고리 입력 박스 readonly일 때 */
+.calender_info input:read-only{
+	cursor: pointer;
+    background-color: #0049A3;
+}
+
+.con {margin:0 auto;position:absolute; top: 80px; left: 200px; max-width: none !important; width: 150%;}
+
+/* 프로젝트 리스트 박스 스타일 */
+.project-info-style{
+    display:inline;
+    float:left;
+    background-color:#B2B1B1;
+     margin: 10px;
+     padding: 5px;
+     width:250px;
+     height:130px;
+     border-radius: 20px;
+     cursor:pointer;
+     z-index : 1;
+}
+
+
+/* 프로젝트 리스트 박스 안의 title 스타일*/
+.project-title{
+    display:inline-block;
+      float:left;
+      
+}
+/* 프로젝트 버튼 안의 setting, delete 스타일*/
+.project-setting{
+    display:inline-block;
+    float:right;
+    cursor:pointer;
+    z-index : 2;
+}
+
+/* 진행률 프로그래스 바 */
+.calender-progress-bar {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 10px;
+  
+  margin-top:10px;
+  margin-bottom:10px;
+  
+}
+
+/* 일정 설정 버튼*/
+.calender-modify-btn{
+	cursor:pointer;
+	margin: 5px;
+    padding: 5px;
+    display:inline-block;
+    	
+	width: 30px;
+	height: 30px;
+    
+}
+
+/* 진행률 */
+.calender-percent {
+  height: 20px;
+  background-color:#0049A3;
+  margin-top:10px;
+  margin-bottom:10px;
+  
+}
+
+/* 일정 칼라 */
+.calender-detail-color{
+	margin-left :-15px;
+	margin-right :-15px;
+	margin-bottom : 5px;
+	
+	height:20px;
+}
+
+/* 카테고리 삭제 버튼 */
+.category-delete-btn{
+	margin-top: 20px;
+	margin-left: 3px;
+	
+	width: 20px;
+	height: 20px;
+	cursor:pointer;
 }

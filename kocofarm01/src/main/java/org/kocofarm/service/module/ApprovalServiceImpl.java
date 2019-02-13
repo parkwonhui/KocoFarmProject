@@ -82,6 +82,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	/* 기안서 입력하기 */
 	@Override
 	public void setDraft(ApprDraftVO draft) {
+		log.info("여기탄다 2");
 		mapper.setDraft(draft);
 	}
 
@@ -89,6 +90,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public void setVacation(ApprVacationVO vacation) {
 		int draftId = mapper.getDraftNo();
+		log.info("여기탄다 3");
 		vacation.setDraftId(draftId);
 		mapper.setVacation(vacation);
 	}
@@ -97,6 +99,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public void setExpence(ApprExpenceVO expence) {
 		int draftId = mapper.getDraftNo();
+		log.info("여기탄다 4");
 		expence.setDraftId(draftId);
 		mapper.setExpence(expence);
 	}
@@ -149,5 +152,26 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	
+
+	@Override
+	public boolean setUpDraft(ApprDraftVO draft) {
+		return mapper.setUpDraft(draft) == 1;
+	}
+	@Override
+	public boolean setUpVacation(ApprVacationVO vacation){
+		return mapper.setUpVacation(vacation)==1;
+	}
+
+	@Override
+	public int setUpExpence(ApprExpenceVO expence) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int setUpExpenceCont(ApprExpenceContVO expenceCont) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

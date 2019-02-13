@@ -26,24 +26,24 @@
 		</div>
 	
 		<!-- Contents Area -->
-		<div class="contents_wrap">
+		<%-- <div class="contents_wrap">
 			<!-- basic draft input  -->
 			<div class="draft_wrap">
 				<h1 class="txt_c">기본 정보</h1>
 				<div class ="inf_wrap_box">
-					<%-- <p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
+					<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
 					<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}
 					<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }
-					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }	 --%>
+					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }		 
 				</div>
 				<p></p>
 				<p></p>
-			</div>
+			</div> --%>
 		
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form action="/approval/setVacation" method="post">
+				<form  role = "form" action="/approval/setUpVacation" method="post">
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>
@@ -61,11 +61,13 @@
 							 	</colgroup>
 							 	<tr>
 							 		<th class="inputText" scope="col"> 기안서 제목 </th>
-							 		<td><input type="text" name="draftTitle" > </td>
+							 		<td><input type="text" name="draftTitle" 
+							 		value='<c:out value="${draft.draftTitle }"/>'readonly="readonly"></td>
 							 	</tr>
 							 	<tr>
 							 		<th class="inputText" scope="col"> 보존 년한 </th>
-							 		<td> <input type="text" name="draftYear"> </td>
+							 		<td> <input type="text" name="draftYear"
+							 		value='<c:out value="${draft.draftYear }"/>'readonly="readonly"> </td>
 							 	</tr>
 							 </table>
 							 
@@ -80,7 +82,9 @@
 							 	<tr>
 							 		<th class="inputText">휴가 종류</th>
 							 		<td colspan="3">
-								 		<input type="radio" name = "vacationType" checked value="병가">병가
+								 		<input type="radio" name = "vacationType" 
+								 		checked value='<c:out value="{vacation_form.vacationType}"/>'>
+								 		<input type="radio" name = "vacationType" value="병가">병가
 										<input type="radio" name = "vacationType" value="오전반차"> 오전 반차
 										<input type="radio" name = "vacationType" value="오후반차"> 오후 반차
 										<input type="radio"	name = "vacationType" value="연차"> 연차
@@ -89,14 +93,17 @@
 							 	
 							 	<tr>
 							 		<th class="inputText">시작 날짜</th>
-							 		<td><input type="text" id="Startdatepicker" name = "vacationStartDt" class="date" readonly=readonly /> </td>
+							 		<td><input type="text" id="Startdatepicker" name = "vacationStartDt" class="date" 
+							 		value="${vacation_form.vacationStartDt }" readonly=readonly /> </td>
 							 		<th class="inputText">종료 날짜</th>
-							 		<td><input type="text" id="Enddatepicker" name = "vacationEndDt" class="date" readonly=readonly /></td>
+							 		<td><input type="text" id="Enddatepicker" name = "vacationEndDt" class="date" 
+							value="${vacation_form.vacationEndDt }" readonly=readonly /></td>
 							 	</tr>
 							 	<tr>
 							 		<th class="inputText">총 일수 </th>
 							 		<td><input type="button" class="days_btn" id="dayBtn" value="계산" />
-							 		<td colspan="2"><input type="text" id ="vacationDays" name="vacationDays"></td>
+							 		<td colspan="2"><input type="text" id ="vacationDays" name="vacationDays"
+							 		value='<c:out value="${vacation_form.vacationDays }"/>'></td>
 							 	</tr>
 							 	
 							 	<tr>
@@ -105,7 +112,8 @@
 							 	
 							 	<tr>
 							 		<td colspan="4" class="inputText txt_c">
-							 			<textarea rows="6" cols="120" name="vacationReason" class="wth100p"></textarea>
+							 			<textarea rows="6" cols="120" name="vacationReason" class="wth100p">
+							 			<c:out value="${vacation_form.vacationReason}"/></textarea>
 									</td>
 							 	</tr>
 							 	</table>
@@ -117,8 +125,9 @@
 								 		<col width="*%" />
 								 	</colgroup>
 								 	<tr>
-								 		<th class="inputText" scope="col">사번 </th>
-								 		<td><input type=text name="replacementId"></td>
+								 		<th class="inputText" scope="col">이름</th>
+								 		<td><input type=text  name="replacementId" 
+								 		value= '<c:out value="${vacation_form.replacementId }"/>'></td>
 								 	</tr>
 								 	
 								 	<tr>
@@ -139,9 +148,8 @@
 			
 						<div class= flt_r>
 						<br><br>
-							<input type="hidden" name="formId" value="4"/>
-							<%-- <input type="hidden" name="empId" value="${empVO.empId }" /> --%>
-							
+							<input type="hidden" name="formId" value="${form.formId}" />
+							<input type="hidden" name="empId" value="${empVO.empId }" />
 							<input type="submit" class="submitBtn" value="제출">
 							<br><br>
 						</div>
@@ -150,7 +158,6 @@
 			</div>
 		
 		</div>
-	</div>
 
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

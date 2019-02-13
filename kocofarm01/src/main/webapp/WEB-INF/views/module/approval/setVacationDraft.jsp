@@ -31,10 +31,10 @@
 			<div class="draft_wrap">
 				<h1 class="txt_c">기본 정보</h1>
 				<div class ="inf_wrap_box">
-					<%-- <p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
+					<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
 					<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}
 					<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }
-					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }	 --%>
+					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }
 				</div>
 				<p></p>
 				<p></p>
@@ -43,7 +43,7 @@
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form action="/approval/setVacation" method="post">
+				<form action="/approval/setVacation"  method="post">
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>

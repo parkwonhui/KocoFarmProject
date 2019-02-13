@@ -139,7 +139,7 @@
 						<div class="btn_wrap">
 							<div class="flt_r">
 								<input type="button" class="list_btn" value="목록" />
-								<input type="button" class="vacEdit_btn" value="수정" />
+								<input type="button" class="vacEdit_btn" value="수정" /> 
 								<input type="button" class="vacDel_btn" value="삭제" />
 								
 							</div>

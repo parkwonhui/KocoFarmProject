@@ -65,6 +65,20 @@ public class ApprovalControllerTest {
 				.andReturn()
 				.getModelAndView().getModelMap());
 	}*/
+	/*@Test
+	public void testSetUpDraft() throws Exception{
+		String resultPage = mockMvc
+				.perform(MockMvcRequestBuilders.post("/approval/setUpDraft")
+						.param("draftId", "30")
+						.param("formId", "4")
+						.param("empId", "EMP_001")
+						.param("draftTitle", "새로운것")
+						.param("draftYear", "1"))
+				.andReturn()
+				.getModelAndView().getViewName();
+		
+		log.info(resultPage);
+	}*/
 	/*public void testDelete() throws Exception{
 		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/approval/delDraft")
 				.param("draftId","165")
@@ -84,4 +98,21 @@ public class ApprovalControllerTest {
 								.getModelMap());
 		}
 	
+	
+	/*@Test
+	public void testSetUpVacation() throws Exception{
+		String resultPage = mockMvc
+				.perform(MockMvcRequestBuilders.post("/approval/setUpVacation")
+						.param("draftId", "42")
+						.param("vacationId", "1")
+						.param("formId", "4")
+						.param("vacationType", "컨트롤테스트")
+						.param("vacationDays", "1")
+						.param("vacationReason", "그냥테스트")
+						.param("replacementId", "EMP_001"))
+				.andReturn()
+				.getModelAndView().getViewName();
+		
+		log.info(resultPage);
+	}*/
 }
