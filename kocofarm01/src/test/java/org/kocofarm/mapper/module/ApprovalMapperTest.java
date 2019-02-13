@@ -113,8 +113,15 @@ public class ApprovalMapperTest {
 	/*public void testDeleteVacation(){
 		log.info("DELETE COUNT : " + mapper.deleteVacation(30));
 	}*/
-	public void testDeleteExpence(){
-		log.info("DELETE COUNT : " + mapper.deleteExpence(30));
+	/*public void testDeleteExpence(){
+		log.info("DELETE COUNT : " + mapper.delExpence(30));
+	}*/
+	public void testUpExpence(){
+		ApprExpenceVO expence = new ApprExpenceVO();
+		expence.setExpenceType("kosta");
+		expence.setSumPrice("20000");
+		
+		mapper.setUpExpence(expence);
+		log.info(expence);
 	}
-	
 }

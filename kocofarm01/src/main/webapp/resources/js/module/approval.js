@@ -67,7 +67,7 @@ $(function() {
 		});
 		
 		$(".vacEdit_btn").click(function(){
-			location.href="UpdateForm.do?draftId="+$("#draftId").val();
+			location.href="setUpVacation?draftId="+$("#draftId").val();
 			return false;
 		});
 		

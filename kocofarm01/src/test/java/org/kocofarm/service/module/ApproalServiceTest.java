@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprVacationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,11 +20,11 @@ public class ApproalServiceTest {
 	
 	@Setter(onMethod_= {@Autowired})
 	private ApprovalService service;
-	@Test
+	/*@Test
 	public void testExist(){
 		log.info(service);
 		assertNotNull(service);
-	}
+	}*/
 	
 
 /*	@Test
@@ -52,8 +53,29 @@ public class ApproalServiceTest {
 		service.getFormList().forEach(form ->log.info(form));
 	}*/
 	
-	@Test
+	/*@Test
 	public void testGetDraft(){
 		service.getDraft(165);
+	}*/
+	/*@Test
+	public void testSetUpDraft(){
+		ApprDraftVO draft = service.getDraft(30);
+		if(draft == null){
+			return;
+		}
+		draft.setDraftTitle("수정");
+		log.info("RESULT : " + service.setUpDraft(draft));
+	}*/
+	@Test
+	public void testSetUpVacation(){
+		ApprVacationVO vacation = service.getVacation(42);
+		if(vacation == null){
+			return;
+		}
+				vacation.setVacationType("휴가신청서");
+				vacation.setVacationDays(2);
+		vacation.setVacationReason("고냥");
+		vacation.setReplacementId("EMP_001");
+		log.info("RESULT : " + service.setUpVacation(vacation));
 	}
 }

@@ -1,6 +1,12 @@
 package org.kocofarm.controller.module;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprVacationVO;
 import org.kocofarm.service.module.ApprovalService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,7 +76,6 @@ public class ApprovalController {
 		model.addAttribute("moduleNm", "approval");
 		
 		if(formId == 2){
-			
 			return  "module/approval/setExpenceDraft";
 		}else if(formId == 4){
 			return "module/approval/setVacationDraft";
@@ -79,4 +84,27 @@ public class ApprovalController {
 		}
 	}
 
+	/* 기본 기안서 업데이트 */
+	@PostMapping("/setUpDraft")
+	public String setUpDraft(ApprDraftVO draft, RedirectAttributes rttr){
+		log.info("setUpDraft : " + draft);
+		
+		if(service.setUpDraft(draft)){
+			rttr.addFlashAttribute("result" , "success");
+		}	
+		return "redirect:/approval/getDraftList";
+	}
+	
+	/* 휴가 신청서 정보 수정 */
+	@GetMapping("/setUpVacation")
+	public String setUpVacation(@RequestParam("draftId") int draftId, Model model) throws Exception{
+		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
+		model.addAttribute("draftId",service.getDraft(draftId));
+		ApprVacationVO vacation = service.getVacation(draftId);
+		String SDt = vacation.getVacationStartDt();
+		String EDt = vacation.getVacationEndDt();
+
+		model.addAttribute("vacation",service.setUpVacation(vacation));
+		return "redirect:/approval/setUpVacation";
+	}
 }

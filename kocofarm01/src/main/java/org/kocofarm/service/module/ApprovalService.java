@@ -27,6 +27,13 @@ public interface ApprovalService {
 	/*휴가 신청서 정보 가져오기*/
 	public ApprVacationVO getVacation(int draftId);
 	
-
-
+	/*--------------수정--------------*/
+	   /* 기본 기안서 정보 수정 */
+	   public boolean setUpDraft(ApprDraftVO draft);
+	   /* 휴가 신청서 정보 수정 */
+	   public boolean setUpVacation(ApprVacationVO vacation);
+	   /* 지출 결의서 정보 수정*/
+	   public int setUpExpence(ApprExpenceVO expence);
+	   /* 지출 결의서 내역 수정*/
+	   public int setUpExpenceCont(ApprExpenceContVO expenceCont);
 }

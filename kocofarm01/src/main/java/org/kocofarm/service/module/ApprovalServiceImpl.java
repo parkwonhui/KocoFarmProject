@@ -62,6 +62,25 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.getVacation(draftId);
 	}
 
-	
+	@Override
+	public boolean setUpDraft(ApprDraftVO draft) {
+		return mapper.setUpDraft(draft) == 1;
+	}
+	@Override
+	public boolean setUpVacation(ApprVacationVO vacation){
+		return mapper.setUpVacation(vacation)==1;
+	}
+
+	@Override
+	public int setUpExpence(ApprExpenceVO expence) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int setUpExpenceCont(ApprExpenceContVO expenceCont) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }
