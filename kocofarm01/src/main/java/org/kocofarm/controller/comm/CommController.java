@@ -8,10 +8,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CommController {
 
-	@GetMapping("/main")
-	public String main(){
-		return "main";
-	}
-	
-	
 }
