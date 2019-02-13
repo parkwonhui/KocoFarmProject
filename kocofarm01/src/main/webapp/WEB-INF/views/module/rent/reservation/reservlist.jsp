@@ -1,25 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include><!-- <link rel="stylesheet" type="text/css" href="/resources/css/module/rent.css" /> -->
+<<jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false"></jsp:include><!-- <link rel="stylesheet" type="text/css" href="/resources/css/module/rent.css" /> -->
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />  -->
 
-	<div class="cont_wrap">
-		<!-- SubTitle Area -->
-		<div class="sub_title">
-			<div class="sub_title_top">
-				<div class="sub_title_inner">
-					<h2>Reservation List <span>회의실 예약 목록</span></h2>
-					<ul class="sub_nav">
-						<li>홈 > </li>
-						<li class="on">회의실 예약 목록</li>
-					</ul>
-				</div>
+<div class="cont_wrap">
+	<!-- SubTitle Area -->
+	<div class="sub_title">
+		<div class="sub_title_top">
+			<div class="sub_title_inner">
+				<h2>
+					Reservation List <span>회의실 예약 목록</span>
+				</h2>
+				<ul class="sub_nav">
+					<li>홈 ></li>
+					<li class="on">회의실 예약 목록</li>
+				</ul>
 			</div>
 		</div>
-		
+	</div>
+
 	<!--회의실 예약 목록 -->
 	<div class="contents_wrap">
 		<div class="contents">
@@ -50,34 +53,45 @@
 					</tr>
 				</thead>
 				<tbody id="contentsTbBody">
-					<c:choose>
-						<c:when test="${not empty list}">
-							<c:forEach var="reserv" items="${list}" varStatus="status">
+						<c:choose>
+							<c:when test="${not empty list}">
+								<c:forEach var="reserv" items="${list}" varStatus="status">
+									<tr>
+										<td>${reserv.rvId}</td>
+										<td>${reserv.mTitle}</td>
+										<fmt:parseDate var="dateString" value="${reserv.startDt }"
+											pattern="yyyy-MM-dd" />
+										<td><fmt:formatDate value="${dateString}"
+												pattern="yyyy-MM-dd" /></td>
+										<fmt:parseDate var="dateString2" value="${reserv.endDt}"
+											pattern="yyyy-MM-dd" />
+										<td><fmt:formatDate value="${dateString2}"
+												pattern="yyyy-MM-dd" /></td>
+										<td>${reserv.deptNm}</td>
+										<td>${reserv.rvUserNm}</td>
+										<td>${reserv.rvWriterNm}</td>
+										<td>${reserv.mId}</td>
+										<fmt:parseDate var="dateString3" value="${reserv.regDt}"
+											pattern="yyyy-MM-dd" />
+										<td><fmt:formatDate value="${dateString3}"
+												pattern="yyyy-MM-dd" /></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
 								<tr>
-									<td>${reserv.rvId}</td>
-									<td>${reserv.mTitle}</td>
-									<fmt:parseDate var = "dateString" value ="${reserv.startDt }"  pattern = "yyyy-MM-dd"/>
-									<td><fmt:formatDate value="${dateString }" pattern = "yyyy-MM-dd"/></td>
-									<fmt:parseDate var = "dateString2" value ="${reserv.endDt }"  pattern = "yyyy-MM-dd"/>
-									<td><fmt:formatDate value="${dateString2 }" pattern = "yyyy-MM-dd"/></td>
-									<td>${reserv.deptNm}</td>
-									<td>${reserv.rvUserNm}</td>
-									<td>${reserv.rvWriterNm}</td>
-									<td>${reserv.mId}</td>
-									<fmt:parseDate var = "dateString3" value ="${reserv.regDt }"  pattern = "yyyy-MM-dd"/>
-									<td><fmt:formatDate value="${dateString3 }" pattern = "yyyy-MM-dd"/></td>
+									<td colspan="9">데이터가 없습니다.</td>
 								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td colspan="9">데이터가 없습니다.</td>
-							</tr>
-						</c:otherwise>
-					</c:choose>
+							</c:otherwise>
+						</c:choose>
 				</tbody>
 			</table>
+			<div class="btn_wrap">
+				<div class="flt_r">
+					<input class="auto_wth_btn_b" type="submit" value="수정">
+				</div>
+			</div>
 		</div>
 	</div>
-<script type="text/javascript" src="/resources/js/module/rent.js"></script>
-<jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>
+	<script type="text/javascript" src="/resources/js/module/rent.js"></script>
+	<jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false"></jsp:include>

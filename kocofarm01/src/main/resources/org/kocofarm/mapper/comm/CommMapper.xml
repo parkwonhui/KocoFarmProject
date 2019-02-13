@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kocofarm.mapper.comm.CommMapper">
+	
+	<!-- 로그인 유저 정보 -->
+	<select id="getLoginUserInfo" parameterType="java.lang.String" resultType="org.kocofarm.domain.comm.LoginVO">
+		SELECT
+				EMP_ID	AS	empId
+			,	PW		AS	pw
+			,	SALT	AS	salt
+			,	KOR_NM	AS	korNm
+			,	ENG_NM	AS	engNm
+			,	EMAIL	AS	email
+			,	CELLPHONE	AS	cellPhone
+			,	HIRE_DT		AS	hireDt
+			,	RETIREMENT_DT	AS	retirementDt
+			,	STATE	AS	state
+			,	ANNUAL	AS	annual
+			,	DEPT_ID	AS	deptId
+			,	JOB_ID	AS	deptId
+			,	POSITION_ID	AS	positionId
+			,	MANAGER_ID	AS	managerId
+			,	AUTHORITY	AS	authority
+			,	SALARY	AS	salary
+			,	REG_DT	AS	regDt
+			,	UP_DT	AS	upDt
+			,	EMP_IMG	AS	empImg
+		FROM EMP
+		WHERE EMP_ID = #{userId}
+	</select>
+	
+</mapper>

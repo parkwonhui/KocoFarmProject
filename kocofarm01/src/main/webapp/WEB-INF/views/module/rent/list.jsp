@@ -23,13 +23,13 @@
 		
 		<div class="contents_wrap">		
 			<ul>
-			    <li><a href="rentCarDetailList.do">차량목록(관리자)</a>
+			    <li><a href="rentCarDetailList">차량목록(관리자)</a>
 				<li><a href="">차량정비일지</a>
 				<li><a href="">차량예약</a>
 				<li><a href="">차량운행일지</a>
 				<hr>
-			  	<li><a href="mroomlist.do">회의실 목록</a></li>
-			  	<li><a href="reservList.do">회의실 예약 목록</a></li>
+			  	<li><a href="/meetingroom/mroomlist">회의실 목록</a></li>
+			  	<li><a href="reservlist">회의실 예약 목록</a></li>
 			</ul>
 		</div>
 	</div>

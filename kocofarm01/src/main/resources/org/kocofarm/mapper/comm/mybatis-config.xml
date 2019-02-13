@@ -2,17 +2,24 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-<!-- 컬럼명 카멜 표기법 자동 변환 설정 -->
+	<!-- 컬럼명 카멜 표기법 자동 변환 설정 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
 	
 	<typeAliases>
-		<!-- 스케쥴 -->
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProject" alias="ScheduleProject" />
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategory" alias="ScheduleCategory" />	
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalender" alias="ScheduleCalender" />
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderList" alias="ScheduleCalenderList" />
-		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderMove" alias="ScheduleCalenderMove" />
+		<!-- 공통 > 로그인 -->
+		<typeAlias type="org.kocofarm.domain.comm.LoginVO" alias="LoginVO" />
+
+		<!-- 인사 관리 -->
+		<typeAlias type="org.kocofarm.domain.emp.EmpVO" alias="EmpVO" />
+		
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProjectVO" alias="ScheduleProjectVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryVO" alias="ScheduleCategoryVO" />	
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderVO" alias="ScheduleCalenderVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderListVO" alias="ScheduleCalenderListVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderMoveVO" alias="ScheduleCalenderMoveVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryMoveVO" alias="ScheduleCategoryMoveVO" />
+
 	</typeAliases>
 </configuration>

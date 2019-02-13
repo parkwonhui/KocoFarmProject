@@ -1,5 +1,9 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//src/main/java/org/kocofarm/mapper/module/ApprovalMapper.java=UTF-8
+=======
+encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8
+>>>>>>> refs/remotes/origin/master
 encoding//src/main/webapp/WEB-INF/views/module/file_room=UTF-8
 encoding//src/main/webapp/WEB-INF/views/module/file_room/fileCheck.jsp=UTF-8
 encoding//src/main/webapp/resources/css/module/approval.css=UTF-8
