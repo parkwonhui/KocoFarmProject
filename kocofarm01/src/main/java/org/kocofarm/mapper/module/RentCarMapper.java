@@ -10,13 +10,13 @@ public interface RentCarMapper {
 	//ëª©ë¡
 	//@Select("select * from RENTCAR_DETAIL")
 	public List<RentCarVO> getRentCarDetailList();	
-	/*//ë“±ë¡
+	/*//?“±ë¡?
 	public void setRentCarDetail(RentCarVO rentCar);
 	//ì¡°íšŒ
 	public RentCarVO getRentCarDetail(String carId);
-	//ì‚­ì œ
+	//?‚­? œ
 	public int delRentCarDetail(String carId); 	
-	//ìˆ˜ì •
+	//?ˆ˜? •
 	public int setUpRentCarDetail(RentCarVO rentCar);*/
 	
 

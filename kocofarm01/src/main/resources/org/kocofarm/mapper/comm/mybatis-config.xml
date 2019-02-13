@@ -10,15 +10,16 @@
 	<typeAliases>
 		<!-- 공통 > 로그인 -->
 		<typeAlias type="org.kocofarm.domain.comm.LoginVO" alias="LoginVO" />
-	
+
 		<!-- 인사 관리 -->
 		<typeAlias type="org.kocofarm.domain.emp.EmpVO" alias="EmpVO" />
-
+		
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProjectVO" alias="ScheduleProjectVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryVO" alias="ScheduleCategoryVO" />	
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderVO" alias="ScheduleCalenderVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderListVO" alias="ScheduleCalenderListVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderMoveVO" alias="ScheduleCalenderMoveVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryMoveVO" alias="ScheduleCategoryMoveVO" />
+
 	</typeAliases>
 </configuration>
