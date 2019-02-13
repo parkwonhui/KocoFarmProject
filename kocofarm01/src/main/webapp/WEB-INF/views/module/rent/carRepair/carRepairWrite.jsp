@@ -37,8 +37,8 @@
 							<tr>
 								<th scope="col">차량 번호</th>
 								<td class="left">
-									<input type="text" name="carId" id = "car_id">
-									<input type = "button" id = "checkCar_Id" class="btn_y" value="중복확인">
+									<input type="text" name="car_id" id = "car_id">
+									<!-- <input type = "button" id = "checkCar_Id" class="btn_y" value="중복확인"> -->
 								</td>
 								<th scope="col">차량 모델 명</th>
 								<td class="left">
@@ -71,9 +71,9 @@
 							</tr>
 							<tr>
 								<th scope="col">유종</th>
-								<td class="left" colspan="3"><!-- oil_Type -> oilType 으로 변경-->
-									<input type = "radio" class="radio_btn" name="oilType" value="휘발유">휘발유
-				 					<input type = "radio" class="radio_btn" name="oilType" value="경유">경유	
+								<td class="left" colspan="3">
+									<input type = "radio" class="radio_btn" name="oil_Type" value="휘발유">휘발유
+				 					<input type = "radio" class="radio_btn" name="oil_Type" value="경유">경유	
 								</td>
 							</tr>
 						</tbody>

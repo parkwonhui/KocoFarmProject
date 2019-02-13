@@ -30,8 +30,8 @@
 					<div class="sch_toggle_wrap">
 						<div class="sch_box_wrap">
 							<div class="right">
-								<input type="checkbox" class="chk_box" name="area" id="carIdChk" value="car_id">차량번호
-								<input type="checkbox" class="chk_box" name="area" value="carModel">차량모델명
+								<!-- <input type="checkbox" class="chk_box" name="area" id="carIdChk" value="car_id">차량번호
+								<input type="checkbox" class="chk_box" name="area" value="carModel">차량모델명 -->
 								<input type="text" name="searchKey" size="10"></input>
 								<input type="submit" class="schBtn" value="검색"/>
 							</div>
@@ -68,14 +68,14 @@
 						</tr>
 					</thead>
 					<tbody id="contentsTbBody">
-						<c:forEach var="RCdetail" items="${list}"> 
+						<c:forEach var="RCrepair" items="${list}"> 
 						<!-- RentCarDetailService에서 RentCarDetailListModel 중에서 list만 불러오는 것이다. -->
 							<tr>
-								<td>${RCdetail.carId }</td> 
-								<td><a href="/rent/rentCarDetailView?carId=${RCdetail.carId}">${RCdetail.modelName }</a></td>
-								<td>${RCdetail.carModel }</td>
-								<td>${RCdetail.condition }</td>
-								<td>${RCdetail.price }</td>
+								<td>${RCrepair.carId }</td> 
+								<td><a href="/rent/rentCarDetailView?car_id=${RCdetail.carId}">${RCdetail.modelName }</a></td>
+								<td>${RCrepair.carModel }</td>
+								<td>${RCrepair.condition }</td>
+								<td>${RCrepair.price }</td>
 								<td>${RCdetail.year}</td>
 								<td>${RCdetail.oilType }</td>
 								<td>

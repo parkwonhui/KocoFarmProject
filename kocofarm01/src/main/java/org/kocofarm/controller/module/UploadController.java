@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import java.util.UUID;
 
 import org.apache.taglibs.standard.resources.Resources;
 import org.kocofarm.domain.fileRoom.AttachFileVO;
-import org.springframework.beans.factory.xml.ResourceEntityResolver;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -179,36 +177,13 @@ public class UploadController {
 		
 		log.info("resource : " + resource);
 		
-		if(resource.exists() == false){
-			
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
 		String resourceName = resource.getFilename();
 		
 		HttpHeaders headers = new HttpHeaders();
 		
 		try {
-			String downloadName = null;
-			
-			if(usera.contains("Trident")){
-				log.info("IE browser");
-				downloadName =
-						URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+"," ");
-			}else if(userA.contains("Edge")){
-				
-				log.info("Edge browser");
-				downloadName =
-						URLEncoder.encode(resourceOriginalName, "UTF-8");
-			
-			}else{
-				log.info("Chrome browser");
-				downloadName = 
-						new String(resourceName.getBytes("UTF-8"),"ISO-8859-1" )
-			}
-			log.info("downloadName : " + downloadName);
-			
-			headers.add("Context-Disposition","attachment; filename=" + downloadName));
+			headers.add("Context-Disposition","attachment; filename=" + new String(resourceName.getBytes("UTF-8"),
+					"ISO-8859-1"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

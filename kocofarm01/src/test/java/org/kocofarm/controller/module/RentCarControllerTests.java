@@ -47,10 +47,10 @@ public class RentCarControllerTests {
 	}*/
 	
 	//등록
-	/*@Test
+	@Test
 	public void testRentCarDetailWrite() throws Exception{
 		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/rent/rentCarDetailWrite")
-				.param("carId", "사1234")
+				.param("carId", "바1234")
 				.param("modelName","배고팡")
 				.param("carModel","배고팡2")
 				.param("condition", "배고팡3")
@@ -60,7 +60,7 @@ public class RentCarControllerTests {
 				).andReturn().getModelAndView().getViewName();
 		
 				log.info(resultPage);		
-	}*/
+	}
 	
 	//조회
 	/*@Test
@@ -73,7 +73,7 @@ public class RentCarControllerTests {
 	}*/
 	
 	//수정
-	@Test
+	/*@Test
 	public void testRentCarDetailEdit()throws Exception{
 		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/rent/rentCarDetailEdit")
 				.param("carId", "호1234")
@@ -86,7 +86,7 @@ public class RentCarControllerTests {
 				.andReturn().getModelAndView().getViewName();
 		
 		log.info(resultPage);
-	}
+	}*/
 	
 	//삭제
 	/*@Test
