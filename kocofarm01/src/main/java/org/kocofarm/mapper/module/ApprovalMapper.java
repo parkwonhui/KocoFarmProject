@@ -54,8 +54,7 @@ public interface ApprovalMapper {
 	/* 지출 결의서 내역 수정*/
 	public int setUpExpenceCont(ApprExpenceContVO expenceCont);
 	
-	
-	
+
 	/*--------------삭제--------------*/
 	/* 기안서 삭제*/
 	public int delDraft(int draftId);
