@@ -10,6 +10,7 @@ import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleMemberVO;
 import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
@@ -151,9 +152,17 @@ public class ScheduleServiceImpl implements ScheduleService{
 		project.setProjectStartDt("");
 		project.setProjectEndDt("");
 		int re = mapper.setProject(project);
+		int projectId = (int) project.getProjectId();
+		
+		ScheduleMemberVO member = new ScheduleMemberVO();
+		member.setProjectId(projectId);
+		member.setEmpId(project.getProjectLeader());
+		mapper.setMember(member);
+		
 		return re;
 	}
 
+	@Transactional
 	@Override
 	public int setUpProject(ScheduleProjectVO project){
 		if(null == project)

@@ -58,7 +58,6 @@ public class ScheduleController {
 	@GetMapping("/list")
 	private String getProjectListAjax(HttpSession session, HttpServletResponse response, ModelAndView mv){
 		log.info("/list..........");
-		log.info("/list..........");
 		LoginVO loginVo = (LoginVO) session.getAttribute("loginVO");
 		// NULL이면 리다이렉션 처리해야함
 		if(null == loginVo){
@@ -91,7 +90,6 @@ public class ScheduleController {
 		
 		ScheduleProjectSearchVO search = new ScheduleProjectSearchVO(loginVo.getEmpId());
 		List<ScheduleProjectVO> list = service.getProjectList(search);
-		System.out.println("list:"+list);
 		model.addAttribute("project", list);
 		model.addAttribute("moduleNm", "schedule");
 		return list;

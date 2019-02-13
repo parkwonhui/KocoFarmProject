@@ -172,7 +172,6 @@ $("#modify-project-button").on("click", function(){
 
 // 검색 버튼
 $("#schBtn").on("click", function(){
-	console.log('검색 버튼 클릭');
 	/* var searchData = $("#schWord").val();
 	
 	var sendUrl = "getProjectListSearch";

@@ -10,6 +10,7 @@ import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleMemberVO;
 import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
@@ -126,14 +127,14 @@ public class ScheduleTestController {
 		ScheduleCategory category = new ScheduleCategory(66, "새로운 카테고리2", 1, 2);
 		mapper.setUpCategory(category);
 	}*/
-		
+/*		
 	@Test
 	public void setProject(){
 		ScheduleProjectVO project = new ScheduleProjectVO(5,"졸려","", "",0,0,false, "EMP_002");
 		mapper.setProject(project);
 		
 		mapper.getProjectList(null);
-	}
+	}*/
 	
 /*	@Test
 	public void setUpProject(){
@@ -160,4 +161,12 @@ public class ScheduleTestController {
 		empMapper.getDeptListEmp("EMP_006");
 	}
 */
+	@Test
+	public void setProject(){
+		//ScheduleProjectVO project = new ScheduleProjectVO(5,"졸려","EMP_002","", "",0,0,false);
+		//mapper.setProject(project);
+		mapper.setMember(new ScheduleMemberVO(1000, 0, 0, "EMP_002", 142, 2));
+		//mapper.getProjectList(null);
+	}
+
 }
