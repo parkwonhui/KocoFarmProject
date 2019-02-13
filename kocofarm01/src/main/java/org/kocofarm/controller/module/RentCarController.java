@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/module/rent/*")
+@RequestMapping("/rent/*")
 public class RentCarController {
 	
 	@GetMapping("/list")
-	public void list(){
+	public String list(){
 		
+		return "/module/rent/list";
 	}
 
 }

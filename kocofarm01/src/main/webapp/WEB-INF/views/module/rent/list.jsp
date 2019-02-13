@@ -29,7 +29,7 @@
 				<li><a href="">차량운행일지</a>
 				<hr>
 			  	<li><a href="/meetingroom/mroomlist">회의실 목록</a></li>
-			  	<li><a href="reservlist">회의실 예약 목록</a></li>
+			  	<li><a href="/reservation/reservlist">회의실 예약 목록</a></li>
 			</ul>
 		</div>
 	</div>

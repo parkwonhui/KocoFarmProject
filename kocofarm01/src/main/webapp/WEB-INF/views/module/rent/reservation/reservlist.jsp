@@ -88,7 +88,9 @@
 			</table>
 			<div class="btn_wrap">
 				<div class="flt_r">
+				<c:if test="${loginVO.authority == 99}">
 					<input class="auto_wth_btn_b" type="submit" value="수정">
+				</c:if>
 				</div>
 			</div>
 		</div>

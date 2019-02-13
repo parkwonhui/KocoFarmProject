@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.Setter;
 
@@ -32,7 +33,8 @@ public class ReservationController {
 
 	// 등록 폼
 	@GetMapping("/reservInsertForm")
-	private String reservInsertForm(Model model) {
+	private String reservInsertForm(@RequestParam("mId")int mId,Model model) {
+		model.addAttribute("mroom", service.getMroomNm(mId) );
 		model.addAttribute("deptList", empService.getDeptList());
 		model.addAttribute("empList", empService.getEmpList());
 
