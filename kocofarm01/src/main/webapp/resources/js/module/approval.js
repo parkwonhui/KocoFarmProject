@@ -17,6 +17,7 @@ $(function() {
 			monthNamesShort : ['1','2','3','4','5','6','7','8','9','10','11','12'],
 		});
 		
+		/* ---------------------휴가 신청서 휴가일 계산 버튼 기능 --------------------- */
 		
 		$("#dayBtn").click(function(){
 			var startDate =$("#Startdatepicker").val();
@@ -30,6 +31,8 @@ $(function() {
 			
 			return false;
 		});
+		
+		/* ---------------------지출결의서 sum계산 버튼 기능 --------------------- */
 		
 		$("#sumBtn").click(function(){
 			var sum = 0;
@@ -60,7 +63,7 @@ $(function() {
 			return false;
 		});
 		
-		
+		/* ---------------------기안서 버튼 기능 --------------------- */
 		$(".list_btn").click(function(){
 			location.href="listDraft.do";
 			return false;
@@ -85,8 +88,6 @@ $(function() {
 			location.href="/approval/delExpDraft?draftId="+$("#draftId").val();
 			return false;
 		});
-		
-		
 		
 });	
 

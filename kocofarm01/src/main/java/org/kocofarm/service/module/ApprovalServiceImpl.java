@@ -9,6 +9,7 @@ import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
+import org.kocofarm.domain.comm.Criteria;
 import org.kocofarm.mapper.module.ApprovalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,24 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	private ApprovalMapper mapper;
 
-	/* 기안서 목록 불러오기 */
+/*	 기안서 목록 불러오기 
 	@Override
 	public List<ApprDraftVO> getDraftList() {
 		return mapper.getDraftList();
 	}
-
+*/
+	/* 페이징 처리한 기안서 목록 불러오기 */
+	@Override
+	public List<ApprDraftVO> getDraftList(Criteria cri) {
+		
+		return mapper.getListWithPaging(cri);
+	}
+	/* 전체 기안서 개수 가져오기 */
+	@Override
+	public int getTotal(Criteria cri) {
+		return mapper.getTotalCount(cri);
+	}
+	
 	/* 양식 목록 불러오기 */
 	@Override
 	public List<ApprFormVO> getFormList() {
@@ -138,5 +151,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		log.info(expenceId+"expc여기도 탑니다3.");
 		mapper.delExpenceCont(expenceId);
 	}
+
+	
 
 }

@@ -57,19 +57,31 @@ public class ApprovalControllerTest {
 		log.info(resultPage);
 	}*/
 	
-	@Test
-/*	public void testGetDraft() throws Exception{
+	/*@Test
+	public void testGetDraft() throws Exception{
 		log.info(mockMvc.perform(MockMvcRequestBuilders
 				.get("/module/approval/getDraft")
 				.param("draftId", "165"))
 				.andReturn()
 				.getModelAndView().getModelMap());
 	}*/
-	public void testDelete() throws Exception{
+	/*public void testDelete() throws Exception{
 		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/approval/delDraft")
 				.param("draftId","165")
 				).andReturn().getModelAndView().getViewName();
 		
 		log.info(resultPage);
-	}
+	}*/
+	
+	@Test
+	public void testList() throws Exception {
+		log.info(
+				mockMvc.perform(MockMvcRequestBuilders.get("/approval/getDraftList")
+								.param("pageNum", "2")
+								.param("amount","5"))
+								.andReturn()
+								.getModelAndView()
+								.getModelMap());
+		}
+	
 }

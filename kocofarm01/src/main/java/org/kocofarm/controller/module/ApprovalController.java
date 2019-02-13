@@ -6,6 +6,8 @@ import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
+import org.kocofarm.domain.comm.Criteria;
+import org.kocofarm.domain.comm.PageDTO;
 import org.kocofarm.service.module.ApprovalService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +28,21 @@ import lombok.extern.log4j.Log4j;
 public class ApprovalController {
 	private ApprovalService service;
 	/*전체 기안서 리스트 가져오기*/
-	@GetMapping("/getDraftList")
+	/*	@GetMapping("/getDraftList")
 	public String getDraftList(Model model){
 		model.addAttribute("moduleNm", "approval");//leftbar띄우기
 		model.addAttribute("draftList", service.getDraftList());
+		return "module/approval/getDraftList";
+	}*/
+	
+	/*페이징 처리한 리스트 가져오기 */
+	@GetMapping("/getDraftList")
+	public String getDraftList(Criteria cri , Model model){
+		model.addAttribute("moduleNm", "approval");//leftbar띄우기
+		model.addAttribute("draftList", service.getDraftList(cri));
+		
+		int total = service.getTotal(cri);
+		model.addAttribute("pageMaker",new PageDTO(cri, total));
 		return "module/approval/getDraftList";
 	}
 	

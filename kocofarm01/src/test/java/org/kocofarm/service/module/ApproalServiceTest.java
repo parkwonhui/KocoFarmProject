@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
+import org.kocofarm.domain.comm.Criteria;
 import org.kocofarm.mapper.module.ApprovalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -42,12 +43,13 @@ public class ApproalServiceTest {
 		service.setDraft(draft);
 		log.info("생성된 게시물 번호 :"+service.getDraftNo());
 	}
-	
+	*/
 	@Test
 	public void testGetDraftList(){
-		service.getDraftList().forEach(draft -> log.info(draft));
+		service.getDraftList(new Criteria(1,5)).forEach(draft -> log.info(draft));
 	}
 	
+	/*
 	@Test
 	public void testGetFormList(){
 		service.getFormList().forEach(form ->log.info(form));

@@ -39,7 +39,7 @@
 	
 	<!-- 특정 기안서 불러오기 -->
 	<select id="getDraft" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
-		select draft_id as draftId,
+		select 	draft_id as draftId,
 				draft_name as draftName,
 				draft_dt as draftDt,
 				draft_title as draftTitle,
@@ -90,6 +90,41 @@
 		where draft_id = #{draftId}
 	</select>
 	
+	
+	<!-- ****************************** 페이징 처리 ****************************** -->
+	<!-- index 정렬후 페이징 목록 가져오기 -->
+	<select id="getListWithPaging" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
+		<![CDATA[
+		select 	draft_id as draftId,
+				draft_name as draftName,
+				draft_dt as draftDt,
+				draft_title as draftTitle,
+				emp_id as empId,
+				draft_year as draftYear,
+				form_id as formId,
+				approve_state as approveState
+		from
+			(	select /*+INDEX_DESC (draft P_5)+*/ 
+						rownum rn,
+						draft_id,
+						draft_name,
+						draft_dt,
+						draft_title,
+						emp_id,
+						draft_year,
+						form_id,
+						approve_state
+				from draft
+				where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} -1 ) * #{amount}
+	]]>
+	</select>
+	
+	<!-- 전체 기안서 개수 가져오기 -->
+	<select id = "getTotalCount" resultType = "int">
+		select count(*) from draft
+	</select>
 	<!-- ****************************** 입력 ****************************** -->
 	
 	<!-- 기본 기안서 정보 입력하기  -->
@@ -169,6 +204,8 @@
 		from Expence_Cont 
 		where expence_id = #{expenceId}
 	</delete>
+
+	
 
 </mapper>
 	

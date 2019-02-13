@@ -7,6 +7,7 @@ import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
+import org.kocofarm.domain.comm.Criteria;
 
 public interface ApprovalMapper {
 	/*--------------목록 불러오기--------------*/
@@ -65,4 +66,9 @@ public interface ApprovalMapper {
 	/* 지출명세서 내역 삭제*/
 	public int delExpenceCont(int expenceId);
 	
+	/*--------------페이징--------------*/
+	/* 페이징 처리*/
+	public List<ApprDraftVO> getListWithPaging(Criteria cri);
+	/*전체 기안서 개수 */
+	public int getTotalCount(Criteria cri);
 }

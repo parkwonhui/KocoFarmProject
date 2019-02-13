@@ -1,11 +1,14 @@
 package org.kocofarm.mapper.module;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
+import org.kocofarm.domain.comm.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -106,14 +109,22 @@ public class ApprovalMapperTest {
 				int count = mapper.updateVacation(vacation);
 						log.info("UPDATE COUNT : " + count);
 	}*/
-	public void testDeleteDraft(){
+/*	public void testDeleteDraft(){
 		log.info("DELETE COUNT : " + mapper.delDraft(204));
-	}
+	}*/
 	/*public void testDeleteVacation(){
 		log.info("DELETE COUNT : " + mapper.delVacation(30));
 	}
 	public void testDeleteExpence(){
 		log.info("DELETE COUNT : " + mapper.delExpence(44));
 	}*/
+	public void testPaging(){
+		Criteria cri = new Criteria();
+		
+		cri.setAmount(5);
+		cri.setPageNum(1);
+		List<ApprDraftVO> list = mapper.getListWithPaging(cri);
+		list.forEach(draft -> log.info(draft.getDraftId()));
+	}
 	
 }
