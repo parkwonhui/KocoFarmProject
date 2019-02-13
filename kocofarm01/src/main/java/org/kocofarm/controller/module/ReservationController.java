@@ -1,6 +1,7 @@
 package org.kocofarm.controller.module;
 
 import org.kocofarm.domain.meetingRoom.ReservationVO;
+import org.kocofarm.service.module.EmpService;
 import org.kocofarm.service.module.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ public class ReservationController {
 
 	@Setter(onMethod_ = { @Autowired })
 	private ReservationService service;
+	
+	@Setter(onMethod_ = { @Autowired })
+	private EmpService empService;
 
 	// 목록
 	@GetMapping("/reservlist")
@@ -29,8 +33,8 @@ public class ReservationController {
 	// 등록 폼
 	@GetMapping("/reservInsertForm")
 	private String reservInsertForm(Model model) {
-		model.addAttribute("deptList", service.getDeptList());
-		model.addAttribute("empList", service.getEmpList());
+		model.addAttribute("deptList", empService.getDeptList());
+		model.addAttribute("empList", empService.getEmpList());
 
 		return "/module/rent/reservation/reservInsertForm";
 	}

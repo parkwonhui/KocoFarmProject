@@ -27,10 +27,5 @@ public interface ReservationService {
 	
 	//회의실 이름
 	public MeetingRoomVO getMroomNm(int mId); 
-	
-	//사원 목록
-	public List<EmpVO> getEmpList();
-	
-	//부서 목록
-	public List<DepartmentsVO> getDeptList();
+
 }

@@ -62,19 +62,5 @@ public class ReservationServiceImpl implements ReservationService{
 		
 		return mapper.getMroomNm(mId);
 	}
-
-	//사원 목록
-	@Override
-	public List<EmpVO> getEmpList() {
-		
-		return empMpper.getEmpList();
-	}
-
-	//부서목록
-	@Override
-	public List<DepartmentsVO> getDeptList() {
-		
-		return empMpper.getDeptList();
-	}
 	
 }
