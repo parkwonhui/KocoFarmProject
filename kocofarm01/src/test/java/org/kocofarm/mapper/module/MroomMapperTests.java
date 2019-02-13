@@ -22,7 +22,7 @@ public class MroomMapperTests {
 	
 	@Test
 	public void testGetList(){
-		mapper.getList().forEach(meetingroom -> log.info(meetingroom));
+		mapper.getMroomList().forEach(meetingroom -> log.info(meetingroom));
 	}
 
 	/*@Test

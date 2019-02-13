@@ -3,16 +3,17 @@ package org.kocofarm.controller.module;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.kocofarm.domain.schedule.ScheduleCalender;
-import org.kocofarm.domain.schedule.ScheduleCalenderList;
-import org.kocofarm.domain.schedule.ScheduleCalenderMove;
-import org.kocofarm.domain.schedule.ScheduleCategory;
-import org.kocofarm.domain.schedule.ScheduleCategoryMove;
-import org.kocofarm.domain.schedule.ScheduleProject;
+import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
+import org.kocofarm.domain.schedule.ScheduleProjectVO;
 import org.kocofarm.service.module.ScheduleService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AllArgsConstructor;
@@ -34,17 +35,34 @@ public class ScheduleController {
 	private ScheduleService service;
 	
 	@GetMapping("/")
-	private String getProjectList(Model model){
-		List<ScheduleProject> list = service.getProjectList();
+	private String getProjectList(Model model, ScheduleProjectVO project){
+		log.info("/..........");
+		log.info(project);
+		List<ScheduleProjectVO> list = service.getProjectList(project);
 		model.addAttribute("project", list);
+		model.addAttribute("moduleNm", "schedule");
 		return "/module/schedule/list";
 	}
 	
+	@ResponseBody
+	@GetMapping("/getProjectListSearch")
+	private List<ScheduleProjectVO> getProjectListSearch(Model model, ScheduleProjectVO project){
+		log.info("/getProjectListSearch..........");
+		log.info(project);
+		List<ScheduleProjectVO> list = service.getProjectList(project);
+		System.out.println("list:"+list);
+		/*model.addAttribute("project", list);
+		model.addAttribute("moduleNm", "schedule");*/
+		return list;
+	}
+	
 	@GetMapping("/list")
-	private String getProjectListAjax(HttpServletResponse response){
+	private String getProjectListAjax(HttpServletResponse response, ScheduleProjectVO project){
+		log.info("/list..........");
 		// ControllerAdvice로 처리 안되나??
 		try {
-			JSONArray list = service.getProjectJsonArray();
+			JSONArray list = service.getProjectJsonArray(project);
+			log.info(list);
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().print(list);
 		} catch (IOException e) {
@@ -56,94 +74,115 @@ public class ScheduleController {
 	
 	@PostMapping("/sendProjectId")
 	private ModelAndView getProjectListAjax(@ModelAttribute("project_id") int projectId){
+		log.info("/sendProjectId..........");
 		log.info("project_id:"+projectId);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectId", projectId);
+		mv.addObject("moduleNm", "schedule");
 		mv.setViewName("/module/schedule/project");
 		return mv;
 	}
 		
 	@PostMapping("/listCalender")
 	private String getProjectCalenderList(int projectId, Model model){
+		log.info("/listCalender.............");
 		log.info("listCalender projectId:"+projectId);
-		List<ScheduleCalenderList> list = service.getProjectCalenderList(projectId);
+		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
+		log.info("list.............."+list);
 		model.addAttribute("calenderList", list);
 		return "/module/schedule/calenderListJsonParse";
 	}
 	
+	@ResponseBody
 	@PostMapping("/insertCalender")
-	private String setCalender(ScheduleCalender calender){
-		service.setCalender(calender);
-		return "/module/schedule/project";
+	private int setCalender(ScheduleCalenderVO calender){
+		log.info("/insertCalender..........");
+		int re = service.setCalender(calender);
+		return re;
 	}
 	
-	
+	@ResponseBody
 	@PostMapping("/editCalender")
-	public String setUpCalender(ScheduleCalender calender){
+	public int setUpCalender(ScheduleCalenderVO calender){
+		log.info("/editCalender..........");
 		int re = service.setUpCalender(calender);
-		return "/module/schedule/project";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/insertCategory")
-	public String setCategory(ScheduleCategory category){
+	public int setCategory(ScheduleCategoryVO category){
+		log.info("/insertCategory..........");
 		log.info("insertCategory:"+category);
 		int re = service.setCategory(category);
-		return "/module/schedule/project";
+		return re;
 	}
-	
+
+	@ResponseBody
 	@PostMapping("/editCategory")
-	public String setUpCategory(ScheduleCategory category){
+	public int setUpCategory(ScheduleCategoryVO category){
+		log.info("/editCategory..........");
 		int re = service.setUpCategory(category);
-		return "/module/schedule/project";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/insertProject")
-	public String setProject(ScheduleProject project){
+	public int setProject(ScheduleProjectVO project){
+		log.info("/insertProject..........");
 		log.info("project!!!!!"+project);
 		int re = service.setProject(project);
-		return "/module/schedule/list";
+		
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/editProject")
-	public String setUpProject(ScheduleProject project){
+	public int setUpProject(ScheduleProjectVO project){
+		log.info("/editProject..........");
 		log.info("project정보:"+project);
 		int re = service.setUpProject(project);
-		return "/module/schedule/list";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/editCalenderPos")
-	public String setUpCalenderPos(@RequestBody List<ScheduleCalenderMove> data){
-		
+	public int setUpCalenderPos(@RequestBody List<ScheduleCalenderMoveVO> data){
+		log.info("/editCalenderPos..........");
 		int re = service.setUpCalenderPos(data);
-		return "/module/schedule/project";
+		return re;
 	}
 	
-	
+	@ResponseBody
 	@PostMapping("/editCategoryPos")
-	public String setCategoryPos(ScheduleCategoryMove category){
+	public int setCategoryPos(ScheduleCategoryMoveVO category){
+		log.info("/editCategoryPos..........");
 		int re = service.setMoveCategory(category);
-		return "/module/schedule/project";	
+		return re;	
 	}
 	
+	@ResponseBody
 	@PostMapping("/delCalender")
-	public String delCalender(int calenderId){
+	public int delCalender(int calenderId){
+		log.info("/delCalender..........");
 		int re = service.delCalender(calenderId);
-		return "/module/schedule/project";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/delCategory")
-	public String delCategory(ScheduleCategory category){
+	public int delCategory(ScheduleCategoryVO category){
+		log.info("/delCategory..........");
 		int re = service.delCategory(category);
-		return "/module/schedule/project";
+		return re;
 	}
 	
+	@ResponseBody
 	@PostMapping("/delProject")
-	public String delProject(int projectId){
+	public int delProject(int projectId){
+		log.info("/delProject..........");
 		log.info("projectId:"+projectId);
 		int re = service.delProject(projectId);
-		return "/module/schedule/list";
+		return re;
 	}
-	
-	
-
 }

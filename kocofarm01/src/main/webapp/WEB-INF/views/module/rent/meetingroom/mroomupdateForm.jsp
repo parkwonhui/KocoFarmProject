@@ -20,9 +20,7 @@
 		<div class="contents_wrap">
 			<div class="contents">
 				<!-- 수정 -->
-				<form action="mroomUpdate.do" method="post">
-					<input type="hidden" name="mId" value="${mroom.mId}">
-				
+				<form action="/meetingroom/mroomUpdate" method="post">
 					<table class="contents_tb wr" id="contTb">
 						<colgroup>
 							<col width="15%">
@@ -38,7 +36,6 @@
 								<th scope="col">인원</th>
 								<td class="left">
 									<input type="text" name="pNum" value="${mroom.pNum}">
-									<input type="hidden" name="upDt" >
 								</td>
 							</tr>
 						</tbody>

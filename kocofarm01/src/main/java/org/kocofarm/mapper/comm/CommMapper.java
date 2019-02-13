@@ -1,5 +1,7 @@
 package org.kocofarm.mapper.comm;
 
-public interface CommMapper {
+import org.kocofarm.domain.comm.LoginVO;
 
+public interface CommMapper {
+	public LoginVO getLoginUserInfo(String userId);
 }

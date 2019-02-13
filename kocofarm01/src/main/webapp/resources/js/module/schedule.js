@@ -169,7 +169,7 @@ function categoryMoveAjax(moveCategory){
     });
     
     // ajax 요청
-    var data = { projectId:add_project_id, moveCategoryId:drag_category_categoryId, moveCategoryX:drag_category_x, oriCategoryId:categoryId, oriCategoryX:x };
+    var data = { "projectId":add_project_id, "moveCategoryId":drag_category_categoryId, "moveCategoryX":drag_category_x, "oriCategoryId":categoryId, "oriCategoryX":x };
     var url = "editCategoryPos";
  
     ajaxRequest(url, data);
@@ -456,10 +456,30 @@ function ajaxRequest(sendUrl, sendData){
 	$.ajax({
 	    type:"POST",
 	    data : sendData,
-	    dataType:"text",
+	    dataType:"json",
 	    url:sendUrl,
 	    success: function(data) {
-	    	calenderList();
+    		if(1001 == data){
+    			alert('[실패] 카테고리 이름을 확인해주세요(1~50자)');
+    	    
+    		}else if(1002 == data){
+    			alert('[실패] 일정의 글자수가 너무 많거나 없습니다(1~100자)');
+    		
+    		}else if(1003 == data){
+    			alert('[실패] 시작날짜가 잘못되었습니다');
+    		
+    		}else if(1004 == data){
+    			alert('[실패] 종료날짜가 잘못되었습니다');
+    		
+    		}else if(1005 == data){
+    			alert('[실패] 완료상황은 0과 100 사이 값만 가능합니다');
+        		
+    		}else if(-1 == data){
+    			alert('[실패] 알 수 없는 에러');
+    	    
+    		}else{
+    			calenderList();
+    		}
 	    },
 	    error : function(error) {
 	    },	// error
@@ -482,7 +502,7 @@ function calenderList(){
 }
 
 // 카테고리 삭제 모달 버튼
-$('#delete-project-button').click(function(){
+$('#project-delete-project-button').click(function(){
 	var url = "delCategory";
 	var data = {projectId:add_project_id, categoryId:add_category_id};
 
@@ -519,8 +539,10 @@ $('#calender_add').click(function() {
 	 clearAddDlg($(this).parent());
 	 
 	 
-	 var data = { projectId:add_project_id, categoryId:add_category_id, title:write,backgroundColor:color, completionPer:completion_per,tag:tag,y:y,startDt:startDt,endDt:endDt  };
+	 var data = { projectId:add_project_id, categoryId:add_category_id, title:write,backgroundColor:color, completionPer:completion_per,tag:tag,yPos:y,startDt:startDt,endDt:endDt  };
 	 var url = "insertCalender";
+	 
+	 ajaxRequest(url, data);
   
 });//click
 

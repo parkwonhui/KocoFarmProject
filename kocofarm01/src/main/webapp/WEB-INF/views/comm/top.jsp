@@ -16,18 +16,18 @@
 				<div class="gnb">
 					<nav class="gnb_inner">
 						<div class="logo">
-							<a href="main.do"><img class="logo_img" /></a>
+							<a href="/main"><img class="logo_img" /></a>
 						</div>
 						<div class="gnb_top">
 							<ul class="gnb_top_ul">
 								<c:choose>
 									<c:when test="${not empty loginVO}">
 										<li>${loginVO.korNm}님 환영 합니다.</li>
-										<li><a href="signIn.do?mode=signOut">로그아웃</a></li>
+										<li><a href="/signIn/out">로그아웃</a></li>
 									</c:when>
 									<c:otherwise>
 										<li>방문을 환영 합니다.</li>
-										<li><a href="signIn.do?mode=signInPage">로그인</a></li>
+										<li><a href="/signIn/page">로그인</a></li>
 									</c:otherwise>
 								</c:choose>
 							</ul>
@@ -36,7 +36,7 @@
 							<li class="top_menu_li"><a href="noticeList.do">공지사항</a></li>
 							<li class="top_menu_li"><a href="empList.do">인사 관리</a></li>
 							<li class="top_menu_li"><a href="listForm.do">문서 결재</a></li>
-							<li class="top_menu_li"><a href="rentCarDetailList.do">대여 관리</a></li>
+							<li class="top_menu_li"><a href="rentCarDetaillist">대여 관리</a></li>
 							<li class="top_menu_li"><a href="/schedule/">일정 관리</a></li>
 						</ul><!-- gnb E -->
 					</nav><!-- gnb_inner E -->

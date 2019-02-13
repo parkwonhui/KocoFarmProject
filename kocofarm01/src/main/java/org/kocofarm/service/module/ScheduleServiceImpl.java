@@ -1,17 +1,18 @@
 package org.kocofarm.service.module;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.kocofarm.domain.schedule.ScheduleCalender;
-import org.kocofarm.domain.schedule.ScheduleCalenderList;
-import org.kocofarm.domain.schedule.ScheduleCalenderMove;
-import org.kocofarm.domain.schedule.ScheduleCategory;
-import org.kocofarm.domain.schedule.ScheduleCategoryMove;
-import org.kocofarm.domain.schedule.ScheduleProject;
+import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
+import org.kocofarm.domain.schedule.ScheduleProjectVO;
 import org.kocofarm.mapper.module.ScheduleMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -24,35 +25,50 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private ScheduleMapper mapper;
 	
 	@Override
-	public List<ScheduleProject> getProjectList() {
-		List<ScheduleProject> list = mapper.getProjectList();
+	public List<ScheduleProjectVO> getProjectList(ScheduleProjectVO project) {
+		List<ScheduleProjectVO> list = mapper.getProjectList(project);
 		return list;
 	}
 
 	@Override
-	public JSONArray getProjectJsonArray(){
+	public JSONArray getProjectJsonArray(ScheduleProjectVO project){
 		JSONArray jsonArr = new JSONArray();
-		List<ScheduleProject> projectList = mapper.getProjectList();
+		List<ScheduleProjectVO> projectList = mapper.getProjectList(project);
+		log.info("..........getProjectJsonArray:"+projectList);
 		jsonArr = JSONArray.fromObject(projectList);
 		return jsonArr;
 	}
 
 
 	@Override
-	public List<ScheduleCalenderList> getProjectCalenderList(int projectId) {
-		List<ScheduleCalenderList> list = mapper.getProjectCalenderList(projectId);
+	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId) {
+		List<ScheduleCalenderListVO> list = mapper.getProjectCalenderList(projectId);
 		return list;
 	}
 
 	@Override
-	public int setCalender(ScheduleCalender calender) {
+	public int setCalender(ScheduleCalenderVO calender) {
+		if(null == calender)
+			return -1;
+		
+		int result = checkCalenderInfo(calender);
+		if(1 != result)
+			return result;
+			
 		initCalender(calender);
 		int re = mapper.setCalender(calender);
 		return re;
 	}
 	
 	@Override
-	public int setUpCalender(ScheduleCalender calender){
+	public int setUpCalender(ScheduleCalenderVO calender){
+		if(null == calender)
+			return -1;
+		
+		int result = checkCalenderInfo(calender);
+		if(1 != result)
+			return result;
+		
 		initCalender(calender);
 		int re = mapper.setUpCalender(calender);
 		return re;
@@ -65,9 +81,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 	
 	@Override
-	public int setUpCalenderPos(List<ScheduleCalenderMove> calenderMoveList){
+	public int setUpCalenderPos(List<ScheduleCalenderMoveVO> calenderMoveList){
 		int re = 0;
-		for(ScheduleCalenderMove calenderMove : calenderMoveList){
+		for(ScheduleCalenderMoveVO calenderMove : calenderMoveList){
 			re = mapper.setUpCalenderPos(calenderMove);
 			if(0 >= re)
 				return -1;
@@ -76,19 +92,57 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 	
 	@Override
-	public int setCategory(ScheduleCategory category){
+	public int setCategory(ScheduleCategoryVO category){
+		if(null == category)
+			return -1;
+		
+		String categoryName = category.getCategoryName();
+		if(null == categoryName)
+			return -1;
+		
+		if(categoryName.length() > 5){
+			return 1001;
+		}
+		
 		int re = mapper.setCategory(category);
 		return re;
 	}
 	
 	@Override
-	public int setUpCategory(ScheduleCategory category){
+	public int setUpCategory(ScheduleCategoryVO category){
+		if(null == category)
+			return -1;
+		
+		String categoryName = category.getCategoryName();
+		if(null == categoryName)
+			return -1;
+		
+		if(categoryName.length() > 5 || categoryName.length() <= 0){
+			return 1001;
+		}
+		
 		int re = mapper.setUpCategory(category);
 		return re;
 	}
 	
 	@Override	
-	public int setProject(ScheduleProject project){
+	public int setProject(ScheduleProjectVO project){
+		if(null == project){
+			log.info("null == project");
+			return -1;
+		}
+		
+		String title = project.getTitle();
+		if(null == title){
+			log.info("null이다");
+			return -1;
+		}
+		
+		if(title.length() > 5){
+			log.info("5보다 크다!!!!");
+			return 1000;
+		}
+		
 		project.setProjectLeader("");
 		project.setProjectStartDt("");
 		project.setProjectEndDt("");
@@ -97,14 +151,25 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	@Override
-	public int setUpProject(ScheduleProject project){
+	public int setUpProject(ScheduleProjectVO project){
+		if(null == project)
+			return -1;
+		
+		String title = project.getTitle();
+		if(null == title)
+			return -1;
+	
+		if(title.length() > 5 || title.length() <= 0){
+			return 1000;
+		}
+		
 		int re = mapper.setUpProject(project);
 		return re;
 	}
 
 	@Transactional
 	@Override
-	public int delCategory(ScheduleCategory category){
+	public int delCategory(ScheduleCategoryVO category){
 		int re = mapper.delCalenderWithCategory(category);
 		re = mapper.delCategory(category.getCategoryId());
 		return re;
@@ -112,7 +177,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Transactional
 	@Override
-	public int setMoveCategory(ScheduleCategoryMove category){
+	public int setMoveCategory(ScheduleCategoryMoveVO category){
 		int re = mapper.setMoveCategoryPosX(category);
 		re = mapper.setOriCategoryPosX(category);
 		return re;
@@ -127,7 +192,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return re;
 	}
 	
-	public ScheduleCalender initCalender(ScheduleCalender calender){
+	public ScheduleCalenderVO initCalender(ScheduleCalenderVO calender){
 		if(null == calender.getBackgroundColor()){
 			calender.setBackgroundColor("");
 		}else if(null == calender.getStartDt()){
@@ -137,5 +202,55 @@ public class ScheduleServiceImpl implements ScheduleService{
 		}
 		
 		return calender;
+	}
+	
+	public int checkCalenderInfo(ScheduleCalenderVO calender){
+		if(null == calender)
+			return -1;
+		
+		String title = calender.getTitle();
+		if(null == title)
+			return -1;
+		
+		System.out.println("title.length() :"+title.length() );
+		if(title.length() > 10 || title.length() <= 0){
+			return 1002;
+		}
+		
+		// calender 날짜 체크
+		String startDt = calender.getStartDt();
+		if(null == startDt){
+			return -1;
+		}
+		
+		if(startDt.length() >= 1){
+			if(10 != startDt.length() || false == dataCheck(startDt))
+				return 1003;
+		}
+		
+		String endDt = calender.getStartDt();
+		if(null == endDt)
+			return -1;
+
+		if(startDt.length() >= 1){
+			if(10 != endDt.length() || false == dataCheck(endDt))
+				return 1004;
+		}
+		
+		int completionPer = calender.getCompletionPer();
+		if(0 > completionPer || completionPer > 100)
+			return 1005;
+		
+		return 1;
+	}
+	
+	public boolean dataCheck(String date){
+		Pattern pattern =  Pattern.compile("^((19|20)\\d\\d)?([- /.])?(0[1-9]|1[012])([- /.])?(0[1-9]|[12][0-9]|3[01])$");
+		Matcher matcher = pattern.matcher(date); 
+
+		if(matcher.find() == false)
+			return false;
+		
+		return true;
 	}
 }
