@@ -6,6 +6,7 @@ import org.kocofarm.service.module.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,18 @@ public class ReservationController {
 	}
 	
 	//삭제
+	@PostMapping("/delReserv")
+	private String reservDelete(@RequestParam("delReserv") int[] delReserv, ModelMap modelmap){
+		// 삭제할 사용자 ID마다 반복해서 사용자 삭제
+	    for (int rvId : delReserv) {
+	        System.out.println("예약 내약 삭제 = " + rvId);
+	        boolean deleteCount = service.delReserv(rvId);
+	    }
+
+		return "redirect:/reservation/reservlist";
+	}
+	
+	//수정
 	
 	//취소
 

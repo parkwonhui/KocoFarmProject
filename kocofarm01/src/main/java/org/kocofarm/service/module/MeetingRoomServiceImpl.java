@@ -20,7 +20,6 @@ public class MeetingRoomServiceImpl implements MeetingRoomService{
 	public void setMroom(MeetingRoomVO mroom){
 		
 	 	mapper.setMroom(mroom);
-		
 	}
 
 	//조회

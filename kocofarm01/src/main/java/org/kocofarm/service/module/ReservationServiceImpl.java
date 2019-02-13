@@ -20,7 +20,6 @@ import lombok.extern.log4j.Log4j;
 public class ReservationServiceImpl implements ReservationService{
 
 	private ReservationMapper mapper;
-	private EmpMapper empMpper;
 
 	//예약 등록
 	@Override

@@ -10,8 +10,7 @@
 		VALUES
 		(reserv_seq.nextval, #{mTitle}, #{dept, jdbcType=VARCHAR},
 		#{startDt, jdbcType=VARCHAR},
-		#{endDt, jdbcType=VARCHAR}, #{rvUser,
-		jdbcType=VARCHAR}, #{rvWriter, jdbcType=VARCHAR}, sysdate, #{mId})
+		#{endDt, jdbcType=VARCHAR}, #{rvUser, jdbcType=VARCHAR}, #{rvWriter, jdbcType=VARCHAR}, sysdate, #{mId})
 	</insert>
 
 	<select id="getMroomNm" resultType="org.kocofarm.domain.meetingRoom.MeetingRoomVO">

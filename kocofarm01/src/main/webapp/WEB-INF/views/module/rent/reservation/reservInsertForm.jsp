@@ -129,14 +129,15 @@
 								<th scope="col">예약자</th>
 								<td class="left">
 									<select class="form-control" name="rvWriter">
-										<c:forEach items="${empList}" var="emp2">
-										  <option value="${emp.empId}">${emp2.korNm}</option>
+										<c:forEach items="${empList}" var="emp2" >
+										  <option value="${emp.empId}">${emp2.korNm} </option>
 										 </c:forEach>
 									</select>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+					<input type="hidden" name="mId" value="${mroom.mId }" >
 					<div class="btn_wrap">
 						<div class="flt_r">
 							<input class="auto_wth_btn_b" type="submit" value="예약">
