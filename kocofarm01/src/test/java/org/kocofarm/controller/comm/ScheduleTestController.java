@@ -10,8 +10,10 @@ import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.mapper.module.ScheduleMapper;
 import org.kocofarm.service.module.ScheduleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,10 @@ import lombok.extern.log4j.Log4j;
 public class ScheduleTestController {
 	@Setter(onMethod_ = {@Autowired})
 	private ScheduleMapper mapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private EmpMapper empMapper;
+	
 	
 	@Before
 	public void setup(){
@@ -121,11 +127,13 @@ public class ScheduleTestController {
 		mapper.setUpCategory(category);
 	}*/
 		
-/*	@Test
+	@Test
 	public void setProject(){
-		ScheduleProject project = new ScheduleProject(5,"졸려","","", "",0,0,false);
+		ScheduleProjectVO project = new ScheduleProjectVO(5,"졸려","", "",0,0,false, "EMP_002");
 		mapper.setProject(project);
-	}*/
+		
+		mapper.getProjectList(null);
+	}
 	
 /*	@Test
 	public void setUpProject(){
@@ -135,9 +143,21 @@ public class ScheduleTestController {
 		List<ScheduleProject> list = mapper.getProjectList();
 		log.info(list);
 	}*/
-	
+/*	
 	@Test
 	public void delCategory(){
 		mapper.delCategory(66);
-	}	
+	}	*/
+	
+/*	@Test
+	public void getProjectEmp(){
+		ScheduleProjectSearchVO search = new ScheduleProjectSearchVO("EMP_006");
+		mapper.getProjectList(search);
+	}*/
+	
+/*	@Test
+	public void test(){
+		empMapper.getDeptListEmp("EMP_006");
+	}
+*/
 }

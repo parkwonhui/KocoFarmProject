@@ -20,6 +20,6 @@
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderListVO" alias="ScheduleCalenderListVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderMoveVO" alias="ScheduleCalenderMoveVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryMoveVO" alias="ScheduleCategoryMoveVO" />
-
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProjectSearchVO" alias="ScheduleProjectSearchVO" />
 	</typeAliases>
 </configuration>

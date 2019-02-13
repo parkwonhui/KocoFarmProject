@@ -1,15 +1,19 @@
 package org.kocofarm.service.module;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.mapper.module.ScheduleMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,15 +27,16 @@ import net.sf.json.JSONArray;
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService{
 	private ScheduleMapper mapper;
+	private EmpMapper empMapper;
 	
 	@Override
-	public List<ScheduleProjectVO> getProjectList(ScheduleProjectVO project) {
-		List<ScheduleProjectVO> list = mapper.getProjectList(project);
+	public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO search) {
+		List<ScheduleProjectVO> list = mapper.getProjectList(search);
 		return list;
 	}
 
 	@Override
-	public JSONArray getProjectJsonArray(ScheduleProjectVO project){
+	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO project){
 		JSONArray jsonArr = new JSONArray();
 		List<ScheduleProjectVO> projectList = mapper.getProjectList(project);
 		log.info("..........getProjectJsonArray:"+projectList);
@@ -143,7 +148,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 			return 1000;
 		}
 		
-		project.setProjectLeader("");
 		project.setProjectStartDt("");
 		project.setProjectEndDt("");
 		int re = mapper.setProject(project);
@@ -204,6 +208,19 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return calender;
 	}
 	
+	public boolean getDepartment(String empId){
+		List<DepartmentsVO> departmentList = empMapper.getDeptListEmp(empId);
+		if(null == departmentList){
+			return false;
+		}
+		
+		if(departmentList.isEmpty()){
+			return false;
+		}
+				
+		return true;
+	}
+
 	public int checkCalenderInfo(ScheduleCalenderVO calender){
 		if(null == calender)
 			return -1;
