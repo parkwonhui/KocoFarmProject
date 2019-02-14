@@ -4,8 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false"></jsp:include>
-<link rel="stylesheet" type="text/css"
-	href="/resources/css/module/rent.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/module/rent.css" />
 
 <div class="cont_wrap">
 	<!-- SubTitle Area -->
@@ -34,7 +33,8 @@
 					<tbody id="contentsTbBody">
 						<tr>
 							<th scope="col">회의실 번호</th>
-							<td class="left"><input type="text" name="mId" id="mId"
+							<td class="left">
+							<input type="text" name="mId" id="mId"
 								placeholder="회의실 번호를 확인해주세요." />
 								<button type="button" id="idChk">회의실 번호 확인</button>
 							<p class="result">
@@ -43,7 +43,8 @@
 						</tr>
 						<tr>
 							<th scope="col">회의실 이름</th>
-							<td class="left"><input type="text" name="mName"
+							<td class="left">
+							<input type="text" name="mName"
 								placeholder="+회의실번호를 입력해주세요." /></td>
 						</tr>
 						<tr>

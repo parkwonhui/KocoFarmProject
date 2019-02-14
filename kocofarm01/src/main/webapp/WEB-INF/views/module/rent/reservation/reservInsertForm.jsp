@@ -2,7 +2,87 @@
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/rent.css" />
-  <script>
+</body>
+</html>
+	<div class="cont_wrap">
+		<!-- SubTitle Area -->
+		<div class="sub_title">
+			<div class="sub_title_top">
+				<div class="sub_title_inner">
+					<h2>Reservation<span>회의실을 예약할 수 있습니다.</span></h2>
+					<ul class="sub_nav">
+						<li>홈 > </li>
+						<li class="on">회의실 예약</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="contents_wrap">
+			<!-- 회의실 수정 -->
+			<div class="contents">
+				<!-- 등록 -->
+				 <form action="/reservation/reservInsert" method="post" >
+					<h1 class="txt_c">${mroom.mName}</h1>
+					<table class="contents_tb wr" id="contTb">
+						<colgroup>
+							<col width="15%">
+						</colgroup>
+						<tbody id="contentsTbBody">
+							<tr>
+								<th scope="col">회의 제목</th>
+								<td class="left">
+									<input type="text" name="mTitle">
+								</td>
+								<th scope="col">부서</th>
+								<td class="left">
+									<select class="form-control" name="dept" >
+										<c:forEach items="${deptList}" var="dept" >
+										  <option value="${dept.deptId}">${dept.deptNm}</option>
+										 </c:forEach>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="col">예약 날짜</th>
+								<td class="left">
+									<input type="text" id="startDt" name="startDt" readonly=readonly />
+								</td>
+								<th scope="col">종료 날짜</th>
+								<td class="left">
+									<input type="text" id="endDt" name="endDt" readonly=readonly />
+								</td>
+							</tr>
+							<tr>
+								<th scope="col">사용자</th>
+								<td class="left">
+									<select class="form-control" name="rvUser" >
+										<c:forEach items="${empList}" var="emp" varStatus="status">
+										  <option value="${emp.empId}">${emp.korNm}</option>
+										 </c:forEach>
+									</select>
+								</td>
+								<th scope="col">예약자</th>
+								<td class="left">
+									<select class="form-control" name="rvWriter">
+										<c:forEach items="${empList}" var="emp2" >
+										  <option value="${emp.empId}">${emp2.korNm} </option>
+										 </c:forEach>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="hidden" name="mId" id="mId" value="${mroom.mId}" >
+					<div class="btn_wrap">
+						<div class="flt_r">
+							<input class="auto_wth_btn_b" type="button" id="idChk" value="예약" >
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+<script>
   $( function() {
     var 
       from = $( "#startDt" ).datepicker({
@@ -63,89 +143,28 @@
       return date;
     }
   } );
+  
+  $(function(){
+		$("#idChk").click(function(){
+			var query = {mId : $("#mId").val()};
+			
+			$.ajax({
+				url: "/reservation/idChk",
+				type: "post",
+				data: query,
+				dataType: "json",
+				success: function(data) {
+					if(data == 1){
+						alert("등록된 회의실 입니다");
+						
+					}else{
+						$("form").submit();	
+					}//end if
+				}
+			}); //end ajax
+		})//end idChk
+	});
 
 </script>
-</body>
-</html>
-
-	<div class="cont_wrap">
-		<!-- SubTitle Area -->
-		<div class="sub_title">
-			<div class="sub_title_top">
-				<div class="sub_title_inner">
-					<h2>Reservation<span>회의실을 예약할 수 있습니다.</span></h2>
-					<ul class="sub_nav">
-						<li>홈 > </li>
-						<li class="on">회의실 예약</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		
-		<div class="contents_wrap">
-			<!-- 회의실 수정 -->
-			<div class="contents">
-				<!-- 등록 -->
-				<form action="/reservation/reservInsert" method="post" >
-					<h1 class="txt_c">${mroom.mName}</h1>
-					<table class="contents_tb wr" id="contTb">
-						<colgroup>
-							<col width="15%">
-						</colgroup>
-						<tbody id="contentsTbBody">
-							<tr>
-								<th scope="col">회의 제목</th>
-								<td class="left">
-									<input type="text" name="mTitle">
-								</td>
-								<th scope="col">부서</th>
-								<td class="left">
-									<select class="form-control" name="dept" >
-										<c:forEach items="${deptList}" var="dept" >
-										  <option value="${dept.deptId}">${dept.deptNm}</option>
-										 </c:forEach>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th scope="col">예약 날짜</th>
-								<td class="left">
-									<input type="text" id="startDt" name="startDt" readonly=readonly />
-								</td>
-								<th scope="col">종료 날짜</th>
-								<td class="left">
-									<input type="text" id="endDt" name="endDt" readonly=readonly />
-								</td>
-							</tr>
-							<tr>
-								<th scope="col">사용자</th>
-								<td class="left">
-									<select class="form-control" name="rvUser" >
-										<c:forEach items="${empList}" var="emp" varStatus="status">
-										  <option value="${emp.empId}">${emp.korNm}</option>
-										 </c:forEach>
-									</select>
-								</td>
-								<th scope="col">예약자</th>
-								<td class="left">
-									<select class="form-control" name="rvWriter">
-										<c:forEach items="${empList}" var="emp2" >
-										  <option value="${emp.empId}">${emp2.korNm} </option>
-										 </c:forEach>
-									</select>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<input type="hidden" name="mId" value="${mroom.mId }" >
-					<div class="btn_wrap">
-						<div class="flt_r">
-							<input class="auto_wth_btn_b" type="submit" value="예약">
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
  <script type="text/javascript" src="/resources/js/module/rent.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

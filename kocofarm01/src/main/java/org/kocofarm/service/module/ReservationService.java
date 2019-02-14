@@ -26,5 +26,8 @@ public interface ReservationService {
 	
 	//회의실 이름
 	public MeetingRoomVO getMroomNm(int mId); 
+	
+	//회의실 번호 확인
+	public ReservationVO getIdChk(int mId);
 
 }

@@ -60,5 +60,12 @@ public class ReservationServiceImpl implements ReservationService{
 		
 		return mapper.getMroomNm(mId);
 	}
+
+	//회의실 번호 확인
+	@Override
+	public ReservationVO getIdChk(int mId) {
+		
+		return mapper.getIdChk(mId);
+	}
 	
 }

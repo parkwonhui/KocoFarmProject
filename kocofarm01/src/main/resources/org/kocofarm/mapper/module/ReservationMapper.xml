@@ -60,5 +60,11 @@
 	<delete id="delReserv">
 	 delete reservation where rv_id = #{rvId}
 	</delete>
+	
+	<select id="getIdChk" resultType="org.kocofarm.domain.meetingRoom.ReservationVO">
+		select m_id AS mId
+		 from reservation
+		where m_id= #{mId}
+	</select>
 
 </mapper>
