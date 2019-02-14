@@ -14,43 +14,45 @@
 		from meetingroom where m_id > 0
 		]]>
 	</select>
-	
+
 	<insert id="setMroom">
 		insert into meetingroom (m_id, m_name, p_num, reg_dt)
 		values(#{mId}, #{mName}, #{pNum}, sysdate)
 	</insert>
-	
-	<!-- <insert id="insertSelectKey">
-		<selectKey keyProperty="mId" order="BEFORE" resultType="int">
-		 select m_id AS mId from dual
-		 </selectKey>
-		 
-		insert into meetingroom (m_id, m_name, p_num, reg_dt)
-		values(#{mId}, #{mName}, #{pNum}, sysdate)
-	</insert> -->
-	
+
+	<!-- <insert id="insertSelectKey"> <selectKey keyProperty="mId" order="BEFORE" 
+		resultType="int"> select m_id AS mId from dual </selectKey> insert into meetingroom 
+		(m_id, m_name, p_num, reg_dt) values(#{mId}, #{mName}, #{pNum}, sysdate) 
+		</insert> -->
+
 	<select id="getMroom" resultType="org.kocofarm.domain.meetingRoom.MeetingRoomVO">
-		select 
-			m_id AS mId,
-			m_name AS mName,
-			p_num AS pNum,
-			reg_dt AS regDt,
-			up_dt AS upDt
+		select
+		m_id AS mId,
+		m_name AS mName,
+		p_num AS pNum,
+		reg_dt AS regDt,
+		up_dt AS upDt
 		from meetingroom where m_id = #{mId}
 	</select>
-	
+
 	<delete id="delMroom">
 		delete meetingroom where m_id = #{mId}
 	</delete>
-	
+
 	<update id="setUpMroom">
-		update meetingroom 
+		update meetingroom
 		set
-			m_id = #{mId},
-			m_name = #{mName},
-			p_num = #{pNum},
-			up_dt = sysdate
+		m_id = #{mId},
+		m_name = #{mName},
+		p_num = #{pNum},
+		up_dt = sysdate
 		where m_id = #{mId}
 	</update>
 
+	<!-- 회의실 번호 확인 -->
+	<select id="getIdChk" resultType="org.kocofarm.domain.meetingRoom.MeetingRoomVO">
+		select m_id AS mId
+		 from meetingroom
+		where m_id= #{mId}
+	</select>
 </mapper>

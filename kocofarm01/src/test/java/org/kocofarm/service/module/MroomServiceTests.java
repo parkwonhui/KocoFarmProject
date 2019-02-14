@@ -59,15 +59,15 @@ public class MroomServiceTests {
 			log.info(service.remove(1));
 		}*/
 		
-		/*@Test
+		@Test
 		public void testUpate(){
-			MeetingRoomVO mroom = service.get(3);
+			MeetingRoomVO mroom = service.getMroom(2);
 			
 			if(mroom == null){
 				return;
 			}//end if
 			
-			mroom.setMName("회의실7");
-			log.info(service.modify(mroom));
-		}*/
+			mroom.setmName("회의실7");
+			log.info(service.setUpMroom(mroom));
+		}
 }

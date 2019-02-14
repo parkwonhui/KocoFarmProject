@@ -24,4 +24,7 @@ public interface ReservationMapper {
 	
 	//수정
 	public int setUpReserv(ReservationVO reserv);
+	
+	//회의실 번호 확인
+	public ReservationVO getIdChk (int mId);
 }

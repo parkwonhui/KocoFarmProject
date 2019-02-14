@@ -42,6 +42,7 @@ public class RentCarController {
 	private String rentCarDetailList(Model model){
 		log.info("rentCarDetailList");
 		model.addAttribute("list", rentCarService.getRentCarDetailList());
+		model.addAttribute("moduleNm", "rent");
 		return "/module/rent/car/rentCarDetailList";
 	}
 	
