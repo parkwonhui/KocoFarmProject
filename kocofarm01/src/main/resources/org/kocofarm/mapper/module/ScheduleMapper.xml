@@ -109,8 +109,8 @@ delete from category where project_id = #{projectId}
 	ON p.project_id = m.project_id
 	and emp_id = #{empId}
 </select>
-<select id="getMember" parameterType="int">
-select * from member where project_id = #{projectId}
+<select id="getMember" parameterType="int" resultType="ScheduleMemberVO">
+select * from member where calender_id = #{calenderId}
 </select>
 <insert id="setMember" parameterType="ScheduleMemberVO">
 insert into member(MEMBER_INDEX, COMPLETE_COUNT, PROGRESS_COUNT, EMP_ID, CALENDER_ID)

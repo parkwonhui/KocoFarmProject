@@ -175,6 +175,13 @@ public class ScheduleController {
 			return ERROR_CODE.UNKNOWN_ERROR;
 		}
 		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		boolean isMember = isMember(calender.getCalenderId(), loginVO);
+		boolean isProjectManager = (null == isManager(session)) ? false : true;
+		if(false == isMember && false == isProjectManager){
+			return ERROR_CODE.AUTH_FAIL;
+		}
+		
 		int result = checkCalenderInfo(calender);
 		if(1 != result)
 			return result;
@@ -246,11 +253,6 @@ public class ScheduleController {
 		
 		project.setProjectLeader(loginVO.getEmpId());
 		log.info("/insertProject..........");
-		
-		if(null == project){
-			log.info("null == project");
-			return ERROR_CODE.UNKNOWN_ERROR;
-		}
 		
 		String title = project.getTitle();
 		if(null == title){
@@ -331,7 +333,7 @@ public class ScheduleController {
 	@PostMapping("/delCalender")
 	public int delCalender(HttpSession session, int calenderId){
 		if(false == isProjectManager(session)){
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ERROR_CODE.AUTH_FAIL;
 		}
 		
 		log.info("/delCalender..........");
@@ -343,7 +345,7 @@ public class ScheduleController {
 	@PostMapping("/delCategory")
 	public int delCategory(HttpSession session, ScheduleCategoryVO category){
 		if(false == isProjectManager(session)){
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ERROR_CODE.AUTH_FAIL;
 		}
 		
 		if(null == category){
@@ -360,7 +362,7 @@ public class ScheduleController {
 	public int delProject(HttpSession session, int projectId){
 		LoginVO loginVO = isManager(session);
 		if(null == loginVO){
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ERROR_CODE.AUTH_FAIL;
 		}
 		
 		log.info("/delProject..........");
@@ -426,6 +428,23 @@ public class ScheduleController {
 	 	return true;
 	}
 	
+	// 해당 일정의 작업자인지 체크
+	public boolean isMember(int calenderId, LoginVO loginVO){
+		String empId = loginVO.getEmpId();
+		if(null == empId){
+			return false;
+		}
+		
+		List<ScheduleMemberVO> list = service.getMember(calenderId);
+		for(ScheduleMemberVO member : list){
+			if(true == member.getEmpId().equals(empId)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public ScheduleCalenderVO initCalender(ScheduleCalenderVO calender){
 		if(null == calender.getBackgroundColor()){
 			calender.setBackgroundColor("");
@@ -485,8 +504,9 @@ public class ScheduleController {
 		Pattern pattern =  Pattern.compile("^((19|20)\\d\\d)?([- /.])?(0[1-9]|1[012])([- /.])?(0[1-9]|[12][0-9]|3[01])$");
 		Matcher matcher = pattern.matcher(date); 
 
-		if(matcher.find() == false)
+		if(matcher.find() == false){
 			return false;
+		}
 		
 		return true;
 	}

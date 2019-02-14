@@ -175,9 +175,14 @@ public class ScheduleTestController {
 		log.info(mapper.getManagerProjectList("EMP_006"));
 	}*/
 	
-	@Test
+/*	@Test
 	public void getSelectProject(){
 		log.info(mapper.getSelectProject(42));
 	}
-
+*/
+	
+	@Test
+	public void getMember(){
+		log.info(mapper.getMember(142));
+	}
 }

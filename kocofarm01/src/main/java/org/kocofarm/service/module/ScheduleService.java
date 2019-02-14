@@ -7,6 +7,7 @@ import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleMemberVO;
 import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
@@ -29,4 +30,5 @@ public interface ScheduleService {
 	public int delCategory(ScheduleCategoryVO category);
 	public int setMoveCategory(ScheduleCategoryMoveVO category);
 	public int delProject(int projectId);
+	public List<ScheduleMemberVO> getMember(int calenderId);
 }

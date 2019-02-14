@@ -32,7 +32,7 @@ public interface ScheduleMapper {
 	public int delCaltegoryWithProject(int projectId);
 	public int delProject(int projectId);
 	public int setMember(ScheduleMemberVO member);
-	public int getMember(int projectId);
+	public List<ScheduleMemberVO> getMember(int calenderId);
 	public int delMemberWithCalender(int calenderId);						// 일정 id로 멤버삭제
 	public int delMemberWithCategory(int categoryId);						// 카테고리 id로 멤버삭제
 	public int delMemberWithProject(int projectId);							// 프로젝트 id로 멤버삭제

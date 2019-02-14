@@ -177,6 +177,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return re;
 	}
 	
+	@Override
+	public List<ScheduleMemberVO> getMember(int calenderId){
+		return mapper.getMember(calenderId);
+	}
+	
 	// 중복 체크
 	public boolean searchProject(List<ScheduleProjectVO> list, ScheduleProjectVO project){
 		for(ScheduleProjectVO vo : list){
