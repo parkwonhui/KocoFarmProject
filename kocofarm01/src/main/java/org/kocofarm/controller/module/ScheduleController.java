@@ -41,15 +41,11 @@ public class ScheduleController {
 	@GetMapping("/")
 	private String getProjectList(HttpSession session, Model model){
 		LoginVO loginVo = (LoginVO) session.getAttribute("loginVO");
-		
 		if(null == loginVo){
 			return "/main";
 		}
 		
-		// 자신이 팀장인지 정보 전달
-		boolean isLeader = service.getDepartment(loginVo.getEmpId());
-		session.setAttribute("teamLeader", "1");
-		
+		log.info("loginVo.getMangerId():"+loginVo.getManagerId());
 		// left 메뉴 정보
 		model.addAttribute("moduleNm", "schedule");
 		return "/module/schedule/list";
@@ -59,15 +55,16 @@ public class ScheduleController {
 	private String getProjectListAjax(HttpSession session, HttpServletResponse response, ModelAndView mv){
 		log.info("/list..........");
 		LoginVO loginVo = (LoginVO) session.getAttribute("loginVO");
-		// NULL이면 리다이렉션 처리해야함
 		if(null == loginVo){
 			log.info(null == loginVo);
 			return "/main";
 		}
+	
+		String empId = loginVo.getEmpId();
 		
 		try {
 			ScheduleProjectSearchVO search = new ScheduleProjectSearchVO(loginVo.getEmpId());
-			JSONArray list = service.getProjectJsonArray(search);
+			JSONArray list = service.getProjectJsonArray(search, empId);
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().print(list);
 			
@@ -153,16 +150,8 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/insertProject")
 	public int setProject(HttpSession session, ScheduleProjectVO project){
-		if(null == session){
-			return -1;
-		}
-
-		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		LoginVO loginVO = isManager(session);
 		if(null == loginVO){
-			return -1;
-		}
-		
-		if(null == loginVO.getEmpId()){
 			return -1;
 		}
 		
@@ -175,7 +164,12 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/editProject")
-	public int setUpProject(ScheduleProjectVO project){
+	public int setUpProject(HttpSession session, ScheduleProjectVO project){
+		LoginVO loginVO = isManager(session);
+		if(null == loginVO){
+			return -1;
+		}
+		
 		log.info("/editProject..........");
 		log.info("project정보:"+project);
 		int re = service.setUpProject(project);
@@ -221,5 +215,28 @@ public class ScheduleController {
 		log.info("projectId:"+projectId);
 		int re = service.delProject(projectId);
 		return re;
+	}
+	
+	public LoginVO isManager(HttpSession session){
+		if(null == session){
+			return null;
+		}
+
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO){
+			return null;
+		}
+		
+		String empId = loginVO.getEmpId();
+		if(null == empId || true == empId.isEmpty()){
+			return null;
+		}
+		
+		String managerId = loginVO.getManagerId();
+		if(null == managerId || true == managerId.isEmpty()){
+			return null; 
+		}
+		
+		return loginVO;
 	}
 }

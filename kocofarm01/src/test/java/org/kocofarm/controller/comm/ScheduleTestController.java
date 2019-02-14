@@ -127,15 +127,15 @@ public class ScheduleTestController {
 		ScheduleCategory category = new ScheduleCategory(66, "새로운 카테고리2", 1, 2);
 		mapper.setUpCategory(category);
 	}*/
-/*		
-	@Test
+		
+/*	@Test
 	public void setProject(){
 		ScheduleProjectVO project = new ScheduleProjectVO(5,"졸려","", "",0,0,false, "EMP_002");
 		mapper.setProject(project);
 		
 		mapper.getProjectList(null);
-	}*/
-	
+	}
+*/	
 /*	@Test
 	public void setUpProject(){
 		ScheduleProject project = new ScheduleProject(101,"졸려BBBBB222BB","2019-03-22","2019-05-22", "",80,0,true);
@@ -150,23 +150,28 @@ public class ScheduleTestController {
 		mapper.delCategory(66);
 	}	*/
 	
-/*	@Test
+	@Test
 	public void getProjectEmp(){
 		ScheduleProjectSearchVO search = new ScheduleProjectSearchVO("EMP_006");
 		mapper.getProjectList(search);
-	}*/
+	}
 	
 /*	@Test
 	public void test(){
 		empMapper.getDeptListEmp("EMP_006");
 	}
 */
-	@Test
+/*	@Test
 	public void setProject(){
 		//ScheduleProjectVO project = new ScheduleProjectVO(5,"졸려","EMP_002","", "",0,0,false);
 		//mapper.setProject(project);
 		mapper.setMember(new ScheduleMemberVO(1000, 0, 0, "EMP_002", 142, 2));
 		//mapper.getProjectList(null);
-	}
+	}*/
+	
+/*	@Test
+	public void getProjectWithManager(){
+		log.info(mapper.getManagerProjectList("EMP_006"));
+	}*/
 
 }

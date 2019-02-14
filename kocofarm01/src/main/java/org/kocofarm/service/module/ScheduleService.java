@@ -15,8 +15,8 @@ import org.springframework.ui.Model;
 import net.sf.json.JSONArray;
 
 public interface ScheduleService {
-	public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO search);
-	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO search);
+	//public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO search);
+	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO search, String empId);
 	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId);
 	public int setCalender(ScheduleCalenderVO calender);
 	public int setUpCalender(ScheduleCalenderVO scheduleCalender);
@@ -29,5 +29,4 @@ public interface ScheduleService {
 	public int delCategory(ScheduleCategoryVO category);
 	public int setMoveCategory(ScheduleCategoryMoveVO category);
 	public int delProject(int projectId);
-	public boolean getDepartment(String empId);
 }

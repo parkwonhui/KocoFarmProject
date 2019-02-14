@@ -1,5 +1,6 @@
 package org.kocofarm.service.module;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -30,18 +31,34 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private ScheduleMapper mapper;
 	private EmpMapper empMapper;
 	
-	@Override
+/*	@Override
 	public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO search) {
 		List<ScheduleProjectVO> list = mapper.getProjectList(search);
 		return list;
-	}
+	}*/
 
 	@Override
-	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO project){
+	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO project, String empId){
 		JSONArray jsonArr = new JSONArray();
+		
 		List<ScheduleProjectVO> projectList = mapper.getProjectList(project);
+		List<ScheduleProjectVO> managerProjectList = mapper.getManagerProjectList(empId);
+
+		// managerProjectList에서 projectList의 중복되는 값을 제거한 최종 list
+		List<ScheduleProjectVO> addList = new ArrayList<ScheduleProjectVO>(); 		
+		
+		// projectList와 중복되는 프로젝트 제외
+		for(ScheduleProjectVO managerListVO : managerProjectList){
+			if(true == searchProject(projectList, managerListVO)){
+				addList.add(managerListVO);
+			}
+		}
+		
+		projectList.addAll(addList);
+		
 		log.info("..........getProjectJsonArray:"+projectList);
 		jsonArr = JSONArray.fromObject(projectList);
+		
 		return jsonArr;
 	}
 
@@ -217,19 +234,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return calender;
 	}
 	
-	public boolean getDepartment(String empId){
-		List<DepartmentsVO> departmentList = empMapper.getDeptListEmp(empId);
-		if(null == departmentList){
-			return false;
-		}
-		
-		if(departmentList.isEmpty()){
-			return false;
-		}
-				
-		return true;
-	}
-
 	public int checkCalenderInfo(ScheduleCalenderVO calender){
 		if(null == calender)
 			return -1;
@@ -276,6 +280,17 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 		if(matcher.find() == false)
 			return false;
+		
+		return true;
+	}
+	
+	// 중복 체크
+	public boolean searchProject(List<ScheduleProjectVO> list, ScheduleProjectVO project){
+		for(ScheduleProjectVO vo : list){
+			if(project.getProjectId() == vo.getProjectId()){
+				return false;
+			}
+		}		
 		
 		return true;
 	}

@@ -8,11 +8,12 @@
 	 * from project
 	<if test="empId != null">
 		where project_id in(
-		select m.project_id from
-		project p
-		join member m
-		ON p.project_id = m.project_id
-		and emp_id = #{empId}
+		select project_id from 
+		category cat
+		join calender cal
+		on cat.category_id = cal.category_id
+		and calender_id in
+		(select member.CALENDER_ID from member where emp_id = #{empId})
 		)
 		<!-- where like '%'|| #{title} ||'%' -->
 	</if>
@@ -115,4 +116,7 @@ select * from member where project_id = #{projectId}
 insert into member(MEMBER_INDEX, COMPLETE_COUNT, PROGRESS_COUNT, EMP_ID, CALENDER_ID, PROJECT_ID)
 values(member_id_seq.nextval, 0, 0, #{empId}, 0, #{projectId} )
 </insert>
+<select id="getManagerProjectList" parameterType="String" resultType="ScheduleProjectVO">
+select * from project where project_leader = #{empId}
+</select>
 </mapper>

@@ -252,8 +252,8 @@ function projectList(data){
          $('.contents').append(html);
      });
      
- 	var teamLeader = '<c:out value="${teamLeader}" />';
-     if("1" == teamLeader){
+     var managerId = '<c:out value="${loginVO.managerId}" />';
+     if(managerId == empId){
      $('.contents').append('<div>'+
      	'<button type="button" class="btn project-info-style h3" data-toggle="modal" data-target="#create-project-modal">create'+
 			'project..</button>'+
