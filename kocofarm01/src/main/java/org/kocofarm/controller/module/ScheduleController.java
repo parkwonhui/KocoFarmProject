@@ -136,6 +136,10 @@ public class ScheduleController {
 		log.info("/listCalender.............");
 		log.info("listCalender projectId:"+projectId);
 		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
+		if(null == list){
+			return "";		// error url
+		}
+		
 		log.info("list.............."+list);
 		model.addAttribute("calenderList", list);
 		return "/module/schedule/calenderListJsonParse";
@@ -272,7 +276,6 @@ public class ScheduleController {
 		int projectId = (int) project.getProjectId();
 		
 		ScheduleMemberVO member = new ScheduleMemberVO();
-		member.setProjectId(projectId);
 		member.setEmpId(project.getProjectLeader());
 		
 		return re;

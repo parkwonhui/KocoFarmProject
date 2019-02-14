@@ -17,5 +17,4 @@ public class ScheduleMemberVO {
 	int progressCount;
 	String empId;
 	int calenderId;
-	int projectId;
 }

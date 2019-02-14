@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
@@ -38,13 +39,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 		JSONArray jsonArr = new JSONArray();
 		
 		List<ScheduleProjectVO> projectList = mapper.getProjectList(project);
-		log.info("getAjson23123");
 		List<ScheduleProjectVO> managerProjectList = mapper.getManagerProjectList(empId);
-		log.info("getAjson123123");
-
+		
 		// managerProjectList에서 projectList의 중복되는 값을 제거한 최종 list
 		List<ScheduleProjectVO> addList = new ArrayList<ScheduleProjectVO>(); 		
-		log.info("getAjso1111111");
 		// projectList와 중복되는 프로젝트 제외
 		for(ScheduleProjectVO managerListVO : managerProjectList){
 			if(true == searchProject(projectList, managerListVO)){
@@ -56,7 +54,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 		log.info(managerProjectList);
 		
 		projectList.addAll(addList);
-		
+				
 		log.info("..........getProjectJsonArray:"+projectList);
 		jsonArr = JSONArray.fromObject(projectList);
 		
@@ -72,8 +70,21 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Override
 	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId) {
-		
 		List<ScheduleCalenderListVO> list = mapper.getProjectCalenderList(projectId);
+		
+		// 작업자 정보 추가
+		for(ScheduleCalenderListVO calender : list){
+			int calenderId = calender.getCalenderId();
+			List<ScheduleMemberVO> memberList = mapper.getMember(calenderId);
+			List<EmpVO> empList = new ArrayList<EmpVO>();
+			for(ScheduleMemberVO member : memberList){
+				String memberEmp = member.getEmpId();
+				EmpVO empVO = empMapper.getEmp(memberEmp);				
+				empList.add(empVO);
+			}
+			calender.setMemberList(empList);
+		}
+		
 		return list;
 	}
 

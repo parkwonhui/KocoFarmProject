@@ -345,6 +345,16 @@ function addDynamicHtml(data){
 	            html += '<span class="calender_detail_startDt">'+ startDt.substring(0,10)+'</span><span> - </span>';
 	            html += '<span class="calender_detail_endDt">'+endDt.substring(0,10)+'</span>';
             }
+            
+            var memberListLength = data[i].memberList.length;
+            if(0 < memberListLength ){
+            	html += '</div>참여자</div>';
+            	for(var k = 0; k < memberListLength; ++k ){
+            		html += data[i].memberList[k].korNm;
+            		html += ' ';
+            	}
+            }
+            
             html += '<input type="hidden" class="calender_detail_completionPer" value="'+ data[i].completionPer+'"></input>';
             html += '<div class="calender-progress-bar">';
             html += '<div style=" height: 20px; background-color: #4CAF50; border-radius:10px; width:'+data[i].completionPer+'%" >'+data[i].completionPer+'</div>'
@@ -474,6 +484,9 @@ function ajaxRequest(sendUrl, sendData){
     		}else if(1005 == data){
     			alert('[실패] 완료상황은 0과 100 사이 값만 가능합니다');
         		
+    		}else if(1006 == data){
+    			alert('[실패] 권한이 없습니다');
+        	    	
     		}else if(-1 == data){
     			alert('[실패] 알 수 없는 에러');
     	    
