@@ -4,10 +4,12 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kocofarm.domain.comm.Criteria;
 import org.kocofarm.domain.rentCar.RentCarVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -20,11 +22,11 @@ public class RentCarServiceTests {
 	@Setter(onMethod_= {@Autowired})
 	private RentCarService rentCarService;
 	
-	@Test
+	/*@Test
 	public void testExist(){
 		log.info(rentCarService);
 		assertNotNull(rentCarService);
-	}
+	}*/
 	
 	/*@Test
 	public void testsetRentCarDetail(){
@@ -47,7 +49,8 @@ public class RentCarServiceTests {
 	
 	/*@Test
 	public void testgetRentCarDetailList(){
-		rentCarService.getRentCarDetailList().forEach(rentCar->log.info(rentCar));
+		//rentCarService.getRentCarDetailList().forEach(rentCar->log.info(rentCar));
+		rentCarService.getRentCarDetailList(new Criteria(2,10)).forEach(rentCar->log.info(rentCar));
 	}*/
 	
 	/*@Test
@@ -70,6 +73,8 @@ public class RentCarServiceTests {
 	public void testdelRentCarDetail(){
 		log.info("delete result : " + rentCarService.delRentCarDetail("사1234"));
 	}*/
+	
+	
 	
 	
 }//RentCarServiceTests

@@ -31,9 +31,6 @@
 		
 		from RENTCAR_DETAIL 
 	]]>
-	
-	
-	
 </select>  
 
 <!-- 등록 -->
@@ -82,6 +79,34 @@ update RENTCAR_DETAIL
 		where car_id = #{carId, jdbcType=VARCHAR}
 
 </update>
+
+
+<!-- 페이징처리 -->
+<select id = "getListWithPaging" resultType="org.kocofarm.domain.rentCar.RentCarVO">
+	<![CDATA[
+	SELECT	
+	]]>
+	<include refid = "basic"></include>
+	<![CDATA[
+		FROM 
+			(
+			SELECT /*+INDEX_ASC(RENCAR_DETAIL SYS_C007193)*/
+			rownum rn, CAR_ID,MODELNAME,CARMODEL, CONDITION, PRICE, YEAR, OIL_TYPE, REG_DT, UP_DT
+			
+			FROM RENTCAR_DETAIL			
+			WHERE ROWNUM <= #{pageNum} * #{amount}
+			ORDER BY CAR_ID ASC
+			)			
+		WHERE RN> (#{pageNum} -1 ) * #{amount}
+	]]>
+</select>
+
+<!-- 글 갯수 -->
+<select id = "getTotalCount" resultType = "int">
+SELECT COUNT(*)
+FROM RENTCAR_DETAIL
+WHERE PRICE>0
+</select>
 
 
 </mapper>

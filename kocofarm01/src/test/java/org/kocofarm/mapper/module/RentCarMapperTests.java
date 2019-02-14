@@ -1,7 +1,10 @@
 package org.kocofarm.mapper.module;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kocofarm.domain.comm.Criteria;
 import org.kocofarm.domain.rentCar.RentCarVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -62,6 +65,15 @@ public class RentCarMapperTests {
 		
 		int count = rentCarMapper.setUpRentCarDetail(rentCar);
 		log.info("UPDATE COUNT : " + count);
+	}*/
+	
+	/*@Test
+	public void testPaging(){
+		Criteria cri = new Criteria();
+		cri.setPageNum(2);
+		cri.setAmount(10);
+		List<RentCarVO> list = rentCarMapper.getListWithPaging(cri);
+		list.forEach(rentCar -> log.info(rentCar));
 	}*/
 
 }
