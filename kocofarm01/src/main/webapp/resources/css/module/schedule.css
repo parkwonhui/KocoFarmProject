@@ -909,3 +909,8 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	height: 20px;
 	cursor:pointer;
 }
+
+/* left 메뉴 z index 수정 */
+.left_wrap{
+	z-index: 1;
+}
