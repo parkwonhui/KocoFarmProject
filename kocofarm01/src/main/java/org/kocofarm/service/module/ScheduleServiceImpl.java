@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
-import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
@@ -174,7 +173,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 		ScheduleMemberVO member = new ScheduleMemberVO();
 		member.setProjectId(projectId);
 		member.setEmpId(project.getProjectLeader());
-		mapper.setMember(member);
 		
 		return re;
 	}
