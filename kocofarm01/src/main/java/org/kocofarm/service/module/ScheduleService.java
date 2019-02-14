@@ -17,6 +17,7 @@ import net.sf.json.JSONArray;
 public interface ScheduleService {
 	//public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO search);
 	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO search, String empId);
+	public ScheduleProjectVO getSelectProject(int projectId);	
 	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId);
 	public int setCalender(ScheduleCalenderVO calender);
 	public int setUpCalender(ScheduleCalenderVO scheduleCalender);

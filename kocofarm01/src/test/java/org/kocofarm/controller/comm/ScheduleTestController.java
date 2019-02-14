@@ -148,13 +148,14 @@ public class ScheduleTestController {
 	@Test
 	public void delCategory(){
 		mapper.delCategory(66);
-	}	*/
+	}	
 	
 	@Test
 	public void getProjectEmp(){
 		ScheduleProjectSearchVO search = new ScheduleProjectSearchVO("EMP_006");
 		mapper.getProjectList(search);
 	}
+	*/
 	
 /*	@Test
 	public void test(){
@@ -173,5 +174,10 @@ public class ScheduleTestController {
 	public void getProjectWithManager(){
 		log.info(mapper.getManagerProjectList("EMP_006"));
 	}*/
+	
+	@Test
+	public void getSelectProject(){
+		log.info(mapper.getSelectProject(42));
+	}
 
 }

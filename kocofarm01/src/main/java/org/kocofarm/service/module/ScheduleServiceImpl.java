@@ -61,6 +61,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return jsonArr;
 	}
 
+	public ScheduleProjectVO getSelectProject(int projectId){
+		ScheduleProjectVO project = mapper.getSelectProject(projectId);
+		return project;
+	}
+
 
 	@Override
 	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId) {

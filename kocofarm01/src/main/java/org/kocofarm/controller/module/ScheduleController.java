@@ -18,6 +18,7 @@ import org.kocofarm.domain.schedule.ScheduleProjectVO;
 import org.kocofarm.service.module.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,9 +95,12 @@ public class ScheduleController {
 	*/
 	
 	@PostMapping("/sendProjectId")
-	private ModelAndView getProjectListAjax(@ModelAttribute("project_id") int projectId){
+	private ModelAndView getProjectListAjax(@ModelAttribute("project_id") int projectId, HttpSession session){
 		log.info("/sendProjectId..........");
 		log.info("project_id:"+projectId);
+		
+		session.setAttribute("selectProjectId", projectId);		
+
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectId", projectId);
 		mv.addObject("moduleNm", "schedule");
@@ -116,7 +120,11 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/insertCalender")
-	private int setCalender(ScheduleCalenderVO calender){
+	private int setCalender(HttpSession session, ScheduleCalenderVO calender){
+		if(false == isProjectManager(session)){
+			return -1;
+		}
+		
 		log.info("/insertCalender..........");
 		int re = service.setCalender(calender);
 		return re;
@@ -124,7 +132,9 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/editCalender")
-	public int setUpCalender(ScheduleCalenderVO calender){
+	public int setUpCalender(HttpSession session, ScheduleCalenderVO calender){
+		// 팀장이거나 해당 캘린더의 작업자인지 확인
+		
 		log.info("/editCalender..........");
 		int re = service.setUpCalender(calender);
 		return re;
@@ -132,7 +142,11 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/insertCategory")
-	public int setCategory(ScheduleCategoryVO category){
+	public int setCategory(HttpSession session, ScheduleCategoryVO category){
+		if(false == isProjectManager(session)){
+			return -1;
+		}
+		
 		log.info("/insertCategory..........");
 		log.info("insertCategory:"+category);
 		int re = service.setCategory(category);
@@ -141,7 +155,11 @@ public class ScheduleController {
 
 	@ResponseBody
 	@PostMapping("/editCategory")
-	public int setUpCategory(ScheduleCategoryVO category){
+	public int setUpCategory(HttpSession session, ScheduleCategoryVO category){
+		if(false == isProjectManager(session)){
+			return -1;
+		}
+		
 		log.info("/editCategory..........");
 		int re = service.setUpCategory(category);
 		return re;
@@ -157,7 +175,7 @@ public class ScheduleController {
 		
 		project.setProjectLeader(loginVO.getEmpId());
 		log.info("/insertProject..........");
-		int re = service.setProject(project);
+		int re = service.setProject(project);		
 		
 		return re;
 	}
@@ -177,7 +195,11 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/editCalenderPos")
-	public int setUpCalenderPos(@RequestBody List<ScheduleCalenderMoveVO> data){
+	public int setUpCalenderPos(HttpSession session, @RequestBody List<ScheduleCalenderMoveVO> data){
+		if(false == isProjectManager(session)){
+			return -1;
+		}
+		
 		log.info("/editCalenderPos..........");
 		int re = service.setUpCalenderPos(data);
 		return re;
@@ -185,7 +207,11 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/editCategoryPos")
-	public int setCategoryPos(ScheduleCategoryMoveVO category){
+	public int setCategoryPos(HttpSession session, ScheduleCategoryMoveVO category){
+		if(false == isProjectManager(session)){
+			return -1;
+		}
+		
 		log.info("/editCategoryPos..........");
 		int re = service.setMoveCategory(category);
 		return re;	
@@ -193,7 +219,11 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/delCalender")
-	public int delCalender(int calenderId){
+	public int delCalender(HttpSession session, int calenderId){
+		if(false == isProjectManager(session)){
+			return -1;
+		}
+		
 		log.info("/delCalender..........");
 		int re = service.delCalender(calenderId);
 		return re;
@@ -201,7 +231,11 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/delCategory")
-	public int delCategory(ScheduleCategoryVO category){
+	public int delCategory(HttpSession session, ScheduleCategoryVO category){
+		if(false == isProjectManager(session)){
+			return -1;
+		}
+		
 		log.info("/delCategory..........");
 		int re = service.delCategory(category);
 		return re;
@@ -220,6 +254,7 @@ public class ScheduleController {
 		return re;
 	}
 	
+	// 팀장 여부 체크
 	public LoginVO isManager(HttpSession session){
 		if(null == session){
 			return null;
@@ -241,5 +276,39 @@ public class ScheduleController {
 		}
 		
 		return loginVO;
+	}
+	
+	// 현재 접속 중인 프로젝트의 팀장인지 체크
+	public boolean isProjectManager(HttpSession session){
+		if(null == session){
+			return false;
+		}
+		
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		if(null == projectVO){
+			return false;
+		}
+		
+		String managerId = projectVO.getProjectLeader();
+		if(null == managerId){
+			return false;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO){
+			return false;
+		}
+		
+	 	String empId = loginVO.getEmpId();
+	 	if(null == empId){
+	 		return false;
+	 	}
+	 	
+	 	if(false == empId.equals(managerId)){
+	 		return false;
+	 	}
+	 	
+	 	return true;
 	}
 }

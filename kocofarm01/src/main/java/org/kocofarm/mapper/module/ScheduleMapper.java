@@ -14,6 +14,7 @@ import org.kocofarm.domain.schedule.ScheduleProjectVO;
 public interface ScheduleMapper {
 	public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO project);
 	public List<ScheduleProjectVO> getManagerProjectList(String empId);		// 자신이 manager인 프로젝트 검색
+	public ScheduleProjectVO		getSelectProject(int projectId);		// 프로젝트 id로 자신이 보고있는 화면의 project 정보를 가져온다
 	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId);
 	public int setCalender(ScheduleCalenderVO scheduleCalender);
 	public int setUpCalender(ScheduleCalenderVO scheduleCalender);

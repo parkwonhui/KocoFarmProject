@@ -119,4 +119,7 @@ values(member_id_seq.nextval, 0, 0, #{empId}, 0 )
 <select id="getManagerProjectList" parameterType="String" resultType="ScheduleProjectVO">
 select * from project where project_leader = #{empId}
 </select>
+<select id="getSelectProject" parameterType="int" resultType="ScheduleProjectVO">
+select * from project where project_id = #{projectId}
+</select>
 </mapper>
