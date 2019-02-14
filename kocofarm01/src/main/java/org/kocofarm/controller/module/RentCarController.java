@@ -32,23 +32,22 @@ public class RentCarController {
 	
 	
 	//Rent의 전체목록으로 이동
-	@GetMapping("/list")
+	/*@GetMapping("/list")
 	private String list(){
 		return "/module/rent/list";
-	}
+	}*/
 	
 	//목록
 	@GetMapping("/rentCarDetailList")
 	private String rentCarDetailList(Criteria cri, Model model){
 		
-		log.info("rentCarDetailList : " + cri);		
-		
+		//log.info("rentCarDetailList : " + cri);		
 		model.addAttribute("list", rentCarService.getRentCarDetailList(cri));
-		//model.addAttribute("pageMaker", new PageDTO(cri, 100));//전체 데이터수 처리 전에 임의로 넣은것
+		/*leftbar*/
+		model.addAttribute("moduleNm", "rent");
 		
 		int total = rentCarService.getTotal(cri);
-		log.info("total : " + total);
-		
+		//log.info("total : " + total);		
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
 		return "/module/rent/car/rentCarDetailList";

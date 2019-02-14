@@ -22,7 +22,8 @@ public class ReservationController {
 	@GetMapping("/reservlist")
 	private String reservList(Model model) {
 		model.addAttribute("list", service.getReservList());
-
+		/*leftbar*/
+		model.addAttribute("moduleNm", "rent");
 		return "/module/rent/reservation/reservlist";
 	}
 
