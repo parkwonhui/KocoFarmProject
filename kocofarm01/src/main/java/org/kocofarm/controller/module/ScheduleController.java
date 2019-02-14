@@ -171,7 +171,6 @@ public class ScheduleController {
 		}
 		
 		log.info("/editProject..........");
-		log.info("project정보:"+project);
 		int re = service.setUpProject(project);
 		return re;
 	}
@@ -210,9 +209,13 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/delProject")
-	public int delProject(int projectId){
+	public int delProject(HttpSession session, int projectId){
+		LoginVO loginVO = isManager(session);
+		if(null == loginVO){
+			return -1;
+		}
+		
 		log.info("/delProject..........");
-		log.info("projectId:"+projectId);
 		int re = service.delProject(projectId);
 		return re;
 	}
