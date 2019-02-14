@@ -172,7 +172,7 @@ $("#modify-project-button").on("click", function(){
 
 // 검색 버튼
 $("#schBtn").on("click", function(){
-	var searchData = $("#schWord").val();
+	/* var searchData = $("#schWord").val();
 	
 	var sendUrl = "getProjectListSearch";
 	var sendData = {title:searchData};
@@ -187,7 +187,7 @@ $("#schBtn").on("click", function(){
 	    },
 	    error : function(error) {	    	
 	    },	// error
-	  });// ajax
+	  });// ajax */
 });
 
 function ajaxListRequest(sendUrl, sendData){
@@ -226,30 +226,39 @@ function projectListAjaxRequest(){
 	  });// ajax
 }
 
-function projectList(data){
+function projectList(data){	
 	 $('.contents').empty();
-     $.each(data, function(index, project){
-    	 
-         $('.contents').append(        	
-         	'<div class="project-info-style">'+
-         	'<form name="enterProject" method="post" action="sendProjectId">'+	
-	         	'<input type="hidden" name ="project_id" value='+project.projectId+' />'+
-				'<div name="projectId" class="sub_title_inner h4 responeProjectId">'+project.title+'</div>'+
-			'</form>'+
-			'<div>'+
-			'<img src ="/resources/img/schedule/settings.png" class="project-setting" id="project-modify-modal-button" data-toggle="modal" data-target="#modify-project-modal" />'+
+	 
+	 var empId = '<c:out value="${loginVO.empId}" />';
+		
+     $.each(data, function(index, project){ 
+    	 var html = ('<div class="project-info-style">'+
+      	'<form name="enterProject" method="post" action="sendProjectId">'+	
+     	'<input type="hidden" name ="project_id" value='+project.projectId+' />'+
+		'<div name="projectId" class="sub_title_inner h4 responeProjectId">'+project.title+'</div>'+
+		'</form>'+
+		'<div>');
+		
+ 		if(project.projectLeader == empId){
+			html += '<img src ="/resources/img/schedule/settings.png" class="project-setting" id="project-modify-modal-button" data-toggle="modal" data-target="#modify-project-modal" />'+
 			'</div>'+	
 			'<div>'+
 			'<img src = "/resources/img/schedule/dustbin.png" id="project-delete-modal-button" class="project-setting" data-toggle="modal" data-target="#delete-project-modal" />'+	
-			'</div>'+
-			'</div>'
-         );
+			'</div>';
+		}
+		
+		html += '</div>';
+    	 
+         $('.contents').append(html);
      });
      
+     var managerId = '<c:out value="${loginVO.managerId}" />';
+     if(managerId == empId){
      $('.contents').append('<div>'+
      	'<button type="button" class="btn project-info-style h3" data-toggle="modal" data-target="#create-project-modal">create'+
 			'project..</button>'+
 			'</div>');
+     }
      
       $(document).on("click", "#project-delete-modal-button", function(event){    	
      	var parent = $(this).parent().parent().children('form[name=enterProject]');

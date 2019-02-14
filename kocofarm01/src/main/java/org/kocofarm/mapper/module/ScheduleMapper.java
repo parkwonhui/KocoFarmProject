@@ -6,11 +6,14 @@ import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleMemberVO;
+import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
 
 public interface ScheduleMapper {
-	public List<ScheduleProjectVO> getProjectList(ScheduleProjectVO project);
+	public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO project);
+	public List<ScheduleProjectVO> getManagerProjectList(String empId);		// 자신이 manager인 프로젝트 검색
 	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId);
 	public int setCalender(ScheduleCalenderVO scheduleCalender);
 	public int setUpCalender(ScheduleCalenderVO scheduleCalender);
@@ -27,4 +30,6 @@ public interface ScheduleMapper {
 	public int delCalenderWithProject(int projectId);					// 프로젝트 삭제 시 하위 일정, 카테고리 삭제
 	public int delCaltegoryWithProject(int projectId);
 	public int delProject(int projectId);
+	public int setMember(ScheduleMemberVO member);
+	public int getMember(int projectId);
 }
