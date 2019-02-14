@@ -104,6 +104,9 @@ $( function() {
 			
 		var projectId = "${projectId}";
 		add_project_id = projectId;
+		
+		is_project_manager = "${bProjectManager}";
+		
 		$.ajax({
 			url : 'listCalender',
 			data : {

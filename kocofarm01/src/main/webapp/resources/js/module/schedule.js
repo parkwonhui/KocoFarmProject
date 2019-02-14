@@ -17,10 +17,12 @@ var drag_category_x;					// 이동하는 카테고리의 x
 var drag_category_projectId;			// 이동하는 카테고리의 프로젝트 id
 var drag_category_categoryId;			// 이동하는 카테고리의 id
 
+/* 프로젝트 관리자 여부 */
+var is_project_manager;
+
 
 (function($) {
-	
-	
+
     var elmDrag, replacerSet = $();
     var eventStack = ['dragstart', 'dragend', 'selectstart', 'dragover', 'dragenter', 'drop'];
     
@@ -102,6 +104,9 @@ var drag_category_categoryId;			// 이동하는 카테고리의 id
                 elmDrag = $(this);
                 index = (elmDrag).addClass('drop-elmDrag').index();
             }).on(eventStack[1], function() { 
+            	if(0 == is_project_manager){
+            		return;
+            	}
             	
             	// 일정 이동 시
             	if("" == drag_category_class){
@@ -120,9 +125,17 @@ var drag_category_categoryId;			// 이동하는 카테고리의 id
                 elmDrag = null;
                 
             }).not('a[href], img').on(eventStack[2], function() {
+            	if(0 == is_project_manager){
+            		return;
+            	}
+            	
                 this.dragDrop && this.dragDrop();
                 return false;
             }).end().add([this, replacer]).on('dragover dragenter drop', function(event) {
+            	if(0 == is_project_manager){
+            		return;
+            	}
+            	
                 if (!items.is(elmDrag) && options.linkTo !== $(elmDrag).parent().data('linkTo')) {
                     return true;
                 }
@@ -204,10 +217,10 @@ function calenderMoveAjax(moveCalender){
     	    data += drag_before_calender_category_id+', "calenderId":';
     	    data += calenderId+', "yPos":';
     	    data += y+'}';
-    	    if(index-1 >= 1)
-    	    	data += ", ";
+   	    	data += ",";
     		$(moveCalender).parent().children().eq(index).children(".this_calender_yPos").val(y++);
-    	} 
+    	}
+		data = data.substr(0, data.length - 1);
 		data += "]";
 	}else{
 		// y값 갱신
@@ -228,8 +241,7 @@ function calenderMoveAjax(moveCalender){
     	    data += drag_after_calender_category_id+', "calenderId":';
     	    data += calenderId+', "yPos":';
     	    data += otherY+'}';
-      	    if(index-1 >= 1)
-    	    	data += ", ";
+   	    	data += ",";
     		$(moveCalender).parent().children().eq(index).children(".this_calender_yPos").val(otherY++);	            		
     	}
     
@@ -245,12 +257,11 @@ function calenderMoveAjax(moveCalender){
     		data += drag_before_calender_category_id+', "calenderId":';
         	data += calenderId+', "yPos":';
         	data += beforeY+'}';        
-      	    if(index-1 >= 1)
-    	    	data += ", ";
+   	    	data += ",";
       	    
     		$(list).parent().children().eq(index).children(".this_calender_yPos").val(beforeY++);
     	}
-    	
+		data = data.substr(0, data.length - 1);
     	data += "]";
 	}
 
@@ -316,8 +327,14 @@ function addDynamicHtml(data){
       		html += '<ul class="connected li1">';
       		html += '<li class="calender_info">';
       		html += '<input class="category-name-input" type="text" readonly="true" value="'+data[i].categoryName+'"></input>';
-      		html += '<img src="/resources/img/schedule/dustbin.png" class="category-delete-btn" data-toggle="modal" data-target="#categoryDeleteModal"/>';
-			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal">새 일정 추가</button>';
+      		
+      		if(1 == is_project_manager){
+      			html += '<img src="/resources/img/schedule/dustbin.png" class="category-delete-btn" data-toggle="modal" data-target="#categoryDeleteModal"/>';      		
+      			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal">새 일정 추가</button>';
+      		}else{
+      			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal" disabled>새 일정 추가</button>';
+      		}
+      		
 			html += '<input type="hidden" class="this_project_id" value='+data[i].projectId+' />';
       		html += '<input type="hidden" class="this_category_id" value='+data[i].categoryId+' />';
       		html += '<input type="hidden" class="this_category_x" value='+data[i].xPos+' />';
@@ -348,7 +365,7 @@ function addDynamicHtml(data){
             
             var memberListLength = data[i].memberList.length;
             if(0 < memberListLength ){
-            	html += '</div>참여자</div>';
+            	html += '<div>참여자</div>';
             	for(var k = 0; k < memberListLength; ++k ){
             		html += data[i].memberList[k].korNm;
             		html += ' ';
@@ -368,13 +385,15 @@ function addDynamicHtml(data){
 		html += '</ul>';
 	    
     	// 새  카테고리
-		html += '<ul class="connected li1">';
-		html += '<li class="calender_info">';
-  		html += '<div><input class="add-category-name-input" type="text"></input><div>';
-        html += '<button type="button" class="btn btn-light btn-block add-category-button">새 카테고리 추가</button>';
-		html += '<input type="hidden" class="this_project_id" value='+projectId+' />';
-		html += '</li>';
-		html += '</ul>';
+		if(1 == is_project_manager){
+			html += '<ul class="connected li1">';
+			html += '<li class="calender_info">';
+	  		html += '<div><input class="add-category-name-input" type="text"></input><div>';
+	        html += '<button type="button" class="btn btn-light btn-block add-category-button">새 카테고리 추가</button>';
+			html += '<input type="hidden" class="this_project_id" value='+projectId+' />';
+			html += '</li>';
+			html += '</ul>';
+		}
 		
 		$(".con").append(html); 
 	    
@@ -425,10 +444,17 @@ function addDynamicHtml(data){
 	   
 	   /* 카테고리 값 체인지 이벤트 */
 	   $('.category-name-input').on("dblclick", function(){
+		    if(0 == is_project_manager){
+			   return;
+		   }
 		   $(this).attr("readonly", false);
 	   });
 	   
 	   $('.category-name-input').on("focusout", function(){
+		    if(0 == is_project_manager){
+			   return;
+		   }
+		   
 		   $(this).attr("readonly", true);
 		   
 		   var par = $(this).parent();
@@ -579,6 +605,10 @@ $('#calender_edit').click(function(){
 
 // 일정 삭제
 $('#calender_del').click(function(){
+	if(0 == is_project_manager){
+		alert('[에러] 권한이 없습니다');
+		return;
+	}
 	
 	$('#calenderModify').modal('toggle');
 	var data = { calenderId:add_calender_id };

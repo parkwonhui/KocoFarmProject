@@ -76,7 +76,7 @@ public class ScheduleController {
 	
 	@GetMapping("/list")
 	private String getProjectListAjax(HttpSession session, HttpServletResponse response, ModelAndView mv){
-		log.info("/list..........여기들어왓니??");
+		log.info("/list..........");
 		LoginVO loginVo = (LoginVO) session.getAttribute("loginVO");
 		if(null == loginVo){
 			log.info(null == loginVo);
@@ -120,11 +120,14 @@ public class ScheduleController {
 	@PostMapping("/sendProjectId")
 	private ModelAndView getProjectListAjax(@ModelAttribute("project_id") int projectId, HttpSession session){
 		log.info("/sendProjectId..........");
-		log.info("project_id:"+projectId);
-		
-		session.setAttribute("selectProjectId", projectId);		
 
+		session.setAttribute("selectProjectId", projectId);		
+		
+		boolean isProjectManager = isProjectManager(session);
+		int projectManagerVal = (true == isProjectManager) ? 1 : 0;
+	
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("bProjectManager", projectManagerVal);
 		mv.addObject("projectId", projectId);
 		mv.addObject("moduleNm", "schedule");
 		mv.setViewName("/module/schedule/project");
@@ -132,7 +135,7 @@ public class ScheduleController {
 	}
 		
 	@PostMapping("/listCalender")
-	private String getProjectCalenderList(int projectId, Model model){
+	private String getProjectCalenderList(HttpSession session, int projectId, Model model){
 		log.info("/listCalender.............");
 		log.info("listCalender projectId:"+projectId);
 		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
@@ -142,6 +145,7 @@ public class ScheduleController {
 		
 		log.info("list.............."+list);
 		model.addAttribute("calenderList", list);
+		
 		return "/module/schedule/calenderListJsonParse";
 	}
 	
@@ -470,7 +474,6 @@ public class ScheduleController {
 			return ERROR_CODE.UNKNOWN_ERROR;
 		}
 		
-		System.out.println("title.length() :"+title.length() );
 		if(title.length() > CHECK_VALUE.PROJECT_TITLE_LENGHT || title.length() <= 0){
 			return ERROR_CODE.CALENDER_TOO_MANY_TEXT;
 		}
