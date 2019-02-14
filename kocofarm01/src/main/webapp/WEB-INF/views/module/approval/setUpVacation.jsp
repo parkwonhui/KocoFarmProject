@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<!-- <link rel="stylesheet" type="text/css" href="/resources/css/common.css" /> -->
-<!-- <link rel="stylesheet" type="text/css" href="/resources/css/approval.css" /> -->
-<!-- <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+ <link rel="stylesheet" type="text/css" href="/resources/css/comm/common.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
+ <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
-<link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
@@ -26,24 +25,24 @@
 		</div>
 	
 		<!-- Contents Area -->
-		<%-- <div class="contents_wrap">
+		 <div class="contents_wrap">
 			<!-- basic draft input  -->
 			<div class="draft_wrap">
 				<h1 class="txt_c">기본 정보</h1>
 				<div class ="inf_wrap_box">
-					<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
+				<%-- 	<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
 					<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}
 					<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }
-					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }		 
+					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }		  --%>
 				</div>
 				<p></p>
 				<p></p>
-			</div> --%>
+			</div> 
 		
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form  role = "form" action="/approval/setUpVacation" method="post">
+				<form  role = "form" action="/module/approval/setUpVacation" method="post">
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>

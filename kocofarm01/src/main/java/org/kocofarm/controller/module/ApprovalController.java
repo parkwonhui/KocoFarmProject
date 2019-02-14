@@ -138,14 +138,10 @@ public class ApprovalController {
 	
 	/* 휴가 신청서 수정 하기 */
 	@GetMapping("/setUpVacation")
-	public String setUpVacation(@RequestParam("draftId") int draftId, Model model) throws Exception{
+	public String setUpVacation(@RequestParam("draftId") int draftId, Model model){
 		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
-		model.addAttribute("draftId",service.getDraft(draftId));
-		ApprVacationVO vacation = service.getVacation(draftId);
-		String SDt = vacation.getVacationStartDt();
-		String EDt = vacation.getVacationEndDt();
-
-		model.addAttribute("vacation",service.setUpVacation(vacation));
-		return "approval/setUpVacation";
+		model.addAttribute("draft",service.getDraft(draftId));
+		model.addAttribute("vacation",service.getVacation(draftId));
+		return "/module/approval/setUpVacation";
 	}
 }
