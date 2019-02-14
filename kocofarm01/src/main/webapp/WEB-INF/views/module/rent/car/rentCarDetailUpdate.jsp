@@ -22,6 +22,9 @@
 			<form id = "rentCarEditForm" action="" method = "post" >
 				<input type="hidden" name="mode" id="mode" value="edit" />
 				<input type="hidden" id = "car_id" name="carId" value="${rentCarDetail.carId }"/>
+				<input type = "hidden" name  = "pageNum" value = "${cri.pageNum}">
+  				<input type = "hidden" name  = "amount" value = "${cri.amount}"> 
+				
 				
 				<div class="contents">
 					<!-- 등록 -->
@@ -76,7 +79,8 @@
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r">
-					<input type="button" class="list_btn" id="listBtn" value="목록"  />
+					<input type="button" class="list_btn2" id="listBtn2" value="목록"  />
+					<input type="button" class="auto_wth_btn_r" value="   삭제   " id = "delete" >
 					 <input type="button" class="auto_wth_btn_y" value="수정완료" id = "Upenroll">				
 				</div>
 			</div>

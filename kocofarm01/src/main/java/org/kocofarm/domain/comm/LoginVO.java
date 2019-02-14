@@ -18,7 +18,7 @@ public class LoginVO {
 	private String deptId;
 	private String jobId;
 	private String positionId;
-	private String mangerId;
+	private String managerId;
 	private int authority;
 	private int salary;
 	private String regDt;
