@@ -27,7 +27,8 @@ public class MeetingRoomController {
 	@GetMapping("/mroomlist")
 	private String mroomList(Model model) {
 		model.addAttribute("list", service.getMroomList());
-
+		model.addAttribute("moduleNm", "rent");
+		
 		return "/module/rent/meetingroom/mroomlist";
 	}
 
