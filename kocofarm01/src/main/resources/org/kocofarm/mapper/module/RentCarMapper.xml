@@ -41,8 +41,8 @@
 	insert into RENTCAR_DETAIL
 				(CAR_ID,MODELNAME, CARMODEL, CONDITION, PRICE, YEAR, OIL_TYPE, REG_DT)
 		values
-				(#{carId}, #{modelName}, #{carModel},#{condition, jdbcType=VARCHAR},
-				 #{price}, #{year}, #{oilType, jdbcType=VARCHAR},sysdate)
+				(#{carId, jdbcType=VARCHAR}, #{modelName, jdbcType=VARCHAR}, #{carModel, jdbcType=VARCHAR},
+				#{condition, jdbcType=VARCHAR}, #{price}, #{year}, #{oilType, jdbcType=VARCHAR},sysdate)
 
 </insert> 
 
@@ -71,6 +71,7 @@
 <update id = "setUpRentCarDetail">
 update RENTCAR_DETAIL
 		set 
+			car_id = #{carId, jdbcType=VARCHAR},
 			modelName = #{modelName, jdbcType=VARCHAR},
 			carModel = #{carModel, jdbcType=VARCHAR},
 			condition = #{condition, jdbcType=VARCHAR},

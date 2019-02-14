@@ -177,36 +177,13 @@ public class UploadController {
 		
 		log.info("resource : " + resource);
 		
-		if(resource.exists() == false){
-			
-			return new resourceName = resource.getFilename();
-		}
-		
 		String resourceName = resource.getFilename();
 		
 		HttpHeaders headers = new HttpHeaders();
 		
 		try {
-			String downloadName = null;
-			
-			if(userAgent.contains("Trident")){
-				log.info("IE browser");
-				downloadName =
-						URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+"," ");
-			}else if(userAgent.contains("Edge")){
-				
-				log.info("Edge browser");
-				downloadName =
-						URLencoder.encode(resourceOriginalName, "UTF-8");
-			
-			}else{
-				log.info("Chrome browser");
-				downloadName = 
-						new String(resourceName.getBytes("UTF-8"),"ISO-8859-1" )
-			}
-			log.info("downloadName : " + downloadName);
-			
-			headers.add("Context-Disposition","attachment; filename=" + downloadName));
+			headers.add("Context-Disposition","attachment; filename=" + new String(resourceName.getBytes("UTF-8"),
+					"ISO-8859-1"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

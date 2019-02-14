@@ -10,14 +10,14 @@ public interface RentCarMapper {
 	//목록
 	//@Select("select * from RENTCAR_DETAIL")
 	public List<RentCarVO> getRentCarDetailList();	
-	/*//등록
+	//등록
 	public void setRentCarDetail(RentCarVO rentCar);
 	//조회
 	public RentCarVO getRentCarDetail(String carId);
 	//삭제
 	public int delRentCarDetail(String carId); 	
 	//수정
-	public int setUpRentCarDetail(RentCarVO rentCar);*/
+	public int setUpRentCarDetail(RentCarVO rentCar);
 	
 
 }
