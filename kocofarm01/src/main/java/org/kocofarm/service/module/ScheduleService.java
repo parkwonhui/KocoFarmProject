@@ -3,9 +3,11 @@ package org.kocofarm.service.module;
 import java.util.List;
 
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
 import org.springframework.ui.Model;
@@ -13,8 +15,8 @@ import org.springframework.ui.Model;
 import net.sf.json.JSONArray;
 
 public interface ScheduleService {
-	public List<ScheduleProjectVO> getProjectList(ScheduleProjectVO project);
-	public JSONArray getProjectJsonArray(ScheduleProjectVO project);
+	//public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO search);
+	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO search, String empId);
 	public List<ScheduleCalenderListVO> getProjectCalenderList(int projectId);
 	public int setCalender(ScheduleCalenderVO calender);
 	public int setUpCalender(ScheduleCalenderVO scheduleCalender);

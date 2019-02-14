@@ -1,15 +1,21 @@
 package org.kocofarm.service.module;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleMemberVO;
+import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.mapper.module.ScheduleMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,19 +29,36 @@ import net.sf.json.JSONArray;
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService{
 	private ScheduleMapper mapper;
+	private EmpMapper empMapper;
 	
-	@Override
-	public List<ScheduleProjectVO> getProjectList(ScheduleProjectVO project) {
-		List<ScheduleProjectVO> list = mapper.getProjectList(project);
+/*	@Override
+	public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO search) {
+		List<ScheduleProjectVO> list = mapper.getProjectList(search);
 		return list;
-	}
+	}*/
 
 	@Override
-	public JSONArray getProjectJsonArray(ScheduleProjectVO project){
+	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO project, String empId){
 		JSONArray jsonArr = new JSONArray();
+		
 		List<ScheduleProjectVO> projectList = mapper.getProjectList(project);
+		List<ScheduleProjectVO> managerProjectList = mapper.getManagerProjectList(empId);
+
+		// managerProjectList에서 projectList의 중복되는 값을 제거한 최종 list
+		List<ScheduleProjectVO> addList = new ArrayList<ScheduleProjectVO>(); 		
+		
+		// projectList와 중복되는 프로젝트 제외
+		for(ScheduleProjectVO managerListVO : managerProjectList){
+			if(true == searchProject(projectList, managerListVO)){
+				addList.add(managerListVO);
+			}
+		}
+		
+		projectList.addAll(addList);
+		
 		log.info("..........getProjectJsonArray:"+projectList);
 		jsonArr = JSONArray.fromObject(projectList);
+		
 		return jsonArr;
 	}
 
@@ -143,13 +166,20 @@ public class ScheduleServiceImpl implements ScheduleService{
 			return 1000;
 		}
 		
-		project.setProjectLeader("");
 		project.setProjectStartDt("");
 		project.setProjectEndDt("");
 		int re = mapper.setProject(project);
+		int projectId = (int) project.getProjectId();
+		
+		ScheduleMemberVO member = new ScheduleMemberVO();
+		member.setProjectId(projectId);
+		member.setEmpId(project.getProjectLeader());
+		mapper.setMember(member);
+		
 		return re;
 	}
 
+	@Transactional
 	@Override
 	public int setUpProject(ScheduleProjectVO project){
 		if(null == project)
@@ -250,6 +280,17 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 		if(matcher.find() == false)
 			return false;
+		
+		return true;
+	}
+	
+	// 중복 체크
+	public boolean searchProject(List<ScheduleProjectVO> list, ScheduleProjectVO project){
+		for(ScheduleProjectVO vo : list){
+			if(project.getProjectId() == vo.getProjectId()){
+				return false;
+			}
+		}		
 		
 		return true;
 	}

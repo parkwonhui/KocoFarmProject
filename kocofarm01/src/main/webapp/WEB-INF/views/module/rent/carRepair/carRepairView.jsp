@@ -16,13 +16,14 @@
 				</div>
 			</div>
 		</div>
-
+	 
+	${rentCarDetail.carId}
 		<!-- Contents Area -->
 		<div class="contents_wrap">
 			<!-- view -->
 			<form action="" id ="rentCarDetailForm" method = "get">
 				<input type = "hidden" name = "mode" id = "mode" value = "${param.mode}}" /> 
-				<input type = "hidden" name = "carId" id = "car_id" value = "${rentCarDetail.carId}" />
+				<input type = "hidden" name = "car_id" id = "car_id" value = "${rentCarDetail.carId}" />
 				
 				<div class="contents">
 					<!-- 상세 정보 -->
@@ -69,7 +70,7 @@
 			<div class="btn_wrap">
 				<div class="flt_r">
 					<input type="button" class="auto_wth_btn_y" value="수정" id = "updateForm">
-					<input type="button" class="auto_wth_btn_r" value="삭제" id = "delete" >
+					<input type="button" class="auto_wth_btn_r" value="삭제" id = "delete">
 				</div>
 			</div>
 		</div>

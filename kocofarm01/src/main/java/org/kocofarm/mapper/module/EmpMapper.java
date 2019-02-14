@@ -15,6 +15,7 @@ public interface EmpMapper {
 	
 	/* 부서 목록 */
 	List<DepartmentsVO> getDeptList();
-	
 
+	/* 팀장 여부 확인 */
+	List<DepartmentsVO> getDeptListEmp(String empId);
 }
