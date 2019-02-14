@@ -20,4 +20,7 @@ public interface MeetingRoomService {
 	
 	//목록
 	public List<MeetingRoomVO> getMroomList();
+	
+	//회의실 번호 확인
+	public MeetingRoomVO getIdChk(int mId);
 }
