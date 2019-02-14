@@ -19,7 +19,6 @@ import lombok.extern.log4j.Log4j;
 public class ReservationServiceImpl implements ReservationService{
 
 	private ReservationMapper mapper;
-	private EmpMapper empMpper;
 
 	//예약 등록
 	@Override
@@ -62,18 +61,11 @@ public class ReservationServiceImpl implements ReservationService{
 		return mapper.getMroomNm(mId);
 	}
 
-	//사원 목록
+	//회의실 번호 확인
 	@Override
-	public List<EmpVO> getEmpList() {
+	public ReservationVO getIdChk(int mId) {
 		
-		return empMpper.getEmpList();
-	}
-
-	//부서목록
-	@Override
-	public List<DepartmentsVO> getDeptList() {
-		
-		return empMpper.getDeptList();
+		return mapper.getIdChk(mId);
 	}
 	
 }

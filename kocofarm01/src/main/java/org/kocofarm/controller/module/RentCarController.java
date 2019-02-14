@@ -39,6 +39,7 @@ public class RentCarController {
 	
 	//목록
 	@GetMapping("/rentCarDetailList")
+
 	private String rentCarDetailList(Criteria cri, Model model){
 		
 		//log.info("rentCarDetailList : " + cri);		
@@ -48,8 +49,9 @@ public class RentCarController {
 		
 		int total = rentCarService.getTotal(cri);
 		//log.info("total : " + total);		
-		model.addAttribute("pageMaker", new PageDTO(cri, total));
-		
+		model.addAttribute("pageMaker", new PageDTO(cri, total));		
+
+
 		return "/module/rent/car/rentCarDetailList";
 	}
 	

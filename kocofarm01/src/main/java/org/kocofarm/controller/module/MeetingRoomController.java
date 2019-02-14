@@ -5,11 +5,13 @@ import org.kocofarm.service.module.MeetingRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
@@ -25,8 +27,8 @@ public class MeetingRoomController {
 	@GetMapping("/mroomlist")
 	private String mroomList(Model model) {
 		model.addAttribute("list", service.getMroomList());
-		/*leftbar*/
 		model.addAttribute("moduleNm", "rent");
+		
 		return "/module/rent/meetingroom/mroomlist";
 	}
 
@@ -48,6 +50,7 @@ public class MeetingRoomController {
 	//등록
 	@PostMapping("/mroomInsert")
 	private String mroomInsert(@ModelAttribute("mroom") MeetingRoomVO mroom) {
+		
 		service.setMroom(mroom);
 
 		return "redirect:/meetingroom/mroomlist";
@@ -79,5 +82,22 @@ public class MeetingRoomController {
 
 		return "redirect:/meetingroom/mroomlist";
 	}
+	
+	//회의실 번호 확인
+	@ResponseBody
+	@PostMapping("/idChk")
+	public int idChk(@RequestParam("mId")int mId){
+		
+		MeetingRoomVO idChk = service.getIdChk(mId);
+		
+		int result = 0;
+		
+		if(idChk != null){
+			result = 1;
+		}
+		
+		return result;
+		
+	}//end idChk
 
 }
