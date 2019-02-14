@@ -93,7 +93,7 @@
 			<div class="btn_wrap">
 				<div class="flt_r">
 					<c:if test="${loginVO.authority == 99}">
-						<input type="submit" value="삭제" />
+						<input class="auto_wth_btn_b" type="submit" value="삭제" />
 					</c:if>
 				</div>
 			</div>	

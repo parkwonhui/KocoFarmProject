@@ -49,6 +49,13 @@ public class MeetingRoomServiceImpl implements MeetingRoomService{
 
 		return mapper.getMroomList();
 	}
+
+	//회의실 번호 확인
+	@Override
+	public MeetingRoomVO getIdChk(int mId) {
+		
+		return mapper.getIdChk(mId);
+	}
 	
 	
 	

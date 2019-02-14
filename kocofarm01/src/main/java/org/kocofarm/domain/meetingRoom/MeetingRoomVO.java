@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class MeetingRoomVO implements Serializable {
+	
 	private int mId;
+	
 	private String mName;
+	
 	private int pNum;
 	private Date regDt;
 	private Date upDt;
