@@ -101,9 +101,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return re;
 	}
 	
+	@Transactional
 	@Override
 	public int delCalender(int calenderId){
-		int re = mapper.delCalender(calenderId);
+		int re = mapper.delMemberWithCalender(calenderId);
+		re = mapper.delCalender(calenderId);
 		return re;
 	}
 	
@@ -203,7 +205,12 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Transactional
 	@Override
 	public int delCategory(ScheduleCategoryVO category){
-		int re = mapper.delCalenderWithCategory(category);
+		if(null == category){
+			return -1;
+		}
+
+		int re = mapper.delMemberWithCategory(category.getCategoryId());
+		re = mapper.delCalenderWithCategory(category);
 		re = mapper.delCategory(category.getCategoryId());
 		return re;
 	}
@@ -219,7 +226,8 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Transactional
 	@Override
 	public int delProject(int projectId){
-		int re = mapper.delCalenderWithProject(projectId);
+		int re = mapper.delMemberWithProject(projectId);
+		re = mapper.delCalenderWithProject(projectId);
 		re = mapper.delCaltegoryWithProject(projectId);
 		re = mapper.delProject(projectId);
 		return re;

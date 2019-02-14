@@ -28,9 +28,15 @@ public interface ScheduleMapper {
 	public int delCalenderWithCategory(ScheduleCategoryVO category);		// 카테고리 삭제 시 하위 일정 삭제
 	public int setMoveCategoryPosX(ScheduleCategoryMoveVO category);
 	public int setOriCategoryPosX(ScheduleCategoryMoveVO category);
-	public int delCalenderWithProject(int projectId);					// 프로젝트 삭제 시 하위 일정, 카테고리 삭제
+	public int delCalenderWithProject(int projectId);						// 프로젝트 삭제 시 하위 일정, 카테고리 삭제
 	public int delCaltegoryWithProject(int projectId);
 	public int delProject(int projectId);
 	public int setMember(ScheduleMemberVO member);
 	public int getMember(int projectId);
+	public int delMemberWithCalender(int calenderId);						// 일정 id로 멤버삭제
+	public int delMemberWithCategory(int categoryId);						// 카테고리 id로 멤버삭제
+	public int delMemberWithProject(int projectId);							// 프로젝트 id로 멤버삭제
+	
+
+
 }

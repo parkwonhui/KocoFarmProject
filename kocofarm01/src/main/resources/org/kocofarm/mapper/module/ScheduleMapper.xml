@@ -122,4 +122,32 @@ select * from project where project_leader = #{empId}
 <select id="getSelectProject" parameterType="int" resultType="ScheduleProjectVO">
 select * from project where project_id = #{projectId}
 </select>
+
+<!-- 일정 삭제 시 member 삭제 -->
+<delete id="delMemberWithCalender" parameterType="int">
+	delete from member where calender_id = #{calenderId}
+</delete>
+
+<!-- 카테고리 삭제 시 member 삭제 -->
+<delete id="delMemberWithCategory" parameterType="int">
+	delete from member
+	where calender_id IN(
+	select cal.calender_id from
+	category cat
+	join calender cal
+	on cat.CATEGORY_ID = cal.CATEGORY_ID
+	and cat.CATEGORY_ID = #{category_id})
+</delete>
+
+<!-- 프로젝트 삭제 시 member 삭제 -->
+<delete id="delMemberWithProject" parameterType="int">
+	delete from member
+	where calender_id IN(
+	select cal.calender_id from
+	category cat
+	join calender cal
+	on cat.CATEGORY_ID = cal.CATEGORY_ID
+	and cat.project_id = #{projectId} )
+</delete>
+
 </mapper>
