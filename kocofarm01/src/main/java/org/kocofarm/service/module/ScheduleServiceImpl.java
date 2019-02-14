@@ -27,15 +27,27 @@ import net.sf.json.JSONArray;
 @Service
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService{
+	final static private class CHECK_VALUE{
+		final static int PROJECT_TITLE_LENGHT = 50;			// 프로젝트 길이
+		final static int CALENDER_DATE_LENGHT = 10;			// 시작,종료 날짜 String 길이
+		final static int CALENDER_COMPLETION_PER_MIN = 0;	// 일정 완료상황 최소 값
+		final static int CALENDER_COMPLETION_PER_MAX = 100;	// 일정 완료상황 최대 값
+	}
+	
+	final static public class ERROR_CODE{
+		final static int UNKNOWN_ERROR = -1;
+		final static int PROJECT_NAME_LENGHT_FAIL = 1000;
+		final static int CATEGORY_NAME_LENGHT_FAIL = 1001;
+		final static int CALENDER_TOO_MANY_TEXT = 1002;
+		final static int CALENDER_START_DT_WRONG = 1003;
+		final static int CALENDER_END_DT_WRONG = 1004;
+		final static int CALENDER_COMPLETION_PERCENT_WRONG = 1005;
+		final static int AUTH_FAIL = 1006;				// 접근할 수 없는 권한
+	};
+	
 	private ScheduleMapper mapper;
 	private EmpMapper empMapper;
 	
-/*	@Override
-	public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO search) {
-		List<ScheduleProjectVO> list = mapper.getProjectList(search);
-		return list;
-	}*/
-
 	@Override
 	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO project, String empId){
 		JSONArray jsonArr = new JSONArray();
@@ -75,8 +87,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 
 	@Override
 	public int setCalender(ScheduleCalenderVO calender) {
-		if(null == calender)
-			return -1;
+		if(null == calender){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 		
 		int result = checkCalenderInfo(calender);
 		if(1 != result)
@@ -89,8 +102,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Override
 	public int setUpCalender(ScheduleCalenderVO calender){
-		if(null == calender)
-			return -1;
+		if(null == calender){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 		
 		int result = checkCalenderInfo(calender);
 		if(1 != result)
@@ -114,23 +128,26 @@ public class ScheduleServiceImpl implements ScheduleService{
 		int re = 0;
 		for(ScheduleCalenderMoveVO calenderMove : calenderMoveList){
 			re = mapper.setUpCalenderPos(calenderMove);
-			if(0 >= re)
-				return -1;
+			if(0 >= re){
+				return ERROR_CODE.UNKNOWN_ERROR;
+			}
 		}
 		return re;
 	}
 	
 	@Override
 	public int setCategory(ScheduleCategoryVO category){
-		if(null == category)
-			return -1;
+		if(null == category){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 		
 		String categoryName = category.getCategoryName();
-		if(null == categoryName)
-			return -1;
+		if(null == categoryName){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 		
 		if(categoryName.length() > 5){
-			return 1001;
+			return ERROR_CODE.CATEGORY_NAME_LENGHT_FAIL;
 		}
 		
 		int re = mapper.setCategory(category);
@@ -140,14 +157,15 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Override
 	public int setUpCategory(ScheduleCategoryVO category){
 		if(null == category)
-			return -1;
+			return ERROR_CODE.UNKNOWN_ERROR;
 		
 		String categoryName = category.getCategoryName();
-		if(null == categoryName)
-			return -1;
+		if(null == categoryName){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 		
 		if(categoryName.length() > 5 || categoryName.length() <= 0){
-			return 1001;
+			return ERROR_CODE.CATEGORY_NAME_LENGHT_FAIL;
 		}
 		
 		int re = mapper.setUpCategory(category);
@@ -158,18 +176,17 @@ public class ScheduleServiceImpl implements ScheduleService{
 	public int setProject(ScheduleProjectVO project){
 		if(null == project){
 			log.info("null == project");
-			return -1;
+			return ERROR_CODE.UNKNOWN_ERROR;
 		}
 		
 		String title = project.getTitle();
 		if(null == title){
 			log.info("null이다");
-			return -1;
+			return ERROR_CODE.UNKNOWN_ERROR;
 		}
 		
-		if(title.length() > 5){
-			log.info("5보다 크다!!!!");
-			return 1000;
+		if(title.length() > CHECK_VALUE.PROJECT_TITLE_LENGHT){
+			return ERROR_CODE.PROJECT_NAME_LENGHT_FAIL;
 		}
 		
 		project.setProjectStartDt("");
@@ -187,15 +204,17 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Transactional
 	@Override
 	public int setUpProject(ScheduleProjectVO project){
-		if(null == project)
-			return -1;
+		if(null == project){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 		
 		String title = project.getTitle();
-		if(null == title)
-			return -1;
+		if(null == title){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 	
-		if(title.length() > 5 || title.length() <= 0){
-			return 1000;
+		if(title.length() > CHECK_VALUE.PROJECT_TITLE_LENGHT || title.length() <= 0){
+			return ERROR_CODE.PROJECT_NAME_LENGHT_FAIL;
 		}
 		
 		int re = mapper.setUpProject(project);
@@ -206,7 +225,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Override
 	public int delCategory(ScheduleCategoryVO category){
 		if(null == category){
-			return -1;
+			return ERROR_CODE.UNKNOWN_ERROR;
 		}
 
 		int re = mapper.delMemberWithCategory(category.getCategoryId());
@@ -246,41 +265,44 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 	
 	public int checkCalenderInfo(ScheduleCalenderVO calender){
-		if(null == calender)
-			return -1;
+		if(null == calender){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 		
 		String title = calender.getTitle();
-		if(null == title)
-			return -1;
+		if(null == title){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 		
 		System.out.println("title.length() :"+title.length() );
-		if(title.length() > 10 || title.length() <= 0){
-			return 1002;
+		if(title.length() > CHECK_VALUE.PROJECT_TITLE_LENGHT || title.length() <= 0){
+			return ERROR_CODE.CALENDER_TOO_MANY_TEXT;
 		}
 		
 		// calender 날짜 체크
 		String startDt = calender.getStartDt();
 		if(null == startDt){
-			return -1;
+			return ERROR_CODE.UNKNOWN_ERROR;
 		}
 		
 		if(startDt.length() >= 1){
-			if(10 != startDt.length() || false == dataCheck(startDt))
-				return 1003;
+			if(CHECK_VALUE.CALENDER_DATE_LENGHT != startDt.length() || false == dataCheck(startDt))
+				return ERROR_CODE.CALENDER_START_DT_WRONG;
 		}
 		
 		String endDt = calender.getStartDt();
-		if(null == endDt)
-			return -1;
+		if(null == endDt){
+			return ERROR_CODE.UNKNOWN_ERROR;
+		}
 
 		if(startDt.length() >= 1){
-			if(10 != endDt.length() || false == dataCheck(endDt))
-				return 1004;
+			if(CHECK_VALUE.CALENDER_DATE_LENGHT != endDt.length() || false == dataCheck(endDt))
+				return ERROR_CODE.CALENDER_END_DT_WRONG;
 		}
 		
 		int completionPer = calender.getCompletionPer();
-		if(0 > completionPer || completionPer > 100)
-			return 1005;
+		if(CHECK_VALUE.CALENDER_COMPLETION_PER_MIN > completionPer || completionPer > CHECK_VALUE.CALENDER_COMPLETION_PER_MAX)
+			return ERROR_CODE.CALENDER_COMPLETION_PERCENT_WRONG;
 		
 		return 1;
 	}
