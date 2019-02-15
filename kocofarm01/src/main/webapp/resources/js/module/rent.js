@@ -1,6 +1,4 @@
-$(function(){
-	
-	
+$(function(){	
 	//차량등록
 	$("#enroll").click(function() {
 		if(confirm("등록하시겠습니까?")){
@@ -64,47 +62,27 @@ $(function(){
 		}	
 	})
 	
+
 	
-	
-	/*
-	//차량번호 - 중복확인(ajax 이용)
-	$("#checkCar_Id").click(function() {
-		$.ajax({
-			type : "POST",
-			url : '/resources/rentCarDetailWriteForm.do',
-			dataType : "json",
-			error : function(){
-				alert("통신실패");
-			},
-			success : function() {
-				alert('통신성공')
-			}
-		})
-		
-	})*/
-	
-	/*Ajax 호출*/
+	/*차량 등록페이지 - Ajax 호출*/
 	$("#checkCar_Id").click(function(){
-		var ajaxMode = "getCarId";
-		$.ajax({
-			"url" : "getCarAjaxData.do",
-			"data" : {
-					"id" : $("#car_id").val(),
-					"ajaxMode" : ajaxMode
-			},
-			dataType : "json",
-			success : function(data){
 				
-				if(1 == data[0]){
-					alert("이미 존재하는 차량번호 입니다.\n정확한 차량번호를 입력 해 주세요.");
+		var query = {carId : $("#car_id").val()};		
+		$.ajax({
+			url : "/rent/getcarIdChk",
+			data : query,
+			type : "post",
+			dataType:"json",
+			success : function(data){				
+				if(1 == data){
+					alert("이미 존재하는 차량번호 입니다.\n차량번호를 정확히 입력 해 주세요.");
 					$("#car_id").val("");
 					$("#car_id").focus();
 				}else{
 					alert("사용 가능한 차량 번호 입니다.");
 				}
 			}	
-		})
-
+		})//ajax
 		
 	})
 	
@@ -135,6 +113,33 @@ $(function(){
 				actionForm.submit();
 			});
 
+	
+	//검색버튼 클릭
+	$("#schBtn").click(function() {
+		actionForm.attr("action", "/rent/rentCarDetailList");
+		alert("검색버튼 눌렀당")
+		
+	/*	if (!searchForm.find("option:selected")
+				.val()) {
+			alert("검색종류를 선택하세요");
+			return false;
+		}
+
+		if (!searchForm.find(
+				"input[name='keyword']").val()) {
+			alert("키워드를 입력하세요");
+			return false;
+		}
+
+		searchForm.find("input[name='pageNum']").val("1");
+		e.preventDefault();*/
+		actionForm.submit();
+	})
+	
+	
+	
+	
+	
 
 });/*전체function 괄호*/
 

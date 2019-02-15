@@ -67,7 +67,7 @@
 			사용자 : <input type="text" name="RES_USER" id = "RES_USER"><br>
 			예약차량 : <input type="text" name="CAR_ID" id = "CAR_ID" ><br>
 			예약시간 : <input type = "text" name = "time">
-					<button type = "button" id = "checkCar_Id">시간선택</button>
+					<!-- <button type = "button" id = "checkCar_Id">시간선택</button> -->
 			출발지 주소 : <input type = "text" name = "St_Addr">	<br>
 			도착지 주소 : <input type = "text" name = "De_Addr">	<br>
 			사용 목적 : <input type="text" name="purpose" id = "purpose"><br>			

@@ -18,9 +18,7 @@ import lombok.extern.log4j.Log4j;
 public class RentCarServiceImpl implements RentCarService {
 
 	@Setter(onMethod_= {@Autowired})
-	private RentCarMapper rentCarMapper;
-	
-	
+	private RentCarMapper rentCarMapper;	
 	
 	//목록
 	@Override
@@ -64,5 +62,10 @@ public class RentCarServiceImpl implements RentCarService {
 		return rentCarMapper.getTotalCount(cri);
 	}
 	
+	@Override
+	public RentCarVO getcarIdChk(String carID){
+		log.info("getcarIdChk....");
+		return rentCarMapper.getcarIdChk(carID);
+	}
 	
 }

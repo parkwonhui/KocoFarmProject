@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -72,6 +73,21 @@ public class RentCarController {
 		/*return "redirect:/rent/car/rentCarDetailList";	*/	
 		return "redirect:rentCarDetailList";
 	}
+	
+	//차량번호 중복확인
+	@ResponseBody
+	@PostMapping("/getcarIdChk")
+	public int getcarIdChk(@RequestParam("carId") String carId){
+		RentCarVO getcarIdChk = rentCarService.getcarIdChk(carId);
+		
+		int re = 0;
+		if(getcarIdChk != null){//carId가 이미 존재한다면
+			re = 1;
+		}
+		return re;
+	}//getcarIdChk
+	
+	
 	
 	//조회
 	@GetMapping("/rentCarDetailView")

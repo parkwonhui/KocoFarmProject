@@ -22,7 +22,8 @@ public interface RentCarMapper {
 	public List<RentCarVO> getListWithPaging(Criteria cri);
 	//글 갯수
 	public int getTotalCount(Criteria cri);
-	
+	//차량번호 중복확인
+	public RentCarVO getcarIdChk(String carID);
 	
 	
 }

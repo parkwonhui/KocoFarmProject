@@ -81,6 +81,25 @@ update RENTCAR_DETAIL
 </update>
 
 
+
+<!-- 페이징 처리  sql문 -->
+<sql id = "criteria">
+	<trim prefix = "(" suffix = ") AND" prefixOverrides = "OR">
+		<foreach item = "type" collection = "typeArr">
+			<trim prefix = "OR">
+				<choose>
+					<when test = "type == 'I'.toString()" ><!-- 차량번호 -->
+						CAR_ID like '%' || #{keyword} || '%'
+					</when>
+					<when test = "type == 'M'.toString()" ><!-- 차량모델명 -->
+						MODELNAME like '%' || #{keyword} || '%'
+					</when>						
+				</choose>			
+			</trim>				
+		</foreach>	
+	</trim>
+</sql>
+
 <!-- 페이징처리 -->
 <select id = "getListWithPaging" resultType="org.kocofarm.domain.rentCar.RentCarVO">
 	<![CDATA[
@@ -94,7 +113,13 @@ update RENTCAR_DETAIL
 			rownum rn, CAR_ID,MODELNAME,CARMODEL, CONDITION, PRICE, YEAR, OIL_TYPE, REG_DT, UP_DT
 			
 			FROM RENTCAR_DETAIL			
-			WHERE ROWNUM <= #{pageNum} * #{amount}
+			WHERE 
+	]]>	
+	
+	<include refid = "criteria"></include>
+		
+	<![CDATA[				
+			ROWNUM <= #{pageNum} * #{amount}
 			ORDER BY CAR_ID ASC
 			)			
 		WHERE RN> (#{pageNum} -1 ) * #{amount}
@@ -105,7 +130,18 @@ update RENTCAR_DETAIL
 <select id = "getTotalCount" resultType = "int">
 SELECT COUNT(*)
 FROM RENTCAR_DETAIL
-WHERE PRICE>0
+WHERE
+
+<include refid = "criteria"></include>
+
+ PRICE>0
+</select>
+
+<!-- 차량번호 중복확인 -->
+<select id = "getcarIdChk" resultType = "org.kocofarm.domain.rentCar.RentCarVO">
+SELECT CAR_ID AS carId
+FROM RENTCAR_DETAIL
+WHERE CAR_ID = #{carId}
 </select>
 
 
