@@ -42,7 +42,8 @@
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form  role = "form" action="/module/approval/setUpVacation" method="post">
+				<form  role = "form" action="/approval/setUpVacation?draftId=${draft.draftId} "method="post">
+					<input type="hidden"  id="draftId" name="draftId"  value="${draft.draftId}" />
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>
@@ -61,12 +62,12 @@
 							 	<tr>
 							 		<th class="inputText" scope="col"> 기안서 제목 </th>
 							 		<td><input type="text" name="draftTitle" 
-							 		value='<c:out value="${draft.draftTitle }"/>'readonly="readonly"></td>
+							 		value='<c:out value="${draft.draftTitle }"/>'></td>
 							 	</tr>
 							 	<tr>
 							 		<th class="inputText" scope="col"> 보존 년한 </th>
 							 		<td> <input type="text" name="draftYear"
-							 		value='<c:out value="${draft.draftYear }"/>'readonly="readonly"> </td>
+							 		value='<c:out value="${draft.draftYear }"/>'> </td>
 							 	</tr>
 							 </table>
 							 
@@ -81,8 +82,7 @@
 							 	<tr>
 							 		<th class="inputText">휴가 종류</th>
 							 		<td colspan="3">
-								 		<input type="radio" name = "vacationType" 
-								 		checked value='<c:out value="{vacation_form.vacationType}"/>'>
+								 		<!-- <input type="radio" name = "vacationType" 	checked value="{vacation.vacationType}">${vacation.vacationType} -->
 								 		<input type="radio" name = "vacationType" value="병가">병가
 										<input type="radio" name = "vacationType" value="오전반차"> 오전 반차
 										<input type="radio" name = "vacationType" value="오후반차"> 오후 반차
@@ -93,16 +93,16 @@
 							 	<tr>
 							 		<th class="inputText">시작 날짜</th>
 							 		<td><input type="text" id="Startdatepicker" name = "vacationStartDt" class="date" 
-							 		value="${vacation_form.vacationStartDt }" readonly=readonly /> </td>
+							 		value="${vacation.vacationStartDt }" /> </td>
 							 		<th class="inputText">종료 날짜</th>
 							 		<td><input type="text" id="Enddatepicker" name = "vacationEndDt" class="date" 
-							value="${vacation_form.vacationEndDt }" readonly=readonly /></td>
+							value="${vacation.vacationEndDt }"/></td>
 							 	</tr>
 							 	<tr>
 							 		<th class="inputText">총 일수 </th>
 							 		<td><input type="button" class="days_btn" id="dayBtn" value="계산" />
 							 		<td colspan="2"><input type="text" id ="vacationDays" name="vacationDays"
-							 		value='<c:out value="${vacation_form.vacationDays }"/>'></td>
+							 		value='<c:out value="${vacation.vacationDays }"/>'></td>
 							 	</tr>
 							 	
 							 	<tr>
@@ -112,7 +112,7 @@
 							 	<tr>
 							 		<td colspan="4" class="inputText txt_c">
 							 			<textarea rows="6" cols="120" name="vacationReason" class="wth100p">
-							 			<c:out value="${vacation_form.vacationReason}"/></textarea>
+							 			<c:out value="${vacation.vacationReason}"/></textarea>
 									</td>
 							 	</tr>
 							 	</table>
@@ -126,7 +126,7 @@
 								 	<tr>
 								 		<th class="inputText" scope="col">이름</th>
 								 		<td><input type=text  name="replacementId" 
-								 		value= '<c:out value="${vacation_form.replacementId }"/>'></td>
+								 		value= '<c:out value="${vacation.replacementId }"/>'></td>
 								 	</tr>
 								 	
 								 	<tr>
@@ -147,9 +147,10 @@
 			
 						<div class= flt_r>
 						<br><br>
-							<input type="hidden" name="formId" value="${form.formId}" />
-							<input type="hidden" name="empId" value="${empVO.empId }" />
-							<input type="submit" class="submitBtn" value="제출">
+							<%-- <input type="hidden" name="formId" value="${form.formId}" />
+							<input type="hidden" name="empId" value="${empVO.empId }" /> --%>
+							<input type="submit"  class="submitBtn" id="Save" value="제출" />
+							
 							<br><br>
 						</div>
 					</div>
@@ -157,6 +158,6 @@
 			</div>
 		
 		</div>
-
+</div>
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

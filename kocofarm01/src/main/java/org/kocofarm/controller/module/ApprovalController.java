@@ -15,6 +15,7 @@ import org.kocofarm.service.module.ApprovalService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -137,11 +138,22 @@ public class ApprovalController {
 	}
 	
 	/* 휴가 신청서 수정 하기 */
-	@GetMapping("/setUpVacation")
-	public String setUpVacation(@RequestParam("draftId") int draftId, Model model){
+	@GetMapping("/getSetUpVacPage")
+	public String getSetUpVacPage(@RequestParam("draftId") int draftId, Model model){
 		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
 		model.addAttribute("draft",service.getDraft(draftId));
 		model.addAttribute("vacation",service.getVacation(draftId));
-		return "/module/approval/setUpVacation";
+		return "module/approval/setUpVacation";
+	}
+	
+	@PostMapping("/setUpVacation")
+	public String setUpVacation(@RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation, Model model){
+		draft.setDraftId(draftId);
+		service.setUpVacation(vacation);
+		service.setUpDraft(draft);
+
+		
+		log.info("Here");
+		return "redirect:/approval/getDraftList";
 	}
 }

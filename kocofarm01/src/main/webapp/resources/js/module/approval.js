@@ -70,7 +70,7 @@ $(function() {
 		});
 		
 		$(".vacEdit_btn").click(function(){
-			location.href="setUpVacation?draftId="+$("#draftId").val();
+			location.href="/approval/getSetUpVacPage?draftId="+$("#draftId").val();
 			return false;
 		});
 		
@@ -89,6 +89,8 @@ $(function() {
 			return false;
 		});
 		
+		
+	
 });	
 
 
