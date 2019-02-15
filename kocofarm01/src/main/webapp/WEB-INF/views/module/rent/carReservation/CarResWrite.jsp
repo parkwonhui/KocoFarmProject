@@ -2,14 +2,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
-<link rel="stylesheet" type="text/css" href="/resources/css/module/rentCar.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/module/rent.css" />
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
 		<div class="sub_title">
 			<div class="sub_title_top">
 				<div class="sub_title_inner">
-					<h2>Rent <span id="subTitSpan">차량을 예약 할 수 있습니다.</span></h2>
+					<h2>RentCar <span id="subTitSpan">차량을 예약 할 수 있습니다.</span></h2>
 					<ul class="sub_nav">
 						<li>홈 > 차량관리 > </li>
 						<li class="on" id="subTitLi">예약</li>
@@ -18,80 +18,98 @@
 			</div>
 		</div>
 	
-	
-		<!-- Contents Area -->
-		 <%--<div class="contents_wrap">
+		<div class="contents_wrap">
 			<!-- write -->
-			<form action="" id="noticeForm" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="mode" id="mode" value="${param.mode}" />
-				<input type="hidden" name="noticeId" id="noticeId" value="${notice.noticeId}" />
-				<input type="hidden" name="fileYn" id="fileYn" value="${notice.fileNm}" />
+			<!-- <form action="" method="post" id = "rentCarWriteForm"> -->
+			<form action="/rent/rentCarDetailWrite" method="post" id = "rentCarWriteForm">			
+				<input type="hidden" name="mode" id="mode" value="write" />
 				
 				<div class="contents">
 					<!-- 등록 -->
 					<table class="contents_tb wr" id="contTb">
 						<colgroup>
-							<col width="20%">
-							<col width="*">
+							<col width="15%">
+							<col width="35%">
+							<col width="15%">
+							<col width="35%">
 						</colgroup>
 						<tbody id="contentsTbBody">
 							<tr>
-								<th scope="col">제목</th>
+								<th scope="col">예약자</th>
 								<td class="left">
-									<input type="text" name="title" id="title" class="tit" value="${notice.title}" />
+									<input type="text" name="carId" id = "car_id">
+								</td>
+								<th scope="col">사용자</th>
+								<td class="left">
+									<input type="text" name="modelName" id = "modelName" >
 								</td>
 							</tr>
 							<tr>
-								<th scope="col" colspan="2">내용</th>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<textarea name="contents" id="contents">${notice.contents}</textarea>
+								<th scope="col">운행시작일자</th>
+								<td class="left">
+									<input type = "radio" class="radio_btn" name="carModel" value = "싼타페">싼타페
+									 <input type = "radio" class="radio_btn" name="carModel" value = "레이">레이
+									 <input type = "radio" class="radio_btn" name="carModel" value = "SM3">SM3
+									 <input type = "radio" class="radio_btn" name="carModel" value = "k3">k3	
+								</td>
+								<th scope="col">운행시작시간</th>
+								<td class="left">
+									<input type = "radio" class="radio_btn" name="condition" value="신차" >신차
+									<input type = "radio" class="radio_btn" name="condition" value="중고차">중고차	
 								</td>
 							</tr>
 							<tr>
-								<th scope="col">파일 첨부</th>
-								<td class="left" id="fileArea">
-									<input type="file" name="fileNm" id="fileNm" />
-									<span id="fileTit">${notice.fileNm}</span>
+								<th scope="col">운행종료일자</th>
+								<td class="left">
+									<input type="text" name="price" id = "price">	
+								</td>
+								<th scope="col">운행종료시간</th>
+								<td class="left">
+									<input type="text" name="year" id = "year">
 								</td>
 							</tr>
+							<tr>
+								<th scope="col">차량</th>
+								<td class="left" colspan="3"><!-- oil_Type -> oilType 으로 변경-->
+									<input type = "radio" class="radio_btn" name="oilType" value="휘발유">휘발유
+				 					<input type = "radio" class="radio_btn" name="oilType" value="경유">경유
+				 					<input type = "button" id = "checkCar_Id" class="btn_y" value="차량목록">			
+								</td>
+								<th scope="col">사용목적</th>
+								<td class="left">
+									<input type="text" name="year" id = "year">
+								</td>								
+							</tr>
+							<tr>
+								<th scope="col">출발지 주소</th>
+								<td class="left">
+									<input type="text" name="price" id = "price">	
+								</td>
+								<th scope="col">도착지 주소</th>
+								<td class="left">
+									<input type="text" name="price" id = "price">	
+								</td>								
+							</tr>
+							
+							
 						</tbody>
 					</table>
 				</div>
-			</form> --%>
-		<!-- 삽입한 부분 -->	 <!-- action="rentCarDetailWrite.do" -->
-			<form action="" method="post" id = "CarResWrite"> 
-				<input type="hidden" name="mode" id="mode" value="write" />
-				
-			사용자 : <input type="text" name="RES_USER" id = "RES_USER"><br>
-			예약차량 : <input type="text" name="CAR_ID" id = "CAR_ID" ><br>
-			예약시간 : <input type = "text" name = "time"><br>
-			출발지 주소 : <input type = "text" name = "St_Addr">	<br>
-			도착지 주소 : <input type = "text" name = "De_Addr">	<br>
-			사용 목적 : <input type="text" name="purpose" id = "purpose"><br>			
-			<input type="button" value="등록" id = "enroll"><br>
-			
-		</form>
-			<!-- 삽입한 부분 -->
-			
+			</form>
 			
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r">
-					<input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = 'rentCarDetailList.do'" />
-					 <c:if test="${param.mode eq 'write'}">
-						<input type="button" class="write_btn" id="writeProCBtn" value="등록" />
-					</c:if>
+					<input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = '/rent/rentCarDetailList'" />
+<%-- 					 <c:if test="${param.mode eq 'write'}"> --%>
+						 <input type="button" class="write_btn" value="등록" id = "enroll" >
+					<%-- </c:if>
 					<c:if test="${param.mode eq 'edit'}">
 						<input type="button" class="edit_btn" id="editProCBtn" value="수정" />
-					</c:if> 
+					</c:if>  --%>
 				</div>
 			</div>
 		</div>
-		
-		
-		
-	
+	</div>
 <script type="text/javascript" src="/resources/js/module/rent.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

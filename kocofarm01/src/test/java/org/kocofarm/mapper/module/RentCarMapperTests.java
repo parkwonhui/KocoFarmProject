@@ -76,13 +76,13 @@ public class RentCarMapperTests {
 		list.forEach(rentCar -> log.info(rentCar));
 	}*/
 	
-	@Test
+	/*@Test
 	public void testSearch(){
 		Criteria cri = new Criteria();
 		cri.setKeyword("미니");
 		cri.setType("M");
 		List<RentCarVO> list = rentCarMapper.getListWithPaging(cri);
 		list.forEach(rentCar->log.info(cri));
-	}
+	}*/
 	
 }

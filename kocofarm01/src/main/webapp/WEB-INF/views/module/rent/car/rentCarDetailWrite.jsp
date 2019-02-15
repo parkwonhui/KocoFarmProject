@@ -39,9 +39,6 @@
 								<td class="left">
 									<input type="text" name="carId" id = "car_id">
 									<input type = "button" id = "checkCar_Id" class="btn_y" value="중복확인">
-									<p class="result">
-										<span class="msg"></span>
-									</p>
 								</td>
 								<th scope="col">차량 모델 명</th>
 								<td class="left">

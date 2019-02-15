@@ -28,10 +28,8 @@ public class ReservationController {
 	// 목록
 	@GetMapping("/reservlist")
 	private String reservList(Model model) {
-		model.addAttribute("list", service.getReservList());
-
-		/*leftbar*/
-		model.addAttribute("moduleNm", "rent");
+		model.addAttribute("list", service.getReservList());		
+		model.addAttribute("moduleNm", "rent");/*leftbar*/
 
 		return "/module/rent/reservation/reservlist";
 	}
@@ -41,8 +39,8 @@ public class ReservationController {
 	private String reservInsertForm(@RequestParam("mId")int mId,Model model) {
 		model.addAttribute("mroom", service.getMroomNm(mId) );
 		model.addAttribute("deptList", empService.getDeptList());
-		model.addAttribute("empList", empService.getEmpList());
-
+		model.addAttribute("empList", empService.getEmpList());		
+		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		return "/module/rent/reservation/reservInsertForm";
 	}
 

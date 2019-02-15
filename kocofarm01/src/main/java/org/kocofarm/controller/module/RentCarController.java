@@ -32,12 +32,6 @@ public class RentCarController {
 	private RentCarService rentCarService;		
 	
 	
-	//Rent의 전체목록으로 이동
-	/*@GetMapping("/list")
-	private String list(){
-		return "/module/rent/list";
-	}*/
-	
 	//목록
 	@GetMapping("/rentCarDetailList")
 
@@ -58,7 +52,10 @@ public class RentCarController {
 	
 	//등록페이지 이동
 	@GetMapping("/rentCarDetailWrite")
-	public String rentCarDetailWrite(){
+	public String rentCarDetailWrite(Model model){
+		/*leftbar*/
+		model.addAttribute("moduleNm", "rent");
+		
 		return "/module/rent/car/rentCarDetailWrite";
 	}
 	
@@ -68,8 +65,7 @@ public class RentCarController {
 		
 		log.info("rentCarDetailWrite : " + rentCar);
 		rentCarService.setRentCarDetail(rentCar);
-		rttr.addFlashAttribute("result", rentCar.getCarId());
-		
+		rttr.addFlashAttribute("result", rentCar.getCarId());		
 		/*return "redirect:/rent/car/rentCarDetailList";	*/	
 		return "redirect:rentCarDetailList";
 	}
@@ -96,6 +92,8 @@ public class RentCarController {
 		
 		log.info("rentCarDetailView...");
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
+		/*leftbar*/
+		model.addAttribute("moduleNm", "rent");
 		
 		return "/module/rent/car/rentCarDetailView";
 	}
@@ -109,6 +107,8 @@ public class RentCarController {
 		log.info("rentCarDetailEdit : " +rentCarService.getRentCarDetail(carId));
 		
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
+		/*leftbar*/
+		model.addAttribute("moduleNm", "rent");
 		
 		return "/module/rent/car/rentCarDetailUpdate";
 	}

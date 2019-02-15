@@ -36,14 +36,16 @@ public class MeetingRoomController {
 	@GetMapping("/mroomdetail")
 	private String mroomDetail(@RequestParam("mId") int mId, Model model) {
 		model.addAttribute("mroom", service.getMroom(mId));
-
+		/*leftbar*/
+		model.addAttribute("moduleNm", "rent");
 		return "/module/rent/meetingroom/mroomdetail";
 	}
 
 	//등록 폼
 	@GetMapping("/mroomInsertForm")
-	private String mroomInsertForm() {
-
+	private String mroomInsertForm(Model model) {
+		/*leftbar*/
+		model.addAttribute("moduleNm", "rent");
 		return "/module/rent/meetingroom/mroomInsertForm";
 	}
 
@@ -69,7 +71,8 @@ public class MeetingRoomController {
 	@GetMapping("/mroomupdateForm")
 	private String mroomUpdataForm(@RequestParam("mId") int mId, Model model) {
 		model.addAttribute("mroom", service.getMroom(mId));
-
+		/*leftbar*/
+		model.addAttribute("moduleNm", "rent");
 		return "/module/rent/meetingroom/mroomupdateForm";
 	}
 
