@@ -55,16 +55,7 @@
 		<servlet-name>appServlet</servlet-name>
 	</filter-mapping>
 
-	<!-- encoding -->
-	<filter>
-		<filter-name>encoding</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-	</filter>
-	
+	<!-- encoding -->	
 	<filter-mapping>
 		<filter-name>encoding</filter-name>
 		<servlet-name>appServlet</servlet-name>
@@ -72,3 +63,4 @@
 	<!-- end encoding  -->
 	
 </web-app>
+

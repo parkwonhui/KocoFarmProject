@@ -35,4 +35,10 @@ public class EmpServiceImpl implements EmpService{
 		return empMapper.getDeptList();
 	}
 
+	// 부서별 목록 by KSH
+	@Override
+	public List<EmpVO> getEmpByDept() {
+		return empMapper.getEmpByDept();
+	}
+
 }

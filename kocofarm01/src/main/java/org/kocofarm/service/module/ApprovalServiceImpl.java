@@ -132,7 +132,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	@Override
 	public boolean delDraft(int draftId) {
-		log.info("draft여기 탄다");
 		return mapper.delDraft(draftId) == 1 ;
 		
 	}
@@ -155,14 +154,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 	
 
 	@Override
-	public boolean setUpDraft(ApprDraftVO draft) {
-		return mapper.setUpDraft(draft) == 1;
+	public int setUpDraft(ApprDraftVO draft) {
+		return mapper.setUpDraft(draft);
 	}
 	@Override
-	public boolean setUpVacation(ApprVacationVO vacation){
-		return mapper.setUpVacation(vacation)==1;
+	public int setUpVacation(ApprVacationVO vacation){
+		return mapper.setUpVacation(vacation);
 	}
 
+	@Override
+	public int setUpVacHit(int draft){
+		return mapper.setUpVacHit(draft);
+	}
+	
 	@Override
 	public int setUpExpence(ApprExpenceVO expence) {
 		// TODO Auto-generated method stub

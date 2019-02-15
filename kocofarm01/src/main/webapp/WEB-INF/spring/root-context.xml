@@ -14,9 +14,6 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<context:annotation-config />
-	<context:component-scan base-package="org.kocofarm.domain"/>
-	<context:component-scan base-package="org.kocofarm.service.module" />
-	<context:component-scan base-package="org.kocofarm.service.comm" />
 	<context:component-scan base-package="org.kocofarm.domain" />
 	<context:component-scan base-package="org.kocofarm.service" />
 
@@ -28,7 +25,7 @@
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
 			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
-		<property name="username" value="kosta192"></property>
+		<property name="username" value="midproject"></property>
 		<property name="password" value="1234"></property>
 	</bean>
 	

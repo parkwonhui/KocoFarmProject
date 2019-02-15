@@ -49,6 +49,7 @@ public interface ApprovalMapper {
 	public int setUpDraft(ApprDraftVO draft);
 	/* 휴가 신청서 정보 수정 */
 	public int setUpVacation(ApprVacationVO vacation);
+	public int setUpVacHit(int draft);
 	/* 지출 결의서 정보 수정*/
 	public int setUpExpence(ApprExpenceVO expence);
 	/* 지출 결의서 내역 수정*/

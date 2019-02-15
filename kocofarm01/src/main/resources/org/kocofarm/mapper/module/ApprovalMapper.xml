@@ -155,8 +155,9 @@
 
 	<!-- 기본 기안서 정보 수정 -->
 	<update id="setUpDraft" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
-		update DRAFT
-		set	draft_title = #{draftTitle} ,
+		update DRAFT 
+		set
+			draft_title = #{draftTitle},
 			draft_dt = SYSDATE,
 			draft_year = #{draftYear}
 		where draft_id = #{draftId}
@@ -165,13 +166,13 @@
 	<!-- 휴가 신청서 정보 수정 -->
 	<update id="setUpVacation" parameterType="org.kocofarm.domain.approval.ApprVacationVO">
 		update vacation_form
-		set	vacation_type = #{vacationType},
-			vacation_start_dt = #{vacationStartDt},
-			vacation_end_dt = #{vacationEndDt},
+		set
+			vacation_type = #{vacationType},
+		   vacation_start_dt = #{vacationStartDt},
+		   vacation_end_dt = #{vacationEndDt},
 			vacation_days = #{vacationDays},
 			vacation_reason = #{vacationReason},
 			replacement_id = #{replacementId}
-			
 		where draft_id = #{draftId}
 	</update>
 
@@ -179,17 +180,17 @@
 	<update id="setUpExpence" parameterType="org.kocofarm.domain.approval.ApprExpenceVO">
 		update expence_form 
 		set expence_dt = SYSDATE , 
-		expence_type = #{expenceType},
-		sum_price = #{sumPrice}
+			expence_type = #{expenceType},
+			sum_price = #{sumPrice}
 		where expence_id = #{expenceId}
 	</update>
 	<!-- 지출 결의서 내역 수정 -->
 	<update id="setUpExpenceCont" parameterType="org.kocofarm.domain.approval.ApprExpenceContVO">
-		update expence_cont set
-		customer_name = #{customerName},
-		expence_price = #{expencePrice},
-		commission_option = #{commissionOption},
-		commission_price = #{commissionPrice}
+		update expence_cont 
+		set	customer_name = #{customerName},
+			expence_price = #{expencePrice},
+			commission_option = #{commissionOption},
+			commission_price = #{commissionPrice}
 		where expence_id = #{expenceId}  
 	</update>
 	
