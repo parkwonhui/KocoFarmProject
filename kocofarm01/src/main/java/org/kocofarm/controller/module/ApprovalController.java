@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
@@ -11,11 +13,12 @@ import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
 import org.kocofarm.domain.comm.Criteria;
 import org.kocofarm.domain.comm.PageDTO;
+import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.service.module.ApprovalService;
+import org.kocofarm.service.module.EmpService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +34,9 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class ApprovalController {
 	private ApprovalService service;
+	private EmpService eService;
+	
+	
 	/*전체 기안서 리스트 가져오기*/
 	/*	@GetMapping("/getDraftList")
 	public String getDraftList(Model model){
@@ -44,7 +50,6 @@ public class ApprovalController {
 	public String getDraftList(Criteria cri , Model model){
 		model.addAttribute("moduleNm", "approval");//leftbar띄우기
 		model.addAttribute("draftList", service.getDraftList(cri));
-		
 		int total = service.getTotal(cri);
 		model.addAttribute("pageMaker",new PageDTO(cri, total));
 		return "module/approval/getDraftList";
@@ -92,7 +97,7 @@ public class ApprovalController {
 			return "module/approval/defaultDraft";
 		}
 	}
-
+	
 	/* 지출 명세서 입력하기 */
 	@PostMapping("/setExpence")
 	public String setDraft(ApprDraftVO draft,ApprExpenceVO expence,HttpServletRequest request){
@@ -109,7 +114,6 @@ public class ApprovalController {
 	public String setVacation(ApprDraftVO draft, ApprVacationVO vacation){
 		service.setDraft(draft);
 		service.setVacation(vacation);
-		log.info("여기탄다");
 		return "redirect:/approval/getDraftList";
 	}
 	
@@ -137,15 +141,17 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
-	/* 휴가 신청서 수정 하기 */
+	/* 휴가 신청서 수정 페이지로 이동 */
 	@GetMapping("/getSetUpVacPage")
-	public String getSetUpVacPage(@RequestParam("draftId") int draftId, Model model){
+	public String getsetUpVacPage(@RequestParam("draftId") int draftId, Model model ) throws Exception{
 		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
 		model.addAttribute("draft",service.getDraft(draftId));
 		model.addAttribute("vacation",service.getVacation(draftId));
-		return "module/approval/setUpVacation";
+
+		return "module/approval/setUpVacationForm";
 	}
 	
+	/*휴가 신청서 수정 */
 	@PostMapping("/setUpVacation")
 	public String setUpVacation(@RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation, Model model){
 		draft.setDraftId(draftId);
@@ -155,5 +161,14 @@ public class ApprovalController {
 		
 		log.info("Here");
 		return "redirect:/approval/getDraftList";
+	}
+	
+	/* emp 검색창 */
+	@GetMapping("/test")
+	public String setTest(Model model){
+		model.addAttribute("empList",eService.getEmpList());
+		model.addAttribute("depList",eService.getDeptList());
+		
+		return "module/approval/getEmpSearchList";
 	}
 }

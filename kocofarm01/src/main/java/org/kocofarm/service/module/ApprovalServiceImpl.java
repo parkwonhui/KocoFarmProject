@@ -132,7 +132,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	@Override
 	public boolean delDraft(int draftId) {
-		log.info("draft여기 탄다");
 		return mapper.delDraft(draftId) == 1 ;
 		
 	}

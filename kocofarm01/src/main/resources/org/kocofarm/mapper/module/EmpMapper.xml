@@ -37,5 +37,16 @@
 		FROM DEPARTMENTS
 	</select>
 
+	<!-- 부서별 목록 -->
+	<select id="getEmpByDept" resultType="org.kocofarm.domain.emp.EmpVO">
+		SELECT
+	  		*
+	 	FROM EMP A
+	     LEFT JOIN DEPARTMENTS B ON A.DEPT_ID = B.DEPT_ID
+	     LEFT JOIN JOBS C ON A.JOB_ID = C.JOB_ID
+	     LEFT JOIN POSITION D ON A.POSITION_ID = D.POSITION_ID
+	  	WHERE A.DEPT_ID = #{deptId}
+	  	ORDER BY A.KOR_NM DESC
+	</select>
 
 </mapper>

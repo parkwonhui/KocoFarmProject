@@ -16,5 +16,6 @@ public interface EmpMapper {
 	/* 부서 목록 */
 	List<DepartmentsVO> getDeptList();
 	
-
+	/* 부서별 사원 목록 by KSH*/
+	List<EmpVO> getEmpByDept();
 }
