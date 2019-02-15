@@ -163,12 +163,23 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
-	/* emp 검색창 */
-	@GetMapping("/test")
-	public String setTest(Model model){
+	/* 대체 근무자 emp 검색창 */
+	@GetMapping("/searchReplaceEmp")
+	public String searchRepalce(Model model){
 		model.addAttribute("empList",eService.getEmpList());
 		model.addAttribute("depList",eService.getDeptList());
 		
-		return "module/approval/getEmpSearchList";
+		return "module/approval/getReplacementEmp";
 	}
+	
+	/* 결재자 emp 검색 창 */
+	@GetMapping("/searchApprovalEmp")
+	public String searchApproval(Model model){
+		model.addAttribute("empList",eService.getEmpList());
+		model.addAttribute("depList",eService.getDeptList());
+		
+		return "module/approval/getApprovalEmp";
+	}
+	
+	
 }
