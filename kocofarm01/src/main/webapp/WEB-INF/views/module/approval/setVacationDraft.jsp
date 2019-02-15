@@ -11,10 +11,6 @@
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
 <script type="text/javascript">
-	function winOpen(){
-		window.open('/approval/test','사원 검색','resizable=no width=600 height=600');
-		
-	}
 
 </script>
 	<div class="cont_wrap">
@@ -37,10 +33,17 @@
 			<div class="draft_wrap">
 				<h1 class="txt_c">기본 정보</h1>
 				<div class ="inf_wrap_box">
-					<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
-					<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}
-					<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }
-					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }
+					<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }</p>
+					<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}</p>
+					<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }</p>
+					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }</p>
+					
+					
+				</div>
+				
+				<div class = "appr_wrap_box">
+					<p class="ApprEmp">결재자<input type='text' name="empId" onclick = "window.open('/approval/searchApprovalEmp','결재자 검색','resizable=no width=600 height=600');return false">
+				
 				</div>
 				<p></p>
 				<p></p>
@@ -60,7 +63,7 @@
 							<div class = "input_draft">
 							<h2 class="txt_c">기안서 정보</h2>
 							
-							 <table widht = 80% class="draft" border = "0" width = "1000">
+							 <table width = 80% class="draft" border = "0" >
 							 	<colgroup>
 							 		<col width="25%" />
 							 		<col width="*" />
@@ -124,7 +127,9 @@
 								 	</colgroup>
 								 	<tr>
 								 		<th class="inputText" scope="col">사번 </th>
-								 		<td><input type='text' name="replacementId" onclick = "winOpen()">
+								 		<td><input type='text' name="replacementId" onclick = "window.open('/approval/searchReplaceEmp','사원 검색','resizable=no width=600 height=600');return false">
+								 		
+								 		
 								 		<!-- <input type=text name="replacementId" > --></td>
 								 	</tr>
 								 	
