@@ -49,3 +49,27 @@ input.date{width:100%;height:39px;text-indent:10px;border:1px solid #ddd;border-
   margin-left: auto;
 }
  
+.empTable th{
+	text-align : center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #222222;
+    text-align: center;
+    padding: 12px 0;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    background-color: #dbdbdb;
+}
+.empTable td{
+	text-align : center;
+	background-color: #efefef
+}
+
+.empTable .empId{
+	background-color: #f4f4f2;;
+	 font-weight: bold;
+}
+
+div .wrap{
+	padding: 2px;
+}

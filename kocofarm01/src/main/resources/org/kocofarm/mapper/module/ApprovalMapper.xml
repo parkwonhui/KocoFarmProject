@@ -179,17 +179,17 @@
 	<update id="setUpExpence" parameterType="org.kocofarm.domain.approval.ApprExpenceVO">
 		update expence_form 
 		set expence_dt = SYSDATE , 
-		expence_type = #{expenceType},
-		sum_price = #{sumPrice}
+			expence_type = #{expenceType},
+			sum_price = #{sumPrice}
 		where expence_id = #{expenceId}
 	</update>
 	<!-- 지출 결의서 내역 수정 -->
 	<update id="setUpExpenceCont" parameterType="org.kocofarm.domain.approval.ApprExpenceContVO">
-		update expence_cont set
-		customer_name = #{customerName},
-		expence_price = #{expencePrice},
-		commission_option = #{commissionOption},
-		commission_price = #{commissionPrice}
+		update expence_cont 
+		set	customer_name = #{customerName},
+			expence_price = #{expencePrice},
+			commission_option = #{commissionOption},
+			commission_price = #{commissionPrice}
 		where expence_id = #{expenceId}  
 	</update>
 	

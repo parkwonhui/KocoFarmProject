@@ -2,7 +2,6 @@ package org.kocofarm.service.module;
 
 import java.util.List;
 
-import org.kocofarm.domain.approval.EmpCategoryVO;
 import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.meetingRoom.MeetingRoomVO;

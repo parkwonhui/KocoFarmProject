@@ -70,7 +70,7 @@ $(function() {
 		});
 		
 		$(".vacEdit_btn").click(function(){
-			location.href="setUpVacation?draftId="+$("#draftId").val();
+			location.href="/approval/getSetUpVacPage?draftId="+$("#draftId").val();
 			return false;
 		});
 		
@@ -80,7 +80,7 @@ $(function() {
 		});
 		
 		$(".expEdit_btn").click(function(){
-			location.href="";
+			location.href="/approval/getSetUpExpPage?draftId="+$("#draftId").val();
 			return false;
 		});
 		
@@ -88,7 +88,19 @@ $(function() {
 			location.href="/approval/delExpDraft?draftId="+$("#draftId").val();
 			return false;
 		});
+
 		
 });	
+/*
+window.onload = function(){
+	var links = document.getElementsByTagName('a');
+	for(var i=0; i<links.length; i++){
+		links[i].onclick = function(){
+			window.opener.document.fmt.replacementId.value= this.innerHTML;
 
+			self.close();
+			//return showPic();
+		}
+	}
+}*/
 

@@ -1,16 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<!-- <link rel="stylesheet" type="text/css" href="/resources/css/common.css" /> -->
-<!-- <link rel="stylesheet" type="text/css" href="/resources/css/approval.css" /> -->
-<!-- <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<link rel="stylesheet" type="text/css" href="/resources/css/common.css" /> 
+<link rel="stylesheet" type="text/css" href="/resources/css/approval.css" /> 
+ <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css"> -->
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
+<script type="text/javascript">
+	function winOpen(){
+		window.open('/approval/test','사원 검색','resizable=no width=600 height=600');
+		
+	}
 
+</script>
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
 		<div class="sub_title">
@@ -43,7 +49,7 @@
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form action="/approval/setVacation"  method="post">
+				<form action="/approval/setVacation" name="setVac" method="post">
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>
@@ -118,17 +124,23 @@
 								 	</colgroup>
 								 	<tr>
 								 		<th class="inputText" scope="col">사번 </th>
-								 		<td><input type=text name="replacementId"></td>
+								 		<td><input type='text' name="replacementId" onclick = "winOpen()">
+								 		<!-- <input type=text name="replacementId" > --></td>
 								 	</tr>
 								 	
 								 	<tr>
-								 		<th class="inputText" scope="col">직위</th>
-								 		<td>자동 입력</td>
+								 		<th class="inputText" scope="col">이름</th>
+								 		<td><input type='text' name="korNm"></td>
+								 	</tr>
+								 	
+								 	<tr>
+								 		<th class="inputText" scope="col">직책</th>
+								 		<td><input type='text' name="positionNm"></td>
 								 	</tr>
 								 	
 								 	<tr>
 								 		<th class="inputText" scope="col">핸드폰 번호</th>
-								 		<td>자동 입력</td>
+								 		<td><input type='text' name="cellPhone"></td>
 								 	</tr>
 							 	</table>
 							
