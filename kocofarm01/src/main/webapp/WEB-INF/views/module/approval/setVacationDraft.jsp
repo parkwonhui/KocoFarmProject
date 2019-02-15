@@ -41,18 +41,18 @@
 					
 				</div>
 				
-				<div class = "appr_wrap_box">
-					<p class="ApprEmp">결재자<input type='text' name="empId" onclick = "window.open('/approval/searchApprovalEmp','결재자 검색','resizable=no width=600 height=600');return false">
-				
-				</div>
 				<p></p>
 				<p></p>
 			</div>
-		
+			<form action="/approval/setVacation" name="setEmpId" method="post">
+				<div class = "appr_wrap_box">
+					<p class="ApprEmp">결재자<input type='text' name="empNameList" onclick = "window.open('/approval/searchApprovalEmp','결재자 검색','resizable=no width=600 height=600');return false">
+					<p class="ApprEmpId">결재자Id<input type='text' name="empIdList" /></p>
+				</div>
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form action="/approval/setVacation" name="setVac" method="post">
+				
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>
@@ -163,11 +163,12 @@
 							<br><br>
 						</div>
 					</div>
+					</div>
 				</form>
 			</div>
 		
 		</div>
-	</div>
+	
 
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

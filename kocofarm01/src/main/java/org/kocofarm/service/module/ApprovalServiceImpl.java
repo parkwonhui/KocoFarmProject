@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
@@ -79,6 +80,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.getVacation(draftId);
 	}
 
+	
+	
+	
 	/* 기안서 입력하기 */
 	@Override
 	public void setDraft(ApprDraftVO draft) {
@@ -130,6 +134,22 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}
 	}
 
+	/* 결재자 입력하기 */
+	@Override
+	public void setApprEmp(HttpServletRequest request) {
+		ApprEmpVO apprEmp = new ApprEmpVO();
+		String empIdList = request.getParameter("empIdList");
+		String[] empId =empIdList.split(",");
+		int draftId = mapper.getDraftNo();
+		for(int i = 0; i<empId.length; i++){
+			apprEmp.setDraftId(draftId);
+			apprEmp.setEmpId(empId[i]);
+			mapper.setApprEmp(apprEmp);
+		}
+		
+	}
+	
+	/* --------------------- 삭제 --------------------- */
 	@Override
 	public boolean delDraft(int draftId) {
 		return mapper.delDraft(draftId) == 1 ;
@@ -152,7 +172,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	
-
+	/* --------------------- 수정 --------------------- */
 	@Override
 	public int setUpDraft(ApprDraftVO draft) {
 		return mapper.setUpDraft(draft);
@@ -178,5 +198,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

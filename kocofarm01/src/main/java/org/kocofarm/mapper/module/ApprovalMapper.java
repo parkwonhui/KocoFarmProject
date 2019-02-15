@@ -3,6 +3,7 @@ package org.kocofarm.mapper.module;
 import java.util.List;
 
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
@@ -26,7 +27,8 @@ public interface ApprovalMapper {
 	public void setExpence(ApprExpenceVO expence);
 	/* 지출명세서 내역 입력 */
 	public void setExpenceCont(ApprExpenceContVO expenceCont);
-	
+	/* 결재자 입력*/
+	public void setApprEmp(ApprEmpVO apprEmp);
 	
 	/*--------------기타 정보 가져오기 --------------*/
 	/* 최근 기안서 번호 가져오기 */

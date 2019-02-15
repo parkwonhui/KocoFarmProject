@@ -69,12 +69,16 @@
 			<p></p>
 
 		</div>
-
+		<form action="/approval/setExpence " name="setEmpId" method="post">
+			<div class = "appr_wrap_box">
+					<p class="ApprEmp">결재자<input type='text' name="empNameList" onclick = "window.open('/approval/searchApprovalEmp','결재자 검색','resizable=no width=600 height=600');return false">
+					<p class="ApprEmpId">결재자Id<input type='text' name="empIdList" /></p>
+			</div>
 		<!-- list -->
 
 		<div class="contents">
 			<!-- 기안서 보기 -->
-			<form action="/approval/setExpence " method="post">
+			
 				<div class="expence_wrap">
 					<div class="title" align="center">
 						<h1 class="txt_c">지 출 결 의 서</h1>
@@ -157,8 +161,8 @@
 					<br>
 				</div>
 
-			</form>
-		</div>
+			</div>
+		</form>
 	</div>
 
 </div>

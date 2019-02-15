@@ -64,6 +64,7 @@ $(function() {
 		});
 		
 		/* ---------------------기안서 버튼 기능 --------------------- */
+		
 		$(".list_btn").click(function(){
 			location.href="listDraft.do";
 			return false;
@@ -93,16 +94,4 @@ $(function() {
 		
 	
 });	
-/*
-window.onload = function(){
-	var links = document.getElementsByTagName('a');
-	for(var i=0; i<links.length; i++){
-		links[i].onclick = function(){
-			window.opener.document.fmt.replacementId.value= this.innerHTML;
-
-			self.close();
-			//return showPic();
-		}
-	}
-}*/
 

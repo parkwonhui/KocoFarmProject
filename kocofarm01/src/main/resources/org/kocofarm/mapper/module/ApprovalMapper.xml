@@ -151,6 +151,12 @@
 		values(${expenceId},#{contSeq},#{customerName},#{expencePrice},#{commissionOption},#{commissionPrice})
 	</insert>
 
+	<!-- 결재자 입력 -->
+	<insert id = "setApprEmp" parameterType="org.kocofarm.domain.approval.ApprEmpVO">
+		insert into appr_emp (draft_id,emp_id)
+		values(#{draftId},#{empId})
+		
+	</insert>
 	<!-- ****************************** 수정 ****************************** -->
 
 	<!-- 기본 기안서 정보 수정 -->

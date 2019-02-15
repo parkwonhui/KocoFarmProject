@@ -62,16 +62,6 @@
 		<h2>대체 근무자</h2>
 	</center>
 	<div class="total_wrap">
-		<div class="header_wrap">
-			<!-- th 정보 테이블 시작 -->
-			<!-- 			<table id="header" border="1" width=100%>
-				<tr>
-					<th>사원목록</th>
-					
-				</tr>
-			</table> -->
-			<!-- th 정보 테이블 끝-->
-		</div>
 
 		<div id="accordion">
 			<c:forEach var="DepartmentsVO" items="${depList }">

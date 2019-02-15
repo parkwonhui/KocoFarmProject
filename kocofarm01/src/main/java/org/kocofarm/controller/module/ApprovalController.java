@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
@@ -100,8 +101,9 @@ public class ApprovalController {
 	
 	/* 지출 명세서 입력하기 */
 	@PostMapping("/setExpence")
-	public String setDraft(ApprDraftVO draft,ApprExpenceVO expence,HttpServletRequest request){
-			
+	public String setExpence(ApprDraftVO draft,ApprExpenceVO expence,HttpServletRequest request){
+		
+			service.setApprEmp(request);
 			service.setDraft(draft);
 			service.setExpence(expence);
 			service.setExpenceCont(request);
@@ -111,7 +113,9 @@ public class ApprovalController {
 	
 	/* 휴가 신청서 입력하기 */
 	@PostMapping("/setVacation")
-	public String setVacation(ApprDraftVO draft, ApprVacationVO vacation){
+	public String setVacation(ApprEmpVO apprEmp, ApprDraftVO draft, ApprVacationVO vacation,HttpServletRequest request){
+	
+		service.setApprEmp(request);
 		service.setDraft(draft);
 		service.setVacation(vacation);
 		return "redirect:/approval/getDraftList";

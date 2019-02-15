@@ -40,6 +40,9 @@ public interface ApprovalService {
 	public void setExpence(ApprExpenceVO expence);
 	/* 지출명세서 내역 입력 */
 	public void setExpenceCont(HttpServletRequest request);
+	/* 결재자 정보 입력*/
+	public void setApprEmp(HttpServletRequest request);
+	
 
 	/* 기안서 삭제*/
 	public boolean delDraft(int draftId);
