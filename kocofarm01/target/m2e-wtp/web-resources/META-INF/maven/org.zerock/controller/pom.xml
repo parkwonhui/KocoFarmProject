@@ -207,7 +207,7 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
-<<<<<<< HEAD
+
 		<!-- service에서 list -> json 데이터 변환 시 사용 -->
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
@@ -221,15 +221,7 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.8</version>
 		</dependency>
-=======
-		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
-		<dependency>
-			<groupId>net.coobird</groupId>
-			<artifactId>thumbnailator</artifactId>
-			<version>0.4.8</version>
-		</dependency>
 
->>>>>>> refs/remotes/origin/haeng
 
 	</dependencies>
 
