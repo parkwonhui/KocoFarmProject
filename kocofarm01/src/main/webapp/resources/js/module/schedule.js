@@ -20,6 +20,9 @@ var drag_category_categoryId;			// 이동하는 카테고리의 id
 /* 프로젝트 관리자 여부 */
 var is_project_manager;
 
+/* 권한 제한이 있는 프로젝트인지 아닌지 */
+var is_public_project;
+
 
 (function($) {
 
@@ -104,7 +107,7 @@ var is_project_manager;
                 elmDrag = $(this);
                 index = (elmDrag).addClass('drop-elmDrag').index();
             }).on(eventStack[1], function() { 
-            	if(0 == is_project_manager){
+            	if(0 == is_public_project && 0 == is_project_manager){
             		return;
             	}
             	
@@ -125,16 +128,16 @@ var is_project_manager;
                 elmDrag = null;
                 
             }).not('a[href], img').on(eventStack[2], function() {
-            	if(0 == is_project_manager){
+            	if(0 == is_public_project && 0 == is_project_manager){
             		return;
             	}
             	
                 this.dragDrop && this.dragDrop();
                 return false;
             }).end().add([this, replacer]).on('dragover dragenter drop', function(event) {
-            	if(0 == is_project_manager){
-            		return;
-            	}
+        		if(0 == is_public_project && 0 == is_project_manager){
+        			return;
+        		}
             	
                 if (!items.is(elmDrag) && options.linkTo !== $(elmDrag).parent().data('linkTo')) {
                     return true;
@@ -328,11 +331,13 @@ function addDynamicHtml(data){
       		html += '<li class="calender_info">';
       		html += '<input class="category-name-input" type="text" readonly="true" value="'+data[i].categoryName+'"></input>';
       		
-      		if(1 == is_project_manager){
+      		
+      		// 매니저이거나 public project 일 때
+      		if(1 == is_project_manager || 1 == is_public_project){
       			html += '<img src="/resources/img/schedule/dustbin.png" class="category-delete-btn" data-toggle="modal" data-target="#categoryDeleteModal"/>';      		
       			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal">새 일정 추가</button>';
       		}else{
-      			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal" disabled>새 일정 추가</button>';
+      			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal" disabled>새 일정 추가</button>';            	
       		}
       		
 			html += '<input type="hidden" class="this_project_id" value='+data[i].projectId+' />';
@@ -385,7 +390,7 @@ function addDynamicHtml(data){
 		html += '</ul>';
 	    
     	// 새  카테고리
-		if(1 == is_project_manager){
+		if(1 == is_project_manager || 1 == is_public_project){
 			html += '<ul class="connected li1">';
 			html += '<li class="calender_info">';
 	  		html += '<div><input class="add-category-name-input" type="text"></input><div>';
@@ -444,14 +449,14 @@ function addDynamicHtml(data){
 	   
 	   /* 카테고리 값 체인지 이벤트 */
 	   $('.category-name-input').on("dblclick", function(){
-		    if(0 == is_project_manager){
+		    if(0 == is_public_project && 0 == is_project_manager){
 			   return;
 		   }
 		   $(this).attr("readonly", false);
 	   });
 	   
 	   $('.category-name-input').on("focusout", function(){
-		    if(0 == is_project_manager){
+		    if(0 == is_public_project && 0 == is_project_manager){
 			   return;
 		   }
 		   
@@ -605,7 +610,7 @@ $('#calender_edit').click(function(){
 
 // 일정 삭제
 $('#calender_del').click(function(){
-	if(0 == is_project_manager){
+	if(0 == is_public_project && 0 == is_project_manager){
 		alert('[에러] 권한이 없습니다');
 		return;
 	}

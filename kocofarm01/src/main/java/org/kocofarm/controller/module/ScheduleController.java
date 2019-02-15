@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.controller.comm.ScheduleEnum;
 import org.kocofarm.domain.comm.LoginVO;
 import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
@@ -40,29 +41,15 @@ import net.sf.json.JSONArray;
 @RequestMapping("/schedule/*")
 @AllArgsConstructor
 public class ScheduleController {
-	final static private class CHECK_VALUE{
-		final static int PROJECT_TITLE_LENGHT = 50;			// 프로젝트 길이
-		final static int CATEGORY_TITLE_LENGHT = 50;		// 카테고리 길이
-		final static int CALENDER_DATE_LENGHT = 10;			// 시작,종료 날짜 String 길이
-		final static int CALENDER_COMPLETION_PER_MIN = 0;	// 일정 완료상황 최소 값
-		final static int CALENDER_COMPLETION_PER_MAX = 100;	// 일정 완료상황 최대 값
-	}
-	
-	final static public class ERROR_CODE{
-		final static int UNKNOWN_ERROR = -1;
-		final static int PROJECT_NAME_LENGHT_FAIL = 1000;
-		final static int CATEGORY_NAME_LENGHT_FAIL = 1001;
-		final static int CALENDER_TOO_MANY_TEXT = 1002;
-		final static int CALENDER_START_DT_WRONG = 1003;
-		final static int CALENDER_END_DT_WRONG = 1004;
-		final static int CALENDER_COMPLETION_PERCENT_WRONG = 1005;
-		final static int AUTH_FAIL = 1006;				// 접근할 수 없는 권한
-	};
 	
 	private ScheduleService service;
 	
 	@GetMapping("/")
 	private String getProjectList(HttpSession session, Model model){
+		if(null == session){
+			return "/main";
+		}
+		
 		LoginVO loginVo = (LoginVO) session.getAttribute("loginVO");
 		if(null == loginVo){
 			return "/main";
@@ -77,6 +64,11 @@ public class ScheduleController {
 	@GetMapping("/list")
 	private String getProjectListAjax(HttpSession session, HttpServletResponse response, ModelAndView mv){
 		log.info("/list..........");
+		
+		if(null == session){
+			return null;
+		}
+		
 		LoginVO loginVo = (LoginVO) session.getAttribute("loginVO");
 		if(null == loginVo){
 			log.info(null == loginVo);
@@ -99,7 +91,7 @@ public class ScheduleController {
 		return null;
 	}
 	
-/*	@ResponseBody
+	/*@ResponseBody
 	@GetMapping("/getProjectListSearch")
 	private List<ScheduleProjectVO> getProjectListSearch(HttpSession session, Model model){
 		log.info("/getProjectListSearch..........");
@@ -114,36 +106,55 @@ public class ScheduleController {
 		model.addAttribute("project", list);
 		model.addAttribute("moduleNm", "schedule");
 		return list;
-	}
-	*/
+	}*/
+	
 	
 	@PostMapping("/sendProjectId")
 	private ModelAndView getProjectListAjax(@ModelAttribute("project_id") int projectId, HttpSession session){
 		log.info("/sendProjectId..........");
-
-		session.setAttribute("selectProjectId", projectId);		
 		
-		boolean isProjectManager = isProjectManager(session);
-		int projectManagerVal = (true == isProjectManager) ? 1 : 0;
-	
 		ModelAndView mv = new ModelAndView();
+		if(null == session){
+			mv.setViewName("/main");
+			return mv;
+		}
+		
+		session.setAttribute("selectProjectId", projectId);		
+	
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		if(null == projectVO){
+			mv.setViewName("/main");
+			return mv;
+		}
+		
+		boolean isProjectManager = isProjectManager(session, projectVO);
+		int projectManagerVal = (true == isProjectManager) ? 1 : 0;
+		
+		// public이면 화면에서 전부 그려준다
+		String bPublic = projectVO.getPublicUse();
+		log.info("bPublic:"+bPublic);
+		mv.addObject("bPublic", bPublic);
 		mv.addObject("bProjectManager", projectManagerVal);
 		mv.addObject("projectId", projectId);
 		mv.addObject("moduleNm", "schedule");
 		mv.setViewName("/module/schedule/project");
+		
 		return mv;
 	}
 		
 	@PostMapping("/listCalender")
 	private String getProjectCalenderList(HttpSession session, int projectId, Model model){
 		log.info("/listCalender.............");
-		log.info("listCalender projectId:"+projectId);
+		
+		if(null == session){
+			return null;
+		}
+		
 		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
 		if(null == list){
 			return "";		// error url
 		}
 		
-		log.info("list.............."+list);
 		model.addAttribute("calenderList", list);
 		
 		return "/module/schedule/calenderListJsonParse";
@@ -152,132 +163,127 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/insertCalender")
 	private int setCalender(HttpSession session, ScheduleCalenderVO calender){
-		if(false == isProjectManager(session)){
-			return ERROR_CODE.UNKNOWN_ERROR;
-		}
-		
 		log.info("/insertCalender..........");
-		
-		if(null == calender){
-			return ERROR_CODE.UNKNOWN_ERROR;
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		int result = checkCalenderInfo(calender);
-		if(1 != result)
-			return result;
-			
-		initCalender(calender);
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);
+		if(null == projectVO){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
 		
-		int re = service.setCalender(calender);
+		String bPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(bPublic, service, projectVO); 
+		int re = process.setCalender(session, calender);
+		
 		return re;
 	}
 	
 	@ResponseBody
 	@PostMapping("/editCalender")
 	public int setUpCalender(HttpSession session, ScheduleCalenderVO calender){
-		// 팀장이거나 해당 캘린더의 작업자인지 확인
-		
+		// 팀장이거나 해당 캘린더의 작업자인지 확인		
 		log.info("/editCalender..........");
 		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
 		if(null == calender){
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		boolean isMember = isMember(calender.getCalenderId(), loginVO);
-		boolean isProjectManager = (null == isManager(session)) ? false : true;
-		if(false == isMember && false == isProjectManager){
-			return ERROR_CODE.AUTH_FAIL;
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);
+		if(null == projectVO){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		int result = checkCalenderInfo(calender);
-		if(1 != result)
-			return result;
+		String bPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(bPublic, service, projectVO); 
+		int re =process.setUpCalender(session, calender);
 		
-		initCalender(calender);
-		
-		int re = service.setUpCalender(calender);
 		return re;
 	}
 	
 	@ResponseBody
 	@PostMapping("/insertCategory")
 	public int setCategory(HttpSession session, ScheduleCategoryVO category){
-		if(false == isProjectManager(session)){
-			return ERROR_CODE.UNKNOWN_ERROR;
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		log.info("/insertCategory..........");
-		log.info("insertCategory:"+category);
-		if(null == category){
-			return ERROR_CODE.UNKNOWN_ERROR;
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		if(null == projectVO){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		String categoryName = category.getCategoryName();
-		if(null == categoryName){
-			return ERROR_CODE.UNKNOWN_ERROR;
-		}
+		String strPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(strPublic, service, projectVO);
+		int re = process.setCategory(session, category);
 		
-		if(categoryName.length() > ERROR_CODE.CATEGORY_NAME_LENGHT_FAIL){
-			return ERROR_CODE.CATEGORY_NAME_LENGHT_FAIL;
-		}
-				
-		int re = service.setCategory(category);
 		return re;
 	}
 
 	@ResponseBody
 	@PostMapping("/editCategory")
 	public int setUpCategory(HttpSession session, ScheduleCategoryVO category){
-		if(false == isProjectManager(session)){
-			return ERROR_CODE.UNKNOWN_ERROR;
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		log.info("/editCategory..........");
-		
-		if(null == category)
-			return ERROR_CODE.UNKNOWN_ERROR;
-		
-		String categoryName = category.getCategoryName();
-		if(null == categoryName){
-			return ERROR_CODE.UNKNOWN_ERROR;
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		if(null == projectVO){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		if(categoryName.length() > 5 || categoryName.length() <= 0){
-			return ERROR_CODE.CATEGORY_NAME_LENGHT_FAIL;
-		}
+		String strPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(strPublic, service, projectVO);
+		int re = process.setUpCategory(session, category);
 		
-		int re = service.setUpCategory(category);
 		return re;
 	}
 	
 	@ResponseBody
 	@PostMapping("/insertProject")
 	public int setProject(HttpSession session, ScheduleProjectVO project){
-		LoginVO loginVO = isManager(session);
+		log.info("/insertProject..........");
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		if(false == isManager(session)){
+			return 	ScheduleEnum.ERROR.AUTH_FAIL;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
 		project.setProjectLeader(loginVO.getEmpId());
-		log.info("/insertProject..........");
 		
 		String title = project.getTitle();
 		if(null == title){
-			log.info("null이다");
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		if(title.length() > CHECK_VALUE.PROJECT_TITLE_LENGHT){
-			return ERROR_CODE.PROJECT_NAME_LENGHT_FAIL;
+		if(title.length() > ScheduleEnum.CHECK.PROJECT_TITLE_LENGHT){
+			return ScheduleEnum.ERROR.PROJECT_NAME_LENGHT_FAIL;
 		}
 		
 		project.setProjectStartDt("");
 		project.setProjectEndDt("");
-		
+		project.setPublicUse("0");
+		log.info(project);
 		int re = service.setProject(project);
-		
-		int projectId = (int) project.getProjectId();
 		
 		ScheduleMemberVO member = new ScheduleMemberVO();
 		member.setEmpId(project.getProjectLeader());
@@ -288,24 +294,33 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/editProject")
 	public int setUpProject(HttpSession session, ScheduleProjectVO project){
-		LoginVO loginVO = isManager(session);
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		if(false == isManager(session)){
+			return ScheduleEnum.ERROR.AUTH_FAIL;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
 		log.info("/editProject..........");
 		
 		if(null == project){
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
 		String title = project.getTitle();
 		if(null == title){
-			return ERROR_CODE.UNKNOWN_ERROR;
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 	
-		if(title.length() > CHECK_VALUE.PROJECT_TITLE_LENGHT || title.length() <= 0){
-			return ERROR_CODE.PROJECT_NAME_LENGHT_FAIL;
+		if(title.length() > ScheduleEnum.CHECK.PROJECT_TITLE_LENGHT || title.length() <= 0){
+			return ScheduleEnum.ERROR.PROJECT_NAME_LENGHT_FAIL;
 		}
 		
 		int re = service.setUpProject(project);
@@ -315,61 +330,102 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/editCalenderPos")
 	public int setUpCalenderPos(HttpSession session, @RequestBody List<ScheduleCalenderMoveVO> data){
-		if(false == isProjectManager(session)){
-			return ERROR_CODE.UNKNOWN_ERROR;
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		log.info("/editCalenderPos..........");
-		int re = service.setUpCalenderPos(data);
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		if(null == projectVO){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		String strPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(strPublic, service, projectVO);
+		int re = process.setUpCalenderPos(session, data);		
+	
 		return re;
 	}
 	
 	@ResponseBody
 	@PostMapping("/editCategoryPos")
 	public int setCategoryPos(HttpSession session, ScheduleCategoryMoveVO category){
-		if(false == isProjectManager(session)){
-			return ERROR_CODE.UNKNOWN_ERROR;
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		log.info("/editCategoryPos..........");
-		int re = service.setMoveCategory(category);
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		if(null == projectVO){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		String strPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(strPublic, service,  projectVO);
+		int re = process.setCategoryPos(session, category);
+		
 		return re;	
 	}
 	
 	@ResponseBody
 	@PostMapping("/delCalender")
 	public int delCalender(HttpSession session, int calenderId){
-		if(false == isProjectManager(session)){
-			return ERROR_CODE.AUTH_FAIL;
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		log.info("/delCalender..........");
-		int re = service.delCalender(calenderId);
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		if(null == projectVO){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		String strPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(strPublic, service,  projectVO);
+		int re = process.delCalender(session, calenderId);
+		
 		return re;
 	}
 	
 	@ResponseBody
 	@PostMapping("/delCategory")
 	public int delCategory(HttpSession session, ScheduleCategoryVO category){
-		if(false == isProjectManager(session)){
-			return ERROR_CODE.AUTH_FAIL;
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		if(null == category){
-			return ERROR_CODE.UNKNOWN_ERROR;
-		}
-		
-		log.info("/delCategory..........");
-		int re = service.delCategory(category);
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		if(null == projectVO){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}		
+
+		String strPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(strPublic, service,  projectVO);
+		int re = process.delCategory(session, category);
+	
 		return re;
 	}
 	
 	@ResponseBody
 	@PostMapping("/delProject")
 	public int delProject(HttpSession session, int projectId){
-		LoginVO loginVO = isManager(session);
+		
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		if(false == isManager(session)){
+			return ScheduleEnum.ERROR.AUTH_FAIL;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
-			return ERROR_CODE.AUTH_FAIL;
+			return ScheduleEnum.ERROR.AUTH_FAIL;
 		}
 		
 		log.info("/delProject..........");
@@ -377,41 +433,39 @@ public class ScheduleController {
 		return re;
 	}
 	
+	
+	////////////////////////
+	
 	// 팀장 여부 체크
-	public LoginVO isManager(HttpSession session){
+	public boolean isManager(HttpSession session){
 		if(null == session){
-			return null;
+			return false;
 		}
 
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
-			return null;
+			return false;
 		}
 		
 		String empId = loginVO.getEmpId();
 		if(null == empId || true == empId.isEmpty()){
-			return null;
+			return false;
 		}
 		
 		String managerId = loginVO.getManagerId();
 		if(null == managerId || true == managerId.isEmpty()){
-			return null; 
+			return false; 
 		}
 		
-		return loginVO;
+		if(false == empId.equals(managerId)){
+			return false; 
+		}
+		
+		return true;
 	}
 	
 	// 현재 접속 중인 프로젝트의 팀장인지 체크
-	public boolean isProjectManager(HttpSession session){
-		if(null == session){
-			return false;
-		}
-		
-		int projectId = (int)session.getAttribute("selectProjectId");
-		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
-		if(null == projectVO){
-			return false;
-		}
+	public boolean isProjectManager(HttpSession session, ScheduleProjectVO projectVO){
 		
 		String managerId = projectVO.getProjectLeader();
 		if(null == managerId){
@@ -434,86 +488,12 @@ public class ScheduleController {
 	 	
 	 	return true;
 	}
-	
-	// 해당 일정의 작업자인지 체크
-	public boolean isMember(int calenderId, LoginVO loginVO){
-		String empId = loginVO.getEmpId();
-		if(null == empId){
-			return false;
-		}
 		
-		List<ScheduleMemberVO> list = service.getMember(calenderId);
-		for(ScheduleMemberVO member : list){
-			if(true == member.getEmpId().equals(empId)){
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	public ScheduleCalenderVO initCalender(ScheduleCalenderVO calender){
-		if(null == calender.getBackgroundColor()){
-			calender.setBackgroundColor("");
-		}else if(null == calender.getStartDt()){
-			calender.setStartDt("");
-		}else if(null == calender.getEndDt()){
-			calender.setEndDt("");
-		}
-		
-		return calender;
-	}
-	
-	public int checkCalenderInfo(ScheduleCalenderVO calender){
-		if(null == calender){
-			return ERROR_CODE.UNKNOWN_ERROR;
-		}
-		
-		String title = calender.getTitle();
-		if(null == title){
-			return ERROR_CODE.UNKNOWN_ERROR;
-		}
-		
-		if(title.length() > CHECK_VALUE.PROJECT_TITLE_LENGHT || title.length() <= 0){
-			return ERROR_CODE.CALENDER_TOO_MANY_TEXT;
-		}
-		
-		// calender 날짜 체크
-		String startDt = calender.getStartDt();
-		if(null == startDt){
-			return ERROR_CODE.UNKNOWN_ERROR;
-		}
-		
-		if(startDt.length() >= 1){
-			if(CHECK_VALUE.CALENDER_DATE_LENGHT != startDt.length() || false == dataCheck(startDt))
-				return ERROR_CODE.CALENDER_START_DT_WRONG;
-		}
-		
-		String endDt = calender.getStartDt();
-		if(null == endDt){
-			return ERROR_CODE.UNKNOWN_ERROR;
-		}
-
-		if(startDt.length() >= 1){
-			if(CHECK_VALUE.CALENDER_DATE_LENGHT != endDt.length() || false == dataCheck(endDt))
-				return ERROR_CODE.CALENDER_END_DT_WRONG;
-		}
-		
-		int completionPer = calender.getCompletionPer();
-		if(CHECK_VALUE.CALENDER_COMPLETION_PER_MIN > completionPer || completionPer > CHECK_VALUE.CALENDER_COMPLETION_PER_MAX)
-			return ERROR_CODE.CALENDER_COMPLETION_PERCENT_WRONG;
-		
-		return 1;
-	}
-	
-	public boolean dataCheck(String date){
-		Pattern pattern =  Pattern.compile("^((19|20)\\d\\d)?([- /.])?(0[1-9]|1[012])([- /.])?(0[1-9]|[12][0-9]|3[01])$");
-		Matcher matcher = pattern.matcher(date); 
-
-		if(matcher.find() == false){
-			return false;
-		}
-		
-		return true;
+	public ScheduleProcess getScheduleProcess(String publicFlag, ScheduleService service, ScheduleProjectVO projectVO){
+		if(true == publicFlag.equals("1")){
+			return new ScheduleProcess(service, projectVO);
+		}else{
+			return new SchedulePrivateProcess(service, projectVO);
+		}		
 	}
 }

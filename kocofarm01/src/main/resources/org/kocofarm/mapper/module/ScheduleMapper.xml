@@ -69,7 +69,7 @@
 		select project_id_seq.nextval FROM DUAL
 	</selectKey>
 	insert into project(PROJECT_ID, TITLE, PROJECT_START_DT, PROJECT_END_DT, PROJECT_REG_DT, PROJECT_COMPLETION, PUBLIC_USE, PROJECT_LEADER)
-	values(#{projectId} , #{title}, TO_DATE(#{projectStartDt}, 'yy-mm-dd') , TO_DATE(#{projectEndDt}, 'yy-mm-dd'), #{projectRegDt}, #{projectCompletion}, #{publicProject}, #{projectLeader})
+	values(#{projectId} , #{title}, TO_DATE(#{projectStartDt}, 'yy-mm-dd') , TO_DATE(#{projectEndDt}, 'yy-mm-dd'), #{projectRegDt}, #{projectCompletion}, #{publicUse}, #{projectLeader})
 </insert>
 <update id="setUpProject" parameterType="ScheduleProjectVO">
 	update project set title = #{title} where project_id = #{projectId}

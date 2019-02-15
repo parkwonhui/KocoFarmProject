@@ -106,6 +106,7 @@ $( function() {
 		add_project_id = projectId;
 		
 		is_project_manager = "${bProjectManager}";
+		is_public_project = "${bPublic}";
 		
 		$.ajax({
 			url : 'listCalender',
