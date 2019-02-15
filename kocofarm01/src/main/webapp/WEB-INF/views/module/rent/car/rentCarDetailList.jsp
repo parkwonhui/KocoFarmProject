@@ -10,7 +10,7 @@
 		<div class="sub_title">
 			<div class="sub_title_top">
 				<div class="sub_title_inner">
-					<h2>RentCar <span>등록된 차량 정보를 확인할 수 있습니다.</span></h2>
+					<h2>RentCar Detail <span>등록된 차량 정보를 확인할 수 있습니다.</span></h2>
 					<ul class="sub_nav">
 						<li>홈 > </li>
 						<li class="on">차량관리</li>

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/rent.css" />
 
@@ -9,7 +8,7 @@
 		<div class="sub_title">
 			<div class="sub_title_top">
 				<div class="sub_title_inner">
-					<h2>RentCar <span id="subTitSpan">차량을 예약 할 수 있습니다.</span></h2>
+					<h2>RentCar Reservation <span id="subTitSpan">차량을 예약 할 수 있습니다.</span></h2>
 					<ul class="sub_nav">
 						<li>홈 > 차량관리 > </li>
 						<li class="on" id="subTitLi">예약</li>
@@ -37,49 +36,54 @@
 							<tr>
 								<th scope="col">예약자</th>
 								<td class="left">
-									<input type="text" name="carId" id = "car_id">
+									<select class="form-control" name="resWriter" >
+										<c:forEach items="${empList}" var="emp" varStatus="status">
+										  <option value="${emp.empId}">${emp.korNm}</option>
+										 </c:forEach>
+									</select>
 								</td>
 								<th scope="col">사용자</th>
+								<td class="left">
+									<select class="form-control" name="resUser" >
+										<c:forEach items="${empList}" var="emp" varStatus="status">
+										  <option value="${emp.empId}">${emp.korNm}</option>
+										 </c:forEach>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="col">운행시작 일자</th>
+								<td class="left">
+									<input type="text" name="stDate" id = "stDate" >
+								</td>
+								<th scope="col">운행시작 시간</th>
+								<td class="left">
+									<input type="text" name="stTime" id = "stTime" >
+								</td>
+							</tr>
+							<tr>
+								<th scope="col">운행종료 일자</th>
+								<td class="left">
+									<input type="text" name="enDate" id = "enDate">	
+								</td>
+								<th scope="col">운행종료 시간</th>
+								<td class="left">
+									<input type="text" name="enTime" id = "enTime">
+								</td>
+							</tr>
+							
+							<tr>
+								<th scope="col">예약 차량</th>
+								<td class="left">
+									<input type="text" name="carId" id = "car_id">
+									<input type = "button" id = "checkCar_Id" class="btn_y" value="차량선택">
+								</td>
+								<th scope="col">사용목적</th>
 								<td class="left">
 									<input type="text" name="modelName" id = "modelName" >
 								</td>
 							</tr>
-							<tr>
-								<th scope="col">운행시작일자</th>
-								<td class="left">
-									<input type = "radio" class="radio_btn" name="carModel" value = "싼타페">싼타페
-									 <input type = "radio" class="radio_btn" name="carModel" value = "레이">레이
-									 <input type = "radio" class="radio_btn" name="carModel" value = "SM3">SM3
-									 <input type = "radio" class="radio_btn" name="carModel" value = "k3">k3	
-								</td>
-								<th scope="col">운행시작시간</th>
-								<td class="left">
-									<input type = "radio" class="radio_btn" name="condition" value="신차" >신차
-									<input type = "radio" class="radio_btn" name="condition" value="중고차">중고차	
-								</td>
-							</tr>
-							<tr>
-								<th scope="col">운행종료일자</th>
-								<td class="left">
-									<input type="text" name="price" id = "price">	
-								</td>
-								<th scope="col">운행종료시간</th>
-								<td class="left">
-									<input type="text" name="year" id = "year">
-								</td>
-							</tr>
-							<tr>
-								<th scope="col">차량</th>
-								<td class="left" colspan="3"><!-- oil_Type -> oilType 으로 변경-->
-									<input type = "radio" class="radio_btn" name="oilType" value="휘발유">휘발유
-				 					<input type = "radio" class="radio_btn" name="oilType" value="경유">경유
-				 					<input type = "button" id = "checkCar_Id" class="btn_y" value="차량목록">			
-								</td>
-								<th scope="col">사용목적</th>
-								<td class="left">
-									<input type="text" name="year" id = "year">
-								</td>								
-							</tr>
+
 							<tr>
 								<th scope="col">출발지 주소</th>
 								<td class="left">
@@ -90,6 +94,20 @@
 									<input type="text" name="price" id = "price">	
 								</td>								
 							</tr>
+							
+							
+							<!-- <tr>
+								<th scope="col">차량 번호22</th>
+								<td class="left">
+									<input type="text" name="carId" id = "car_id">
+									<input type = "button" id = "checkCar_Id" class="btn_y" value="중복확인">
+								</td>
+								<th scope="col">차량 모델 명22</th>
+								<td class="left">
+									<input type="text" name="modelName" id = "modelName" >
+								</td>
+							</tr> -->
+							
 							
 							
 						</tbody>

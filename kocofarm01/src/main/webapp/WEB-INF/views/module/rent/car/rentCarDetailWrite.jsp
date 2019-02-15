@@ -37,12 +37,12 @@
 							<tr>
 								<th scope="col">차량 번호</th>
 								<td class="left">
-									<input type="text" name="carId" id = "car_id">
+									<input type="text" name="carId" id = "car_id" placeholder = "차량번호를 입력해주세요">
 									<input type = "button" id = "checkCar_Id" class="btn_y" value="중복확인">
 								</td>
 								<th scope="col">차량 모델 명</th>
 								<td class="left">
-									<input type="text" name="modelName" id = "modelName" >
+									<input type="text" name="modelName" id = "modelName" placeholder = "차량모델명을 입력해주세요.">
 								</td>
 							</tr>
 							<tr>
@@ -62,11 +62,11 @@
 							<tr>
 								<th scope="col">가격</th>
 								<td class="left">
-									<input type="text" name="price" id = "price">	
+									<input type="text" name="price" id = "price" placeholder = "차량 가격을 입력해주세요.">	
 								</td>
 								<th scope="col">연식</th>
 								<td class="left">
-									<input type="text" name="year" id = "year">
+									<input type="text" name="year" id = "year" placeholder = "차량 연식을 입력해주세요.">
 								</td>
 							</tr>
 							<tr>

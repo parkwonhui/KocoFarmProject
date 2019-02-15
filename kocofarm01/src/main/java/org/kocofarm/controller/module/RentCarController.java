@@ -37,15 +37,11 @@ public class RentCarController {
 
 	private String rentCarDetailList(Criteria cri, Model model){
 		
-		//log.info("rentCarDetailList : " + cri);		
 		model.addAttribute("list", rentCarService.getRentCarDetailList(cri));
-		/*leftbar*/
-		model.addAttribute("moduleNm", "rent");
+		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		
 		int total = rentCarService.getTotal(cri);
-		//log.info("total : " + total);		
 		model.addAttribute("pageMaker", new PageDTO(cri, total));		
-
 
 		return "/module/rent/car/rentCarDetailList";
 	}
@@ -53,8 +49,8 @@ public class RentCarController {
 	//등록페이지 이동
 	@GetMapping("/rentCarDetailWrite")
 	public String rentCarDetailWrite(Model model){
-		/*leftbar*/
-		model.addAttribute("moduleNm", "rent");
+		
+		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		
 		return "/module/rent/car/rentCarDetailWrite";
 	}
@@ -66,7 +62,6 @@ public class RentCarController {
 		log.info("rentCarDetailWrite : " + rentCar);
 		rentCarService.setRentCarDetail(rentCar);
 		rttr.addFlashAttribute("result", rentCar.getCarId());		
-		/*return "redirect:/rent/car/rentCarDetailList";	*/	
 		return "redirect:rentCarDetailList";
 	}
 	
@@ -92,9 +87,7 @@ public class RentCarController {
 		
 		log.info("rentCarDetailView...");
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
-		/*leftbar*/
-		model.addAttribute("moduleNm", "rent");
-		
+		model.addAttribute("moduleNm", "rent");/*leftbar*/		
 		return "/module/rent/car/rentCarDetailView";
 	}
 	
@@ -106,9 +99,8 @@ public class RentCarController {
 		log.info("rentCarDetailEdit...수정페이지");
 		log.info("rentCarDetailEdit : " +rentCarService.getRentCarDetail(carId));
 		
-		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
-		/*leftbar*/
-		model.addAttribute("moduleNm", "rent");
+		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));		
+		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		
 		return "/module/rent/car/rentCarDetailUpdate";
 	}
@@ -143,7 +135,6 @@ public class RentCarController {
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
-/*		return "redirect:/rent/car/rentCarDetailList";*/
 		return "redirect:rentCarDetailList";
 	}
 

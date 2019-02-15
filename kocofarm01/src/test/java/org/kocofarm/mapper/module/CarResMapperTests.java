@@ -2,6 +2,7 @@ package org.kocofarm.mapper.module;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kocofarm.domain.rentCar.CarResVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,9 +18,17 @@ public class CarResMapperTests {
 	@Setter(onMethod_= {@Autowired})
 	private CarResMapper carResMapper;
 	
-	@Test
+	/*@Test
 	public void testGetCarResList(){
 		carResMapper.getCarResList().forEach(CarRes ->log.info(CarRes));
-	}
+	}*/
 	
+	/*public void testsetCarRes(){
+		CarResVO carResVo = new CarResVO();
+		carResVo.setCarId("가1234");
+		carResVo.setResWriter("정현");
+		carResVo.setResUser("아람");
+		
+		
+	}*/
 }

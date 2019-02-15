@@ -8,9 +8,8 @@ import org.kocofarm.domain.rentCar.CarResVO;
 public interface CarResMapper {
 	
 	//목록
-	//@Select("SELECT * FROM CAR_RES")
 	public List<CarResVO> getCarResList();
-
-	//예약
+	//등록
+	public void setCarRes(CarResVO carResVo);
 	
 }
