@@ -153,11 +153,13 @@ public class ApprovalController {
 	
 	/*휴가 신청서 수정 */
 	@PostMapping("/setUpVacation")
-	public String setUpVacation(@RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation){
-		log.info(draftId);
+	public String setUpVacation(@RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation, Model model){
 		draft.setDraftId(draftId);
-		service.setUpDraft(draft);
 		service.setUpVacation(vacation);
+		service.setUpDraft(draft);
+
+		
+		log.info("Here");
 		return "redirect:/approval/getDraftList";
 	}
 	

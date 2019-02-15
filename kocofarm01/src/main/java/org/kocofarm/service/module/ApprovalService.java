@@ -51,9 +51,10 @@ public interface ApprovalService {
 	public void delExpenceCont(int draftId);
 	
 	/* 기안서 수정 */
-	public boolean setUpDraft(ApprDraftVO draft);
+	public int setUpDraft(ApprDraftVO draft);
 	/* 휴가 신청서 수정*/
-	public boolean setUpVacation(ApprVacationVO vacation);
+	public int setUpVacation(ApprVacationVO vacation);
+	public int setUpVacHit(int draft);
 	/* 지출명세서 수정*/
 	public int setUpExpence(ApprExpenceVO expence);
 	/* 지출명세서 내역 수정*/

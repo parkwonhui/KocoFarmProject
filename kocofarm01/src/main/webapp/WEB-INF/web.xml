@@ -39,8 +39,8 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-	<!-- encoding -->
+	
+	<!-- 한글 깨짐 -->
 	<filter>
 		<filter-name>encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -53,7 +53,14 @@
 	<filter-mapping>
 		<filter-name>encoding</filter-name>
 		<servlet-name>appServlet</servlet-name>
+	</filter-mapping>
+
+	<!-- encoding -->	
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<servlet-name>appServlet</servlet-name>
 	</filter-mapping> 
 	<!-- end encoding  -->
 	
 </web-app>
+
