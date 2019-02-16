@@ -155,8 +155,8 @@ $( function() {
 					<div>
 						<label>진행상황</label>
 						<div class="add-calender-slidecontainer">
-						  <input type="range" min="1" max="100" value="50" class="add-calender-slider" id="calenderCompletionPerRang">
-  						  <input type="text" name="addCompletionPer" id="calenderCompletionPerVal"></input>
+						  <input type="range" min="0" max="100" value="0" class="add-calender-slider" id="calenderCompletionPerRang">
+  						  <input type="text" name="addCompletionPer" id="calenderCompletionPerVal" value="0"></input>
 						</div>
 					</div>
 					<div>

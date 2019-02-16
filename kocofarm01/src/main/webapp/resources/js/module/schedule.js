@@ -416,6 +416,7 @@ function addDynamicHtml(data){
 			var par = $(this).parent();	// calender_info
 			var project_id = par.children(".this_project_id").val();
 			var category_id = par.children(".this_category_id").val();
+			$("#editCalenderCompletionPerRang").val(0);
 			calenderButtonClick(project_id, category_id, 0);
 		});
 	   
@@ -443,6 +444,7 @@ function addDynamicHtml(data){
 			val.children("input[name=write]").val(title);
 			val.children("input[name=editDatepickerStart]").val(startDt);
 			val.children("input[name=editDatepickerEnd]").val(endDt);
+			$("#editCalenderCompletionPerRang").val(completionPer);
 			$("#editCalenderCompletionPerVal").val(completionPer);
 
 			calenderButtonClick(project_id, category_id, calender_id);
