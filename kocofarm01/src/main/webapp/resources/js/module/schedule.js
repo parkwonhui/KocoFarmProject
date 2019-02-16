@@ -437,7 +437,8 @@ function addDynamicHtml(data){
 		   
 
 		 	var val = $("#calenderModify").children(".modal-dialog").children(".modal-content").children(".modal-body");
-			
+		 	add_calender_color_value =  hexc(color);
+
 			// 값 넣기
 			val.children("input[name=write]").val(title);
 			val.children("input[name=editDatepickerStart]").val(startDt);

@@ -1,4 +1,4 @@
-package org.kocofarm.controller.comm;
+package org.kocofarm.controller.module;
 
 import java.util.ArrayList;
 import java.util.List;
