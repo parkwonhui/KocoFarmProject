@@ -111,9 +111,9 @@ public class ScheduleController {
 	}*/
 	
 	
-	@PostMapping("/sendProjectId")
+	@PostMapping("/project")
 	private ModelAndView getProjectListAjax(@ModelAttribute("project_id") int projectId, HttpSession session){
-		log.info("/sendProjectId..........");
+		log.info("/project..........");
 		
 		ModelAndView mv = new ModelAndView();
 		if(null == session){

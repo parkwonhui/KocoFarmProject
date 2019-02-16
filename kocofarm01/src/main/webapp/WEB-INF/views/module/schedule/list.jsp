@@ -277,7 +277,7 @@ function projectList(data){
 		
      $.each(data, function(index, project){ 
     	 var html = ('<div class="project-info-style">'+
-      	'<form name="enterProject" method="post" action="sendProjectId">'+	
+      	'<form name="enterProject" method="post" action="project">'+	
      	'<input type="hidden" name ="project_id" value='+project.projectId+' />'+
 		'<div name="projectId" class="sub_title_inner h4 responeProjectId">'+project.title+'</div>');
     	
