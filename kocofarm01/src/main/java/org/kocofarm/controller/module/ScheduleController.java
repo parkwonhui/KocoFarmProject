@@ -46,6 +46,8 @@ public class ScheduleController {
 	
 	@GetMapping("/")
 	private String getProjectList(HttpSession session, Model model){
+		log.info("/..........");
+		
 		if(null == session){
 			return "/main";
 		}
@@ -211,6 +213,7 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/insertCategory")
 	public int setCategory(HttpSession session, ScheduleCategoryVO category){
+		log.info("/insertCategory..........");
 		
 		if(null == session){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
@@ -232,6 +235,7 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/editCategory")
 	public int setUpCategory(HttpSession session, ScheduleCategoryVO category){
+		log.info("/editCategory..........");
 		
 		if(null == session){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
@@ -281,7 +285,6 @@ public class ScheduleController {
 		
 		project.setProjectStartDt("");
 		project.setProjectEndDt("");
-		project.setPublicUse("0");
 		log.info(project);
 		int re = service.setProject(project);
 		
@@ -294,6 +297,7 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/editProject")
 	public int setUpProject(HttpSession session, ScheduleProjectVO project){
+		log.info("/editProject..........");
 		
 		if(null == session){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
@@ -330,7 +334,8 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/editCalenderPos")
 	public int setUpCalenderPos(HttpSession session, @RequestBody List<ScheduleCalenderMoveVO> data){
-		
+		log.info("/editCalenderPos..........");
+
 		if(null == session){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
@@ -351,6 +356,7 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/editCategoryPos")
 	public int setCategoryPos(HttpSession session, ScheduleCategoryMoveVO category){
+		log.info("/editCategoryPos..........");
 		
 		if(null == session){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
@@ -372,6 +378,7 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/delCalender")
 	public int delCalender(HttpSession session, int calenderId){
+		log.info("/delCalender..........");
 		
 		if(null == session){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
@@ -393,6 +400,7 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/delCategory")
 	public int delCategory(HttpSession session, ScheduleCategoryVO category){
+		log.info("/delCategory..........");
 		
 		if(null == session){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
@@ -414,6 +422,7 @@ public class ScheduleController {
 	@ResponseBody
 	@PostMapping("/delProject")
 	public int delProject(HttpSession session, int projectId){
+		log.info("/delProject..........");
 		
 		if(null == session){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
@@ -432,10 +441,7 @@ public class ScheduleController {
 		int re = service.delProject(projectId);
 		return re;
 	}
-	
-	
-	////////////////////////
-	
+		
 	// 팀장 여부 체크
 	public boolean isManager(HttpSession session){
 		if(null == session){
