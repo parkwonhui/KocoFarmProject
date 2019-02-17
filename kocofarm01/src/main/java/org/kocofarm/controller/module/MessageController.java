@@ -1,0 +1,113 @@
+package org.kocofarm.controller.module;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.kocofarm.domain.comm.LoginVO;
+import org.kocofarm.domain.emp.EmpVO;
+import org.kocofarm.domain.message.MessageEmpListVO;
+import org.kocofarm.domain.message.MessageRoomListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
+import org.kocofarm.service.module.MessageService;
+import org.kocofarm.service.module.ScheduleService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+
+@Log4j
+@Controller
+@RequestMapping("/message/*")
+@AllArgsConstructor
+public class MessageController {
+
+	private MessageService service;
+	
+	@GetMapping("/")
+	private String getMessageInfo(HttpSession session, Model model){
+		log.info("[message] /");
+		
+		if(null == session){
+			return "/main";
+		}
+		
+		LoginVO loginVO = (LoginVO) session.getAttribute("loginVO");
+		if(null == loginVO){
+			return "redirect:/main";
+		}
+		
+		model.addAttribute("moduleNm", "schedule");
+		
+		return "/module/message/list";
+	}
+
+	@ResponseBody
+	@GetMapping("/list")
+	private List<MessageRoomListVO> getMessageRoomList(HttpSession session){
+		log.info("[message] /list");
+		
+		if(null == session){
+			return null;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO){
+			return null;
+		}
+		
+		String empId = loginVO.getEmpId();
+		if(null == empId){
+			return null;
+		}
+		
+		List<MessageRoomListVO> list = service.getMessageRoomList(loginVO.getEmpId());
+		log.info(list);
+		
+		return list;
+	}
+	
+	@ResponseBody
+	@GetMapping("/empList")
+	private List<MessageEmpListVO> getMessageEmpList(HttpSession session){
+		if(null == session){
+			return null;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO){
+			return null;
+		}
+		
+		List<MessageEmpListVO> list = service.getMessageEmpList();
+		System.out.println("list:"+list);
+		return list;
+	}
+	
+	@ResponseBody
+	@PostMapping("/addMessageRoom")
+	private int setMessageRoom(HttpSession session, List<String> empList, String title){
+		log.info("/addMessageRoom");
+		log.info(empList);
+		log.info(title);
+
+		if(null == session){
+			return -1;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO){
+			return -1;
+		}
+		
+		
+		//service.setMessageRoom(empList, );
+		return 1;
+	}
+}

@@ -1,0 +1,110 @@
+$(function(){
+	
+	// message room list
+	var addMessageRoomListFunction = function addMessageRoomList(data){	
+		$(".inbox_chat").empty();
+		var length = data.length;
+		for(var i = 0; i < length; ++i){
+			
+			var text = '<div class="chat_list">';
+			text += '<div class="chat_people">';
+			text += '<div class="chat_img">';
+			text += '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
+			text += '</div>';
+			text += '<div class="chat_ib">';
+			text += '<h5>';
+			text += '<p>'+ data[i].roomTitle + '</p>';
+			text += data[i].lastMessageEmpName+' <span class="chat_date">'+data[i].lastMessageDateToString+'</span>';
+			text += '</h5>';
+			text += '<p>'+ data[i].lastMessage +'</p>';
+			text += '</div>';
+			text += '</div>';
+			text += '</div>';
+
+			$(".inbox_chat").append(text);
+		}	
+	}
+	
+	// message room 초대할 유저 list
+	var addEmpFunction = function addEmpList(data){
+		console.log('addEmpFunction');
+		$("#emp-list").empty();
+		var length = data.length;
+		var text ='<ul class="add-message-room-emp-list">';
+		for(var i = 0; i < length; ++i){
+			text += '<li class="add-message-room-emp">';
+			//text += '<img src="/resources/img/comm/'+data[i].empImaSrc+'" >';
+			text += '<input type="hidden" name="empId" value='+data[i].empId+' />';
+			text += '<div class="add-message-chat-img"><img src="https://ptetutorials.com/images/user-profile.png" ></div>';
+			text += '<p class="add-message-emp-name">'+data[i].empName+'</p>';
+			text += '</li>';
+		}
+		text += '</ul>';
+		
+		$("#emp-list").append(text);
+	}
+
+	ajaxRequest("list", null, "get", addMessageRoomListFunction);
+	
+
+	
+	$('#add-message-room-button').click(function(){
+		ajaxRequest("empList", null, "get", addEmpFunction);
+	});
+	
+	$('#add-message-room-request').click(function(){
+		var empList = $('.add-message-room-emp');
+		var length = empList.length;
+		var list = new Array();
+		
+		console.log(empList[0]);
+		for(var i = 0; i < length; ++i){
+			if(false ==$(empList[i]).hasClass('checked'))
+				continue;
+
+			list.push($(empList[i]).children("input[name=empId]").val());
+		}
+		
+		console.log(JSON.stringify(list));
+		// 채팅방 리스트
+		ajaxMessageRoomList("addMessageRoom", JSON.stringify(list));
+	});
+	
+	//  메시지 룸 초대 인원 클릭 동적 태그 이벤트 붙여주기
+	$(document).on("click", ".add-message-room-emp", function(){
+		$(this).toggleClass('checked');
+	});
+	
+	function ajaxRequest(sendUrl, sendData, type, func){
+		
+		$.ajax({
+		    type:type,
+		    data : sendData,
+		    dataType:"json",
+		    url:sendUrl,
+		    success: function(data) {
+		    	console.log(data);
+		    	func(data);
+		    },
+		    error : function(error) {
+		    },	// error
+		  });// ajax
+	}
+	
+	function ajaxMessageRoomList(sendUrl, sendData){
+		
+		$.ajax({
+		    type:"post",
+		    data : sendData,
+		    dataType:"json",
+		    url:sendUrl,
+		    success: function(data) {
+		    	addMessageRoomListFunction(data);
+		    },
+		    error : function(error) {
+		    },	// error
+		  });// ajax
+	}
+	
+	
+});

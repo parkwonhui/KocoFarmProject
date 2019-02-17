@@ -358,7 +358,6 @@ function addDynamicHtml(data){
             
             html += '<div><img src="/resources/img/schedule/settings.png" class="calender-modify-btn" data-toggle="modal" data-target="#calenderModify"/></div>';
             html += '<div class="calender_detail_title ">'+data[i].title+'</div>';
-            /*html += '<div>calender:id'+data[i].calenderId+'</div>';*/
             html += '<input type="hidden" class="this_calender_id" value='+data[i].calenderId+' />';
             html += '<input type="hidden" class="this_calender_yPos" value='+data[i].yPos+' />';            
             var startDt = data[i].startDt;
