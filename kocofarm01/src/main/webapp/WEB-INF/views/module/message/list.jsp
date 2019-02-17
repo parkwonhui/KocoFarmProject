@@ -149,5 +149,6 @@
 
 		</div>
 	</div>
+</div>
 	<script type="text/javascript" src="/resources/js/module/message.js"></script>
 	<jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false"></jsp:include>

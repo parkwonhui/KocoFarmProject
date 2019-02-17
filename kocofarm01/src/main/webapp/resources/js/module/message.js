@@ -103,6 +103,23 @@ $(function(){
 		$(this).toggleClass('checked');
 	});
 	
+	// 메시지 방 선택 시 배경색 변경
+	$(document).on("click", ".chat_list", function(){
+		console.log('click!!!');
+		$(this).toggleClass('checked');
+		
+		var list = $('.chat_list');
+		var length = list.length;
+		
+		for(var i = 0; i < length; ++i){
+			if(this == list[i]){
+				continue;
+			}
+			
+			$(list[i]).removeClass('checked');
+		}
+	});
+	
 	function ajaxRequest(sendUrl, sendData, type, func){
 		
 		$.ajax({

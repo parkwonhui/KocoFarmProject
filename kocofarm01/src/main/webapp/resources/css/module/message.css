@@ -230,8 +230,14 @@ img {
 	cursor: pointer;
 }
 
+/* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
 .add-message-room-emp-list .checked{
 	background-color: #FAFAFA;  	
+}
+
+/* 메시지 방 선택 시 배경색 변경*/
+.inbox_chat .checked{
+	background-color: #F6CED8;  
 }
 
 /* 메신저 방만들기 초대 이미지 */
