@@ -1,9 +1,12 @@
 package org.kocofarm.controller.module;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.kocofarm.domain.comm.LoginVO;
 import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.message.MessageEmpListVO;
@@ -14,6 +17,7 @@ import org.kocofarm.service.module.ScheduleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import net.sf.json.JSONObject;
 
 @Log4j
 @Controller
@@ -29,6 +34,11 @@ import lombok.extern.log4j.Log4j;
 public class MessageController {
 
 	private MessageService service;
+	
+	public static final class RESULT{
+		public static final int UNKNOWN_ERROR = -1;
+		public static final int SUCCESS = 1;
+	};
 	
 	@GetMapping("/")
 	private String getMessageInfo(HttpSession session, Model model){
@@ -86,28 +96,40 @@ public class MessageController {
 		}
 		
 		List<MessageEmpListVO> list = service.getMessageEmpList();
-		System.out.println("list:"+list);
 		return list;
 	}
 	
 	@ResponseBody
 	@PostMapping("/addMessageRoom")
-	private int setMessageRoom(HttpSession session, List<String> empList, String title){
+	private int setMessageRoom(HttpSession session, @RequestBody String list){
 		log.info("/addMessageRoom");
-		log.info(empList);
-		log.info(title);
-
+		log.info(list);
+		
+		JSONObject jsonObject =  JSONObject.fromObject(list);
 		if(null == session){
-			return -1;
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		if(null == list){
+			return RESULT.UNKNOWN_ERROR;
 		}
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
-			return -1;
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		String title = (String) jsonObject.get("0");		// title
+		int lenght = (int)jsonObject.get("1");		// length
+		
+		List<String> empList = new ArrayList<String>();
+		for(int i = 2; i < lenght+2; ++i){
+			String empId = (String)jsonObject.get(i+"");
+			empList.add(empId);
 		}
 		
 		
-		//service.setMessageRoom(empList, );
-		return 1;
+		service.setMessageRoom(empList, title);
+		return RESULT.SUCCESS;
 	}
 }

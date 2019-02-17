@@ -36,12 +36,14 @@ public class MessageServiceImpl implements MessageService {
 		}
 		
 		List<MessageRoomListVO> list = mapper.getMessageRoomList(empId);
-		System.out.println("list:"+list);
 		for(MessageRoomListVO vo :list){
 			
 			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			EmpVO emp = empMapper.getEmp(vo.getLastMessageEmpId());
+			if(null == emp)
+				continue;
+			
 			String name = emp.getKorNm();
 			String dateToString = transFormat.format(vo.getLastMessageDate());
 

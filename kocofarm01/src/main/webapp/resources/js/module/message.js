@@ -1,7 +1,10 @@
 $(function(){
 	
 	// message room list
-	var addMessageRoomListFunction = function addMessageRoomList(data){	
+	var addMessageRoomListFunction = function addMessageRoomList(data){
+		if(null == data)
+			return;
+		
 		$(".inbox_chat").empty();
 		var length = data.length;
 		for(var i = 0; i < length; ++i){
@@ -14,9 +17,13 @@ $(function(){
 			text += '<div class="chat_ib">';
 			text += '<h5>';
 			text += '<p>'+ data[i].roomTitle + '</p>';
-			text += data[i].lastMessageEmpName+' <span class="chat_date">'+data[i].lastMessageDateToString+'</span>';
+			if(null != data[i].lastMessageEmpName){
+				text += data[i].lastMessageEmpName+' <span class="chat_date">'+data[i].lastMessageDateToString+'</span>';
+			}
 			text += '</h5>';
-			text += '<p>'+ data[i].lastMessage +'</p>';
+			if(null != data[i].lastMessageEmpName){
+				text += '<p>'+ data[i].lastMessage +'</p>';
+			}
 			text += '</div>';
 			text += '</div>';
 			text += '</div>';
@@ -54,20 +61,41 @@ $(function(){
 	
 	$('#add-message-room-request').click(function(){
 		var empList = $('.add-message-room-emp');
-		var length = empList.length;
-		var list = new Array();
+		var messageRoomTitle = $('#add-message-room-title').val();
 		
+		var length = empList.length;
+		var list = {};
+		var index = 0;
+		list[index+""] = messageRoomTitle;
+		++index;
+		++index;
+		var count = 0;
 		console.log(empList[0]);
 		for(var i = 0; i < length; ++i){
 			if(false ==$(empList[i]).hasClass('checked'))
 				continue;
 
-			list.push($(empList[i]).children("input[name=empId]").val());
+			list[index+""] = $(empList[i]).children("input[name=empId]").val();
+			++index;
+			++count;
 		}
 		
-		console.log(JSON.stringify(list));
+		list["1"] = count; 
+
 		// 채팅방 리스트
-		ajaxMessageRoomList("addMessageRoom", JSON.stringify(list));
+		$.ajax({
+		    type:"post",
+		    data : JSON.stringify(list),
+		    dataType:"json",
+		    url:"addMessageRoom",
+		    contentType : 'application/json',
+		    success: function(data) {
+		    	requestMessageRoomList();
+		    },
+		    error : function(error) {
+		    },	// error
+		  });// ajax
+		
 	});
 	
 	//  메시지 룸 초대 인원 클릭 동적 태그 이벤트 붙여주기
@@ -91,13 +119,12 @@ $(function(){
 		  });// ajax
 	}
 	
-	function ajaxMessageRoomList(sendUrl, sendData){
+	function requestMessageRoomList(){
 		
 		$.ajax({
-		    type:"post",
-		    data : sendData,
+		    type:"get",
 		    dataType:"json",
-		    url:sendUrl,
+		    url:"list",
 		    success: function(data) {
 		    	addMessageRoomListFunction(data);
 		    },

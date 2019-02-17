@@ -42,7 +42,7 @@
 				</div>
 				<div class="modal-body">
 					<p>방 제목</p>
-					<input type"text" />
+					<input type = "text" id="add-message-room-title" />
 					<div id="emp-list" ></div>
 				</div>
 				<div class="modal-footer">

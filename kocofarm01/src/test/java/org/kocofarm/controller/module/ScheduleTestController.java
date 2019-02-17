@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
@@ -181,8 +182,9 @@ public class ScheduleTestController {
 	}
 */
 	
-	@Test
+	/*@Test
 	public void getMember(){
 		log.info(mapper.getMember(142));
-	}
+	}*/
+	
 }

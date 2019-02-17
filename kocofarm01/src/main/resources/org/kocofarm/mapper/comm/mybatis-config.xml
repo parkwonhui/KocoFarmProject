@@ -5,6 +5,7 @@
 	<!-- 컬럼명 카멜 표기법 자동 변환 설정 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 	
 	<typeAliases>
