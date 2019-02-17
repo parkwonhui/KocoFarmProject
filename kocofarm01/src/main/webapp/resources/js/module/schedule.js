@@ -378,7 +378,7 @@ function addDynamicHtml(data){
             
             html += '<input type="hidden" class="calender_detail_completionPer" value="'+ data[i].completionPer+'"></input>';
             html += '<div class="calender-progress-bar">';
-            html += '<div style=" height: 20px; background-color: #4CAF50; border-radius:10px; width:'+data[i].completionPer+'%" >'+data[i].completionPer+'</div>'
+            html += '<div style=" height: 20px; background-color: #01A9DB; border-radius:10px; width:'+data[i].completionPer+'%" >'+data[i].completionPer+'</div>'
             html += '</div>';
             
             html += '</li>';	      		
@@ -635,6 +635,9 @@ function clearAddDlg(this_parent){
 
 /* 배경 rgb값을 16진수로 convert */
 function hexc(colorval) {
+	if(undefined == colorval){
+		return;
+	}
 	
     var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
     delete(parts[0]);

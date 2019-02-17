@@ -143,17 +143,15 @@ $( function() {
 						<div>시작날짜 <input type="text" name="addDatepickerStart" id="addDatepickerStart"/></div>
 						<div>종료날짜 <input type="text" name="addDatepickerEnd" id="addDatepickerEnd"/></div>	
 					</div>
+					<p>캘린더 칼라</p>
 					<div>
-						<label>캘린더 칼라</label>
+					 	<input type="button" class="tag-important btn"/>
+					  	<input type="button" class="tag-approve btn" />
+					   	<input type="button" class="tag-quickly btn" />
+					   	<input type="button" class="tag-request btn" />
 					</div>
 					<div>
-					 	<input type="button" class="tag-important btn btn-xs" value="red"/>
-					  	<input type="button" class="tag-approve btn btn-xs" value="green" />
-					   	<input type="button" class="tag-quickly btn btn-xs" value="blue" />
-					   	<input type="button" class="tag-request btn btn-xs" value="yellow" />
-					</div>
-					<div>
-						<label>진행상황</label>
+						<p>진행상황</p>
 						<div class="add-calender-slidecontainer">
 						  <input type="range" min="0" max="100" value="0" class="add-calender-slider" id="calenderCompletionPerRang">
   						  <input type="text" name="addCompletionPer" id="calenderCompletionPerVal" value="0"></input>
