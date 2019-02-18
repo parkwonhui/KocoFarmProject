@@ -3,12 +3,7 @@
 
 <mapper namespace="org.kocofarm.mapper.module.ScheduleMapper">
 <select id="getProjectList" resultType="ScheduleProjectVO" parameterType="ScheduleProjectVO">
-	select
-	/*+ INDEX_ASC(project PROJECT_ID_PK) */
-	 * from project
-<if test="title != null">
-where title like '%'|| #{title} ||'%'
-</if>
+	select * from project
 </select>
 <select id="getProjectCalenderList" resultType="ScheduleCalenderListVO" parameterType="int">
 	select *

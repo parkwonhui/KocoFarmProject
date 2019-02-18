@@ -138,6 +138,6 @@ public class ScheduleTestController {
 	
 	@Test
 	public void delCategory(){
-		mapper.delCategory(66);
+		log.info(mapper.getProjectList(null));
 	}	
 }
