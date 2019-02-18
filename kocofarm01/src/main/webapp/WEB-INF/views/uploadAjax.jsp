@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -13,37 +14,69 @@
 	<div class='uploadDiv'>
 		<input type="file" name="uploadFile" multiple>
 	</div>
-<style>
 
-.uploadResult{
+	<div class="bigPictureWrapper">
+		<div class="bigPicture"></div>
 
-width:100%;
-background-color: gray;
+
+	</div>
+
+
+
+	<style>
+.uploadResult {
+	width: 100%;
+	background-color: gray;
 }
 
-.uploadResult ul{
-
-display: flex;
-flex-flow: row;
-justify-content: center;
-align-items: center;
+.uploadResult ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
 }
 
-.uploadResult ul li{
-	list-style:none;
+.uploadResult ul li {
+	list-style: none;
 	padding: 10px;
-	
 }
-.uploadResult ul li img{
-width: 20px;
 
+.uploadResult ul li img {
+	width: 100px;
+}
+
+.uploadResult ul li span {
+	color: white;
+}
+
+.bigPictureWrapper {
+	position: absolute;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
+	z-index: 100;
+	background: rgba(255, 255, 255, 0, 5);
+}
+
+.bigPicture {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bigPicture img {
+	width: 600px;
 }
 
 </style>
 	<div class="uploadResult">
-	<ul>
-	
-	</ul>
+		<ul>
+		</ul>
 	</div>
 
 
@@ -53,7 +86,23 @@ width: 20px;
 		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 		crossorigin="anonymous"></script>
 
-<script>	
+	<script>
+
+function showImage(fileCallPath){
+	//alert(fileCallPath)
+	
+	$(".bigPictureWrapper").css("display","flex").show();
+	
+	$(".bigPicture")
+	.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"'/>")
+	.animate({width:'100%', height: '100%'}, 0);
+	
+	$(".bigPictureWrapper").on("click", function(e){
+		$(".bigPicture").animate({width:'0%', height: '0%'}, 10);
+		setTimeout(() => {$(this).hide();}, 10);});
+ 
+}
+
 $(document).ready(function(){ 
 
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -96,7 +145,7 @@ $(document).ready(function(){
 			}
 			
 			formData.append("uploadFile", files[i]);
-			
+			//uploadfile 키값에 file[0]을 매핑하여 폼데이터에 추가는 것임
 		}
 		
 		var uploadResult = $(".uploadResult ul");
@@ -109,19 +158,50 @@ $(document).ready(function(){
 					function(i, obj){
 						//function() 에서 i 는 인덱스, obj 는 뭐 어떤 데이터 값
 						if(!obj.image){
-				str += "<li><img src='/resources/img/file.png'>"
-						+ obj.fileName + "</li>";
-				// obj 가 어디서 온것인지?
-						// function 도..
-						
-					} else {
-						//str += "<li>" + obj.fileName + "</li>";
-						var fileCallPath = encodeURIComponent( obj.filePath +"/s_"+obj.uuid +"_"+ obj.fileName);
-						
-						str += "<li><img src='/display?fileName="+fileCallPath+"'></li>";
-					}
 				
+						var fileCallPath = encodeURIComponent( obj.filePath +"/"+obj.uuid +"_"+ obj.fileName);
+						
+						str += "<li><div><a href='/download?fileName="+fileCallPath+"'>"
+								+"<img src='/resources/img/doc.png'>"+obj.fileName+"</a>"
+								+"<span data-file=\'"+fileCallPath+"\'data-type='file'> x </spqn>" +"<div></li>" 
+					}else{
+						
+						var fileCallPath = encodeURIComponent(obj.filePath+ "/s_" + obj.uuid +"_"+obj.fileName);
+						
+						var originPath = obj.filePath +"\\" + obj.uuid +"_"+obj.fileName;
+						
+						originPath = originPath.replace(new RegExp(/\\/g),"/");
+						
+						
+						str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\">"+
+						"<img src='display?fileName="+fileCallPath+"'></a>"+
+						"<span data-file=\'"+fileCallPath+"\' data-type='image'> x</span>"+
+						"<li>";
+						
+						
+						
+					}
+						
+						$('.uploadResult').on("click","span",function(e){
+							var targetFile = $(this).data("file");
+							var type = $(this).data("type");
+							console.log(targetFile);
+							console.log(type);
+							
+							$.ajax({
+								url:'/deleteFile',
+								data: {"fileName" : targetFile , "type":type},
+								dataType : "text",
+								type: 'POST',
+								success: function(result){
+									alert(result);
+								}
+								
+							});
 			});
+
+				})
+			
 			
 			uploadResult.append(str);
 				
@@ -145,6 +225,10 @@ $(document).ready(function(){
 		}
 		 
 	});
+		
+		
+		
+		
 	});
 	
 });

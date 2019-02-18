@@ -10,6 +10,9 @@
 	<typeAliases>
 		<!-- 공통 > 로그인 -->
 		<typeAlias type="org.kocofarm.domain.comm.LoginVO" alias="LoginVO" />
+		<typeAlias type="org.kocofarm.domain.comm.AttachFileVO" alias="AttachFileVO" />
+		<typeAlias type="org.kocofarm.domain.comm.BoardVO" alias="BoardVO" />
+		
 
 		<!-- 인사 관리 -->
 		<typeAlias type="org.kocofarm.domain.emp.EmpVO" alias="EmpVO" />

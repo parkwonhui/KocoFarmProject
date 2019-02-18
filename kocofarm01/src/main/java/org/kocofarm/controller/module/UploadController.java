@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.taglibs.standard.resources.Resources;
-import org.kocofarm.domain.fileRoom.AttachFileVO;
+import org.kocofarm.domain.comm.AttachFileVO;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -41,12 +42,19 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
 public class UploadController {
 
-	@GetMapping("/uploadAjax")
+/*	@GetMapping("/uploadAjax")
 	public void uploadAjax() {
 		log.info("uploadAjax");
 
 	}// get mapping
+*/
+	@GetMapping("/uploadForm")
+	public void uploadForm() {
+		log.info("uploadForm");
 
+	}
+	
+	
 	private String GetFolder(){
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,19 +126,21 @@ public class UploadController {
 				File saveFile = new File(uploadPath, uploadFileName);
 				multipartFile.transferTo(saveFile);
 				
-				attachFileVO.setFilePath(uploadFolderPath);
-				attachFileVO.setUuid(uuid.toString());
+				
+				attachFileVO.setUploadPath(uploadFolderPath);
+				attachFileVO.setUudi(uuid.toString());
 				
 				log.info("uploadfolderpath : "+uploadFolderPath);
 				
 				// chech image file
 				if(checkImageType(saveFile)) {
 					
-					attachFileVO.setImage(true);
+					
+					attachFileVO.setFileType(true);
 					
 					FileOutputStream thumnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 					
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumnail, 100, 100);
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumnail, 300, 300);
 					
 					thumnail.close();
 				}
@@ -171,7 +181,7 @@ public class UploadController {
 	
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
-	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agnet") String userAgent, String fileName) {
+	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 		
 		log.info("download file : " + fileName);
 		
@@ -179,7 +189,7 @@ public class UploadController {
 		
 		log.info("resource : " + resource);
 		
-		if(resource.exists()==false){
+		if(resource.exists() == false){
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			
@@ -212,7 +222,7 @@ public class UploadController {
 			log.info("downloadName : " + downloadName);
 			
 			
-			headers.add("Context-Disposition","attachment; filename=" + downloadName);
+			headers.add("Content-Disposition","attachment; filename=" + downloadName);
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -220,6 +230,45 @@ public class UploadController {
 		
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
+	
+	@PostMapping(value="/deleteFile")
+	@ResponseBody
+	public ResponseEntity<String> deleteFile(String fileName, String type){
+		
+		log.info("delfile : " + fileName);
+		
+		File file;
+		
+		
+		try {
+			file = new File("C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\"+URLDecoder.decode(fileName,"UTF-8"));
+			log.info("delfile: "+file);
+			file.delete();
+			
+			// 확장자명 list TF result 하는것 필요
+			/*String[] Ext = new String []{"jpg", "jpeg", "png", "gif"};*/
+			/*if(fileExtention.equals("jpg")||fileExtention.equals("png")||fileExtention.equals("jpeg")||fileExtention.equals("gif")){*/
+			if(type.equals("image")){
+			
+				String uuidFileName = file.getAbsolutePath().replace("s_", "");
+				
+				file = new File(uuidFileName);
+				
+				file.delete();
+				
+			}
+			
+			
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+
+		return new ResponseEntity<String>("deleted", HttpStatus.OK);
+		
+	}
+	
 	
 	
 }// controller end
