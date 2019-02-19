@@ -78,6 +78,9 @@
 					<div class="modal-body">
 						<p>프로젝트 이름</p>
 						<input type="text" id="create-project-input"></input>
+						<div>프로젝트 access</div>
+						<div class='project-check-box'><input name="projectAccess" type="checkbox" id="project-public-check">public(프로젝트 일정에 속한 모든 사원이 모든 기능을 사용할 수 있다) </div>
+						<div class='project-check-box'><input name="projectAccess" type="checkbox" id="project-private-check">private(프로젝트를 만든 팀장만 카테고리,일정 추가,삭제할 수 있다)  </div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" id="create-project-button">생성</button>
@@ -144,9 +147,39 @@ $(function(){
 
 // modal 창의 create 버튼
 $("#create-project-button").on("click", function(){
-	var sendData = {title:$('#create-project-input').val()};
+	
+	var check = 0;
+	var accessCheckBox = $("input[name=projectAccess]");
+	console.log(accessCheckBox);
+	var size = accessCheckBox.length;
+	for(var i = 0; i < size; ++i){
+		if(true == accessCheckBox[i].checked){
+			check = 1;
+		}
+	}
+	
+	if(0 == check){
+		alert('[에러] 프로젝트 권한을 체크해주세요');
+		return;
+	}
+	
+	if('' == sendData){
+		alert('[에러] 프로젝트명을 입력해주세요');
+	}
+	
+	// checked : 0이면 private,1이면 public
+	var strPublic = $("#project-public-check").checked
+
+	var bPublic = "0";
+	if(true == bPublic)
+		bPublic = "1";
+	
+	var sendData = {"title":$('#create-project-input').val(), "publicUse":bPublic };
 	ajaxListRequest("insertProject",sendData);
 	$("#create-project-input").val("");
+	for(var i = 0; i < size; ++i){
+		accessCheckBox[i].checked = false;		
+	}
 });
 
 //modal 창의 delete 버튼
@@ -170,9 +203,20 @@ $("#modify-project-button").on("click", function(){
 	ajaxListRequest(sendUrl, sendData);
 });
 
+//프로젝트 엑세스 체크박스 클릭 이벤트
+$("input[name=projectAccess]").on("click", function(){
+	var accessCheckBox = $("input[name=projectAccess]");
+	var size = accessCheckBox.length;
+	for(var i = 0; i < size; ++i){
+		if(accessCheckBox[i] != this){
+			accessCheckBox[i].checked = false;
+		}
+	}
+});
+
 // 검색 버튼
 $("#schBtn").on("click", function(){
-	var searchData = $("#schWord").val();
+	/* var searchData = $("#schWord").val();
 	
 	var sendUrl = "getProjectListSearch";
 	var sendData = {title:searchData};
@@ -187,7 +231,7 @@ $("#schBtn").on("click", function(){
 	    },
 	    error : function(error) {	    	
 	    },	// error
-	  });// ajax
+	  });// ajax */
 });
 
 function ajaxListRequest(sendUrl, sendData){
@@ -226,30 +270,48 @@ function projectListAjaxRequest(){
 	  });// ajax
 }
 
-function projectList(data){
+function projectList(data){	
 	 $('.contents').empty();
-     $.each(data, function(index, project){
-    	 
-         $('.contents').append(        	
-         	'<div class="project-info-style">'+
-         	'<form name="enterProject" method="post" action="sendProjectId">'+	
-	         	'<input type="hidden" name ="project_id" value='+project.projectId+' />'+
-				'<div name="projectId" class="sub_title_inner h4 responeProjectId">'+project.title+'</div>'+
-			'</form>'+
-			'<div>'+
-			'<img src ="/resources/img/schedule/settings.png" class="project-setting" id="project-modify-modal-button" data-toggle="modal" data-target="#modify-project-modal" />'+
+	 
+	 var empId = '<c:out value="${loginVO.empId}" />';
+		
+     $.each(data, function(index, project){ 
+    	 var html = ('<div class="project-info-style">'+
+      	'<form name="enterProject" method="post" action="project">'+	
+     	'<input type="hidden" name ="project_id" value='+project.projectId+' />'+
+		'<div name="projectId" class="sub_title_inner h4 responeProjectId">'+project.title+'</div>');
+    	
+    	var accessText;
+    	if(1 == project.publicUse){
+    		accessText = '수정, 삭제에 제한 없음';   		
+    	}else{
+    		accessText = '수정, 삭제에 제한 있음';
+    	}
+    	
+    	html += '<div name="projectId" class="sub_title_inner">'+accessText+'</div>';
+    	html += '</form>';
+    	html += '<div>';
+		
+ 		if(project.projectLeader == empId){
+			html += '<img src ="/resources/img/schedule/settings.png" class="project-setting" id="project-modify-modal-button" data-toggle="modal" data-target="#modify-project-modal" />'+
 			'</div>'+	
 			'<div>'+
 			'<img src = "/resources/img/schedule/dustbin.png" id="project-delete-modal-button" class="project-setting" data-toggle="modal" data-target="#delete-project-modal" />'+	
-			'</div>'+
-			'</div>'
-         );
+			'</div>';
+		}
+		
+		html += '</div>';
+    	 
+         $('.contents').append(html);
      });
      
+     var managerId = '<c:out value="${loginVO.managerId}" />';
+     if(managerId == empId){
      $('.contents').append('<div>'+
      	'<button type="button" class="btn project-info-style h3" data-toggle="modal" data-target="#create-project-modal">create'+
 			'project..</button>'+
 			'</div>');
+     }
      
       $(document).on("click", "#project-delete-modal-button", function(event){    	
      	var parent = $(this).parent().parent().children('form[name=enterProject]');

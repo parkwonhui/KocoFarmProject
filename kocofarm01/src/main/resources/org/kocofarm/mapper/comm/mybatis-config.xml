@@ -5,6 +5,7 @@
 	<!-- 컬럼명 카멜 표기법 자동 변환 설정 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 	
 	<typeAliases>
@@ -17,12 +18,24 @@
 		<!-- 인사 관리 -->
 		<typeAlias type="org.kocofarm.domain.emp.EmpVO" alias="EmpVO" />
 		
+		<!-- 일정 관리 -->		
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProjectVO" alias="ScheduleProjectVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryVO" alias="ScheduleCategoryVO" />	
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderVO" alias="ScheduleCalenderVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderListVO" alias="ScheduleCalenderListVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCalenderMoveVO" alias="ScheduleCalenderMoveVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryMoveVO" alias="ScheduleCategoryMoveVO" />
-
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProjectSearchVO" alias="ScheduleProjectSearchVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleMemberVO" alias="ScheduleMemberVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleTagVO" alias="ScheduleTagVO" />
+		
+		<!-- 메시지 -->
+		<typeAlias type="org.kocofarm.domain.message.MessageVO" alias="MessageVO" />
+		<typeAlias type="org.kocofarm.domain.message.MessagePushVO" alias="MessagePushVO" />
+		<typeAlias type="org.kocofarm.domain.message.MessageRoomVO" alias="MessageRoomVO" />
+		<typeAlias type="org.kocofarm.domain.message.MessageRoomListVO" alias="MessageRoomListVO" />
+		<typeAlias type="org.kocofarm.domain.message.MessageEmpListVO" alias="MessageEmpListVO" />
+		
+		
 	</typeAliases>
 </configuration>

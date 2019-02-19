@@ -21,4 +21,7 @@ public interface MeetingRoomMapper {
 	public int delMroom(int mId);
 	//수정
 	public int setUpMroom(MeetingRoomVO mroom);
+	
+	//회의실 번호 확인
+	public MeetingRoomVO getIdChk(int mId);
 }

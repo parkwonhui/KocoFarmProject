@@ -18,21 +18,22 @@
 									<li><a href="">근태 관리</a></li>
 								</c:when>
 								<c:when test="${'approval' eq moduleNm}">
-									<li><a href="listForm.do">기안서 등록하기</a></li>
-									<li><a href="listDraft.do">기안서 전체보기</a></li>
+									<li><a href="/approval/getDraftList">기안서 전체보기</a></li>
+									<li><a href="/approval/getFormList">기안서 등록하기</a></li>
 									<li><a href="">결재 기안서 보기</a></li>
 									<li><a href="">기타 추가</a></li>
 								</c:when>
 								<c:when test="${'rent' eq moduleNm}">
-									<li><a href="rentCarDetailList">차량 관리</a></li>
+									<li><a href="/rent/rentCarDetailList">차량 관리</a></li>
 									<li><a href="">차량 예약</a></li>
 									<li><a href="">차량 운행 일지</a></li>
 									<li><a href="">차량 정비 일지</a></li>
 									<li><a href="/meetingroom/mroomlist">회의실</a></li>
-									<li><a href="/meetingroom/reservList">회의실 예약 목록</a></li>
+									<li><a href="/reservation/reservlist">회의실 예약 목록</a></li>
 								</c:when>
 								<c:when test="${'schedule' eq moduleNm}">
-									<li><a href="schedule.do">일정 관리</a></li>
+									<li><a href="/schedule/">일정 관리</a></li>
+									<li><a href="/message/">메신저</a></li>
 									<li><a href="fileList.do">파일 보관함</a></li>
 								</c:when>
 							</c:choose>

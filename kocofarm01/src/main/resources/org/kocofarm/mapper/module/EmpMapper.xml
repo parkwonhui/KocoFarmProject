@@ -36,6 +36,4 @@
 		DEPT_NM AS deptNm
 		FROM DEPARTMENTS
 	</select>
-
-
 </mapper>

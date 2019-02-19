@@ -662,53 +662,59 @@ footer{margin-top: 30px; text-align: center; color: #333}
 /* 일정 태그 */
 .tag-important { 
   color: #FFFFFF; 
-  background-color: #FF3636; 
-  border-color: #FFFFFF; 
+  background-color: #ff2b92; 
+  border-color: #ffc4e9; 
   border: none;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  border-radius:75px;
   
 } 
 
 .tag-approve { 
   color: #FFFFFF; 
-  background-color: #36FFC6; 
-  border-color: #FFFFFF; 
+  background-color: #24d1b7; 
+  border-color: #c9fffd; 
   border: none;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  border-radius:75px;
   
 } 
 
 .tag-quickly { 
   color: #FFFFFF; 
-  background-color: #365EFF; 
-  border-color: #FFFFFF; 
+  background-color: #3253a1; 
+  border-color: #787cf0; 
   border: none;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  border-radius:75px;
+  
   
 } 
 
 .tag-request { 
   color: #FFFFFF; 
-  background-color: #FFEE36; 
-  border-color: #FFFFFF;
+  background-color: #ffe15c; 
+  border-color: #ffd9bd;
   border: none;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  border-radius:75px;
+  
 } 
 
 /* 일정 추가 완료도 프로그래스바 예제 */
@@ -908,4 +914,9 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	width: 20px;
 	height: 20px;
 	cursor:pointer;
+}
+
+/* left 메뉴 z index 수정 */
+.left_wrap{
+	z-index: 1;
 }

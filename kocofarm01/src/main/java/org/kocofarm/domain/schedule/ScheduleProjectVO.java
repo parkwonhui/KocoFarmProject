@@ -23,6 +23,6 @@ public class ScheduleProjectVO implements Serializable{
 	private String projectEndDt;
 	private int projectRegDt;
 	private int projectCompletion;
-	private boolean publicProject;
+	private String publicUse;
 	
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kocofarm.mapper.module.MessageMapper">
+
+<!-- 메시지 룸 조회 -->
+<select id="getMessageRoomList" parameterType="String" resultType="MessageRoomListVO">
+	select
+	room.message_room_id, room.room_title, push.emp_id, room.last_message, room.last_message_emp_id, room.last_message_date
+	from message_room room
+	join message_push push
+	on room.message_room_id = push.message_room_id
+	and push.emp_id = #{empId}
+</select>
+
+<!-- 신규 메시지 룸 생성 -->
+<insert id="setMessageRoom" parameterType="MessageRoomVO">
+	<selectKey keyProperty="messageRoomId" resultType="integer" order="BEFORE">
+		select message_room_id_seq.nextval FROM DUAL
+	</selectKey>
+	insert into
+	message_room(message_room_id, room_title)
+	values(#{messageRoomId}, #{roomTitle})
+</insert>
+
+<!-- 신규 메시지 룸 생성 시 참여자 추가-->
+<insert id="setMessagePush" parameterType="MessagePushVO">
+	insert into
+	message_push(message_push_id, message_room_id, emp_id)
+	values(message_push_id_seq.nextval, #{messageRoomId}, #{empId})
+</insert>
+</mapper>

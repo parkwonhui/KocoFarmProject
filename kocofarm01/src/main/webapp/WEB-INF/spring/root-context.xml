@@ -16,6 +16,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="org.kocofarm.domain" />
 	<context:component-scan base-package="org.kocofarm.service" />
+
 	
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> 
@@ -40,12 +41,12 @@
 	</bean>
 	
 	<tx:annotation-driven />
-	<bean id="transactionManager"
-	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	
-	<mybatis-spring:scan base-package="org.kocofarm.mapper" />
+
+	<mybatis-spring:scan base-package="org.kocofarm.mapper.comm" />
+	<mybatis-spring:scan base-package="org.kocofarm.mapper.module" />
 	
 		
 </beans>

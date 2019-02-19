@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/comm/comm.css" />
+
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
@@ -18,6 +20,10 @@
 			</div>
 		</div>
 	
+		<form id = 'actionForm' action = "/approval/getDraftList" method = 'get'>
+			<input type = 'hidden' name = 'pageNum' value = '${pageMaker.cri.pageNum }'>
+			<input type = 'hidden' name = 'amount' value = '${pageMaker.cri.amount }'>
+		</form>
 		<!-- Contents Area -->
 		<div class="contents_wrap">
 			<!-- sch_top -->
@@ -71,13 +77,13 @@
 					</table>
 				 	<section id = "content1">
 				 		<table class="contents_tb" id="contTb">
-							<c:forEach var="ApprovalDraft" items="${list }">
+							<c:forEach var="ApprDraftVO" items="${draftList }">
 								<tr>
-									<td width = 10%>${ApprovalDraft.draftId }</td>
-									<td width = 40%><a href = "DetailDraft.do?draftId=${ApprovalDraft.draftId }" >${ApprovalDraft.draftName}</a></td>
-									<td width = 10%>${ApprovalDraft.formId}</td>
-									<td width = 20%>${ApprovalDraft.draftDt }</td>
-									<td width = 10%>${ApprovalDraft.approveState }</td>
+									<td width = 10%>${ApprDraftVO.draftId }</td>
+									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+									<td width = 10%>${ApprDraftVO.formId}</td>
+									<td width = 20%>${ApprDraftVO.draftDt }</td>
+									<td width = 10%>${ApprDraftVO.approveState }</td>
 								</tr>
 							</c:forEach>
 						</table>
@@ -85,14 +91,14 @@
 				 
 				 	<section id = "content2">
 				 		<table class="contents_tb" id="contTb">
-							<c:forEach var="ApprovalDraft" items="${list }">
-								<c:if test = "${ApprovalDraft.approveState eq '기안중' }">
+							<c:forEach var="ApprDraftVO" items="${draftList }">
+								<c:if test = "${ApprDraftVO.approveState eq '기안중' }">
 								<tr>
-									<td width = 10%>${ApprovalDraft.draftId }</td>
-									<td width = 40%><a href = "DetailiDraft.do?draftId=${ApprovalDraft.draftId }" >${ApprovalDraft.draftName}</a></td>
-									<td width = 10%>${ApprovalDraft.formId}</td>
-									<td width = 20%>${ApprovalDraft.draftDt }</td>
-									<td width = 10%>${ApprovalDraft.approveState }</td>
+									<td width = 10%>${ApprDraftVO.draftId }</td>
+									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+									<td width = 10%>${ApprDraftVO.formId}</td>
+									<td width = 20%>${ApprDraftVO.draftDt }</td>
+									<td width = 10%>${ApprDraftVO.approveState }</td>
 								</tr>
 								</c:if>
 							</c:forEach>
@@ -101,14 +107,14 @@
 				 	
 				 	<section id = "content3">
 				 		<table class="contents_tb" id="contTb">
-							<c:forEach var="ApprovalDraft" items="${list }">
-								<c:if test = "${ApprovalDraft.approveState eq '결재중' }">
+							<c:forEach var="ApprDraftVO" items="${draftList }">
+								<c:if test = "${ApprDraftVO.approveState eq '결재중' }">
 								<tr>
 									<td width = 10%>${ApprovalDraft.draftId }</td>
-									<td width = 40%><a href = "DetailDraft.do?draftId=${ApprovalDraft.draftId }" >${ApprovalDraft.draftName}</a></td>
-									<td width = 10%>${ApprovalDraft.formId}</td>
-									<td width = 20%>${ApprovalDraft.draftDt }</td>
-									<td width = 10%>${ApprovalDraft.approveState }</td>
+									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+									<td width = 10%>${ApprDraftVO.formId}</td>
+									<td width = 20%>${ApprDraftVO.draftDt }</td>
+									<td width = 10%>${ApprDraftVO.approveState }</td>
 								</tr>
 								</c:if>
 							</c:forEach>
@@ -117,14 +123,14 @@
 				 	
 				 	<section id = "content4">
 				 		<table class="contents_tb" id="contTb">
-							<c:forEach var="ApprovalDraft" items="${list }">
-								<c:if test = "${ApprovalDraft.approveState eq '반려' }">
+							<c:forEach var="ApprDraftVO" items="${draftList }">
+								<c:if test = "${ApprDraftVO.approveState eq '반려' }">
 								<tr>
-									<td width = 10%>${ApprovalDraft.draftId }</td>
-									<td width = 40%><a href = "DetailDraft.do?draftId=${ApprovalDraft.draftId }" >${ApprovalDraft.draftName}</a></td>
-									<td width = 10%>${ApprovalDraft.formId}</td>
-									<td width = 20%>${ApprovalDraft.draftDt }</td>
-									<td width = 10%>${ApprovalDraft.approveState }</td>
+									<td width = 10%>${ApprDraftVO.draftId }</td>
+									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+									<td width = 10%>${ApprDraftVO.formId}</td>
+									<td width = 20%>${ApprDraftVO.draftDt }</td>
+									<td width = 10%>${ApprDraftVO.approveState }</td>
 								</tr>
 								</c:if>
 							</c:forEach>
@@ -133,28 +139,46 @@
 				 	
 				 	<section id = "content5">
 				 		<table class="contents_tb" id="contTb">
-							<c:forEach var="ApprovalDraft" items="${list }">
-								<c:if test = "${ApprovalDraft.approveState eq '결재완료' }">
+							<c:forEach var="ApprDraftVO" items="${draftList }">
+								<c:if test = "${ApprDraftVO.approveState eq '결재완료' }">
 								<tr>
-									<td width = 10%>${ApprovalDraft.draftId }</td>
-									<td width = 40%><a href = "DetailDraft.do?draftId=${ApprovalDraft.draftId }" >${ApprovalDraft.draftName}</a></td>
-									<td width = 10%>${ApprovalDraft.formId}</td>
-									<td width = 20%>${ApprovalDraft.draftDt }</td>
-									<td width = 10%>${ApprovalDraft.approveState }</td>
+									<td width = 10%>${ApprDraftVO.draftId }</td>
+									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+									<td width = 10%>${ApprDraftVO.formId}</td>
+									<td width = 20%>${ApprDraftVO.draftDt }</td>
+									<td width = 10%>${ApprDraftVO.approveState }</td>
 								</tr>
 								</c:if>
 							</c:forEach>
 						</table>
 				 	</section>
-				
+						
+					<!-- pagination start -->
+					<div class = 'pull-right '>
+						<ul class = "pagination">
+							<c:if test = "${pageMaker.prev }">
+								<li class = "paginate_button previous"><a href = "${pageMaker.startPage - 1 }">Previous</a></li>
+							</c:if>
+							
+							<c:forEach var = "num" begin ="${pageMaker.startPage }" end = "${pageMaker.endPage }">
+								<li class = "paginate_button ${pageMaker.cri.pageNum == num ? "active" : ""}"><a href="${num }">${num }</a></li>
+							</c:forEach>
+						
+							<c:if test = "${pageMaker.next }">
+								<li class = "paginate_button next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+							</c:if>
+						</ul>
+					</div>
+					<!-- pagination end -->
 				 </div>
 
-				<!-- 목록 보기 -->
 			
 			</div>
 		
 		</div>
+
 	</div>
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
+<script type="text/javascript" src="/resources/js/comm/comm.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>
 

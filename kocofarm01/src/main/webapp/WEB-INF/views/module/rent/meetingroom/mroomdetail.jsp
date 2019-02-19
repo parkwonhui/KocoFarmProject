@@ -44,7 +44,7 @@
 					</tbody>
 				</table>
 				
-				<%-- <div class="btn_wrap">
+				<div class="btn_wrap">
 					<div class="flt_r">
 						<c:if test="${loginVO.authority == 99}">
 							<a href="/meetingroom/mroomupdateForm?mId=${mroom.mId}">
@@ -54,11 +54,11 @@
 								<input type="button" class="auto_wth_btn_r" value="삭제" />
 							</a>
 						</c:if>
-						<a href="/meetingroom/reservinsertForm?mId=${mroom.mId}">
+						<a href="/reservation/reservInsertForm?mId=${mroom.mId}">
 							<input type="button" class="auto_wth_btn_b" value="회의실 예약" />
 						</a>
 					</div>
-				</div> --%>
+				</div> 
 			</div>
 		</div>
 	</div>
