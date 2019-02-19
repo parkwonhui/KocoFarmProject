@@ -131,10 +131,12 @@ $(function() {
    }
 
 $(".commentInsertBtn").click(function(){
-	var commentContents = $("commentContents").val();
-	var draftId = "${draft_comment.draftId}";
-	var empId = "${draft_comment.empId}";
+	var commentContents = $("#commentContents").val();
+	var draftId = $("#draftId").val();
+	var empId = $("#empId").val();
+	
 	var param = {"commentContents" : commentContents, "draftId" : draftId, "empId" : empId};
+	
 		$.ajax({
 			type : "POST",
 			url : "setComment",

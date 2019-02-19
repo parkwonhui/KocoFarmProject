@@ -54,40 +54,40 @@ public class ApprovalController {
 	private EmpService eService;
 	
 	
-	/*전체 기안서 리스트 가져오기*/
+	/*�쟾泥� 湲곗븞�꽌 由ъ뒪�듃 媛��졇�삤湲�*/
 	/*	@GetMapping("/getDraftList")
 	public String getDraftList(Model model){
-		model.addAttribute("moduleNm", "approval");//leftbar띄우기
+		model.addAttribute("moduleNm", "approval");//leftbar�쓣�슦湲�
 		model.addAttribute("draftList", service.getDraftList());
 		return "module/approval/getDraftList";
 	}*/
 	
-	/*페이징 처리한 리스트 가져오기 */
+	/*�럹�씠吏� 泥섎━�븳 由ъ뒪�듃 媛��졇�삤湲� */
 	@GetMapping("/getDraftList")
 	public String getDraftList(Criteria cri , Model model){
-		model.addAttribute("moduleNm", "approval");//leftbar띄우기
+		model.addAttribute("moduleNm", "approval");//leftbar�쓣�슦湲�
 		model.addAttribute("draftList", service.getDraftList(cri));
 		int total = service.getTotal(cri);
 		model.addAttribute("pageMaker",new PageDTO(cri, total));
 		return "module/approval/getDraftList";
 	}
 	
-	/* 전체 양식 리스트 가져오기 */
+	/* �쟾泥� �뼇�떇 由ъ뒪�듃 媛��졇�삤湲� */
 	@GetMapping("/getFormList")
 	public String getFormList(Model model){
 		
 		
-		model.addAttribute("moduleNm", "approval");//leftbar띄우기
+		model.addAttribute("moduleNm", "approval");//leftbar�쓣�슦湲�
 		model.addAttribute("formList",service.getFormList()); 
 		
 		return "/module/approval/getFormList";
 	}
 	
-	/* 특정 기안서 가져오기 */
+	/* �듅�젙 湲곗븞�꽌 媛��졇�삤湲� */
 	@GetMapping("/getDraft")
 	public String getDraft(@RequestParam("draftId") int draftId, Model model){
 		
-		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
+		model.addAttribute("moduleNm", "approval"); //leftbar�쓣�슦湲�
 		model.addAttribute("draft",service.getDraft(draftId));
 		model.addAttribute("empVO",eService.getEmp(service.getDraft(draftId).getEmpId()));
 		model.addAttribute("apprEmp",service.getApprEmpList(draftId));
@@ -108,7 +108,7 @@ public class ApprovalController {
 	}
 	
 
-	/* 기안서 양식 가져오기 */
+	/* 湲곗븞�꽌 �뼇�떇 媛��졇�삤湲� */
 	@GetMapping("/getForm")
 	public String getForm(HttpSession session, @RequestParam("formId") int formId, Model model,RedirectAttributes rttr){
 		model.addAttribute("moduleNm", "approval");
@@ -124,7 +124,7 @@ public class ApprovalController {
 		}
 	}
 	
-	/* 지출 명세서 입력하기 */
+	/* 吏�異� 紐낆꽭�꽌 �엯�젰�븯湲� */
 	@PostMapping("/setExpence")
 	public String setExpence(ApprDraftVO draft,ApprExpenceVO expence,HttpServletRequest request){
 		
@@ -136,7 +136,7 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
-	/* 휴가 신청서 입력하기 */
+	/* �쑕媛� �떊泥��꽌 �엯�젰�븯湲� */
 	@PostMapping("/setVacation")
 	public String setVacation(ApprEmpVO apprEmp, ApprDraftVO draft, ApprVacationVO vacation,HttpServletRequest request){
 	
@@ -146,23 +146,23 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
-	/* 휴가 신청서 삭제하기 */
+	/* �쑕媛� �떊泥��꽌 �궘�젣�븯湲� */
 	@GetMapping("/delVacDraft")
 	public String delVacDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
-		log.info("삭제:"+draftId);
+		log.info("�궘�젣:"+draftId);
 		service.delVacation(draftId);
 		service.delDraft(draftId);
 		
 		return "redirect:/approval/getDraftList";
 	}
 	
-	/* 지츨 명세서 삭제하기 */
+	/* 吏�痢� 紐낆꽭�꽌 �궘�젣�븯湲� */
 	@GetMapping("/delExpDraft")
 	public String delExpDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
 		int expenceId = service.getExpence(draftId).getExpenceId();
-		log.info("삭제:"+draftId);
+		log.info("�궘�젣:"+draftId);
 		service.delExpenceCont(expenceId);
 		service.delExpence(draftId);
 		service.delDraft(draftId);
@@ -170,17 +170,17 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
-	/* 휴가 신청서 수정 페이지로 이동 */
+	/* �쑕媛� �떊泥��꽌 �닔�젙 �럹�씠吏�濡� �씠�룞 */
 	@GetMapping("/getSetUpVacPage")
 	public String getsetUpVacPage(@RequestParam("draftId") int draftId, Model model ) throws Exception{
-		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
+		model.addAttribute("moduleNm", "approval"); //leftbar�쓣�슦湲�
 		model.addAttribute("draft",service.getDraft(draftId));
 		model.addAttribute("vacation",service.getVacation(draftId));
 
 		return "module/approval/setUpVacationForm";
 	}
 	
-	/*휴가 신청서 수정 */
+	/*�쑕媛� �떊泥��꽌 �닔�젙 */
 	@PostMapping("/setUpVacation")
 	public String setUpVacation(@RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation, Model model){
 		draft.setDraftId(draftId);
@@ -192,7 +192,7 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
-	/* 결재 상태 수정 (버튼에 따라 다름) */
+	/* 寃곗옱 �긽�깭 �닔�젙 (踰꾪듉�뿉 �뵲�씪 �떎由�) */
 	@GetMapping("/setUpApprState")
 	public String setUpApprState(HttpSession session , @RequestParam("draftId") int draftId, @RequestParam("apprState") int apprState){
 		ApprDraftVO draft = service.getDraft(draftId);
@@ -202,11 +202,11 @@ public class ApprovalController {
 	
 		//service.getApprEmp(draftId,empId);
 		if(apprState == 0){
-			draft.setApproveState("반려");
-			empDraft.setApprOption("반려");
+			draft.setApproveState("諛섎젮");
+			empDraft.setApprOption("諛섎젮");
 		}else if(apprState == 1){
-			draft.setApproveState("결재중");
-			empDraft.setApprOption("결재");
+			draft.setApproveState("寃곗옱以�");
+			empDraft.setApprOption("寃곗옱");
 		}
 		
 		service.setUpDraft(draft);
@@ -215,7 +215,7 @@ public class ApprovalController {
 	}
 	
 	
-	/* 대체 근무자 emp 검색창 */
+	/* ��泥� 洹쇰Т�옄 emp 寃��깋李� */
 	@GetMapping("/searchReplaceEmp")
 	public String searchRepalce(Model model){
 		model.addAttribute("empList",eService.getEmpList());
@@ -224,7 +224,7 @@ public class ApprovalController {
 		return "module/approval/getReplacementEmp";
 	}
 	
-	/* 결재자 emp 검색 창 */
+	/* 寃곗옱�옄 emp 寃��깋 李� */
 	@GetMapping("/searchApprovalEmp")
 	public String searchApproval(Model model){
 		model.addAttribute("empList",eService.getEmpList());
@@ -233,7 +233,7 @@ public class ApprovalController {
 		return "module/approval/getApprovalEmp";
 	}
 	
-	/*댓글 등록하기 */
+	/*�뙎湲� �벑濡앺븯湲� */
 	/*@PostMapping(value = "/setComment",
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
@@ -245,25 +245,22 @@ public class ApprovalController {
 				? new ResponseEntity<>("success", HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}*/	
-	/* 댓글 작성하기*/
+	/* �뙎湲� �옉�꽦�븯湲�*/
 	@PostMapping("/setComment")
 	@ResponseBody
-	public String setComment(@RequestParam("dratId") int draftId, @RequestParam("empId") String empId, 
-		@RequestParam("commentContents") ApprCommentVO comment){
-		System.out.println("뿌잉");
-		log.info("뿌잉");
+	public String setComment(@RequestParam("draftId") int draftId, @RequestParam("empId") String empId,
+		ApprCommentVO comment){
 		service.setComment(comment);
-		 
 		return "redirect:/approval/getVacationDraft";
 	}
 	
-	/* 댓글 리스트 보기 */
+	/* �뙎湲� 由ъ뒪�듃 蹂닿린 */
 	@GetMapping("/getCommentList")
 	public String getCommentList(Model model){
 		
 		return "/module/approval/getDraftList";
 	}
-		/* 로그인 후 내가 결재할 기안서 리스트 불러오기*/
+		/* 濡쒓렇�씤 �썑 �궡媛� 寃곗옱�븷 湲곗븞�꽌 由ъ뒪�듃 遺덈윭�삤湲�*/
 	@GetMapping("/getEmpDraftList")
 	public String getEmpDraftList(HttpSession session, Model model){
 		model.addAttribute("moduleNm", "approval");

@@ -32,61 +32,61 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	private ApprovalMapper mapper;
 
-/*	 기안서 목록 불러오기 
+/*	 湲곗븞�꽌 紐⑸줉 遺덈윭�삤湲� 
 	@Override
 	public List<ApprDraftVO> getDraftList() {
 		return mapper.getDraftList();
 	}
 */
-	/* 페이징 처리한 기안서 목록 불러오기 */
+	/* �럹�씠吏� 泥섎━�븳 湲곗븞�꽌 紐⑸줉 遺덈윭�삤湲� */
 	@Override
 	public List<ApprDraftVO> getDraftList(Criteria cri) {
 		
 		return mapper.getListWithPaging(cri);
 	}
-	/* 전체 기안서 개수 가져오기 */
+	/* �쟾泥� 湲곗븞�꽌 媛쒖닔 媛��졇�삤湲� */
 	@Override
 	public int getTotal(Criteria cri) {
 		return mapper.getTotalCount(cri);
 	}
 	
-	/* 양식 목록 불러오기 */
+	/* �뼇�떇 紐⑸줉 遺덈윭�삤湲� */
 	@Override
 	public List<ApprFormVO> getFormList() {
 		return mapper.getFormList();
 	}
 
-	/* 최근 draft_No 불러오기 */
+	/* 理쒓렐 draft_No 遺덈윭�삤湲� */
 	@Override
 	public int getDraftNo() {
 		return mapper.getDraftNo();
 	}
 
-	/* 기안서 불러오기 */
+	/* 湲곗븞�꽌 遺덈윭�삤湲� */
 	@Override
 	public ApprDraftVO getDraft(int draftId) {
 		return mapper.getDraft(draftId);
 	}
 
-	/* 지출 명세서 불러오기 */
+	/* 吏�異� 紐낆꽭�꽌 遺덈윭�삤湲� */
 	@Override
 	public ApprExpenceVO getExpence(int draftId) {
 		return mapper.getExpence(draftId);
 	}
 
-	/* 지출 명세서 내역 불러오기 */
+	/* 吏�異� 紐낆꽭�꽌 �궡�뿭 遺덈윭�삤湲� */
 	@Override
 	public List<ApprExpenceContVO> getExpenceCont(int expenceId) {
 		return mapper.getExpenceCont(expenceId);
 	}
 
-	/* 휴가 신청서 불러오기 */
+	/* �쑕媛� �떊泥��꽌 遺덈윭�삤湲� */
 	@Override
 	public ApprVacationVO getVacation(int draftId) {
 		return mapper.getVacation(draftId);
 	}
 
-	/* 결재자 리스트 불러오기 */
+	/* 寃곗옱�옄 由ъ뒪�듃 遺덈윭�삤湲� */
 	@Override
 	public List<EmpVO> getApprEmpList(int draftId) {
 		return mapper.getApprEmpList(draftId);
@@ -98,24 +98,24 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 
-	/*로그인 회원이 결재할 기안서 개수 가져오기 */
+	/*濡쒓렇�씤 �쉶�썝�씠 寃곗옱�븷 湲곗븞�꽌 媛쒖닔 媛��졇�삤湲� */
 	@Override
 	public int getNumberOfDraft(String empId) {
 		return mapper.getNumberOfDraft(empId);
 	}
-	/* 결재할 기안서 리스트 번호 가져오기 */
+	/* 寃곗옱�븷 湲곗븞�꽌 由ъ뒪�듃 踰덊샇 媛��졇�삤湲� */
 	@Override
 	public List<ApprEmpDraftVO> getEmpDraftList(String empId) {
 		return mapper.getEmpDraftList(empId);
 	}
 	
-	/* 기안서 입력하기 */
+	/* 湲곗븞�꽌 �엯�젰�븯湲� */
 	@Override
 	public void setDraft(ApprDraftVO draft) {
 		mapper.setDraft(draft);
 	}
 
-	/* 휴가 신청서 입력하기 */
+	/* �쑕媛� �떊泥��꽌 �엯�젰�븯湲� */
 	@Override
 	public void setVacation(ApprVacationVO vacation) {
 		
@@ -124,7 +124,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		mapper.setVacation(vacation);
 	}
 
-	/* 지출 결의서 입력하기 */
+	/* 吏�異� 寃곗쓽�꽌 �엯�젰�븯湲� */
 	@Override
 	public void setExpence(ApprExpenceVO expence) {
 		int draftId = mapper.getDraftNo();
@@ -132,7 +132,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		mapper.setExpence(expence);
 	}
 
-	/* 지출 결의서 내역 입력하기 */
+	/* 吏�異� 寃곗쓽�꽌 �궡�뿭 �엯�젰�븯湲� */
 	@Override
 	public void setExpenceCont(HttpServletRequest request) {
 		ApprExpenceContVO expenceCont = new ApprExpenceContVO();
@@ -158,7 +158,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}
 	}
 
-	/* 결재자 입력하기 */
+	/* 寃곗옱�옄 �엯�젰�븯湲� */
 	@Override
 	public void setApprEmp(HttpServletRequest request) {
 		ApprEmpVO apprEmp = new ApprEmpVO();
@@ -173,7 +173,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		
 	}
 	
-	/* --------------------- 삭제 --------------------- */
+	/* --------------------- �궘�젣 --------------------- */
 	@Override
 	public boolean delDraft(int draftId) {
 		return mapper.delDraft(draftId) == 1 ;
@@ -196,7 +196,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	
-	/* --------------------- 수정 --------------------- */
+	/* --------------------- �닔�젙 --------------------- */
 	@Override
 	public int setUpDraft(ApprDraftVO draft) {
 		return mapper.setUpDraft(draft);
@@ -206,10 +206,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.setUpVacation(vacation);
 	}
 
-	@Override
-	public int setUpVacHit(int draft){
-		return mapper.setUpVacHit(draft);
-	}
 	
 	@Override
 	public int setUpExpence(ApprExpenceVO expence) {
@@ -223,7 +219,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return 0;
 	}
 	
-	/* 결재 상태 수정 (버튼에 따라 다름) */
+	/* 寃곗옱 �긽�깭 �닔�젙 (踰꾪듉�뿉 �뵲�씪 �떎由�) */
 	@Override
 	public int setUpApprOption(ApprEmpDraftDetailVO empDraft) {
 		return mapper.setUpApprOption(empDraft);

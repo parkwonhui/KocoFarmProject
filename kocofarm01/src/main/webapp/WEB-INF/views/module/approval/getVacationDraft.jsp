@@ -180,7 +180,7 @@
 						
 						<input type = "hidden" name="draftId" id="draftId" value ="${draft.draftId}" />
 						<input type = "hidden" name="formId" id="formId" value ="4" />
-						<input type = "hidden" name = "empId" id="empId" value="${loginVO.empId }" />
+						<input type = "hidden" name = "empId" id="empId" value="${loginVO.empId}" />
 						<!-- btn -->
 						
 						<div class="btn_wrap">
@@ -202,8 +202,8 @@
         <label for="content">comment</label>
         <form name="commentInsertForm"  style="margin-left: 350;">
             <div class="input-group">
-               <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/>
-               <input type="hidden" name="empId" value="${DRAFT_COMMENT.empId }"/>
+<%--                <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/> --%>
+<%--                <input type="hidden" name="empId" value="${DRAFT_COMMENT.empId }"/> --%>
                <input type="text"  width="70%"   class="form-control" id="commentContents" 
                name="commentContents" placeholder="내용을 입력하세요.">
                <span class="input-group-btn">
