@@ -43,7 +43,7 @@
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form  role = "form" action="/approval/setUpVacation?draftId=${draft.draftId }" method="post">
+				<form  role = "form" name = "setVac" action="/approval/setUpVacation?draftId=${draft.draftId }" method="post">
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>
@@ -125,18 +125,23 @@
 								 	</colgroup>
 								 	<tr>
 								 		<th class="inputText" scope="col">이름</th>
-								 		<td><input type=text  name="replacementId" 
-								 		value= '<c:out value="${vacation.replacementId }"/>'></td>
+								 		<td><input type='text' name = "replacementId" value= '<c:out value="${vacation.replacementId }"/>' name="replacementId" onclick = "window.open('/approval/searchReplaceEmp','사원 검색','resizable=no width=700 height=700');return false" />
+		 	
 								 	</tr>
 								 	
 								 	<tr>
-								 		<th class="inputText" scope="col">직위</th>
-								 		<td>자동 입력</td>
+								 		<th class="inputText" scope="col">이름</th>
+								 		<td><input type='text' name="korNm"></td>
+								 	</tr>
+								 	
+								 	<tr>
+								 		<th class="inputText" scope="col">직책</th>
+								 		<td><input type='text' name="positionNm"></td>
 								 	</tr>
 								 	
 								 	<tr>
 								 		<th class="inputText" scope="col">핸드폰 번호</th>
-								 		<td>자동 입력</td>
+								 		<td><input type='text' name="cellPhone"></td>
 								 	</tr>
 							 	</table>
 							

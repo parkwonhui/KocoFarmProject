@@ -13,7 +13,7 @@
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false"></jsp:include>
 <link rel="stylesheet" type="text/css"
 	href="/resources/css/module/approval.css" />
-
+<HTML>
 <div class="cont_wrap">
 	<!-- SubTitle Area -->
 	<div class="sub_title">
@@ -51,6 +51,50 @@ h1 {
 			<div class="expence_wrap">
 				<div class="title" align="center">
 					<h1>지 출 결 의 서</h1>
+				</div>
+				
+				<div class="draft_wrap">
+					<h1 class="txt_c">결재자 정보</h1>
+					<div class="inf_wrap_box">
+						<table border = 0 height = "100%" width = 100%>
+							<thead>
+								<tr>
+									<th width = 20%>부서 </th>
+									<th width = 20%>직위</th>
+									<th width = 20%>이름</th>
+									<th width = 10%>결재</th>
+									<th width = 10%>반려</th>
+									<th width = 10%>sign</th>
+											
+								</tr>
+							</thead>
+									
+							<tbody>
+								<c:forEach var="ApprEmployee" items="${apprEmp }">
+									<tr>
+										<td>${ApprEmployee.deptNm }</td>
+										<td>${ApprEmployee.positionNm }</td>
+										<td>${ApprEmployee.empId}</td>
+										<td>
+											<c:if  test= "${ApprEmployee.empId eq loginVO.empId }">
+											<input type="button" class="approveBtn" id ="apprState" value="결재" width ="20px"/>											
+											
+											
+											</c:if>
+										</td>
+										<td>
+											<c:if  test= "${ApprEmployee.empId eq loginVO.empId }">
+											<input type="button" class="returnBtn" id ="apprState" value="반려" width ="20px" />
+											</c:if>
+										</td>
+										<td id = 'signImage'></td>
+									</c:forEach>
+								</tbody>
+							</table>		
+						</div>				
+					<p></p>
+					<p></p>
+		
 				</div>
 				<!-- expence table 시작 -->
 				<div class="vac_table">
@@ -117,6 +161,7 @@ h1 {
 						</tr>
 						<c:forEach var="ApprExpenceCont" items="${expenceCont }">
 							<tr>
+								
 								<td>${ApprExpenceCont.contSeq }</td>
 								<td>${ApprExpenceCont.customerName }</td>
 								<td>${ApprExpenceCont.expencePrice }</td>
@@ -171,6 +216,6 @@ h1 {
 
 
 		</div>
-
+</HTML>
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false"></jsp:include>

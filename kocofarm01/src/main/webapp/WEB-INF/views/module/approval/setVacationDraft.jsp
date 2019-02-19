@@ -33,26 +33,25 @@
 			<div class="draft_wrap">
 				<h1 class="txt_c">기본 정보</h1>
 				<div class ="inf_wrap_box">
-					<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }</p>
-					<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}</p>
-					<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }</p>
-					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }</p>
+					<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.korNm }</p>
+					<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.positionNm}</p>
+					<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.deptNm }</p>
 					
 					
 				</div>
 				
-				<div class = "appr_wrap_box">
-					<p class="ApprEmp">결재자<input type='text' name="empId" onclick = "window.open('/approval/searchApprovalEmp','결재자 검색','resizable=no width=600 height=600');return false">
-				
-				</div>
 				<p></p>
 				<p></p>
 			</div>
-		
+			<form action="/approval/setVacation" name="setEmpId" method="post">
+				<div class = "appr_wrap_box">
+					<p class="ApprEmp">결재자<input type='text' name="empNameList" onclick = "window.open('/approval/searchApprovalEmp','결재자 검색','resizable=no width=610 height=620');return false">
+					<p class="ApprEmpId">결재자Id<input type='text' name="empIdList" /></p>
+				</div>
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form action="/approval/setVacation" name="setVac" method="post">
+				
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>
@@ -127,10 +126,8 @@
 								 	</colgroup>
 								 	<tr>
 								 		<th class="inputText" scope="col">사번 </th>
-								 		<td><input type='text' name="replacementId" onclick = "window.open('/approval/searchReplaceEmp','사원 검색','resizable=no width=600 height=600');return false">
-								 		
-								 		
-								 		<!-- <input type=text name="replacementId" > --></td>
+								 		<td><input type='text' name="replacementId" onclick = "window.open('/approval/searchReplaceEmp','사원 검색','resizable=no width=700 height=700');return false">
+
 								 	</tr>
 								 	
 								 	<tr>
@@ -157,17 +154,18 @@
 						<div class= flt_r>
 						<br><br>
 							<input type="hidden" name="formId" value="4"/>
-							<%-- <input type="hidden" name="empId" value="${empVO.empId }" /> --%>
+							<input type="hidden" name="empId" value="${loginEmp.empId }" />
 							
 							<input type="submit" class="submitBtn" value="제출">
 							<br><br>
 						</div>
 					</div>
+					</div>
 				</form>
 			</div>
 		
 		</div>
-	</div>
+	
 
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

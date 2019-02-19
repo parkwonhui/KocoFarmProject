@@ -36,7 +36,60 @@
 		where ROWNUM = 1
 		order by draft_id DESC
 	</select>
+
+ 	<!-- 결재자 리스트 불러오기  -->
+ 	<select id = "getApprEmpList" resultType = "org.kocofarm.domain.emp.EmpVO">
+		select 	d.dept_nm as deptNm,
+				e.kor_nm as korNm,
+		 		p.position_nm as positionNm,
+		 		e.emp_id as empId
+		from emp e, appr_emp a, departments d, position p
+		where	e.emp_id = a.emp_id and
+      			e.position_id = p.position_id and
+      			e.dept_id = d.dept_id and 
+ 		 		a.draft_id = #{draftId}
+ 	</select>
 	
+	
+	<!-- 로그인 회원이 결재할 기안서 개수 가져오기  -->
+	<select id = "getNumberOfDraft" resultType = "int" >
+		select count(*)
+  		from appr_emp
+  		where emp_id = #{empId}
+  		and appr_option = '미확인'
+	</select>
+	
+	
+	<select id = "getApprEmp" resultType ="org.kocofarm.domain.approval.ApprEmpDraftDetailVO">
+		select 	apprline_id as apprlineId,
+				appr_dt as apprDt,
+				appr_option as apprOption,
+				draft_id as draftId,
+				emp_id as empId
+		from 	appr_emp
+  		where 	draft_id = #{draftId} and 
+  				emp_id = #{empId}
+	</select>
+	
+	<!-- 사원별 기안서 정보  불러오기 -->
+	<select id = "getEmpDraftList" resultType ="org.kocofarm.domain.approval.ApprEmpDraftVO">
+		select 	d.draft_id as draftId,
+				d.draft_name as draftName,
+				f.mode_name as modeName,
+				d.draft_dt as draftDt,
+				e.kor_nm as korNm,
+				a.appr_option as apprOption
+    	from 	appr_emp a, 
+    			draft d,
+    			form f, 
+    			emp e
+    	where 	a.draft_id = d.draft_id and
+          		d.form_id = f.form_id and
+          		a.emp_id = e.emp_id and
+          		a.emp_id = #{empId}
+	</select>
+	
+	<!-- ****************************** 기안서 불러오기 ******************************  -->
 	<!-- 특정 기안서 불러오기 -->
 	<select id="getDraft" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
 		select 	draft_id as draftId,
@@ -55,7 +108,7 @@
 	<select id = "getExpence" resultType = "org.kocofarm.domain.approval.ApprExpenceVO">
 		select 	expence_id as expenceId,
 				draft_id as draftId,
-				form_id as draftId,
+				form_id as formId,
 				expence_dt as expenceDt,
 				expence_type as expenceType,
 				sum_price as sumPrice
@@ -125,12 +178,13 @@
 	<select id = "getTotalCount" resultType = "int">
 		select count(*) from draft
 	</select>
+	
 	<!-- ****************************** 입력 ****************************** -->
 	
 	<!-- 기본 기안서 정보 입력하기  -->
 	<insert id = "setDraft" parameterType = "org.kocofarm.domain.approval.ApprDraftVO">
 		insert into draft <!-- (draft_id,draft_name,draft_Dt,draft_title,emp_id,draft_year,form_id,approve_state) -->
-		values (seq_draft.nextval,'기안서 이름',SYSDATE,#{draftTitle},'EMP_003',#{draftYear},#{formId},'기안중')
+		values (seq_draft.nextval,'기안서 이름',SYSDATE,#{draftTitle},#{empId},#{draftYear},#{formId},'기안중')
 	</insert>
 
 	<!-- 휴가 신청서 입력 -->
@@ -151,12 +205,17 @@
 		values(${expenceId},#{contSeq},#{customerName},#{expencePrice},#{commissionOption},#{commissionPrice})
 	</insert>
 
+	<!-- 결재자 입력 -->
+	<insert id = "setApprEmp" parameterType="org.kocofarm.domain.approval.ApprEmpVO">
+		insert into appr_emp (draft_id,emp_id,appr_option)
+		values(#{draftId},#{empId},'미확인')
+	</insert>
 	<!-- ****************************** 수정 ****************************** -->
 
 	<!-- 기본 기안서 정보 수정 -->
 	<update id="setUpDraft" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
 		update DRAFT 
-		set
+		set approve_state = #{approveState},
 			draft_title = #{draftTitle},
 			draft_dt = SYSDATE,
 			draft_year = #{draftYear}
@@ -165,33 +224,47 @@
 
 	<!-- 휴가 신청서 정보 수정 -->
 	<update id="setUpVacation" parameterType="org.kocofarm.domain.approval.ApprVacationVO">
-		update vacation_form
-		set
-			vacation_type = #{vacationType},
-		   vacation_start_dt = #{vacationStartDt},
-		   vacation_end_dt = #{vacationEndDt},
-			vacation_days = #{vacationDays},
-			vacation_reason = #{vacationReason},
-			replacement_id = #{replacementId}
-		where draft_id = #{draftId}
+		update 	vacation_form
+		set		vacation_type = #{vacationType},
+		   		vacation_start_dt = #{vacationStartDt},
+		   		vacation_end_dt = #{vacationEndDt},
+				vacation_days = #{vacationDays},
+				vacation_reason = #{vacationReason},
+				replacement_id = #{replacementId}
+		where 	draft_id = #{draftId}
 	</update>
 
 	<!-- 지출 결의서 정보 수정 -->
 	<update id="setUpExpence" parameterType="org.kocofarm.domain.approval.ApprExpenceVO">
-		update expence_form 
-		set expence_dt = SYSDATE , 
-			expence_type = #{expenceType},
-			sum_price = #{sumPrice}
-		where expence_id = #{expenceId}
+		update 	expence_form 
+		set 	expence_dt = SYSDATE , 
+				expence_type = #{expenceType},
+				sum_price = #{sumPrice}
+		where 	expence_id = #{expenceId}
 	</update>
+	
 	<!-- 지출 결의서 내역 수정 -->
 	<update id="setUpExpenceCont" parameterType="org.kocofarm.domain.approval.ApprExpenceContVO">
-		update expence_cont 
-		set	customer_name = #{customerName},
-			expence_price = #{expencePrice},
-			commission_option = #{commissionOption},
-			commission_price = #{commissionPrice}
-		where expence_id = #{expenceId}  
+		update 	expence_cont 
+		set		customer_name = #{customerName},
+				expence_price = #{expencePrice},
+				commission_option = #{commissionOption},
+				commission_price = #{commissionPrice}
+		where 	expence_id = #{expenceId}  
+	</update>
+	
+	
+	<update id = "setUpApprState" parameterType = "org.kocofarm.domain.approval.ApprDraftVO">
+		update 	draft
+		set 	approve_state = #{approveState}
+		where 	draft_id = #{draftId}
+	</update>
+	
+	<update id = "setUpApprOption" parameterType = "org.kocofarm.domain.approval.ApprEmpDraftDetailVO">
+		update 	appr_emp
+		set 	appr_option = #{apprOption}
+		where 	draft_id = #{draftId} and
+				emp_id = #{empId}
 	</update>
 	
 	<!-- ****************************** 삭제 ****************************** -->

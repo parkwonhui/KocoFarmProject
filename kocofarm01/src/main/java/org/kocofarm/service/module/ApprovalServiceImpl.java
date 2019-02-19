@@ -3,14 +3,20 @@ package org.kocofarm.service.module;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
+import org.kocofarm.domain.approval.ApprEmpDraftVO;
+import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
 import org.kocofarm.domain.comm.Criteria;
+import org.kocofarm.domain.comm.LoginVO;
+import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.mapper.module.ApprovalMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,18 +86,40 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.getVacation(draftId);
 	}
 
+	/* 결재자 리스트 불러오기 */
+	@Override
+	public List<EmpVO> getApprEmpList(int draftId) {
+		return mapper.getApprEmpList(draftId);
+	}
+	
+	@Override
+	public ApprEmpDraftDetailVO getApprEmp(int draftId, String empId) {
+		return mapper.getApprEmp(draftId , empId);
+	}
+	
+
+	/*로그인 회원이 결재할 기안서 개수 가져오기 */
+	@Override
+	public int getNumberOfDraft(String empId) {
+		return mapper.getNumberOfDraft(empId);
+	}
+	/* 결재할 기안서 리스트 번호 가져오기 */
+	@Override
+	public List<ApprEmpDraftVO> getEmpDraftList(String empId) {
+		return mapper.getEmpDraftList(empId);
+	}
+	
 	/* 기안서 입력하기 */
 	@Override
 	public void setDraft(ApprDraftVO draft) {
-		log.info("여기탄다 2");
 		mapper.setDraft(draft);
 	}
 
 	/* 휴가 신청서 입력하기 */
 	@Override
 	public void setVacation(ApprVacationVO vacation) {
+		
 		int draftId = mapper.getDraftNo();
-		log.info("여기탄다 3");
 		vacation.setDraftId(draftId);
 		mapper.setVacation(vacation);
 	}
@@ -100,7 +128,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public void setExpence(ApprExpenceVO expence) {
 		int draftId = mapper.getDraftNo();
-		log.info("여기탄다 4");
 		expence.setDraftId(draftId);
 		mapper.setExpence(expence);
 	}
@@ -131,6 +158,22 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}
 	}
 
+	/* 결재자 입력하기 */
+	@Override
+	public void setApprEmp(HttpServletRequest request) {
+		ApprEmpVO apprEmp = new ApprEmpVO();
+		String empIdList = request.getParameter("empIdList");
+		String[] empId =empIdList.split(",");
+		int draftId = mapper.getDraftNo();
+		for(int i = 0; i<empId.length; i++){
+			apprEmp.setDraftId(draftId);
+			apprEmp.setEmpId(empId[i]);
+			mapper.setApprEmp(apprEmp);
+		}
+		
+	}
+	
+	/* --------------------- 삭제 --------------------- */
 	@Override
 	public boolean delDraft(int draftId) {
 		return mapper.delDraft(draftId) == 1 ;
@@ -153,7 +196,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	
-
+	/* --------------------- 수정 --------------------- */
 	@Override
 	public int setUpDraft(ApprDraftVO draft) {
 		return mapper.setUpDraft(draft);
@@ -161,6 +204,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int setUpVacation(ApprVacationVO vacation){
 		return mapper.setUpVacation(vacation);
+	}
+
+	@Override
+	public int setUpVacHit(int draft){
+		return mapper.setUpVacHit(draft);
 	}
 	
 	@Override
@@ -173,6 +221,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int setUpExpenceCont(ApprExpenceContVO expenceCont) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	/* 결재 상태 수정 (버튼에 따라 다름) */
+	@Override
+	public int setUpApprOption(ApprEmpDraftDetailVO empDraft) {
+		return mapper.setUpApprOption(empDraft);
 	}
 	
 	@Override
