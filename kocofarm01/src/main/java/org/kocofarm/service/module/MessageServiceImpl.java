@@ -11,6 +11,7 @@ import org.kocofarm.domain.message.MessageEmpListVO;
 import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.message.MessageRoomListVO;
 import org.kocofarm.domain.message.MessageRoomVO;
+import org.kocofarm.domain.message.MessageVO;
 import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.mapper.module.MessageMapper;
 import org.kocofarm.mapper.module.ScheduleMapper;
@@ -93,4 +94,13 @@ public class MessageServiceImpl implements MessageService {
 		return re;
 		
 	}	
+	
+	@Override
+	public List<MessageVO> getMessageList(int roomId){
+		if(0 == roomId){
+			return null;
+		}
+		
+		return mapper.getMessageList(roomId);
+	}
 }

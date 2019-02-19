@@ -11,6 +11,7 @@ import org.kocofarm.domain.comm.LoginVO;
 import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.message.MessageEmpListVO;
 import org.kocofarm.domain.message.MessageRoomListVO;
+import org.kocofarm.domain.message.MessageVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.service.module.MessageService;
 import org.kocofarm.service.module.ScheduleService;
@@ -54,12 +55,12 @@ public class MessageController {
 		}
 		
 		model.addAttribute("moduleNm", "schedule");
-		
+		model.addAttribute("empId", loginVO.getEmpId());
 		return "/module/message/list";
 	}
 
 	@ResponseBody
-	@GetMapping("/list")
+	@GetMapping("/listMessageRoom")
 	private List<MessageRoomListVO> getMessageRoomList(HttpSession session){
 		log.info("[message] /list");
 		
@@ -80,6 +81,19 @@ public class MessageController {
 		List<MessageRoomListVO> list = service.getMessageRoomList(loginVO.getEmpId());
 		log.info(list);
 		
+		return list;
+	}
+	
+	@ResponseBody
+	@GetMapping("/listMessage")
+	private List<MessageVO> listMessage(HttpSession session, int roomId){
+		if(null == session){
+			return null;
+		}
+		log.info("roomId:"+roomId);
+		
+		List<MessageVO> list = service.getMessageList(roomId);
+
 		return list;
 	}
 	

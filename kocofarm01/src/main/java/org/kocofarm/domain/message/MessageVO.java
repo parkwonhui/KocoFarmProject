@@ -17,6 +17,8 @@ public class MessageVO {
 
 	int 	messageId;
 	int 	messageRoomId;
+	String  empName;
+	String  empImgSrc;
 	String 	contents;
 	Date 	dt;
 	int 	fileNo;

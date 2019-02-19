@@ -29,4 +29,12 @@
 	message_push(message_push_id, message_room_id, emp_id)
 	values(message_push_id_seq.nextval, #{messageRoomId}, #{empId})
 </insert>
+
+<!-- 메시지 룸에 따른 대화 가져오기 추후 파일 처리 할 것 -->
+<select id="getMessageList" parameterType="int" resultType="MessageVO">
+select m.message_id, m.message_room_id, m.contents, m.dt, e.emp_id, e.kor_nm, emp_img from message m
+join emp e
+on m.emp_id = e.emp_id
+and m.message_room_id = #{roomId}
+</select>
 </mapper>
