@@ -1,7 +1,6 @@
 $(function() {
-
 	// message room list
-	var addMessageRoomListFunction = function addMessageRoomList(data) {
+	var addMessageRoomList = function(data) {
 		if (null == data)
 			return;
 
@@ -36,9 +35,47 @@ $(function() {
 		}
 	}
 
+	var addMessageList = function(data) {
+		$('.msg_history').empty();
+
+		const
+		strEmpId = $('message-my-emp-id').val();
+		var nLength = data.length;
+
+		for (var i = 0; i < nLength; ++i) {
+
+			var text = '';
+			if (strEmpId == data[i].empId) {
+				text += '<div class="outgoing_msg">';
+				text += '<div class="sent_msg">';
+				text += '<p>' + data[i].contents + '</p>';
+				text += '<span class="time_date">' + data[i].dateString
+						+ '</span>';
+				text += '</div>';
+				text += '</div>';
+			} else {
+				text += '<div class="incoming_msg">';
+				text += '<div  class="incoming_msg_img">';
+				text += '<img  src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
+				text += '</div>';
+				text += '<div class="received_msg">';
+				text += '<p>' + data[i].korNm + '</p>';
+				text += '<div  class="received_withd_msg">';
+				text += '<p>' + data[i].contents + '</p>';
+				text += '<span  class="time_date">' + data[i].dateString
+						+ '</span>';
+				text += '</div>';
+				text += '</div>';
+				text += '</div>';
+				text += '</div>';
+			}
+
+			$('.msg_history').append(text);
+		}
+	}
+
 	// message room 초대할 유저 list
 	var addEmpFunction = function addEmpList(data) {
-		console.log('addEmpFunction');
 		$("#emp-list").empty();
 		var length = data.length;
 		var text = '<ul class="add-message-room-emp-list">';
@@ -57,7 +94,7 @@ $(function() {
 		$("#emp-list").append(text);
 	}
 
-	ajaxGetRequest("listMessageRoom", null, addMessageRoomListFunction);
+	ajaxGetRequest("listMessageRoom", null, addMessageRoomList);
 
 	$('#add-message-room-button').click(function() {
 		ajaxGetRequest("empList", null, addEmpFunction);
@@ -75,7 +112,6 @@ $(function() {
 				++index;
 				++index;
 				var count = 0;
-				console.log(empList[0]);
 				for (var i = 0; i < length; ++i) {
 					if (false == $(empList[i]).hasClass('checked'))
 						continue;
@@ -102,7 +138,7 @@ $(function() {
 					}, // error
 				});// ajax
 
-			});
+	});
 
 	// 메시지 룸 초대 인원 클릭 동적 태그 이벤트 붙여주기
 	$(document).on("click", ".add-message-room-emp", function() {
@@ -113,15 +149,21 @@ $(function() {
 	$(document).on("click", ".chat_list", function() {
 		$(this).toggleClass('checked');
 		initSelectMessageRoomColor(this);
-	
+
 		var roomID = $(this).children("input[name=messageRoomId]").val();
-		var data = {"roomId" : roomID };
-				
+		var data = {
+			"roomId" : roomID
+		};
+
 		requestMessageList(data);
+	});
+	
+	// 메시지 보내기
+	$('.msg_send_btn').click(function(){
 	});
 
 	/* 선택된 메시지 방 외의 다른 메시지방 색상 초기화*/
-	function initSelectMessageRoomColor(clickRoom){
+	function initSelectMessageRoomColor(clickRoom) {
 		// 배경색 변경
 		var list = $('.chat_list');
 		var length = list.length;
@@ -142,7 +184,6 @@ $(function() {
 			dataType : "json",
 			url : sendUrl,
 			success : function(data) {
-				console.log(data);
 				func(data);
 			},
 			error : function(error) {
@@ -151,16 +192,12 @@ $(function() {
 	}
 
 	function ajaxRequest(sendUrl, sendData) {
-		console.log(sendUrl);
-		
-		console.log(sendData);
 		$.ajax({
 			type : "post",
 			data : sendData,
 			dataType : "json",
 			url : sendUrl,
 			success : function(data) {
-				console.log(data);
 				requestMessageRoomList(data);
 			},
 			error : function(error) {
@@ -176,7 +213,7 @@ $(function() {
 			dataType : "json",
 			url : "listMessageRoom",
 			success : function(data) {
-				addMessageRoomListFunction(data);
+				addMessageRoomList(data);
 			},
 			error : function(error) {
 			}, // error
@@ -191,8 +228,7 @@ $(function() {
 			dataType : "json",
 			url : "listMessage",
 			success : function(data) {
-				console.log(data);
-				//addMessageRoomListFunction(data);
+				addMessageList(data);
 			},
 			error : function(error) {
 			}, // error

@@ -100,7 +100,15 @@ public class MessageServiceImpl implements MessageService {
 		if(0 == roomId){
 			return null;
 		}
+		List<MessageVO> list = mapper.getMessageList(roomId);
 		
-		return mapper.getMessageList(roomId);
+		for(MessageVO vo : list){
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");			
+			String dateToString = transFormat.format(vo.getDt());
+			vo.setDateString(dateToString);
+
+		}	
+		
+		return list;
 	}
 }

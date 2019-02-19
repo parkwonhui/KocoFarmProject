@@ -17,10 +17,11 @@ public class MessageVO {
 
 	int 	messageId;
 	int 	messageRoomId;
-	String  empName;
+	String  korNm;
 	String  empImgSrc;
 	String 	contents;
 	Date 	dt;
+	String  dateString;
 	int 	fileNo;
 	int 	fileSize;
 	String 	fileName;
