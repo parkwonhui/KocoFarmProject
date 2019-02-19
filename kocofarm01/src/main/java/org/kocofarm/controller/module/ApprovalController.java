@@ -208,7 +208,7 @@ public class ApprovalController {
 		System.out.println("뿌잉");
 		log.info("뿌잉");
 		service.setComment(comment);
-		
+		 
 		return "redirect:/approval/getVacationDraft";
 	}
 	
