@@ -49,8 +49,9 @@ public class UploadController {
 	}// get mapping
 */
 	@GetMapping("/uploadForm")
-	public void uploadForm() {
+	public String uploadForm() {
 		log.info("uploadForm");
+		return "/module/fileRoom/uploadForm";
 
 	}
 	
@@ -72,11 +73,13 @@ public class UploadController {
 		try {
 			String contentType = Files.probeContentType(file.toPath());
 			
+			log.info("contentType" + contentType);
 			return contentType.startsWith("image");
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		
 	}
 	
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -124,11 +127,12 @@ public class UploadController {
 			
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
+				log.info("SAVEFILE:"+saveFile);
 				multipartFile.transferTo(saveFile);
 				
 				
 				attachFileVO.setUploadPath(uploadFolderPath);
-				attachFileVO.setUudi(uuid.toString());
+				attachFileVO.setUuid(uuid.toString());
 				
 				log.info("uploadfolderpath : "+uploadFolderPath);
 				
