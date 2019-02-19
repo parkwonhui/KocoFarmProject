@@ -53,17 +53,15 @@
 			<h1 class="txt_c">기본 정보</h1>
 			<div class="inf_wrap_box">
 				<p class="name">
-					<b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
+					<b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.korNm }
 				</p>
 				<p class="position">
-					<b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}
+					<b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.positionNm}
 				</p>
 				<p class="dep">
-					<b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }
+					<b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.deptNm }
 				</p>
-				<p class="form">
-					<b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }
-				</p>
+				
 			</div>
 			<p></p>
 			<p></p>
@@ -156,7 +154,7 @@
 				<div class=flt_r align="center">
 					<br><br> 
 					<input type="hidden" name="formId" value="2" />
-					<%-- <input type="hidden" name="empId" value="${empVO.empId }" /> --%> 
+					<input type="hidden" name="empId" value="${loginEmp.empId }" />
 					<input type="submit" class="submitBtn" value="제출"> <br>
 					<br>
 				</div>

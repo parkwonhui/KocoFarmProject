@@ -2,13 +2,17 @@ package org.kocofarm.mapper.module;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
+import org.kocofarm.domain.approval.ApprEmpDraftVO;
 import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
 import org.kocofarm.domain.comm.Criteria;
+import org.kocofarm.domain.emp.EmpVO;
 
 public interface ApprovalMapper {
 	/*--------------목록 불러오기--------------*/
@@ -30,10 +34,18 @@ public interface ApprovalMapper {
 	/* 결재자 입력*/
 	public void setApprEmp(ApprEmpVO apprEmp);
 	
+	
 	/*--------------기타 정보 가져오기 --------------*/
 	/* 최근 기안서 번호 가져오기 */
 	public int getDraftNo();
-	
+	/* 결재자 정보 리스트 가져오기 */
+	public List<EmpVO> getApprEmpList(int draftId);
+	/* 결재할 기안서 갯수 가져오기 */
+	public int getNumberOfDraft(String empId);
+	/* 결재할 기안서 리스트 번호 가져오기 ----여기에 기안서 정보도 추가*/
+	public List<ApprEmpDraftVO> getEmpDraftList(String empId);
+	/* 결재자 정보  가져오기 */
+	public ApprEmpDraftDetailVO getApprEmp(@Param("draftId") int draftId, @Param("empId") String empId);
 	
 	/*--------------기안서 가져오기--------------*/
 	/* 특정 기안서 불러오기 */
@@ -56,7 +68,8 @@ public interface ApprovalMapper {
 	public int setUpExpence(ApprExpenceVO expence);
 	/* 지출 결의서 내역 수정*/
 	public int setUpExpenceCont(ApprExpenceContVO expenceCont);
-	
+	/* 결재 상태 수정 (버튼에 따라 다름) */
+	public int setUpApprOption(ApprEmpDraftDetailVO empDraft);
 
 	/*--------------삭제--------------*/
 	/* 기안서 삭제*/

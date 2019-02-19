@@ -7,14 +7,21 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.SqlSession;
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
+import org.kocofarm.domain.approval.ApprEmpDraftVO;
 import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
 import org.kocofarm.domain.comm.Criteria;
+import org.kocofarm.domain.comm.LoginVO;
 import org.kocofarm.domain.comm.PageDTO;
 import org.kocofarm.domain.emp.DepartmentsVO;
+import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.service.module.ApprovalService;
 import org.kocofarm.service.module.EmpService;
 import org.springframework.stereotype.Controller;
@@ -59,18 +66,24 @@ public class ApprovalController {
 	/* 전체 양식 리스트 가져오기 */
 	@GetMapping("/getFormList")
 	public String getFormList(Model model){
+		
+		
 		model.addAttribute("moduleNm", "approval");//leftbar띄우기
 		model.addAttribute("formList",service.getFormList()); 
+		
 		return "/module/approval/getFormList";
 	}
 	
 	/* 특정 기안서 가져오기 */
 	@GetMapping("/getDraft")
 	public String getDraft(@RequestParam("draftId") int draftId, Model model){
+		
 		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
 		model.addAttribute("draft",service.getDraft(draftId));
-		
+		model.addAttribute("empVO",eService.getEmp(service.getDraft(draftId).getEmpId()));
+		model.addAttribute("apprEmp",service.getApprEmpList(draftId));
 		int formId = service.getDraft(draftId).getFormId();
+		
 		if(formId == 2){
 			model.addAttribute("expence",service.getExpence(draftId));
 			int expenceId = service.getExpence(draftId).getExpenceId();
@@ -78,6 +91,7 @@ public class ApprovalController {
 			return  "/module/approval/getExpenceDraft";
 		}else if(formId == 4){
 			model.addAttribute("vacation", service.getVacation(draftId));
+			model.addAttribute("replaceEmp", eService.getEmp(service.getVacation(draftId).getReplacementId()));
 			return "module/approval/getVacationDraft";
 		}else{
 			return "module/approval/defaultDraft";
@@ -87,9 +101,11 @@ public class ApprovalController {
 
 	/* 기안서 양식 가져오기 */
 	@GetMapping("/getForm")
-	public String getForm(@RequestParam("formId") int formId, Model model,RedirectAttributes rttr){
+	public String getForm(HttpSession session, @RequestParam("formId") int formId, Model model,RedirectAttributes rttr){
 		model.addAttribute("moduleNm", "approval");
-		
+		LoginVO login = (LoginVO) session.getAttribute("loginVO");
+		String empId = login.getEmpId();
+		model.addAttribute("loginEmp",eService.getEmp(empId));
 		if(formId == 2){
 			return  "module/approval/setExpenceDraft";
 		}else if(formId == 4){
@@ -167,6 +183,29 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
+	/* 결재 상태 수정 (버튼에 따라 다름) */
+	@GetMapping("/setUpApprState")
+	public String setUpApprState(HttpSession session , @RequestParam("draftId") int draftId, @RequestParam("apprState") int apprState){
+		ApprDraftVO draft = service.getDraft(draftId);
+		LoginVO login = (LoginVO) session.getAttribute("loginVO");
+		String empId = login.getEmpId();
+		ApprEmpDraftDetailVO empDraft = service.getApprEmp(draftId, empId);
+	
+		//service.getApprEmp(draftId,empId);
+		if(apprState == 0){
+			draft.setApproveState("반려");
+			empDraft.setApprOption("반려");
+		}else if(apprState == 1){
+			draft.setApproveState("결재중");
+			empDraft.setApprOption("결재");
+		}
+		
+		service.setUpDraft(draft);
+		service.setUpApprOption(empDraft);
+		return "redirect:/approval/getEmpDraftList";
+	}
+	
+	
 	/* 대체 근무자 emp 검색창 */
 	@GetMapping("/searchReplaceEmp")
 	public String searchRepalce(Model model){
@@ -185,5 +224,21 @@ public class ApprovalController {
 		return "module/approval/getApprovalEmp";
 	}
 	
+	/*@GetMapping("/test")
+	public String tset(){
+		return "module/approval/test";
+	}*/
+	
+	/* 로그인 후 내가 결재할 기안서 리스트 불러오기*/
+	@GetMapping("/getEmpDraftList")
+	public String getEmpDraftList(HttpSession session, Model model){
+		model.addAttribute("moduleNm", "approval");
+		LoginVO login = (LoginVO) session.getAttribute("loginVO");
+		String empId = login.getEmpId();
+		
+		model.addAttribute("perDraftList",service.getEmpDraftList(empId));
+		return "module/approval/getEmpDraftList";
+	}
+
 	
 }

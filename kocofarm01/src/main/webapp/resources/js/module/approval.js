@@ -89,9 +89,39 @@ $(function() {
 			location.href="/approval/delExpDraft?draftId="+$("#draftId").val();
 			return false;
 		});
+		
+		$(".approveBtn").click(function(){
+			alert('승인 하시겠습니까?');
+			/*$("#signImage").val("<input type = 'text' value =' 바보' readonly='readonly' >");*/
+			var a = document.getElementById('signImage');
+			a.innerHTML = "<input type='image' src = '/resources/img/approval/searchBt.png'>";
+			console.log(a.innerHTML);
+			
+		/*	
+			var b = document.getElementById('position1');
+			console.log(b.innerHTML);
+			*/
+			
+			
+			//location.href="/approval/setUpApprState?draftId="+$("#draftId").val()+"&apprState="+1;
+		});
 
+		$(".returnBtn").click(function(){
+			alert('반려 하시겠습니까?');
+			var a = document.getElementById('signImage');
+			a.innerHTML = "반려";
+			console.log(a.innerHTML);
+			//location.href="/approval/setUpApprState?draftId="+$("#draftId").val()+"&apprState="+0;
+			
+		});
 		
-		
+
 	
 });	
+
+function getApprDraftList(empId) {
+	  alert(empId);
+	  
+	  location.href = "/approval/getEmpDraftList?empId="+empId;
+	}
 

@@ -41,6 +41,53 @@
 							<h1>휴 가 신 청 서</h1>
 						</div>
 						
+						<div class="draft_wrap">
+							<h1 class="txt_c">결재자 정보</h1>
+							<div class="inf_wrap_box">
+								<table border = 0 height = "100%" width = 100%>
+									<thead>
+										<tr>
+											<th width = 10%>번호 </th>
+											<th width = 10%>부서 </th>
+											<th width = 10%>직위</th>
+											<th width = 10%>사번</th>
+											<th width = 20%>이름</th>
+											<th width = 10%>결재</th>
+											<th width = 10%>반려</th>
+											<th width = 10%>sign</th>
+											
+										</tr>
+									</thead>
+									
+									<tbody>
+										<c:forEach var="ApprEmployee" items="${apprEmp }"  varStatus="vs">
+											<tr>
+												<td id = 'count'>${vs.count }</td>
+												<td>${ApprEmployee.deptNm }</td>
+												<td>${ApprEmployee.positionNm }</td>
+												<td id = 'position${vs.count }' class = "${ApprEmployee.empId}">${ApprEmployee.empId}</td>
+												<td>${ApprEmployee.korNm}</td>
+												<c:if  test= "${ApprEmployee.empId eq loginVO.empId }">
+													<td>
+														<input type="button" class="approveBtn" id ="apprState" value="결재" width ="20px"/>
+													</td>
+													<td>
+														<input type="button" class="returnBtn" id ="apprState" value="반려" width ="20px" />
+													</td>
+													<td id = 'signImage' class = "getSign" ></td>
+												</c:if>
+												
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>	
+								
+								<input type = "button" class="apprSubmit" value = "저장" />	
+							</div>
+							<p></p>
+							<p></p>
+				
+						</div>
 						<!-- vacation table 시작 -->
 						<div class="vac_table">
 							<table width = 80% height = 80% border=1 cellpadding=0 cellspacing=0 align="center">
@@ -104,9 +151,9 @@
 									<td>ID</td>
 									<td>${vacation.replacementId }</td>
 									<td>이름</td>
-									<td>대체근무자 이름</td>
+									<td>${replaceEmp.korNm }</td>
 									<td>직위</td>
-									<td>직위라능</td>
+									<td>${replaceEmp.positionNm }</td>
 								</tr>
 								<tr>
 									<!-- 신청내용   -->
@@ -133,7 +180,7 @@
 						
 						<input type = "hidden" name="draftId" id="draftId" value ="${draft.draftId}" />
 						<input type = "hidden" name="formId" id="formId" value ="4" />
-						
+						<input type = "hidden" name = "empId" id="empId" value="${loginVO.empId }" />
 						<!-- btn -->
 						
 						<div class="btn_wrap">

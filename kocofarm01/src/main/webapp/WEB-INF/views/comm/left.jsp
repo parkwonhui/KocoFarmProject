@@ -20,7 +20,7 @@
 								<c:when test="${'approval' eq moduleNm}">
 									<li><a href="/approval/getDraftList">기안서 전체보기</a></li>
 									<li><a href="/approval/getFormList">기안서 등록하기</a></li>
-									<li><a href="">결재 기안서 보기</a></li>
+									<li><a href="#" onclick="getApprDraftList('${loginVO.empId}')">결재 기안서 보기</a></li>
 									<li><a href="">기타 추가</a></li>
 								</c:when>
 								<c:when test="${'rent' eq moduleNm}">
@@ -42,3 +42,4 @@
 			</div>
 		</div>
 	</c:if>
+<script type="text/javascript" src="/resources/js/module/approval.js"></script>
