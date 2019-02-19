@@ -519,7 +519,13 @@ function ajaxRequest(sendUrl, sendData){
         		
     		}else if(1006 == data){
     			alert('[실패] 권한이 없습니다');
-        	    	
+    		
+    		}else if(1007 == data){
+    			alert('[실패] 태그 이름을 확인해주세요(1~50자)');
+        	
+    		}else if(1008 == data){
+    			alert('[실패] 색 이름을 확인해주세요(1~50자)');
+    			
     		}else if(-1 == data){
     			alert('[실패] 알 수 없는 에러');
     	    
@@ -562,11 +568,13 @@ $('#calender_add').click(function() {
 	 var write 			= $("input[name=write]").val();
 	 var color 			= add_calender_color_value;
 	 var completion_per = $("input[name=addCompletionPer]").val();
-	 var tag 			= $("input[name=tag]").val();
+	 var tagName		= $("input[name=tagname]").val();
+	 var tagColor		= $("input[name=tag]").val();
 	 var category		= $("input[value="+add_category_id+"]").parent();	// 선택한 카테고리 클릭
 	 var y 				= category.parent().children().last().index()+1;	// 마지막 자식 노드 인덱스, 카테고리 때문에 1더함
 	 var startDt 		= $("input[name=addDatepickerStart]").val();
 	 var endDt 			= $("input[name=addDatepickerEnd]").val();
+	 
  
 	 if(null == write || "" == write){
 		 alert("일정 정보가 없습니다");

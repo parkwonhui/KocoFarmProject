@@ -13,7 +13,9 @@ import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
 import org.kocofarm.domain.schedule.ScheduleMemberVO;
+import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.domain.schedule.ScheduleTagVO;
 import org.kocofarm.service.module.ScheduleService;
 import org.kocofarm.service.module.ScheduleServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,9 @@ public class ScheduleProcess {
 	
 	protected ScheduleService service;
 	protected ScheduleProjectVO projectVO;
+	protected ScheduleCalenderVO calenderVO;	
+	protected ScheduleTagVO tagVO;
+	
 	
 	public ScheduleProcess(){}
 	public ScheduleProcess(ScheduleService service, ScheduleProjectVO projectVO){
@@ -131,6 +136,66 @@ public class ScheduleProcess {
 		
 		int re = service.delCategory(category);
 		
+		return re;
+	}
+	
+	public int setTag(HttpSession session, ScheduleTagVO tag){
+		
+		if(null == tag){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		String tagName = tag.getTag_name();
+		if(null == tagName){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		if(tagName.length() > ScheduleEnum.CHECK.CATEGORY_TITLE_LENGHT){
+			return ScheduleEnum.ERROR.CATEGORY_NAME_LENGHT_FAIL;
+		}
+		
+		String tagColor = tag.getTag_color();
+		if(tagColor.length() > ScheduleEnum.CHECK.TAG_TITLE_LENGTH){
+			return ScheduleEnum.ERROR.TAG_NAME_LENGTH_FAIL;
+		}
+		if(tagColor.length() > ScheduleEnum.CHECK.TAG_COLOR_LENGTH){
+			return ScheduleEnum.ERROR.TAG_COLOR_LENGTH_FAIL;
+		}
+		
+		int re = service.setTag(tag);
+		return re;
+	}
+	
+	public int setUpTag(HttpSession session, ScheduleTagVO tag){
+		
+		if(null == tag){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		String tagName = tag.getTag_name();
+		if(null == tagName){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		if(tagName.length() > ScheduleEnum.CHECK.CATEGORY_TITLE_LENGHT){
+			return ScheduleEnum.ERROR.CATEGORY_NAME_LENGHT_FAIL;
+		}
+		
+		String tagColor = tag.getTag_color();
+		if(tagColor.length() > ScheduleEnum.CHECK.TAG_TITLE_LENGTH){
+			return ScheduleEnum.ERROR.TAG_NAME_LENGTH_FAIL;
+		}
+		if(tagColor.length() > ScheduleEnum.CHECK.TAG_COLOR_LENGTH){
+			return ScheduleEnum.ERROR.TAG_COLOR_LENGTH_FAIL;
+		}
+		
+		int re = service.setUpTag(tag);
+		return re;
+	}
+	
+	public int delTag(HttpSession session, int tag_id){
+		
+		int re = service.delTag(tag_id);
 		return re;
 	}
 	

@@ -24,6 +24,7 @@
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleCategoryMoveVO" alias="ScheduleCategoryMoveVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleProjectSearchVO" alias="ScheduleProjectSearchVO" />
 		<typeAlias type="org.kocofarm.domain.schedule.ScheduleMemberVO" alias="ScheduleMemberVO" />
+		<typeAlias type="org.kocofarm.domain.schedule.ScheduleTagVO" alias="ScheduleTagVO" />
 		
 		<!-- 메시지 -->
 		<typeAlias type="org.kocofarm.domain.message.MessageVO" alias="MessageVO" />

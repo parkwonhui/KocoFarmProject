@@ -77,6 +77,29 @@
 <delete id="delCategory" parameterType="int">
 	delete from category where category_id = #{categoryId}
 </delete>
+<!-- 태그 xml -->
+<insert id ="setTag" parameterType="ScheduleTagVO">
+	insert into Tag (TAG_ID, CALENDER_ID, TAG_NAME, TAG_COLOR) 
+	values(tag_id_seq.nextva0l,#{calenderId}, #{tagName}, #{tagColor})
+</insert>
+
+<update id="setUpTag" parameterType="ScheduleTagVO">
+	<trim prefix="SET" suffixOverrides=",">
+       <if test="title != null">
+        tag = #{tagName},
+       </if>
+       <if test="tagColr != null">
+        tagColor = #{tagColor},
+        </if>
+       where tag_id = #{tagId}
+       </trim>
+</update>
+
+<delete id="delTag">
+	delete from tag where tag_id = #{tagId}
+</delete>
+
+
 <delete id="delCalenderWithCategory" parameterType="ScheduleCategoryVO">
 	delete calender where calender_id IN(select cal.calender_id from
 	category cat, calender cal
@@ -122,6 +145,7 @@ select * from project where project_leader = #{empId}
 <select id="getSelectProject" parameterType="int" resultType="ScheduleProjectVO">
 select * from project where project_id = #{projectId}
 </select>
+
 
 <!-- 일정 삭제 시 member 삭제 -->
 <delete id="delMemberWithCalender" parameterType="int">
