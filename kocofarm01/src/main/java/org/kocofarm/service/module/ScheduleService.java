@@ -11,6 +11,7 @@ import org.kocofarm.domain.schedule.ScheduleMemberVO;
 import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.domain.schedule.ScheduleTagVO;
 import org.springframework.ui.Model;
 
 import net.sf.json.JSONArray;
@@ -31,4 +32,7 @@ public interface ScheduleService {
 	public int setMoveCategory(ScheduleCategoryMoveVO category);
 	public int delProject(int projectId);
 	public List<ScheduleMemberVO> getMember(int calenderId);
+	public int setTag(ScheduleTagVO tag);
+	public int setUpTag(ScheduleTagVO tag);
+	public int delTag(int tagId);
 }

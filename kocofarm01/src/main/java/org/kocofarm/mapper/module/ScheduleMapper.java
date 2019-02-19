@@ -10,6 +10,7 @@ import org.kocofarm.domain.schedule.ScheduleMemberVO;
 import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.domain.schedule.ScheduleTagVO;
 
 public interface ScheduleMapper {
 	public List<ScheduleProjectVO> getProjectList(ScheduleProjectSearchVO project);
@@ -36,6 +37,10 @@ public interface ScheduleMapper {
 	public int delMemberWithCalender(int calenderId);						// 일정 id로 멤버삭제
 	public int delMemberWithCategory(int categoryId);						// 카테고리 id로 멤버삭제
 	public int delMemberWithProject(int projectId);							// 프로젝트 id로 멤버삭제
+	public int setTag(ScheduleTagVO tag);
+	public int setUpTag(ScheduleTagVO tag);
+	public int delTag(int tagId);
+	
 	
 
 

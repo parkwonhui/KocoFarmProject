@@ -15,6 +15,7 @@ import org.kocofarm.domain.schedule.ScheduleMemberVO;
 import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.domain.schedule.ScheduleTagVO;
 import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.mapper.module.ScheduleMapper;
 import org.springframework.stereotype.Service;
@@ -202,5 +203,25 @@ public class ScheduleServiceImpl implements ScheduleService{
 		}		
 		
 		return true;
+	}
+
+	
+	// TAG 부분 정의
+	@Override
+	public int setTag(ScheduleTagVO tag) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int setUpTag(ScheduleTagVO tag) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delTag(int tagId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

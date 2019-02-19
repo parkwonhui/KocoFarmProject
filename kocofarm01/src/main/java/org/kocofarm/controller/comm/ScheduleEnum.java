@@ -7,6 +7,10 @@ public class ScheduleEnum {
 		public static final int CALENDER_DATE_LENGHT = 10;			// 시작,종료 날짜 String 길이
 		public static final int CALENDER_COMPLETION_PER_MIN = 0;	// 일정 완료상황 최소 값
 		public static final int CALENDER_COMPLETION_PER_MAX = 100;	// 일정 완료상황 최대 값
+		public static final int TAG_TITLE_LENGTH = 50;
+		public static final int TAG_COLOR_LENGTH = 50;
+	
+	
 	}
 	
 	public static final class ERROR{
@@ -16,7 +20,10 @@ public class ScheduleEnum {
 		public static final int CALENDER_TOO_MANY_TEXT = 1002;
 		public static final int CALENDER_START_DT_WRONG = 1003;
 		public static final int CALENDER_END_DT_WRONG = 1004;
-		public static final int CALENDER_COMPLETION_PERCENT_WRONG = 1005;
+		public static final int CALENDER_COMPLETION_PERCENT_WRONG = 1005;		
 		public static final int AUTH_FAIL = 1006;					// 접근할 수 없는 권한
+		public static final int TAG_NAME_LENGTH_FAIL = 1007;
+		public static final int TAG_COLOR_LENGTH_FAIL = 1008;
+		
 	};
 }

@@ -157,8 +157,8 @@ $( function() {
   						  <input type="text" name="addCompletionPer" id="calenderCompletionPerVal" value="0"></input>
 						</div>
 					</div>
-					<div>
-						<button class="btn btn-warning" name="tag">태그 선택</button>
+					<div class="tag-selectbox-container">
+						<button class="enter-tag-selectbox" name="tagcontainerbutton">태그 선택</button>
 					</div>
 					<div>
 						<button class="btn btn-secondary" name="worker_list">작업자
@@ -206,8 +206,35 @@ $( function() {
   						  <input type="text" name="editCompletionPer" id="editCalenderCompletionPerVal"></input>
 						</div>
 					<div>
-						<button class="btn btn-warning" name="tag">태그 선택</button>
+						<button class="btn btn-warning" data-target="#select-tag-popup" data-toggle="modal" name="tag">태그 선택</button>
 					</div>
+					<div class="modal fade" id="select-tag-popup" >
+					 <div class="modal-dialog">
+					   <div class="modal-content">
+					     <!-- header -->
+					     <div class="tag-select-header">
+					       <!-- 닫기(x) 버튼 -->
+					       <button type="button" class="close" data-dismiss="modal">×</button>
+					       <!-- header title -->
+					       <h4 class="tag-select-title">Tag선택</h4>
+					     </div>
+					     <!-- body -->
+					     <div class="modal-body">
+					          Tag name
+					         <div><input type="text" value="Basic" class="tag-name-select" id = "tag-name-select"></div>
+					          
+					          Tag color
+					         <div><input type="color"  value="document.getElementById('tag-color-select').value" class="tag-color-select" id="tag-color-select"></div>
+					         
+					     </div>
+					     <!-- Footer -->
+					      <div class="tag-select-footer">
+					        <input type="button" class="btn btn-default" data-dismiss="modal" value="Close"></input>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+
 					<div><button class="btn btn-secondary" name="worker_list">작업자 선택</button></div>
 					<button class="btn btn-primary" id="calender_edit">일정 수정</Button>
 					<button type="button" class="btn btn-danger" id="calender_del">일정 삭제</button>

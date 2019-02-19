@@ -11,6 +11,7 @@ import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.domain.schedule.ScheduleTagVO;
 import org.kocofarm.service.module.ScheduleService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +49,47 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 		}
 		
 		int re = super.setUpCalender(session, calender);
+		return re;
+	}
+	
+	public int setTag(HttpSession session, ScheduleTagVO tag){
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		int calenderId =tag.getCalender_id();
+		boolean isMember = isMember(calenderId, loginVO); 
+		if(false == isMember && false == isProjectManager(session, projectVO)){
+			//해당 캘린더에 속해있는 사람인지 확인해야함
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		int re = super.setTag(session, tag);
+		return re;
+	}
+	
+	public int setUpTag(HttpSession session, ScheduleTagVO tag){
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		int calenderId =tag.getCalender_id();
+		boolean isMember = isMember(calenderId, loginVO); 
+		if(false == isMember && false == isProjectManager(session, projectVO)){
+
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		int re = super.setUpTag(session, tag);
+		return re;
+	}
+	
+	public int delTag(HttpSession session, ScheduleTagVO tag){
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		int calenderId =tag.getCalender_id();
+		
+		boolean isMember = isMember(calenderId, loginVO);
+		if(false == isMember && false == isProjectManager(session, projectVO)){
+
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		int tagId = tag.getTag_id();
+		int re = super.delTag(session, tagId);
 		return re;
 	}
 	
