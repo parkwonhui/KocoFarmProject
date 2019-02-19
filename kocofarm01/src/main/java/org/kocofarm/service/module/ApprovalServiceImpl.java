@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
@@ -161,11 +162,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int setUpVacation(ApprVacationVO vacation){
 		return mapper.setUpVacation(vacation);
 	}
-
-	@Override
-	public int setUpVacHit(int draft){
-		return mapper.setUpVacHit(draft);
-	}
 	
 	@Override
 	public int setUpExpence(ApprExpenceVO expence) {
@@ -177,6 +173,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int setUpExpenceCont(ApprExpenceContVO expenceCont) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public int setComment(ApprCommentVO comment){
+		return mapper.setComment(comment);
+	}
+	
+	@Override
+	public List<ApprCommentVO> getCommentList(int draftId){
+		return mapper.getCommentList(draftId);
 	}
 
 }

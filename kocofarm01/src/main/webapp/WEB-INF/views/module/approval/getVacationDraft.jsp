@@ -149,99 +149,30 @@
 		
 		</div>
 		
-<!-- 댓글달기 -->
-<!-- 댓글 부분 -->
-    <div id="comment" align="center" >
-    <!-- 댓글 목록 -->    
-   	<div id = "ListComment" style="width: 54%; text-align: left;">
-   		<c:forEach var="item" items="${draftList }" varStatus="status">
-   		<table style="border: 1px solid #A4A4A4; border-radius : 3px; width : 100%; margin-top: 5px; font-size:12px;">
-   			<tr style="height : 15px; background-color : #F6E3CE; ">
-   				<td>
-   					작성자 &nbsp; ${item.empId }
-   				</td>
-   				<td style="text-align: right !important ;">
-   					작성일 &nbsp; ${item.commentDt }
-   				</td>
-   			</tr>
-   			<tr>
-   				<td style="width:15%;">
-   					댓글내용
-   				</td>
-   				<td >
-   					<div style=" height: 40px; overflow:auto;">${item.commentContents }</div>
-   				</td>
-   			</tr>
-   		</table>
-   		</c:forEach>
-   	</div>
-	<div id="commentPaging">
-	
-	
-	
-	
-	</div>   	
-	<!-- 로그인 했을 경우만 댓글 작성가능 -->
-            
-		<!--  댓글작성창 -->
-		<form id="commentForm" style="margin-top : 10px;">
-			<div class=re_writer style="width:54%;">
-					<input type="hidden" name="draftId" id="draftId" value="${draft.draftId}" />
-					<textarea id="commentContents" name="commentContents" style="height: 60; width: 90%; vertical-align: middle; border : 1px solid #A4A4A4; border-radius:3px; resize:none;"></textarea>
-					<input type="button" id="setCommentBtn" value="댓글등록" style="vertical-align: middle; width:76px;height: 60px; line-height: 33px; border : 1px solid #A4A4A4; border-radius:3px;">
-			</div>
-			<div style="padding-left: 800;">
-			
-			</div>
-		</form>
-		<!-- 댓글목록들 -->
-	
+		<!-- 댓글 -->
+		<!--  댓글  -->
+    <div class="container">
+        <label for="content">comment</label>
+        <form name="commentInsertForm"  style="margin-left: 350;">
+            <div class="input-group">
+               <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/>
+               <input type="hidden" name="empId" value="${DRAFT_COMMENT.empId }"/>
+               <input type="text"  width="70%"   class="form-control" id="commentContents" 
+               name="commentContents" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <input type="button" class="commentInsertBtn" value="등록"/>
+               </span>
+              </div>
+        </form>
+    </div>
+    
+    <div class="container">
+        <div class="commentList"></div>
+    </div>
 </div>
-<script>
-	$(function() {
-			 $("#setCommentBtn").click(function(){
-					var draftId = $("#draftId").val();
-					var commentContents = $("#commentContents").val();
-					commentContents = commentContents.replace(/(?:\r\n|\r|\n)/g, '<br />');
-					var commentId = 1;
-					var data = {
-							draftId : draftId,
-							commentContents : commentContents,
-							commentId : commentId
-					}
-					
-					$.ajax({
-						url : "insertComment.do",
-						type : "GET",
-						data : data,
-						success : function(){
-							var today = new Date();
-							var dd = today.getDate();
-							var mm = (today.getMonth()+1).toString();
-							if (mm.length < 2) {
-								mm = '0' + mm;
-							}
-							var yyyy = today.getFullYear();
-							var hour = today.getHours();
-							var min = today.getMinutes();
-							var sec = today.getSeconds();
-							
-							var date = yyyy+'-'+mm+'-'+dd+' '+hour+':'+min+':'+sec;
-							var html = '<table style="border: 1px solid #A4A4A4; width : 100%; font-size:12px; margin-top:5px; border-radius:5px;">';
-								html += '<tr style="height:15px;  background-color : #F6E3CE; "><td>작성자 &nbsp; '+commentId+'</td><td style="text-align:right !important ;"> 작성일 &nbsp; '+ date + '</td></tr>';
-								html += '<tr><td style="width:15%;">댓글내용</td><td><div style=" height: 40px; overflow:auto;">'+commentContents+'</div></td></tr></table>';
-								
-							$('#ListComment').append(html);
-							if ($('#ListComment table').length > 5) {
-								$('#ListComment').children()[0].remove();
-								 $("#commentContents").val("");
-							}
-						}
-					});
-			}); 
-		});
-		
-</script>
+ </div>
+
+
 
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

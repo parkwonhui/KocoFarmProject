@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
@@ -16,13 +18,18 @@ import org.kocofarm.domain.comm.PageDTO;
 import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.service.module.ApprovalService;
 import org.kocofarm.service.module.EmpService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -181,5 +188,34 @@ public class ApprovalController {
 		return "module/approval/getApprovalEmp";
 	}
 	
+	/*댓글 등록하기 */
+	/*@PostMapping(value = "/setComment",
+			consumes = "application/json",
+			produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> create(@RequestBody ApprCommentVO comment){
+		log.info("ApprCommentVO : " + comment);
+		int setCount = service.setComment(comment);
+		log.info(setCount);
+		return setCount == 1
+				? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}*/	
+	/* 댓글 작성하기*/
+	@PostMapping("/setComment")
+	@ResponseBody
+	public String setComment(@RequestParam("dratId") int draftId, @RequestParam("empId") String empId, 
+		@RequestParam("commentContents") ApprCommentVO comment){
+		System.out.println("뿌잉");
+		log.info("뿌잉");
+		service.setComment(comment);
+		
+		return "redirect:/approval/getVacationDraft";
+	}
 	
+	/* 댓글 리스트 보기 */
+	@GetMapping("/getCommentList")
+	public String getCommentList(Model model){
+		
+		return "/module/approval/getDraftList";
+	}
 }
