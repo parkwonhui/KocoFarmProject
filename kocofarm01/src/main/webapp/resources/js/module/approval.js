@@ -118,12 +118,12 @@ $(function() {
 
 	
 });	
-
+/*
 	  alert(empId);
 	  
 	  location.href = "/approval/getEmpDraftList?empId="+empId;
 	}
-
+*/
 	function getApprDraftList(empId) {
      alert(empId);
      
