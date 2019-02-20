@@ -39,7 +39,7 @@ $(function() {
 		$('.msg_history').empty();
 
 		const
-		strEmpId = $('message-my-emp-id').val();
+		strEmpId = $('#message-my-emp-id').val();
 		var nLength = data.length;
 
 		for (var i = 0; i < nLength; ++i) {
