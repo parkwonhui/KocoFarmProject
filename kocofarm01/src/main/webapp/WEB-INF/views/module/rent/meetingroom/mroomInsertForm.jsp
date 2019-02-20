@@ -35,7 +35,7 @@
 							<th scope="col">회의실 번호</th>
 							<td class="left">
 							<input type="text" name="mId" id="mId"
-								placeholder="회의실 번호를 확인해주세요." />
+								placeholder="회의실 번호를 입력해주세요.(숫자)" />
 								<button type="button" id="idChk">회의실 번호 확인</button>
 							<p class="result">
 								<span class="msg"></span>

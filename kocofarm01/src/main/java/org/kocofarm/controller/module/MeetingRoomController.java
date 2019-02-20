@@ -87,7 +87,6 @@ public class MeetingRoomController {
 	@ResponseBody
 	@PostMapping("/idChk")
 	public int idChk(@RequestParam("mId")int mId){
-		
 		MeetingRoomVO idChk = service.getIdChk(mId);
 		
 		int result = 0;
