@@ -3,6 +3,7 @@ package org.kocofarm.controller.module;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kocofarm.domain.message.MessagePushVO;
+import org.kocofarm.domain.message.MessageVO;
 import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.mapper.module.MessageMapper;
 import org.kocofarm.mapper.module.ScheduleMapper;
@@ -38,8 +39,26 @@ public class MessageControllerTest {
 		log.info(mapper.getMessageRoomList("EMP_007"));
 	}
 */
-	@Test
+/*	@Test
 	public void getMessageList(){
 		log.info(mapper.getMessageList(61));
+	}*/
+	@Test
+	public void setMessage(){
+		MessageVO vo = new MessageVO();
+		vo.setMessageRoomId(61);
+		vo.setEmpId("EMP_007");
+		vo.setContents("저도 있어요ㅎㅎ");
+		vo.setDateString("20190220160139");
+		mapper.setMessage(vo);
 	}
+/*	@Test
+	public void getEmpMessageRoom(){
+		MessagePushVO vo = new MessagePushVO();
+		vo.setEmpId("EMP_006");
+		vo.setMessageRoomId(21);
+		log.info(mapper.getEmpMessageRoom(vo));
+	}
+*/
+	//20190220160139
 }

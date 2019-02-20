@@ -1,4 +1,7 @@
 $(function() {
+	// 메시지 요청
+	var bRequestMessage = true;
+
 	// message room list
 	var addMessageRoomList = function(data) {
 		if (null == data)
@@ -94,6 +97,10 @@ $(function() {
 		$("#emp-list").append(text);
 	}
 
+	// Context 등록하기
+	requestNewMessage();
+	
+	// 메시지 룸 리스트 가져오기
 	ajaxGetRequest("listMessageRoom", null, addMessageRoomList);
 
 	$('#add-message-room-button').click(function() {
@@ -160,7 +167,36 @@ $(function() {
 	
 	// 메시지 보내기
 	$('.msg_send_btn').click(function(){
+	
+		var roomId = searchMessageRoomId();
+		var text = $('.write_msg').val();
+		var data = {"contents": text, "messageRoomId":roomId};
+		
+		$.ajax({
+			type : "post",
+			data : data,
+			url : "push/sendMessage/",
+			success : function(data) {
+				console.log(data);
+				//if(undefined == func){
+				//	func(data);
+				//}
+			},
+			error : function(error) {
+			}, // error
+		});// ajax
 	});
+	
+	/* 선택한 메시지룸 찾기*/
+	function searchMessageRoomId(){
+		var list = $('.chat_list');
+		var length = list.length;
+		for (var i = 0; i < length; ++i) {
+			if (true == $(list[i]).hasClass('checked')) {
+				return $(list[i]).children("input[name=messageRoomId]").val();
+			}
+		}
+	}
 
 	/* 선택된 메시지 방 외의 다른 메시지방 색상 초기화*/
 	function initSelectMessageRoomColor(clickRoom) {
@@ -190,7 +226,7 @@ $(function() {
 			}, // error
 		});// ajax
 	}
-
+	
 	function ajaxRequest(sendUrl, sendData) {
 		$.ajax({
 			type : "post",
@@ -205,6 +241,46 @@ $(function() {
 		});// ajax
 	}
 
+	/* 메시지 룸 리스트 가져오기 */
+	function ajaxNoFunction(url, sendData, func) {
+		var str =  "가나다라라라라라";
+		$.ajax({
+			type : "post",
+			data : str,
+			url : url,
+			success : function(data) {
+				console.log(data);
+				//if(undefined == func){
+				//	func(data);
+				//}
+			},
+			error : function(error) {
+			}, // error
+		});// ajax
+	}
+	
+	function ajaxRequestMessage(){
+		$.ajax({
+			type : "post",
+			url : "push/getMessage",
+			contentType : 'json',
+			success : function(data) {
+				console.log(data);
+				result = true;
+				
+				
+			/*	var contentElement = document.getElementById("content");
+				contentElement.innerHTML += data;*/
+				return true;
+			},
+			error : function(error) {
+				console.log('걸기 실패');
+				return false;
+			}, // error
+		});// ajax
+	}
+
+	
 	/* 메시지 룸 리스트 가져오기 */
 	function requestMessageRoomList() {
 
@@ -234,4 +310,13 @@ $(function() {
 			}, // error
 		});// ajax
 	}
+	
+	function requestNewMessage() {
+		if (true == bRequestMessage) {
+			bRequestMessage = ajaxRequestMessage();
+		}
+	}	
+	
+	setInterval(requestNewMessage(), 1000);
+	
 });

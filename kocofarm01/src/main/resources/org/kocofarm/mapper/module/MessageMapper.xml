@@ -30,11 +30,25 @@
 	values(message_push_id_seq.nextval, #{messageRoomId}, #{empId})
 </insert>
 
-<!-- 메시지 룸에 따른 대화 가져오기 추후 파일 처리 할 것 -->
+<!-- 메시지 룸에 따른 대화 가져오기 최근 대화 50개, 파일 처리 할 것 -->
 <select id="getMessageList" parameterType="int" resultType="MessageVO">
-select m.message_id, m.message_room_id, m.contents, m.dt, e.emp_id, e.kor_nm, emp_img from message m
-join emp e
-on m.emp_id = e.emp_id
-and m.message_room_id = #{roomId}
+	/*+ INDEX_ASC(project MESSAGE_ID_PK) */
+	select m.message_id, m.message_room_id, m.contents, m.dt, e.emp_id, e.kor_nm, emp_img from message m
+	join emp e
+	on m.emp_id = e.emp_id
+	and m.message_room_id = #{roomId}
+</select>
+
+<!-- 메시지 추가 -->
+<insert id="setMessage" parameterType="MessageVO">
+	insert into
+	message(message_id, message_room_id, emp_id, contents, dt, type)
+	values(message_room_id_seq.nextval, #{messageRoomId}, #{empId}, #{contents}, TO_DATE(#{dateString}, 'yyyyMMddHH24miss'), #{type})
+</insert>
+
+<!-- 메시지방의 참여 유저인지 확인 -->
+<select id="getEmpMessageRoom" parameterType="MessagePushVO" resultType="MessagePushVO">
+select * from message_push
+where emp_id = #{empId} AND message_room_id = #{messageRoomId} 
 </select>
 </mapper>

@@ -111,4 +111,19 @@ public class MessageServiceImpl implements MessageService {
 		
 		return list;
 	}
+
+	@Override
+	public int setMessage(MessageVO messageVO){
+		if(null == messageVO){
+			return -1;
+		}
+		
+		return mapper.setMessage(messageVO);
+	}
+	
+	@Override
+	public MessagePushVO getEmpMessageRoom(MessagePushVO messagePushVo){
+		return mapper.getEmpMessageRoom(messagePushVo);
+	}
+
 }
