@@ -43,7 +43,7 @@ public class MessageControllerTest {
 	public void getMessageList(){
 		log.info(mapper.getMessageList(61));
 	}*/
-	@Test
+/*	@Test
 	public void setMessage(){
 		MessageVO vo = new MessageVO();
 		vo.setMessageRoomId(61);
@@ -52,6 +52,13 @@ public class MessageControllerTest {
 		vo.setDateString("20190220160139");
 		mapper.setMessage(vo);
 	}
+	*/
+/*	@Test
+	public void getMessageRoomEmpList(){
+		log.info(mapper.getMessageRoomEmpList(61));
+	}
+*/
+	
 /*	@Test
 	public void getEmpMessageRoom(){
 		MessagePushVO vo = new MessagePushVO();
@@ -60,5 +67,11 @@ public class MessageControllerTest {
 		log.info(mapper.getEmpMessageRoom(vo));
 	}
 */
-	//20190220160139
+
+	@Test
+	public void getMessageRoomList(){
+		log.info(mapper.getMessageRoomList("EMP_006"));
+	}
+
+	
 }

@@ -15,4 +15,5 @@ public interface MessageMapper {
 	public List<MessageVO> getMessageList(int roomId);
 	public int setMessage(MessageVO messageVO);
 	public MessagePushVO getEmpMessageRoom(MessagePushVO messagePushVo);
+	public List<String> getMessageRoomEmpList(int roomId);
 }

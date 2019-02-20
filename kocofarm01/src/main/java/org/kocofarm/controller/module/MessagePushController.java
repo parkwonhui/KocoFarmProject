@@ -58,7 +58,6 @@ public class MessagePushController {
 
 	@PostMapping("/sendMessage")
 	public void sendMessage(HttpServletRequest request, HttpServletResponse response, MessageVO messageVo){
-		log.info(messageVo);
 		log.info("[getRegistry]");
 
 		HttpSession session = request.getSession();
@@ -66,8 +65,6 @@ public class MessagePushController {
 		if(null == loginVO){
 			return;
 		}
-		
-		//response.setContentType("charset=UTF-8");
 		
 		String empId = loginVO.getEmpId();
 		String name = loginVO.getKorNm();
@@ -84,39 +81,59 @@ public class MessagePushController {
 		if(false == isWrongRequest(empId, roomId)){
 			return;
 		}
+		
+
 	
 		messageVo.setEmpId(empId);
 		messageVo.setKorNm(name);
-		//messageVo.setContents(message);
-		//messageVo.setMessageRoomId(roomId);
 		String strTime = getCurrentTime();
 		messageVo.setDateString(strTime);
-	
-		log.info("메시지 보낸 시간!!!"+strTime);
 		
 		service.setMessage(messageVo);
+
+		List<String> roomEmpList = service.getMessageRoomEmpList(roomId);
+		if(null == roomEmpList){
+			return;
+		}
 		
 		List<AsyncContext> asyncContexts = new CopyOnWriteArrayList<AsyncContext>(this.contexts);
 		this.contexts.clear();
 		
-		System.out.println(message);
-		
-		ServletContext sc = request.getServletContext();
-		
 		int i = 0;
 		for (AsyncContext asyncContext : asyncContexts) {
+			
+			HttpServletRequest req = (HttpServletRequest)asyncContext.getRequest();
+			if(null == req){
+				continue;
+			}
+			
+			HttpSession s = req.getSession();
+			if(null == s){
+				continue;
+			}
+			
+			LoginVO login = (LoginVO)s.getAttribute("loginVO");
+			if(null == login){
+				continue;
+			}
+			
+			if(false == isMessageRoomEmp(roomEmpList, login.getEmpId())){
+				continue;
+			}
+			
 			PrintWriter writer;
 			try {
 				JSONObject obj = new JSONObject();
-				obj.put("name", name);
-				obj.put("message", messageVo.getContents());
-							
-				//writer = asyncContext.getResponse().getWriter();
-				//writer.println(obj);
-				//writer.flush();
-				response.setContentType("text/html;charset=UTF-8");
-				response.getWriter().print(obj);
-				
+				asyncContext.getResponse().setContentType("application/json;  charset=UTF-8");
+				obj.put("korNm", name);
+                obj.put("empId", empId);
+                obj.put("roomId", roomId);
+                obj.put("contents", messageVo.getContents());
+                obj.put("dateString", messageVo.getDateString());
+                obj.put("empImgSrc", messageVo.getEmpImgSrc());
+				writer = asyncContext.getResponse().getWriter();
+				writer.println(obj);
+				writer.flush();
 				asyncContext.complete();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -139,10 +156,22 @@ public class MessagePushController {
 		
 	}
 	
+	public boolean isMessageRoomEmp(List<String> list, String empId){
+		for(String id : list){
+			if(empId.equals(id)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	
 	public String getCurrentTime(){
 		Calendar calendar = Calendar.getInstance();
         java.util.Date date = calendar.getTime();
         String strTime = (new SimpleDateFormat("yyyyMMddHHmmss").format(date));
         return strTime;
 	}
+	
 }

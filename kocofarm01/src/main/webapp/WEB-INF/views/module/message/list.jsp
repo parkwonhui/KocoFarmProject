@@ -61,6 +61,7 @@
 						<div class="headind_srch">
 							<div class="recent_heading">
 								<input type="hidden" id="message-my-emp-id" value='${loginVO.empId}' />
+								<input type="hidden" id="click-message-room-id" value='' />
 								<h4>Recent</h4>
 							</div>
 							<div class="srch_bar">

@@ -90,7 +90,6 @@ public class MessageServiceImpl implements MessageService {
 				return -1;
 			}
 		}
-		
 		return re;
 		
 	}	
@@ -124,6 +123,11 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public MessagePushVO getEmpMessageRoom(MessagePushVO messagePushVo){
 		return mapper.getEmpMessageRoom(messagePushVo);
+	}
+	
+	@Override
+	public List<String> getMessageRoomEmpList(int roomId){
+		return mapper.getMessageRoomEmpList(roomId);
 	}
 
 }

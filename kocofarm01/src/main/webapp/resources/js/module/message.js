@@ -4,6 +4,8 @@ $(function() {
 
 	// message room list
 	var addMessageRoomList = function(data) {
+		console.log(data);
+		
 		if (null == data)
 			return;
 
@@ -41,8 +43,7 @@ $(function() {
 	var addMessageList = function(data) {
 		$('.msg_history').empty();
 
-		const
-		strEmpId = $('#message-my-emp-id').val();
+		const strEmpId = $('#message-my-emp-id').val();
 		var nLength = data.length;
 
 		for (var i = 0; i < nLength; ++i) {
@@ -76,7 +77,48 @@ $(function() {
 			$('.msg_history').append(text);
 		}
 	}
+	
+	/* 변경된 데이터만 전달 */
+	var addMessage = function(data){
 
+		// 현재 메시지 창을 보고 있지 않다
+		if(data.roomId != $('#click-message-room-id').val()){
+			return;
+		}
+		
+		console.log(data);
+		console.log(data.empId);
+		const strEmpId = $('#message-my-emp-id').val();
+	
+		var text = '';
+		if (strEmpId == data.empId) {
+			text += '<div class="outgoing_msg">';
+			text += '<div class="sent_msg">';
+			text += '<p>' + data.contents + '</p>';
+			text += '<span class="time_date">' + data.dateString	+ '</span>';
+			text += '</div>';
+			text += '</div>';
+		} else {
+			text += '<div class="incoming_msg">';
+			text += '<div  class="incoming_msg_img">';
+			text += '<img  src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
+			text += '</div>';
+			text += '<div class="received_msg">';
+			text += '<p>' + data.korNm + '</p>';
+			text += '<div  class="received_withd_msg">';
+			text += '<p>' + data.contents + '</p>';
+			text += '<span  class="time_date">' + data.dateString
+					+ '</span>';
+			text += '</div>';
+			text += '</div>';
+			text += '</div>';
+			text += '</div>';
+		}
+
+		$('.msg_history').append(text);
+		
+	}
+	
 	// message room 초대할 유저 list
 	var addEmpFunction = function addEmpList(data) {
 		$("#emp-list").empty();
@@ -161,6 +203,9 @@ $(function() {
 		var data = {
 			"roomId" : roomID
 		};
+		
+		// 현재 선택한 방 id 저장
+		$('#click-message-room-id').val(roomID);
 
 		requestMessageList(data);
 	});
@@ -177,10 +222,7 @@ $(function() {
 			data : data,
 			url : "push/sendMessage/",
 			success : function(data) {
-				console.log(data);
-				//if(undefined == func){
-				//	func(data);
-				//}
+				//addMessage(data);
 			},
 			error : function(error) {
 			}, // error
@@ -260,13 +302,17 @@ $(function() {
 	}
 	
 	function ajaxRequestMessage(){
+		bRequestMessage = false;
+		console.log('요청걸기!!!');
 		$.ajax({
 			type : "post",
 			url : "push/getMessage",
 			contentType : 'json',
 			success : function(data) {
+				console.log('데이터 받았다!!!!:');
 				console.log(data);
-				result = true;
+				bRequestMessage = true;
+				addMessage(data);
 				
 				
 			/*	var contentElement = document.getElementById("content");
@@ -289,7 +335,7 @@ $(function() {
 			dataType : "json",
 			url : "listMessageRoom",
 			success : function(data) {
-				addMessageRoomList(data);
+				addMessage(data);
 			},
 			error : function(error) {
 			}, // error
@@ -304,7 +350,7 @@ $(function() {
 			dataType : "json",
 			url : "listMessage",
 			success : function(data) {
-				addMessageList(data);
+				addMessageRoomList(data);
 			},
 			error : function(error) {
 			}, // error
@@ -317,6 +363,6 @@ $(function() {
 		}
 	}	
 	
-	setInterval(requestNewMessage(), 1000);
+	setInterval(requestNewMessage, 1000);
 	
 });

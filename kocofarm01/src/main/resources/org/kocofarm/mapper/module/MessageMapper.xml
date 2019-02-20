@@ -51,4 +51,10 @@
 select * from message_push
 where emp_id = #{empId} AND message_room_id = #{messageRoomId} 
 </select>
+
+<!-- 메시지 룸 참여자인지 확인 getEmpMessageRoom 방식으로는 많은 유저를 체크하기 적합x -->
+<select id="getMessageRoomEmpList" parameterType="int" resultType="String">
+select emp_id from message_push
+where message_room_id = #{messageRoomId}
+</select>
 </mapper>

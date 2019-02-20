@@ -142,8 +142,13 @@ public class MessageController {
 			empList.add(empId);
 		}
 		
+		empList.add(loginVO.getEmpId());
 		
 		service.setMessageRoom(empList, title);
+		
+		
+		log.info(service.getMessageRoomList(loginVO.getEmpId()));
+		
 		return RESULT.SUCCESS;
 	}
 }
