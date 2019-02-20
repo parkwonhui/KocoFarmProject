@@ -4,27 +4,46 @@ $(function(){
 	//차량등록
 	$("#enroll").click(function() {
 		if(confirm("등록하시겠습니까?")){
-			//여기에 유효성 겁사 - 함수 만들기
+			//여기에 유효성 겁사
 			chkReq();										
 		}
 		return false;
 	})
 	
 	//수정버튼 눌렀을 떄
-	$("#updateForm").click(function() {
-		/*위치이동*/
-		/*location.href = "/rent/rentCarDetailEdit?car_id="+$("#car_id").val()*/
-		location.href = "/rent/rentCarDetailEdit?carId="+$("#car_id").val()
+	$("#updateForm").click(function() {		
+		$('#rentCarDetailForm').attr("action", "/rent/rentCarDetailEdit")
+		$("#rentCarDetailForm").submit();		
 		return false;
 	})
 	
 	
-	//목록버튼 눌렀을 때
-	$("#listBtn").click(function() {
-		
-		location.href = "/rent/rentCarDetailList";
-		
+	//상세보기에서 - 목록버튼 눌렀을 때 기존페이지로 이동한다. 
+	$("#listBtn").click(function() {		
+		$('#rentCarDetailForm').attr("action", "/rent/rentCarDetailList")
+		$("#rentCarDetailForm").submit();		
+			
 	})
+	
+	//내용수정(update.jsp)에서 - 목록버튼 눌렀을떄 =>1페이지로 이동돼ㅠ
+	$("#listBtn2").click(function() {		
+		$('#rentCarEditForm').attr("action", "/rent/rentCarDetailList").attr("method", "get")
+		 var pageNumTag = $("input[name = 'pageNum']").clone();
+	     var amountTag = $("input[name = 'amount']").clone();
+	   /*  var keywordTag = $("input[name = 'keyword']").clone();
+	     var typeTag = $("input[name = 'type']").clone();*/
+	     
+	     $('#rentCarEditForm').empty();
+	     
+	     $('#rentCarEditForm').append(pageNumTag);
+	     $('#rentCarEditForm').append(amountTag);
+	    /* $('#rentCarEditForm').append(keywordTag);
+	     $('#rentCarEditForm').append(typeTag);*/
+		
+		$("#rentCarEditForm").submit()		
+		//기존 : location.href = "/rent/rentCarDetailList";		
+	}) 
+	
 
 	//수정내용 등록
 	$("#Upenroll").click(function() {
@@ -39,7 +58,9 @@ $(function(){
 		if(confirm("삭제하시겠습니까?")){
 			/*페이지 이동*/
 			/*location.href = "/rent/rentCarDetailDel?carId=" +$("#car_id").val()*/
-			location.href = "/rent/rentCarDetailDel?carId="+$("#car_id").val();			
+			//location.href = "/rent/rentCarDetailDel?carId="+$("#car_id").val();	
+			$('#rentCarEditForm').attr("action", "/rent/rentCarDetailDel").attr("method", "get")
+			$("#rentCarEditForm").submit()
 		}	
 	})
 	
@@ -86,6 +107,33 @@ $(function(){
 
 		
 	})
+	
+	
+	
+	//페이징처리
+	var actionForm = $("#actionForm");
+	$(".paginate_button a").on(
+			"click",
+			function(e) {
+
+				e.preventDefault();
+				console.log('click');
+				actionForm.find("input[name='pageNum']").val($(this).attr("href"));				
+				actionForm.submit();
+			});
+	
+	//페이징처리 - 이벤트
+	$(".move")
+	.on(
+			"click",
+			function(e) {
+				e.preventDefault();
+				actionForm
+						.append("<input type='hidden' name='carId' value='"
+								+ $(this).attr("href") + "'>");
+				actionForm.attr("action", "/rent/rentCarDetailView");
+				actionForm.submit();
+			});
 
 
 });/*전체function 괄호*/
@@ -147,7 +195,7 @@ function chkReq(){
 	/*여기 주석처리*/
 	var mode = $("#mode").val();
 	if("write" == mode){
-		$('#rentCarWriteForm').attr("action", "rentCarDetailWrite.do")
+		$('#rentCarWriteForm').attr("action", "/rent/rentCarDetailWrite")
 		$("#rentCarWriteForm").submit()
 	
 	}
@@ -155,7 +203,7 @@ function chkReq(){
 	
 }
 
-//수정 필수값 체크
+//수정완료 버튼 후, 필수값 체크
 function chkReq2(){
 	
 	
@@ -205,12 +253,3 @@ function chkReq2(){
 	}
 }
 
-//유효성검사 함수 - 예외처리
-function isvalid(){
-	/*var car_id = //
-*/	//차량번호
-	functop
-	
-	//차량이름
-	
-}

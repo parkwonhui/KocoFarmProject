@@ -1,4 +1,4 @@
-package org.kocofarm.controller.comm;
+package org.kocofarm.controller.module;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
@@ -148,13 +149,14 @@ public class ScheduleTestController {
 	@Test
 	public void delCategory(){
 		mapper.delCategory(66);
-	}	*/
+	}	
 	
 	@Test
 	public void getProjectEmp(){
 		ScheduleProjectSearchVO search = new ScheduleProjectSearchVO("EMP_006");
 		mapper.getProjectList(search);
 	}
+	*/
 	
 /*	@Test
 	public void test(){
@@ -173,5 +175,16 @@ public class ScheduleTestController {
 	public void getProjectWithManager(){
 		log.info(mapper.getManagerProjectList("EMP_006"));
 	}*/
-
+	
+/*	@Test
+	public void getSelectProject(){
+		log.info(mapper.getSelectProject(42));
+	}
+*/
+	
+	/*@Test
+	public void getMember(){
+		log.info(mapper.getMember(142));
+	}*/
+	
 }

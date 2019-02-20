@@ -17,10 +17,15 @@ var drag_category_x;					// 이동하는 카테고리의 x
 var drag_category_projectId;			// 이동하는 카테고리의 프로젝트 id
 var drag_category_categoryId;			// 이동하는 카테고리의 id
 
+/* 프로젝트 관리자 여부 */
+var is_project_manager;
+
+/* 권한 제한이 있는 프로젝트인지 아닌지 */
+var is_public_project;
+
 
 (function($) {
-	
-	
+
     var elmDrag, replacerSet = $();
     var eventStack = ['dragstart', 'dragend', 'selectstart', 'dragover', 'dragenter', 'drop'];
     
@@ -102,6 +107,9 @@ var drag_category_categoryId;			// 이동하는 카테고리의 id
                 elmDrag = $(this);
                 index = (elmDrag).addClass('drop-elmDrag').index();
             }).on(eventStack[1], function() { 
+            	if(0 == is_public_project && 0 == is_project_manager){
+            		return;
+            	}
             	
             	// 일정 이동 시
             	if("" == drag_category_class){
@@ -120,9 +128,17 @@ var drag_category_categoryId;			// 이동하는 카테고리의 id
                 elmDrag = null;
                 
             }).not('a[href], img').on(eventStack[2], function() {
+            	if(0 == is_public_project && 0 == is_project_manager){
+            		return;
+            	}
+            	
                 this.dragDrop && this.dragDrop();
                 return false;
             }).end().add([this, replacer]).on('dragover dragenter drop', function(event) {
+        		if(0 == is_public_project && 0 == is_project_manager){
+        			return;
+        		}
+            	
                 if (!items.is(elmDrag) && options.linkTo !== $(elmDrag).parent().data('linkTo')) {
                     return true;
                 }
@@ -204,10 +220,10 @@ function calenderMoveAjax(moveCalender){
     	    data += drag_before_calender_category_id+', "calenderId":';
     	    data += calenderId+', "yPos":';
     	    data += y+'}';
-    	    if(index-1 >= 1)
-    	    	data += ", ";
+   	    	data += ",";
     		$(moveCalender).parent().children().eq(index).children(".this_calender_yPos").val(y++);
-    	} 
+    	}
+		data = data.substr(0, data.length - 1);
 		data += "]";
 	}else{
 		// y값 갱신
@@ -228,8 +244,7 @@ function calenderMoveAjax(moveCalender){
     	    data += drag_after_calender_category_id+', "calenderId":';
     	    data += calenderId+', "yPos":';
     	    data += otherY+'}';
-      	    if(index-1 >= 1)
-    	    	data += ", ";
+   	    	data += ",";
     		$(moveCalender).parent().children().eq(index).children(".this_calender_yPos").val(otherY++);	            		
     	}
     
@@ -245,12 +260,11 @@ function calenderMoveAjax(moveCalender){
     		data += drag_before_calender_category_id+', "calenderId":';
         	data += calenderId+', "yPos":';
         	data += beforeY+'}';        
-      	    if(index-1 >= 1)
-    	    	data += ", ";
+   	    	data += ",";
       	    
     		$(list).parent().children().eq(index).children(".this_calender_yPos").val(beforeY++);
     	}
-    	
+		data = data.substr(0, data.length - 1);
     	data += "]";
 	}
 
@@ -316,8 +330,16 @@ function addDynamicHtml(data){
       		html += '<ul class="connected li1">';
       		html += '<li class="calender_info">';
       		html += '<input class="category-name-input" type="text" readonly="true" value="'+data[i].categoryName+'"></input>';
-      		html += '<img src="/resources/img/schedule/dustbin.png" class="category-delete-btn" data-toggle="modal" data-target="#categoryDeleteModal"/>';
-			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal">새 일정 추가</button>';
+      		
+      		
+      		// 매니저이거나 public project 일 때
+      		if(1 == is_project_manager || 1 == is_public_project){
+      			html += '<img src="/resources/img/schedule/dustbin.png" class="category-delete-btn" data-toggle="modal" data-target="#categoryDeleteModal"/>';      		
+      			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal">새 일정 추가</button>';
+      		}else{
+      			html += '<button type="button" class="btn  btn-primary calenderWriteBtn btn-block" data-toggle="modal" data-target="#calenderAddModal" disabled>새 일정 추가</button>';            	
+      		}
+      		
 			html += '<input type="hidden" class="this_project_id" value='+data[i].projectId+' />';
       		html += '<input type="hidden" class="this_category_id" value='+data[i].categoryId+' />';
       		html += '<input type="hidden" class="this_category_x" value='+data[i].xPos+' />';
@@ -336,7 +358,6 @@ function addDynamicHtml(data){
             
             html += '<div><img src="/resources/img/schedule/settings.png" class="calender-modify-btn" data-toggle="modal" data-target="#calenderModify"/></div>';
             html += '<div class="calender_detail_title ">'+data[i].title+'</div>';
-            /*html += '<div>calender:id'+data[i].calenderId+'</div>';*/
             html += '<input type="hidden" class="this_calender_id" value='+data[i].calenderId+' />';
             html += '<input type="hidden" class="this_calender_yPos" value='+data[i].yPos+' />';            
             var startDt = data[i].startDt;
@@ -345,9 +366,19 @@ function addDynamicHtml(data){
 	            html += '<span class="calender_detail_startDt">'+ startDt.substring(0,10)+'</span><span> - </span>';
 	            html += '<span class="calender_detail_endDt">'+endDt.substring(0,10)+'</span>';
             }
+            
+            var memberListLength = data[i].memberList.length;
+            if(0 < memberListLength ){
+            	html += '<div>참여자</div>';
+            	for(var k = 0; k < memberListLength; ++k ){
+            		html += data[i].memberList[k].korNm;
+            		html += ' ';
+            	}
+            }
+            
             html += '<input type="hidden" class="calender_detail_completionPer" value="'+ data[i].completionPer+'"></input>';
             html += '<div class="calender-progress-bar">';
-            html += '<div style=" height: 20px; background-color: #4CAF50; border-radius:10px; width:'+data[i].completionPer+'%" >'+data[i].completionPer+'</div>'
+            html += '<div style=" height: 20px; background-color: #01A9DB; border-radius:10px; width:'+data[i].completionPer+'%" >'+data[i].completionPer+'</div>'
             html += '</div>';
             
             html += '</li>';	      		
@@ -358,13 +389,15 @@ function addDynamicHtml(data){
 		html += '</ul>';
 	    
     	// 새  카테고리
-		html += '<ul class="connected li1">';
-		html += '<li class="calender_info">';
-  		html += '<div><input class="add-category-name-input" type="text"></input><div>';
-        html += '<button type="button" class="btn btn-light btn-block add-category-button">새 카테고리 추가</button>';
-		html += '<input type="hidden" class="this_project_id" value='+projectId+' />';
-		html += '</li>';
-		html += '</ul>';
+		if(1 == is_project_manager || 1 == is_public_project){
+			html += '<ul class="connected li1">';
+			html += '<li class="calender_info">';
+	  		html += '<div><input class="add-category-name-input" type="text"></input><div>';
+	        html += '<button type="button" class="btn btn-light btn-block add-category-button">새 카테고리 추가</button>';
+			html += '<input type="hidden" class="this_project_id" value='+projectId+' />';
+			html += '</li>';
+			html += '</ul>';
+		}
 		
 		$(".con").append(html); 
 	    
@@ -382,6 +415,7 @@ function addDynamicHtml(data){
 			var par = $(this).parent();	// calender_info
 			var project_id = par.children(".this_project_id").val();
 			var category_id = par.children(".this_category_id").val();
+			$("#editCalenderCompletionPerRang").val(0);
 			calenderButtonClick(project_id, category_id, 0);
 		});
 	   
@@ -403,11 +437,13 @@ function addDynamicHtml(data){
 		   
 
 		 	var val = $("#calenderModify").children(".modal-dialog").children(".modal-content").children(".modal-body");
-			
+		 	add_calender_color_value =  hexc(color);
+
 			// 값 넣기
 			val.children("input[name=write]").val(title);
 			val.children("input[name=editDatepickerStart]").val(startDt);
 			val.children("input[name=editDatepickerEnd]").val(endDt);
+			$("#editCalenderCompletionPerRang").val(completionPer);
 			$("#editCalenderCompletionPerVal").val(completionPer);
 
 			calenderButtonClick(project_id, category_id, calender_id);
@@ -415,10 +451,17 @@ function addDynamicHtml(data){
 	   
 	   /* 카테고리 값 체인지 이벤트 */
 	   $('.category-name-input').on("dblclick", function(){
+		    if(0 == is_public_project && 0 == is_project_manager){
+			   return;
+		   }
 		   $(this).attr("readonly", false);
 	   });
 	   
 	   $('.category-name-input').on("focusout", function(){
+		    if(0 == is_public_project && 0 == is_project_manager){
+			   return;
+		   }
+		   
 		   $(this).attr("readonly", true);
 		   
 		   var par = $(this).parent();
@@ -474,6 +517,15 @@ function ajaxRequest(sendUrl, sendData){
     		}else if(1005 == data){
     			alert('[실패] 완료상황은 0과 100 사이 값만 가능합니다');
         		
+    		}else if(1006 == data){
+    			alert('[실패] 권한이 없습니다');
+    		
+    		}else if(1007 == data){
+    			alert('[실패] 태그 이름을 확인해주세요(1~50자)');
+        	
+    		}else if(1008 == data){
+    			alert('[실패] 색 이름을 확인해주세요(1~50자)');
+    			
     		}else if(-1 == data){
     			alert('[실패] 알 수 없는 에러');
     	    
@@ -516,11 +568,13 @@ $('#calender_add').click(function() {
 	 var write 			= $("input[name=write]").val();
 	 var color 			= add_calender_color_value;
 	 var completion_per = $("input[name=addCompletionPer]").val();
-	 var tag 			= $("input[name=tag]").val();
+	 var tagName		= $("input[name=tagname]").val();
+	 var tagColor		= $("input[name=tag]").val();
 	 var category		= $("input[value="+add_category_id+"]").parent();	// 선택한 카테고리 클릭
 	 var y 				= category.parent().children().last().index()+1;	// 마지막 자식 노드 인덱스, 카테고리 때문에 1더함
 	 var startDt 		= $("input[name=addDatepickerStart]").val();
 	 var endDt 			= $("input[name=addDatepickerEnd]").val();
+	 
  
 	 if(null == write || "" == write){
 		 alert("일정 정보가 없습니다");
@@ -566,6 +620,10 @@ $('#calender_edit').click(function(){
 
 // 일정 삭제
 $('#calender_del').click(function(){
+	if(0 == is_public_project && 0 == is_project_manager){
+		alert('[에러] 권한이 없습니다');
+		return;
+	}
 	
 	$('#calenderModify').modal('toggle');
 	var data = { calenderId:add_calender_id };
@@ -585,6 +643,9 @@ function clearAddDlg(this_parent){
 
 /* 배경 rgb값을 16진수로 convert */
 function hexc(colorval) {
+	if(undefined == colorval){
+		return;
+	}
 	
     var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
     delete(parts[0]);
