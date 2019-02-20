@@ -21,9 +21,11 @@
 		<div class="contents_wrap">
 			<!-- view -->
 			<form action="" id ="rentCarDetailForm" method = "get">
-				<input type = "hidden" name = "mode" id = "mode" value = "${param.mode}}" /> 
+				<input type = "hidden" name = "mode" id = "mode" value = "${param.mode}" /> 
 				<input type = "hidden" name = "carId" id = "car_id" value = "${rentCarDetail.carId}" />
-				
+				<input type = "hidden" name  = "pageNum" value = "${cri.pageNum}">
+  				<input type = "hidden" name  = "amount" value = "${cri.amount}"> 
+
 				<div class="contents">
 					<!-- 상세 정보 -->
 					<table class="contents_tb vw" id="rentCarDetailView">
@@ -50,7 +52,7 @@
 							</tr>
 							<tr>
 								<th scope="col">가격</th>
-								<td class="left">${rentCarDetail.price } 만원</td>
+							<td class="left">${rentCarDetail.price } 만원</td>
 							</tr>
 							<tr>
 								<th scope="col">연식</th>
@@ -68,11 +70,11 @@
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r">
-					<input type="button" class="auto_wth_btn_y" value="수정" id = "updateForm">
-					<input type="button" class="auto_wth_btn_r" value="삭제" id = "delete" >
+					<input type="button" class="list_btn" id="listBtn" value="목록"  />
+					<input type="button" class="auto_wth_btn_y" value="  수정    " id = "updateForm">				
 				</div>
 			</div>
-		</div>
+		</div>	
 	</div>
 	
 <script type="text/javascript" src="/resources/js/module/rent.js"></script>

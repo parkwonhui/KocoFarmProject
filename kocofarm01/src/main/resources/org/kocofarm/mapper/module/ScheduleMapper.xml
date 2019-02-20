@@ -69,7 +69,7 @@
 		select project_id_seq.nextval FROM DUAL
 	</selectKey>
 	insert into project(PROJECT_ID, TITLE, PROJECT_START_DT, PROJECT_END_DT, PROJECT_REG_DT, PROJECT_COMPLETION, PUBLIC_USE, PROJECT_LEADER)
-	values(#{projectId} , #{title}, TO_DATE(#{projectStartDt}, 'yy-mm-dd') , TO_DATE(#{projectEndDt}, 'yy-mm-dd'), #{projectRegDt}, #{projectCompletion}, #{publicProject}, #{projectLeader})
+	values(#{projectId} , #{title}, TO_DATE(#{projectStartDt}, 'yy-mm-dd') , TO_DATE(#{projectEndDt}, 'yy-mm-dd'), #{projectRegDt}, #{projectCompletion}, #{publicUse}, #{projectLeader})
 </insert>
 <update id="setUpProject" parameterType="ScheduleProjectVO">
 	update project set title = #{title} where project_id = #{projectId}
@@ -77,6 +77,29 @@
 <delete id="delCategory" parameterType="int">
 	delete from category where category_id = #{categoryId}
 </delete>
+<!-- 태그 xml -->
+<insert id ="setTag" parameterType="ScheduleTagVO">
+	insert into Tag (TAG_ID, CALENDER_ID, TAG_NAME, TAG_COLOR) 
+	values(tag_id_seq.nextva0l,#{calenderId}, #{tagName}, #{tagColor})
+</insert>
+
+<update id="setUpTag" parameterType="ScheduleTagVO">
+	<trim prefix="SET" suffixOverrides=",">
+       <if test="title != null">
+        tag = #{tagName},
+       </if>
+       <if test="tagColr != null">
+        tagColor = #{tagColor},
+        </if>
+       where tag_id = #{tagId}
+       </trim>
+</update>
+
+<delete id="delTag">
+	delete from tag where tag_id = #{tagId}
+</delete>
+
+
 <delete id="delCalenderWithCategory" parameterType="ScheduleCategoryVO">
 	delete calender where calender_id IN(select cal.calender_id from
 	category cat, calender cal
@@ -109,14 +132,46 @@ delete from category where project_id = #{projectId}
 	ON p.project_id = m.project_id
 	and emp_id = #{empId}
 </select>
-<select id="getMember" parameterType="int">
-select * from member where project_id = #{projectId}
+<select id="getMember" parameterType="int" resultType="ScheduleMemberVO">
+select * from member where calender_id = #{calenderId}
 </select>
 <insert id="setMember" parameterType="ScheduleMemberVO">
-insert into member(MEMBER_INDEX, COMPLETE_COUNT, PROGRESS_COUNT, EMP_ID, CALENDER_ID, PROJECT_ID)
-values(member_id_seq.nextval, 0, 0, #{empId}, 0, #{projectId} )
+insert into member(MEMBER_INDEX, COMPLETE_COUNT, PROGRESS_COUNT, EMP_ID, CALENDER_ID)
+values(member_id_seq.nextval, 0, 0, #{empId}, 0 )
 </insert>
 <select id="getManagerProjectList" parameterType="String" resultType="ScheduleProjectVO">
 select * from project where project_leader = #{empId}
 </select>
+<select id="getSelectProject" parameterType="int" resultType="ScheduleProjectVO">
+select * from project where project_id = #{projectId}
+</select>
+
+
+<!-- 일정 삭제 시 member 삭제 -->
+<delete id="delMemberWithCalender" parameterType="int">
+	delete from member where calender_id = #{calenderId}
+</delete>
+
+<!-- 카테고리 삭제 시 member 삭제 -->
+<delete id="delMemberWithCategory" parameterType="int">
+	delete from member
+	where calender_id IN(
+	select cal.calender_id from
+	category cat
+	join calender cal
+	on cat.CATEGORY_ID = cal.CATEGORY_ID
+	and cat.CATEGORY_ID = #{category_id})
+</delete>
+
+<!-- 프로젝트 삭제 시 member 삭제 -->
+<delete id="delMemberWithProject" parameterType="int">
+	delete from member
+	where calender_id IN(
+	select cal.calender_id from
+	category cat
+	join calender cal
+	on cat.CATEGORY_ID = cal.CATEGORY_ID
+	and cat.project_id = #{projectId} )
+</delete>
+
 </mapper>

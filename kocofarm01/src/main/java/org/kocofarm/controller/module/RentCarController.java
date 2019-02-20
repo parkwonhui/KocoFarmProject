@@ -2,12 +2,16 @@ package org.kocofarm.controller.module;
 
 import java.lang.ProcessBuilder.Redirect;
 
+import org.kocofarm.domain.comm.Criteria;
+import org.kocofarm.domain.comm.PageDTO;
 import org.kocofarm.domain.rentCar.RentCarVO;
 import org.kocofarm.service.module.RentCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,23 +30,28 @@ public class RentCarController {
 	@Setter(onMethod_={@Autowired})
 	private RentCarService rentCarService;		
 	
-	//left Bar 삽입	
-	private void leftBar(){
-		
-	}
 	
 	//Rent의 전체목록으로 이동
-	@GetMapping("/list")
+	/*@GetMapping("/list")
 	private String list(){
 		return "/module/rent/list";
-	}
+	}*/
 	
 	//목록
 	@GetMapping("/rentCarDetailList")
-	private String rentCarDetailList(Model model){
-		log.info("rentCarDetailList");
-		model.addAttribute("list", rentCarService.getRentCarDetailList());
+
+	private String rentCarDetailList(Criteria cri, Model model){
+		
+		//log.info("rentCarDetailList : " + cri);		
+		model.addAttribute("list", rentCarService.getRentCarDetailList(cri));
+		/*leftbar*/
 		model.addAttribute("moduleNm", "rent");
+		
+		int total = rentCarService.getTotal(cri);
+		//log.info("total : " + total);		
+		model.addAttribute("pageMaker", new PageDTO(cri, total));		
+
+
 		return "/module/rent/car/rentCarDetailList";
 	}
 	
@@ -60,23 +69,29 @@ public class RentCarController {
 		rentCarService.setRentCarDetail(rentCar);
 		rttr.addFlashAttribute("result", rentCar.getCarId());
 		
-		return "redirect:/rent/car/rentCarDetailList";		
+		/*return "redirect:/rent/car/rentCarDetailList";	*/	
+		return "redirect:rentCarDetailList";
 	}
 	
 	//조회
 	@GetMapping("/rentCarDetailView")
-	public String rentCarDetailView(@RequestParam("carId") String carId, Model model ){
+	public String rentCarDetailView(@RequestParam("carId") String carId, 
+									@ModelAttribute("cri") Criteria cri ,Model model ){
 		
 		log.info("rentCarDetailView...");
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
+		
 		return "/module/rent/car/rentCarDetailView";
 	}
 	
 	//수정페이지 이동
 	@GetMapping("/rentCarDetailEdit")
-	public String rentCarDetailEdit(@RequestParam("carId") String carId, Model model){
+	public String rentCarDetailEdit(@RequestParam("carId") String carId,
+									@ModelAttribute("cri") Criteria cri, Model model){
+		
 		log.info("rentCarDetailEdit...수정페이지");
 		log.info("rentCarDetailEdit : " +rentCarService.getRentCarDetail(carId));
+		
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
 		
 		return "/module/rent/car/rentCarDetailUpdate";
@@ -85,26 +100,35 @@ public class RentCarController {
 	//수정
 	@PostMapping("/rentCarDetailEdit")
 	//@GetMapping("/rentCarDetailEdit")
-	public String rentCarDetailEdit(RentCarVO rentCar, RedirectAttributes rttr){
+	public String rentCarDetailEdit(RentCarVO rentCar,
+									@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
 		log.info("rentCarDetailEdit...수정처리");		
 		log.info("rentCarDetailEdit :" + rentCar);		
 		
 		if(rentCarService.setUpRentCarDetail(rentCar)){
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/car/rentCarDetailList";
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		
+		return "redirect:rentCarDetailList";
 	}
 		
 	//삭제
 	//기존 post로 설정해주었었다
 	@GetMapping("/rentCarDetailDel")
-	public String rentCarDetailDel(@RequestParam("carId") String carId, RedirectAttributes rttr){
+	public String rentCarDetailDel(@RequestParam("carId") String carId, 
+								@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
 		log.info("rentCarDetailDel.." + carId);
 		
 		if(rentCarService.delRentCarDetail(carId)){
 			rttr.addFlashAttribute("result", "success");
 		}
-		return "redirect:/rent/car/rentCarDetailList";
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+/*		return "redirect:/rent/car/rentCarDetailList";*/
+		return "redirect:rentCarDetailList";
 	}
 
 	

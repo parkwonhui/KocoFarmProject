@@ -1,4 +1,4 @@
-package org.kocofarm.domain.schedule;
+package org.kocofarm.domain.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +11,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleMemberVO {
-	int memberIndex;
-	int completeCount;
-	int progressCount;
+public class MessageEmpListVO {
+	String empName;
 	String empId;
-	int calenderId;
+	String empImaSrc;
 }

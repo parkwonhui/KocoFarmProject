@@ -2,6 +2,7 @@ package org.kocofarm.service.module;
 
 import java.util.List;
 
+import org.kocofarm.domain.comm.Criteria;
 import org.kocofarm.domain.rentCar.RentCarVO;
 import org.kocofarm.mapper.module.RentCarMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ public class RentCarServiceImpl implements RentCarService {
 	
 	//목록
 	@Override
-	public List<RentCarVO> getRentCarDetailList() {
-		log.info("getRentCarDetailList....");
-		return rentCarMapper.getRentCarDetailList();
+	public List<RentCarVO> getRentCarDetailList(Criteria cri) {
+		log.info("getRentCarDetailList.... with criteria : " + cri);
+		return rentCarMapper.getListWithPaging(cri);
 	}
 
 	//등록
@@ -57,4 +58,11 @@ public class RentCarServiceImpl implements RentCarService {
 		return rentCarMapper.setUpRentCarDetail(rentCar)==1;
 	}
 
+	@Override
+	public int getTotal(Criteria cri){
+		log.info("getTotal.......");
+		return rentCarMapper.getTotalCount(cri);
+	}
+	
+	
 }

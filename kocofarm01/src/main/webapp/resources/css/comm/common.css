@@ -70,6 +70,9 @@ table.contents_tb.wr td{border-bottom:none}
 .btn_wrap input.edit_btn{width:80px;height:40px;line-height:40px;background:#ffce0b;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
 .btn_wrap input.del_btn{width:80px;height:40px;line-height:40px;background:#ED1B00;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
 .btn_wrap input.view_btn{width:80px;height:40px;line-height:40px;background:#2ca52a;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
+.btn_wrap input.list_btn2{width:80px;height:40px;line-height:40px;background:#777;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
+
+
 
 input.auto_wth_btn_g{padding:0 10px;height:40px;line-height:40px;background:#777;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
 input.auto_wth_btn_b{padding:0 10px;height:40px;line-height:40px;background:#010372;border-radius:3px;font-size:14px;font-weight:bold;color:#fff!important;cursor:pointer;text-indent:0;border:1px solid #ddd}

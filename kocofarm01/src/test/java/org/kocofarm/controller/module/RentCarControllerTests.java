@@ -11,7 +11,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.context.WebApplicationContext;
 
 import lombok.Setter;
@@ -37,30 +36,30 @@ public class RentCarControllerTests {
 	}
 	
 	//목록
-	/*@Test
+	@Test
 	public void testRentCarDetailList() throws Exception{
 		log.info(
 				mockMvc.perform(MockMvcRequestBuilders.get("/rent/rentCarDetailList"))
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());		
-	}*/
+	}
 	
 	//등록
-	@Test
+	/*@Test
 	public void testRentCarDetailWrite() throws Exception{
 		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/rent/rentCarDetailWrite")
-				.param("carId", "바1234")
-				.param("modelName","배고팡")
-				.param("carModel","배고팡2")
-				.param("condition", "배고팡3")
-				.param("price", "1000")
+				.param("carId", "하1234")
+				.param("modelName","미니쿠페-3호차")
+				.param("carModel","미니쿠페")
+				.param("condition", "신차")
+				.param("price", "4000")
 				.param("year", "2020")
-				.param("oilType", "경유")
+				.param("oilType", "휘발유")
 				).andReturn().getModelAndView().getViewName();
 		
 				log.info(resultPage);		
-	}
+	}*/
 	
 	//조회
 	/*@Test
@@ -98,6 +97,16 @@ public class RentCarControllerTests {
 		log.info(resultPage);
 	}*/
 	
+	/*@Test
+	public void testListPaging() throws Exception{
+		log.info(
+				mockMvc.perform(
+						MockMvcRequestBuilders.get("/rent/rentCarDetailList")
+						.param("pageNum", "1")
+						.param("amount", "10"))
+						.andReturn().getModelAndView().getModelMap()				
+				);
+	}*/
 	
 	
 	
