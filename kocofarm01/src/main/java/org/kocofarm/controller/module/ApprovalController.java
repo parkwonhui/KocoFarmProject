@@ -256,7 +256,7 @@ public class ApprovalController {
 	
 	/* �뙎湲� 由ъ뒪�듃 蹂닿린 */
 	@GetMapping("/getCommentList")
-	public String getCommentList(Model model){
+	public String getCommentList(@RequestParam("draftId") int draftId, Model model){
 		
 		return "/module/approval/getDraftList";
 	}

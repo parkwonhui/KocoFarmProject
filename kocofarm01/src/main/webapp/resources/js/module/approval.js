@@ -143,6 +143,19 @@ $(".commentInsertBtn").click(function(){
 			data : param,
 			success : function(){
 				alert("댓글이 등록되었습니다.");
+				listReply("1");
 				}
 		});
 });
+
+function listReply(num){
+	$.ajax({
+		type : "POST",
+		url : "getCommentList?draftId="+$("#draftId").val(),
+		success : function(result){
+			console.log(result);
+			$("#listReply").html(result);
+		}
+		
+	})
+}

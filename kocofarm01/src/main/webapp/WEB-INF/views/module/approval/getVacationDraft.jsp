@@ -214,7 +214,7 @@
     </div>
     
     <div class="container">
-        <div class="commentList"></div>
+        <div class="getCommentList"></div>
     </div>
 </div>
  </div>
