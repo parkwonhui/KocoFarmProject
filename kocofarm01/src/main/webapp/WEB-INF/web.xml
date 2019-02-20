@@ -57,9 +57,6 @@
 	<filter-mapping>
 		<filter-name>encoding</filter-name>
 		<servlet-name>appServlet</servlet-name>
-<!-- 	<dispatcher>ASYNC</dispatcher> -->
-		</filter-mapping>
-
-
+	</filter-mapping>
 	
 </web-app>
