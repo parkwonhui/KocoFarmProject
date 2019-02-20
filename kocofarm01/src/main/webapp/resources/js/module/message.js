@@ -5,7 +5,7 @@ $(function() {
 	// message room list
 	var addMessageRoomList = function(data) {
 		console.log(data);
-		
+
 		if (null == data)
 			return;
 
@@ -43,7 +43,8 @@ $(function() {
 	var addMessageList = function(data) {
 		$('.msg_history').empty();
 
-		const strEmpId = $('#message-my-emp-id').val();
+		const
+		strEmpId = $('#message-my-emp-id').val();
 		var nLength = data.length;
 
 		for (var i = 0; i < nLength; ++i) {
@@ -77,25 +78,35 @@ $(function() {
 			$('.msg_history').append(text);
 		}
 	}
-	
+
 	/* 변경된 데이터만 전달 */
-	var addMessage = function(data){
+	var addMessage = function(data) {
 
 		// 현재 메시지 창을 보고 있지 않다
-		if(data.roomId != $('#click-message-room-id').val()){
+		if (data.roomId != $('#click-message-room-id').val()) {		
+			var massageRoomList = $("input[name=messageRoomId]");
+			var length = massageRoomList.length;
+			for(var i = 0; i < length; ++i){
+				console.log($(massageRoomList[i]).val());
+				if($(massageRoomList[i]).val() == data.roomId){
+					$(massageRoomList[i]).parent().children('.chat_people').children('.chat_ib').children('h5').append('<span>New</span>');				
+				}
+			}
+			
 			return;
 		}
-		
+
 		console.log(data);
 		console.log(data.empId);
-		const strEmpId = $('#message-my-emp-id').val();
-	
+		const
+		strEmpId = $('#message-my-emp-id').val();
+
 		var text = '';
 		if (strEmpId == data.empId) {
 			text += '<div class="outgoing_msg">';
 			text += '<div class="sent_msg">';
 			text += '<p>' + data.contents + '</p>';
-			text += '<span class="time_date">' + data.dateString	+ '</span>';
+			text += '<span class="time_date">' + data.dateString + '</span>';
 			text += '</div>';
 			text += '</div>';
 		} else {
@@ -107,8 +118,7 @@ $(function() {
 			text += '<p>' + data.korNm + '</p>';
 			text += '<div  class="received_withd_msg">';
 			text += '<p>' + data.contents + '</p>';
-			text += '<span  class="time_date">' + data.dateString
-					+ '</span>';
+			text += '<span  class="time_date">' + data.dateString + '</span>';
 			text += '</div>';
 			text += '</div>';
 			text += '</div>';
@@ -116,9 +126,9 @@ $(function() {
 		}
 
 		$('.msg_history').append(text);
-		
+
 	}
-	
+
 	// message room 초대할 유저 list
 	var addEmpFunction = function addEmpList(data) {
 		$("#emp-list").empty();
@@ -140,13 +150,13 @@ $(function() {
 	}
 
 	// Context 등록하기
-	requestNewMessage();
-	
+	//requestNewMessage();
+
 	// 메시지 룸 리스트 가져오기
-	ajaxGetRequest("listMessageRoom", null, addMessageRoomList);
+	ajaxRequest("listMessageRoom", null, "get",addMessageRoomList);
 
 	$('#add-message-room-button').click(function() {
-		ajaxGetRequest("empList", null, addEmpFunction);
+		ajaxRequest("empList", null, "get", addEmpFunction);
 	});
 
 	$('#add-message-room-request').click(
@@ -187,7 +197,7 @@ $(function() {
 					}, // error
 				});// ajax
 
-	});
+			});
 
 	// 메시지 룸 초대 인원 클릭 동적 태그 이벤트 붙여주기
 	$(document).on("click", ".add-message-room-emp", function() {
@@ -203,20 +213,23 @@ $(function() {
 		var data = {
 			"roomId" : roomID
 		};
-		
+
 		// 현재 선택한 방 id 저장
 		$('#click-message-room-id').val(roomID);
 
-		requestMessageList(data);
+		ajaxRequest("listMessage", data, "get", addMessageList);
 	});
-	
+
 	// 메시지 보내기
-	$('.msg_send_btn').click(function(){
-	
+	$('.msg_send_btn').click(function() {
+
 		var roomId = searchMessageRoomId();
 		var text = $('.write_msg').val();
-		var data = {"contents": text, "messageRoomId":roomId};
-		
+		var data = {
+			"contents" : text,
+			"messageRoomId" : roomId
+		};
+
 		$.ajax({
 			type : "post",
 			data : data,
@@ -228,9 +241,9 @@ $(function() {
 			}, // error
 		});// ajax
 	});
-	
+
 	/* 선택한 메시지룸 찾기*/
-	function searchMessageRoomId(){
+	function searchMessageRoomId() {
 		var list = $('.chat_list');
 		var length = list.length;
 		for (var i = 0; i < length; ++i) {
@@ -254,54 +267,8 @@ $(function() {
 		}
 	}
 
-	function ajaxGetRequest(sendUrl, sendData, func) {
-
-		$.ajax({
-			type : "get",
-			data : sendData,
-			dataType : "json",
-			url : sendUrl,
-			success : function(data) {
-				func(data);
-			},
-			error : function(error) {
-			}, // error
-		});// ajax
-	}
-	
-	function ajaxRequest(sendUrl, sendData) {
-		$.ajax({
-			type : "post",
-			data : sendData,
-			dataType : "json",
-			url : sendUrl,
-			success : function(data) {
-				requestMessageRoomList(data);
-			},
-			error : function(error) {
-			}, // error
-		});// ajax
-	}
-
-	/* 메시지 룸 리스트 가져오기 */
-	function ajaxNoFunction(url, sendData, func) {
-		var str =  "가나다라라라라라";
-		$.ajax({
-			type : "post",
-			data : str,
-			url : url,
-			success : function(data) {
-				console.log(data);
-				//if(undefined == func){
-				//	func(data);
-				//}
-			},
-			error : function(error) {
-			}, // error
-		});// ajax
-	}
-	
-	function ajaxRequestMessage(){
+	// 동작이 다르므로 그대로 ㄱㄱ
+	function ajaxRequestMessage() {
 		bRequestMessage = false;
 		console.log('요청걸기!!!');
 		$.ajax({
@@ -313,10 +280,9 @@ $(function() {
 				console.log(data);
 				bRequestMessage = true;
 				addMessage(data);
-				
-				
-			/*	var contentElement = document.getElementById("content");
-				contentElement.innerHTML += data;*/
+
+				/*	var contentElement = document.getElementById("content");
+					contentElement.innerHTML += data;*/
 				return true;
 			},
 			error : function(error) {
@@ -325,7 +291,22 @@ $(function() {
 			}, // error
 		});// ajax
 	}
-
+	
+	function ajaxRequest(sendUrl, sendData, type, func) {
+		$.ajax({
+			type : type,
+			data : sendData,
+			dataType : "json",
+			url : sendUrl,
+			success : function(data) {
+				if(undefined != func){
+					func(data);
+				}
+			},
+			error : function(error) {
+			}, // error
+		});// ajax
+	}
 	
 	/* 메시지 룸 리스트 가져오기 */
 	function requestMessageRoomList() {
@@ -335,34 +316,20 @@ $(function() {
 			dataType : "json",
 			url : "listMessageRoom",
 			success : function(data) {
-				addMessage(data);
-			},
-			error : function(error) {
-			}, // error
-		});// ajax
-	}
-
-	/* 메시지 리스트 가져오기 */
-	function requestMessageList(data) {
-		$.ajax({
-			type : "get",
-			data : data,
-			dataType : "json",
-			url : "listMessage",
-			success : function(data) {
+				console.log(data);
 				addMessageRoomList(data);
 			},
 			error : function(error) {
 			}, // error
 		});// ajax
 	}
-	
+
 	function requestNewMessage() {
 		if (true == bRequestMessage) {
 			bRequestMessage = ajaxRequestMessage();
 		}
-	}	
-	
+	}
+
 	setInterval(requestNewMessage, 1000);
-	
+
 });
