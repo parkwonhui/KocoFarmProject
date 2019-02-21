@@ -67,11 +67,18 @@ public class MessageControllerTest {
 		log.info(mapper.getEmpMessageRoom(vo));
 	}
 */
-
-	@Test
+/*	@Test
 	public void getMessageRoomList(){
 		log.info(mapper.getMessageRoomList("EMP_006"));
 	}
+*/
+	@Test
+	public void delMessagePush(){
+		MessagePushVO vo = new MessagePushVO();
+		vo.setEmpId("EMP_007");
+		vo.setMessageRoomId(21);
 
+		log.info(mapper.delMessagePush(vo));
+	}
 	
 }

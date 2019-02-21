@@ -57,4 +57,10 @@ where emp_id = #{empId} AND message_room_id = #{messageRoomId}
 select emp_id from message_push
 where message_room_id = #{messageRoomId}
 </select>
+
+<!-- 메시지 방 나가기 -->
+<delete id="delMessagePush" parameterType="MessagePushVO">
+	delete from message_push
+	where message_room_id = #{messageRoomId} and emp_id = #{empId}
+</delete>
 </mapper>

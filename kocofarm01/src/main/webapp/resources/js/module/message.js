@@ -233,12 +233,10 @@ $(function() {
 			"roomId" : roomID
 		};
 
-		console.log("출력!!!");
 		var messageRoom = $(this).children('.chat_people').children('.chat_ib').children('h5').children('p').html();
 		// 현재 선택한 방 id 저장
 		$('#click-message-room-id').val(roomID);
 		selectMessageRoomName = messageRoom;
-
 		ajaxRequest("listMessage", data, "get", addMessageList);
 	});
 
@@ -262,6 +260,16 @@ $(function() {
 			}, // error
 		});// ajax
 	});
+	
+	$(document).on("click", ".message-room-emp-list-print", function(){
+	});
+	
+	$(document).on("click", ".message-room-emp-exit", function(){
+		var roomId = $('#click-message-room-id').val();
+		var data = {"messageRoomId":roomId};
+		ajaxRequest("delMessagePush", data, "post", requestMessageRoomList);
+	});
+
 
 	function ajaxRequestMessage() {
 		bRequestMessage = false;
@@ -291,7 +299,14 @@ $(function() {
 			dataType : "json",
 			url : sendUrl,
 			success : function(data) {
+				console.log(func);
 				if(undefined != func){
+					
+					if(-1 == data){
+						alert('[에러] 알 수 없는 에러가 발생했습니다');
+						return;
+					}
+					
 					func(data);
 				}
 			},
@@ -333,7 +348,17 @@ $(function() {
 	/* 메시지 룸 타이틀 생성 */
 	function addMessageRoomTitle(){
 		$('.message-room-title').empty();
-		var html = "<div class='message-room-top-title '>"+selectMessageRoomName+"</div>";
+
+		var html = "<div class='message-room-top-title '>"+selectMessageRoomName
+		html += '<div class="dropdown">';
+		html += "<img src = '/resources/img/message/more.png' class='message-room-top-more' />";
+		html += "<div class='dropdown-content'>";
+		html += '<div class="message-room-emp-list-print">참여자</div>';
+		html += '<div class="message-room-emp-exit">나가기</div>';
+		html += '</div>';
+		html += '</div>';
+		html += '</div>';
+		
 		$('.message-room-title').append(html);
 	}
 	
@@ -345,7 +370,7 @@ $(function() {
 			dataType : "json",
 			url : "listMessageRoom",
 			success : function(data) {
-				console.log(data);
+				
 				addMessageRoomList(data);
 			},
 			error : function(error) {

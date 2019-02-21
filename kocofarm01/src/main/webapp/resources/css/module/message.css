@@ -1,7 +1,7 @@
 
 /* left bar 간격 조정 */
 .cont_wrap{
-    margin-left: 200px;
+    margin-left: 150px;
 }
 .container {
 	max-width: 1170px;
@@ -123,6 +123,14 @@ img {
 	background: #ebebeb;
 }
 
+.incoming_msg{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	
+}
+
 .incoming_msg_img {
 	display: inline-block;
 	width: 6%;
@@ -159,7 +167,7 @@ img {
 .mesgs {
 	float: left;
 	/*padding: 30px 15px 0 25px;*/
-	width: 55%;
+	width: 60%;
 }
 
 .sent_msg p {
@@ -238,21 +246,21 @@ img {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
+  left: -40px;
   min-width: 160px;
-  left:100px;
-  top:-5px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-content div {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  cursor: pointer;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content div:hover {background-color: #f1f1f1}
 
 .dropdown:hover .dropdown-content {
   display: block;
@@ -306,4 +314,13 @@ img {
 .message-room-top-title {
 	background-color: #1cff2b;
     height:50px;
+}
+
+/* 메시지 방 타이틀 more */
+.message-room-top-more{
+	display:inline-block;
+	float:right;
+	width : 32px;
+	height : 32px;	
+	cursor: pointer;
 }

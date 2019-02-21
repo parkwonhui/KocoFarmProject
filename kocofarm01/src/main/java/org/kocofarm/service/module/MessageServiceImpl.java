@@ -130,4 +130,9 @@ public class MessageServiceImpl implements MessageService {
 		return mapper.getMessageRoomEmpList(roomId);
 	}
 
+	@Override
+	public int delMessagePush(MessagePushVO messagePushVo){
+		return mapper.delMessagePush(messagePushVo);
+	}
+
 }
