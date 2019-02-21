@@ -202,7 +202,7 @@
         <label for="content">comment</label>
         <form name="commentInsertForm"  style="margin-left: 350;">
             <div class="input-group">
-<%--                <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/> --%>
+                 <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/>
 <%--                <input type="hidden" name="empId" value="${DRAFT_COMMENT.empId }"/> --%>
                <input type="text"  width="70%"   class="form-control" id="commentContents" 
                name="commentContents" placeholder="내용을 입력하세요.">
@@ -214,7 +214,7 @@
     </div>
     
     <div class="container">
-        <div class="getCommentList"></div>
+        <div id = "getCommentList"></div>
     </div>
 </div>
  </div>

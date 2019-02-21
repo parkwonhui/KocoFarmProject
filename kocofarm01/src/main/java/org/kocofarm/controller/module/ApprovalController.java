@@ -256,10 +256,23 @@ public class ApprovalController {
 	
 	/* �뙎湲� 由ъ뒪�듃 蹂닿린 */
 	@GetMapping("/getCommentList")
-	public String getCommentList(@RequestParam("draftId") int draftId, Model model){
-		
-		return "/module/approval/getDraftList";
+	public String getCommentList(@RequestParam("draftId") int draftId,@RequestParam("empId") String empId,
+			Model model){
+		List<ApprCommentVO> list = service.getCommentList(draftId);
+		model.addAttribute("list", list);
+		return "/module/approval/getCommentList";
 	}
+	
+	/* 댓글 삭제 */
+	@PostMapping("/delComment")
+	public String delComment(@RequestParam("draftId") int draftId,@RequestParam("commentId") int commentId, ApprCommentVO comment){
+	System.out.println("####");
+	System.out.println(commentId);
+	System.out.println("$$$$");
+	service.delComment(commentId);
+	return "/module/approval/getVacationDraft";
+	}
+	
 		/* 濡쒓렇�씤 �썑 �궡媛� 寃곗옱�븷 湲곗븞�꽌 由ъ뒪�듃 遺덈윭�삤湲�*/
 	@GetMapping("/getEmpDraftList")
 	public String getEmpDraftList(HttpSession session, Model model){

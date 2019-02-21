@@ -311,7 +311,7 @@
 	</select>
 	
 	<!-- 삭제 -->
-	<delete id="delComm">
+	<delete id="delComment">
 	delete from DRAFT_COMMENT where comment_id = #{commentId}
 	</delete>
 	

@@ -86,4 +86,6 @@ public interface ApprovalService {
 	public int setComment(ApprCommentVO comment);
 	/* 댓글 목록 */
 	public List<ApprCommentVO> getCommentList(int draftId);
+	/* 댓글 삭제 */
+	public int delComment(int commentId);
 }

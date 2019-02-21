@@ -234,5 +234,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public List<ApprCommentVO> getCommentList(int draftId){
 		return mapper.getCommentList(draftId);
 	}
-
+	
+	@Override
+	public int delComment(int commentId){
+		return mapper.delComment(commentId);
+	}
 }

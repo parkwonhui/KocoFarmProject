@@ -96,7 +96,7 @@ public interface ApprovalMapper {
 	/*조회*/
 	public List<ApprCommentVO> getCommentList(int draftId);
 	/*삭제*/
-	public int delComment(int draftId);
+	public int delComment(int commentId);
 	/*수정*/
 	public int setUpComment(ApprCommentVO comment);
 }

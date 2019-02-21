@@ -143,19 +143,29 @@ $(".commentInsertBtn").click(function(){
 			data : param,
 			success : function(){
 				alert("댓글이 등록되었습니다.");
-				listReply("1");
+				getCommentList();
 				}
 		});
 });
 
-function listReply(num){
+
+$(function(){
+	getCommentList();
+});
+
+
+function getCommentList(){
+	var commentContents = $("#commentContents").val();
+	var draftId = $("#draftId").val();
+	var empId = $("#empId").val();
+	
+	var param = {"commentContents" : commentContents, "draftId" : draftId, "empId" : empId};
 	$.ajax({
-		type : "POST",
-		url : "getCommentList?draftId="+$("#draftId").val(),
-		success : function(result){
-			console.log(result);
-			$("#listReply").html(result);
+		type : "GET",
+		url : "getCommentList",
+		data : param,
+		success : function (result){
+			$("#getCommentList").html(result);
 		}
-		
-	})
+	});
 }
