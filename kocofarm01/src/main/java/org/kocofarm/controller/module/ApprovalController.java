@@ -188,7 +188,7 @@ public class ApprovalController {
 		service.setUpDraft(draft);
 
 		
-		log.info("Here");
+
 		return "redirect:/approval/getDraftList";
 	}
 	
@@ -251,7 +251,7 @@ public class ApprovalController {
 	public String setComment(@RequestParam("draftId") int draftId, @RequestParam("empId") String empId,
 		ApprCommentVO comment){
 		service.setComment(comment);
-		return "redirect:/approval/getVacationDraft";
+		return "redirect:/approval/getDraft?draftId=${ApprDraftVO.draftId }";
 	}
 	
 	/* �뙎湲� 由ъ뒪�듃 蹂닿린 */

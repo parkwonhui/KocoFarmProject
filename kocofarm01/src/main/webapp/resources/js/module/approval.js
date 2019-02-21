@@ -143,6 +143,7 @@ $(".commentInsertBtn").click(function(){
 			data : param,
 			success : function(){
 				alert("댓글이 등록되었습니다.");
+				$("#commentContents").val("");
 				getCommentList();
 				}
 		});
@@ -158,6 +159,7 @@ function getCommentList(){
 	var commentContents = $("#commentContents").val();
 	var draftId = $("#draftId").val();
 	var empId = $("#empId").val();
+	console.log(draftId, empId);
 	
 	var param = {"commentContents" : commentContents, "draftId" : draftId, "empId" : empId};
 	$.ajax({
