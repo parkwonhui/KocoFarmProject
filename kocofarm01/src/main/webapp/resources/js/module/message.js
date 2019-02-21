@@ -68,6 +68,7 @@ $(function() {
 			for(var i = 0; i < length; ++i){
 				console.log($(massageRoomList[i]).val());
 				if($(massageRoomList[i]).val() == data.roomId){
+					$(massageRoomList[i]).parent().children('.chat_people').children('.chat_ib').children('h5').children('span').empty();
 					$(massageRoomList[i]).parent().children('.chat_people').children('.chat_ib').children('h5').append('<span>New</span>');
 					return;
 				}
@@ -107,14 +108,15 @@ $(function() {
 		var text = '';
 
 		// 누군가 나갔다
-		if(data.type == 2){
+		if(data.type == 2){			
 			console.log('1111111111111');
 			text += '<div class="message-room-exit-message">'+ data.contents +'</div>';
 			
 			// 나간 것은 자기자신이다
 			if(strEmpId == data.empId){
 				$('.message-room-title').empty();
-				//$('.mesgs').empty();
+				$('.msg_history').empty();
+				$('.input_msg_write').empty();
 				text = '';
 			}
 			
@@ -166,6 +168,7 @@ $(function() {
 	ajaxRequest("listMessageRoom", null, "get",addMessageRoomList);
 
 	$('#add-message-room-button').click(function() {
+		$('#add-message-room-title').val("");
 		ajaxRequest("empList", null, "get", addEmpFunction);
 	});
 
@@ -218,8 +221,8 @@ $(function() {
 	$(document).on("click", ".chat_list", function() {
 		$(this).toggleClass('checked');
 		initSelectMessageRoomColor(this);
-
-		//$(massageRoomList[i]).parent().children('.chat_people').children('.chat_ib').children('h5')
+		removeNew();
+		
 		var roomID = $(this).children("input[name=messageRoomId]").val();
 		 $(this).children("input[name=messageRoomId]").val();
 		var data = {
@@ -232,6 +235,11 @@ $(function() {
 		selectMessageRoomName = messageRoom;
 		ajaxRequest("listMessage", data, "get", addMessageList);
 	});
+	
+	function removeNew(){
+		var newTextParent = $(this).children('.chat_people').children('.chat_ib').children('h5');
+		console.log($(newTextParent).children('span').val(""));
+	}
 
 	$(document).on("click", ".msg_send_btn", function(){
 		var roomId = searchMessageRoomId();
@@ -242,6 +250,8 @@ $(function() {
 			"messageRoomId" : roomId
 		};
 		console.log(data);
+		
+		$('.write_msg').val("");
 
 		$.ajax({
 			type : "post",
