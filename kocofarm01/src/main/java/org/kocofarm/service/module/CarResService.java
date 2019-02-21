@@ -10,4 +10,6 @@ public interface CarResService {
 		public List<CarResVO> getCarResList();
 		//등록
 		public void setCarRes(CarResVO carResVo);
+		//조회
+		public CarResVO getCarRes(String resId);
 }

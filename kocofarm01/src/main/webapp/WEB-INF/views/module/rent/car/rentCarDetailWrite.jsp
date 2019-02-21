@@ -9,7 +9,7 @@
 		<div class="sub_title">
 			<div class="sub_title_top">
 				<div class="sub_title_inner">
-					<h2>RentCar <span id="subTitSpan">차량을 등록 할 수 있습니다.</span></h2>
+					<h2>RentCarDetail <span id="subTitSpan">차량을 등록 할 수 있습니다.</span></h2>
 					<ul class="sub_nav">
 						<li>홈 > 차량관리 > </li>
 						<li class="on" id="subTitLi">등록</li>
@@ -34,16 +34,15 @@
 							<col width="35%">
 						</colgroup>
 						<tbody id="contentsTbBody">
-							<tr>
+						<tr>
 								<th scope="col">차량 번호</th>
 								<td class="left">
 									<input type="text" name="carId" id = "car_id" placeholder = "차량번호를 입력해주세요">
 									<input type = "button" id = "checkCar_Id" class="btn_y" value="중복확인">
-								</td>
-								<th scope="col">차량 모델 명</th>
-								<td class="left">
-									<input type="text" name="modelName" id = "modelName" placeholder = "차량모델명을 입력해주세요.">
-								</td>
+								</td>						
+								
+								<td class="left" colspan="3"></td>
+								
 							</tr>
 							<tr>
 								<th scope="col">차종</th>
@@ -52,24 +51,30 @@
 									 <input type = "radio" class="radio_btn" name="carModel" value = "레이">레이
 									 <input type = "radio" class="radio_btn" name="carModel" value = "SM3">SM3
 									 <input type = "radio" class="radio_btn" name="carModel" value = "k3">k3	
-								</td>
+								</td>								
+								<th scope="col">차량 모델명</th>
+								<td class="left">
+									<input type="text" name="modelName" id = "modelName" placeholder = "차량모델명을 입력해주세요.">
+								</td>																								
+							</tr>
+							<tr>
 								<th scope="col">구입 조건</th>
 								<td class="left">
 									<input type = "radio" class="radio_btn" name="condition" value="신차" >신차
 									<input type = "radio" class="radio_btn" name="condition" value="중고차">중고차	
 								</td>
-							</tr>
-							<tr>
 								<th scope="col">가격</th>
 								<td class="left">
 									<input type="text" name="price" id = "price" placeholder = "차량 가격을 입력해주세요.">	
 								</td>
+								
+							</tr>
+							<tr>
 								<th scope="col">연식</th>
 								<td class="left">
 									<input type="text" name="year" id = "year" placeholder = "차량 연식을 입력해주세요.">
 								</td>
-							</tr>
-							<tr>
+								
 								<th scope="col">유종</th>
 								<td class="left" colspan="3"><!-- oil_Type -> oilType 으로 변경-->
 									<input type = "radio" class="radio_btn" name="oilType" value="휘발유">휘발유

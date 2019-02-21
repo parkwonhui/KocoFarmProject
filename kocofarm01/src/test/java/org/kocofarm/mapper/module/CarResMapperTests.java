@@ -23,12 +23,20 @@ public class CarResMapperTests {
 		carResMapper.getCarResList().forEach(CarRes ->log.info(CarRes));
 	}*/
 	
-	/*public void testsetCarRes(){
+	/*@Test
+	public void testsetCarRes(){
 		CarResVO carResVo = new CarResVO();
 		carResVo.setCarId("가1234");
-		carResVo.setResWriter("정현");
-		carResVo.setResUser("아람");
+		carResVo.setResWriter("EMP_007");
+		carResVo.setResUser("EMP_007");
+		carResVo.setPurpose("외부행사22");
+		carResVo.setStAddr("아주");
+		carResVo.setDeAddr("가산");
 		
+		carResMapper.setCarRes(carResVo);
+		log.info(carResVo);	
 		
-	}*/
+	}*///testsetCarRes
+	
+	
 }

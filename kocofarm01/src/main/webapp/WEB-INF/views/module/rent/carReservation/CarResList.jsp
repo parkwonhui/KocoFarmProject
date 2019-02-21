@@ -10,10 +10,10 @@
 		<div class="sub_title">
 			<div class="sub_title_top">
 				<div class="sub_title_inner">
-					<h2>RentCar Detail <span>등록된 차량 정보를 확인할 수 있습니다.</span></h2>
+					<h2>RentCar Reservation<span>차량 예약 신청 목록을 확인할 수 있습니다.</span></h2>
 					<ul class="sub_nav">
 						<li>홈 > </li>
-						<li class="on">차량관리</li>
+						<li class="on">차량 예약 목록</li>
 					</ul>
 				</div>
 			</div>
@@ -21,7 +21,8 @@
 	
 		<!-- Contents Area -->
 		<div class="contents_wrap">
-			<form id = "searchForm" action="" method="GET">
+		<!-- 검색 -->
+			<%-- <form id = "searchForm" action="" method="GET">
 				<div class="sch_wrap">
 					<p class="tit">검색</p>
 					
@@ -53,7 +54,7 @@
 						</div>
 					</div>
 				</div>
-			</form>			
+			</form> --%>			
 			
 			<!-- list -->
 			<div class="contents">
@@ -66,44 +67,36 @@
 						<col width="10%">
 						<col width="10%">
 						<col width="10%">
-						<col width="10%">
-						<col width="10%">
-						<col width="10%">
+					
 					</colgroup>
 					<thead>
 						<tr>
-							<th scope="col">차량번호</th>			
-							<th scope="col">차량모델명</th>
-							<th scope="col">차종</th>
-							<th scope="col">구입조건</th>
-							<th scope="col">가격</th>
-							<th scope="col">연식</th>
-							<th scope="col">유종</th>
+							<th scope="col">예약번호</th>			
+							<th scope="col">예약자</th>
+							<th scope="col">사용자</th>
+							<th scope="col">차량번호</th>
+							<th scope="col">사용목적</th>
 							<th scope="col">등록일자</th>
-							<th scope="col">수정일자</th>
+							
 						</tr>
 					</thead>
 					<tbody id="contentsTbBody">
-						<c:forEach var="RCdetail" items="${list}"> 
+						<c:forEach var="CarReserve" items="${list}"> 
 						<!-- RentCarDetailService에서 RentCarDetailListModel 중에서 list만 불러오는 것이다. -->
 							<tr>
-								<td>${RCdetail.carId }</td> 								
-								<td><a class = "move" href = '<c:out value="${RCdetail.carId}"/>'>
-									<c:out value="${RCdetail.modelName }"/></a>
-								</td>								
-								<td>${RCdetail.carModel }</td>
-								<td>${RCdetail.condition }</td>
-								<td>${RCdetail.price }</td>
-								<td>${RCdetail.year}</td>
-								<td>${RCdetail.oilType }</td>
+								<td>${CarReserve.resId }</td>
+								<td><a class = "move2" href = "/rent/CarResDetail?resId=${CarReserve.resId }">
+									${CarReserve.resWriter}</a>								
+								</td>					
+								<%-- <td>${CarReserve.resWriter }</td> --%>
+								<td>${CarReserve.resUser }</td>
+								<td>${CarReserve.carId}</td>
+								<td>${CarReserve.purpose}</td>								
+																					
 								<td>
-									<fmt:parseDate var ="dateString" value="${RCdetail.regDt }"	pattern="yyyy-MM-dd"/>
+									<fmt:parseDate var ="dateString" value="${CarReserve.regDt }"	pattern="yyyy-MM-dd"/>
 									<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd"/>
 								</td>
-								<td>
-									<fmt:parseDate var ="dateString" value="${RCdetail.upDt }"	pattern="yyyy-MM-dd"/>
-									<fmt:formatDate value="${dateString }" pattern="yyyy-MM-dd"/>
-								</td> 
 							</tr>
 						</c:forEach> 
 					</tbody>
@@ -144,11 +137,11 @@
 		<div class="btn_wrap">
 			<div class="flt_r">
 				<!-- 차량등록 권한 부여 - 관리자만 -->
-				<c:if test="${loginVO.authority == 99}">
-				<a href="/rent/rentCarDetailWrite">
+				<%-- <c:if test="${loginVO.authority == 99}"> --%>
+				<!-- <a href="/rent/rentCarDetailWrite">
 					<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
-				</a>
-				</c:if>
+				</a> -->
+				<%-- </c:if> --%>
 			</div>
 		</div>			
 		</div>

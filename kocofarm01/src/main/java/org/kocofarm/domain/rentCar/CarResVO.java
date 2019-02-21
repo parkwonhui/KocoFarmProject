@@ -16,6 +16,7 @@ public class CarResVO {
 	private String enDate;	
 	private String carId;
 	
+	
 	public CarResVO(){ }
 
 	public CarResVO(String resId, String resWriter, String resUser, String purpose, String stAddr, String deAddr,
@@ -138,6 +139,14 @@ public class CarResVO {
 
 	public void setCarId(String carId) {
 		this.carId = carId;
+	}
+
+	@Override
+	public String toString() {
+		return "CarResVO [resId=" + resId + ", resWriter=" + resWriter + ", resUser=" + resUser + ", purpose=" + purpose
+				+ ", stAddr=" + stAddr + ", deAddr=" + deAddr + ", regDt=" + regDt + ", upDt=" + upDt + ", stTime="
+				+ stTime + ", enTime=" + enTime + ", stDate=" + stDate + ", enDate=" + enDate + ", carId=" + carId
+				+ "]";
 	}
 	
 	

@@ -28,14 +28,11 @@ $(function(){
 		$('#rentCarEditForm').attr("action", "/rent/rentCarDetailList").attr("method", "get")
 		 var pageNumTag = $("input[name = 'pageNum']").clone();
 	     var amountTag = $("input[name = 'amount']").clone();
-	   /*  var keywordTag = $("input[name = 'keyword']").clone();
-	     var typeTag = $("input[name = 'type']").clone();*/
 	     
 	     $('#rentCarEditForm').empty();
 	     
 	     $('#rentCarEditForm').append(pageNumTag);
 	     $('#rentCarEditForm').append(amountTag);
-	    
 		
 		$("#rentCarEditForm").submit();	
 		
@@ -105,6 +102,7 @@ $(function(){
 	.on(
 			"click",
 			function(e) {
+				console.log("carDetail");
 				e.preventDefault();
 				actionForm
 						.append("<input type='hidden' name='carId' value='"
@@ -204,15 +202,178 @@ $(function(){
     /*datepicker 사용 종료*/
     
     
-    /*timepicker 사용*/
+    /*timeFormat: 'p h:mm',
+     * minTime: '09:00am',
+    maxTime: '11:00pm',*/
+    /*timepicker 사용*/    
+   $('#stTime').timepicker({
+        timeFormat: 'H:mm',
+        interval: 60,
+        minTime: '09:00',
+        maxTime: '23:00',
+        dynamic: true,
+        dropdown: true,
+        scrollbar: true
+
+    });
+    
+    $('#enTime').timepicker({
+    	timeFormat: 'H:mm',
+        interval: 60,
+        minTime: '09:00',
+        maxTime: '23:00',
+        dynamic: true,
+        dropdown: true,
+        scrollbar: true
+    });
+    /*timepicker 종료*/
+
+
+    /*지도api*/
+    
+    /*=======================첫번째 지도=========================*/
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+        center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+        level: 5 // 지도의 확대 레벨
+    };
+
+	//지도를 미리 생성
+	var map = new daum.maps.Map(mapContainer, mapOption);
+	//주소-좌표 변환 객체를 생성
+	var geocoder = new daum.maps.services.Geocoder();
+	//마커를 미리 생성
+	var marker = new daum.maps.Marker({
+	    position: new daum.maps.LatLng(37.537187, 127.005476),
+	    map: map
+	});
+    
+    
+    
+    $("#postcodeBtn").click(function() {
+   	new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = data.address; // 최종 주소 변수
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("address").value = addr;
+                // 주소로 상세 정보를 검색
+                geocoder.addressSearch(data.address, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+                    }
+                });
+            }
+        }).open();
+	})
     
 	
-	
-	
-	
-	
-	
+	  /*=======================두번째 지도=========================*/
+	  var mapContainer2 = document.getElementById('map2'), // 지도를 표시할 div
+    mapOption2 = {
+        center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+        level: 5 // 지도의 확대 레벨
+    };
 
+	//지도를 미리 생성
+	var map2 = new daum.maps.Map(mapContainer2, mapOption2);
+	//주소-좌표 변환 객체를 생성
+	var geocoder2 = new daum.maps.services.Geocoder();
+	//마커를 미리 생성
+	var marker2 = new daum.maps.Marker({
+	    position: new daum.maps.LatLng(37.537187, 127.005476),
+	    map2: map2
+	});
+	
+	 $("#postcodeBtn2").click(function() {   	
+   	new daum.Postcode({
+            oncomplete: function(data) {
+                var addr2 = data.address; // 최종 주소 변수
+
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("address2").value = addr2;
+                // 주소로 상세 정보를 검색
+                geocoder2.addressSearch(data.address, function(results2, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result2 = results2[0]; //첫번째 결과의 값을 활용
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords2 = new daum.maps.LatLng(result2.y, result2.x);
+                        // 지도를 보여준다.
+                        mapContainer2.style.display = "block";
+                        map2.relayout();
+                        // 지도 중심을 변경한다.
+                        map2.setCenter(coords2);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker2.setPosition(coords2);
+                    }
+                });
+            }
+        }).open();
+	})
+    
+    /*지도api*/
+  
+   
+	/*=============예약등록페이지  >>> 예약 리스트로 이동 ===============*/
+	 $("#carReslist").click(function() {
+		 $('#CarResWriteForm').attr("action", "/rent/CarResList").attr("method", "get")
+			$("#CarResWriteForm").submit();		
+			
+			
+	})
+	
+	
+	
+	
+	
+	$("#checkCar").click(function() {
+		alert("클릭햇당")
+		
+		//예약 가능한 차량 보여주기 
+		/*운행시작시간과 운행종료 시간 참고하기*/
+		
+		//window.open('https://www.google.co.kr/', 'google', 'width=500,height=500');
+		window.open('/module/rent/carReservation/a.jsp', 'rentCarDetailList' ,'width=500,height=500,location=no,status=no,scrollbars=yes');
+		
+
+	})
+	
+	//예약신청 버튼 누르면, 등록되도록 설정한다. 	
+	$("#carRes").click(function() {
+		alert('예약신청이 완료되었습니다. ')		
+		
+		var mode = $("#mode").val();
+		if("write" == mode){
+			
+			$("#CarResWriteForm").submit()
+		
+		}
+	})
+	
+	
+	//수정버튼 눌렀을떄
+	$("#updateForm2").click(function() {		
+		
+		//$('#carResDetailForm').attr("action", "/rent/rentCarDetailEdit")
+		$("#carResDetailForm").submit();		
+		return false;
+	})
+	
+	
+	
 });/*전체function 괄호*/
 
 

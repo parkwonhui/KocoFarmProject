@@ -33,4 +33,11 @@ public class CarResServiceImpl implements CarResService {
 		carResMapper.setCarRes(carResVo);
 	}
 
+	//조회
+	@Override
+	public CarResVO getCarRes(String resId) {
+		log.info("getCarRes.......");
+		return carResMapper.getCarRes(resId);
+	}
+	
 }
