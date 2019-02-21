@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.kocofarm.controller.module.MessageController.MESSAGE_TYPE;
+import org.kocofarm.controller.module.MessageController.RESULT;
 import org.kocofarm.domain.comm.LoginVO;
 import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.message.MessageVO;
@@ -49,20 +51,32 @@ public class MessagePushController {
 	@PostMapping("/getMessage")
 	public void getMessage(HttpServletRequest request, HttpServletResponse response) {
 		log.info("[getRegistry]");
+				
+		LoginVO loginVo = getLoginVO(request);
+		if(null == loginVo){
+			return;
+		}
+
+		int index = getListIndex(loginVo.getEmpId());
+		if(-1 != index){
+			contexts.remove(index);
+
+		}else{
 		
-		final AsyncContext asyncContext = request.startAsync(request, response);
-		asyncContext.setTimeout(10 * 60 * 1000);
-		contexts.add(asyncContext);
-		
+			final AsyncContext asyncContext = request.startAsync(request, response);
+			asyncContext.setTimeout(10 * 60 * 1000);
+			contexts.add(asyncContext);
+		}		
 	}
 
 	@PostMapping("/sendMessage")
 	public void sendMessage(HttpServletRequest request, HttpServletResponse response, MessageVO messageVo){
-		log.info("[getRegistry]");
+		log.info("[sendMessage]");
 
 		HttpSession session = request.getSession();
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
+			System.out.println("에러11111");
 			return;
 		}
 		
@@ -73,7 +87,7 @@ public class MessagePushController {
 		int roomId = messageVo.getMessageRoomId();
 		
 		log.info(messageVo);
-		
+
 		if(null == empId || null == name ){
 			return;
 		}
@@ -81,43 +95,68 @@ public class MessagePushController {
 		if(false == isWrongRequest(empId, roomId)){
 			return;
 		}
-		
 
-	
 		messageVo.setEmpId(empId);
 		messageVo.setKorNm(name);
 		String strTime = getCurrentTime();
 		messageVo.setDateString(strTime);
 		
 		service.setMessage(messageVo);
+		
+		pushMessage(roomId, loginVO, messageVo);
+	}
+	
+	@ResponseBody
+	@PostMapping("/delMessagePush")
+	private int setMessageRoom(HttpSession session, MessagePushVO messagePushVO){
+		
+		if(0 == messagePushVO.getMessageRoomId()){
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO.getEmpId()){
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		messagePushVO.setEmpId(loginVO.getEmpId());
+		
+		// 나갔다는 메시지 생성
+		MessageVO messageVo = new MessageVO();
+		messageVo.setMessageRoomId(messagePushVO.getMessageRoomId());
+		messageVo.setContents(loginVO.getEngNm()+"님이 대화방을 나갔습니다");
+		messageVo.setEmpId(loginVO.getEmpId());
+		messageVo.setType(MESSAGE_TYPE.EXIT);
+		messageVo.setDateString(getCurrentTime());	
+		
+		if(1 != service.delMessagePush(messagePushVO, messageVo)){
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		pushMessage(messagePushVO.getMessageRoomId(), loginVO, messageVo);
 
+		
+		return RESULT.SUCCESS;
+	}
+	
+	public void pushMessage(int roomId,LoginVO loginVO, MessageVO messageVo){
+		List<AsyncContext> asyncContexts = new CopyOnWriteArrayList<AsyncContext>(this.contexts);
+		this.contexts.clear();
+		
 		List<String> roomEmpList = service.getMessageRoomEmpList(roomId);
 		if(null == roomEmpList){
 			return;
 		}
 		
-		List<AsyncContext> asyncContexts = new CopyOnWriteArrayList<AsyncContext>(this.contexts);
-		this.contexts.clear();
-		
 		int i = 0;
 		for (AsyncContext asyncContext : asyncContexts) {
 			
-			HttpServletRequest req = (HttpServletRequest)asyncContext.getRequest();
-			if(null == req){
+			LoginVO sendLoginVO = getLoginVO((HttpServletRequest)asyncContext.getRequest());
+			if(null == sendLoginVO){
 				continue;
 			}
 			
-			HttpSession s = req.getSession();
-			if(null == s){
-				continue;
-			}
-			
-			LoginVO login = (LoginVO)s.getAttribute("loginVO");
-			if(null == login){
-				continue;
-			}
-			
-			if(false == isMessageRoomEmp(roomEmpList, login.getEmpId())){
+			if(false == isMessageRoomEmp(roomEmpList, sendLoginVO.getEmpId())){
 				continue;
 			}
 			
@@ -125,13 +164,15 @@ public class MessagePushController {
 			try {
 				JSONObject obj = new JSONObject();
 				asyncContext.getResponse().setContentType("application/json;  charset=UTF-8");
-				obj.put("korNm", name);
-                obj.put("empId", empId);
+				obj.put("korNm", loginVO.getKorNm());
+                obj.put("empId", loginVO.getEmpId());
                 obj.put("roomId", roomId);
                 obj.put("contents", messageVo.getContents());
                 obj.put("dateString", messageVo.getDateString());
                 obj.put("empImgSrc", messageVo.getEmpImgSrc());
+                obj.put("type", messageVo.getType());
 				writer = asyncContext.getResponse().getWriter();
+				System.out.println("obj:"+obj);
 				writer.println(obj);
 				writer.flush();
 				asyncContext.complete();
@@ -171,7 +212,40 @@ public class MessagePushController {
 		Calendar calendar = Calendar.getInstance();
         java.util.Date date = calendar.getTime();
         String strTime = (new SimpleDateFormat("yyyyMMddHHmmss").format(date));
+
+        //String strTime = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
         return strTime;
+	}
+	
+	public int getListIndex(String empId){
+		/*for (AsyncContext asyncContext : contexts) 
+		*/
+		int size = contexts.size();
+		for(int i = 0; i < size; ++i ){
+		LoginVO loginVO = getLoginVO((HttpServletRequest)contexts.get(i).getRequest());
+			if(true == empId.equals(loginVO.getEmpId())){
+				return i;
+			}
+		}
+		return -1;		
+	}
+
+	public LoginVO getLoginVO(HttpServletRequest req){
+		if(null == req){
+			return null;
+		}
+		
+		HttpSession s = req.getSession();
+		if(null == s){
+			return null;
+		}
+		
+		LoginVO login = (LoginVO)s.getAttribute("loginVO");
+		if(null == login){
+			return null;
+		}
+		
+		return login;
 	}
 	
 }
