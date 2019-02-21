@@ -17,4 +17,7 @@ public interface MessageMapper {
 	public MessagePushVO getEmpMessageRoom(MessagePushVO messagePushVo);
 	public List<String> getMessageRoomEmpList(int roomId);
 	public int delMessagePush(MessagePushVO messagePushVo);
+	public int delMessage(int messageRoomId);
+	public int delMessageRoom(int messageRoomId);
+	public int getMessageRoomEmpCount(int messageRoomId);
 }

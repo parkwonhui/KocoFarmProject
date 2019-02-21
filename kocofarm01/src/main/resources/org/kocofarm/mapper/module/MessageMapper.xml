@@ -63,4 +63,23 @@ where message_room_id = #{messageRoomId}
 	delete from message_push
 	where message_room_id = #{messageRoomId} and emp_id = #{empId}
 </delete>
+
+<!-- message 삭제 -->
+<delete id="delMessage" parameterType="int">
+	delete from message
+	where message_room_id = #{messageRoomId}
+</delete>
+
+<!-- message room 삭제 -->
+<delete id="delMessageRoom" parameterType="int">
+	delete from message_room
+	where message_room_id = #{messageRoomId}
+</delete>
+
+<!-- message room 에 등록된 emp 수 확인 -->
+<select id="getMessageRoomEmpCount" parameterType="int" resultType="int">
+	select count(*) from message_push
+	where message_room_id = #{messageRoomId}
+</select>
+
 </mapper>

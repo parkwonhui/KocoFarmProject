@@ -60,7 +60,7 @@ $(function() {
 
 	/* 변경된 데이터만 전달 */
 	var addMessage = function(data) {
-
+		console.log(data);
 		// 현재 메시지 창을 보고 있지 않다
 		if (data.roomId != $('#click-message-room-id').val()) {		
 			var massageRoomList = $("input[name=messageRoomId]");
@@ -103,17 +103,25 @@ $(function() {
 	function addMessageHtml(data){
 		const strEmpId = $('#message-my-emp-id').val();
 
+		console.log(data);
 		var text = '';
 
 		// 누군가 나갔다
 		if(data.type == 2){
+			console.log('1111111111111');
 			text += '<div class="message-room-exit-message">'+ data.contents +'</div>';
 			
+			// 나간 것은 자기자신이다
 			if(strEmpId == data.empId){
-				$('.msg_history').empty();
+				$('.message-room-title').empty();
+				//$('.mesgs').empty();
+				text = '';
 			}
 			
+			
 		}else if (strEmpId == data.empId) {
+			console.log('222222222222222');
+
 			text += '<div class="outgoing_msg">';
 			text += '<div class="sent_msg">';
 			text += '<p>' + data.contents + '</p>';
@@ -121,6 +129,7 @@ $(function() {
 			text += '</div>';
 			text += '</div>';
 		} else {
+			console.log('3333333333333333');
 			text += '<div class="incoming_msg">';
 			text += '<div  class="incoming_msg_img">';
 			text += '<img  src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
@@ -328,6 +337,10 @@ $(function() {
 	
 	/* 스크롤바 맨 아래로 이동 */
 	function moveScrollbarDown(){
+		if(undefined == $(".msg_history")[0]){
+			return;
+		}
+
 		$(".msg_history").scrollTop($(".msg_history")[0].scrollHeight);
 	}
 	

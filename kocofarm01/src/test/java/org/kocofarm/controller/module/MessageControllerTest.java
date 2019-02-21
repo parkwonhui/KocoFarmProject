@@ -72,7 +72,7 @@ public class MessageControllerTest {
 		log.info(mapper.getMessageRoomList("EMP_006"));
 	}
 */
-	@Test
+/*	@Test
 	public void delMessagePush(){
 		MessagePushVO vo = new MessagePushVO();
 		vo.setEmpId("EMP_007");
@@ -80,5 +80,17 @@ public class MessageControllerTest {
 
 		log.info(mapper.delMessagePush(vo));
 	}
-	
+*/
+	@Test
+	public void delMessagePush(){
+		// 회색??
+		//mapper.delMessage(225);
+		//mapper.delMessageRoom(225);
+	}
+/*	
+	@Test
+	public void delMessagePush(){
+		mapper.getMessageRoomEmpCount(143);
+	}
+	*/
 }

@@ -58,15 +58,14 @@ public class MessagePushController {
 		}
 
 		int index = getListIndex(loginVo.getEmpId());
+		
 		if(-1 != index){
 			contexts.remove(index);
-
-		}else{
-		
-			final AsyncContext asyncContext = request.startAsync(request, response);
-			asyncContext.setTimeout(10 * 60 * 1000);
-			contexts.add(asyncContext);
 		}		
+	
+		final AsyncContext asyncContext = request.startAsync(request, response);
+		asyncContext.setTimeout(10 * 60 * 1000);
+		contexts.add(asyncContext);
 	}
 
 	@PostMapping("/sendMessage")
@@ -89,10 +88,13 @@ public class MessagePushController {
 		log.info(messageVo);
 
 		if(null == empId || null == name ){
+			System.out.println("444444");
 			return;
 		}
 				
 		if(false == isWrongRequest(empId, roomId)){
+			System.out.println("6666666");
+
 			return;
 		}
 
@@ -103,7 +105,7 @@ public class MessagePushController {
 		
 		service.setMessage(messageVo);
 		
-		pushMessage(roomId, loginVO, messageVo);
+		pushMessage(roomId, loginVO, messageVo, true);
 	}
 	
 	@ResponseBody
@@ -133,35 +135,47 @@ public class MessagePushController {
 			return RESULT.UNKNOWN_ERROR;
 		}
 		
-		pushMessage(messagePushVO.getMessageRoomId(), loginVO, messageVo);
+		pushMessage(messagePushVO.getMessageRoomId(), loginVO, messageVo, false);
 
 		
 		return RESULT.SUCCESS;
 	}
 	
-	public void pushMessage(int roomId,LoginVO loginVO, MessageVO messageVo){
+	public void pushMessage(int roomId,LoginVO loginVO, MessageVO messageVo, final boolean flag){
+		System.out.println("2222222");
 		List<AsyncContext> asyncContexts = new CopyOnWriteArrayList<AsyncContext>(this.contexts);
 		this.contexts.clear();
 		
 		List<String> roomEmpList = service.getMessageRoomEmpList(roomId);
 		if(null == roomEmpList){
+			System.out.println("333333333");
+
 			return;
 		}
 		
 		int i = 0;
 		for (AsyncContext asyncContext : asyncContexts) {
+			System.out.println("444444444");
 			
 			LoginVO sendLoginVO = getLoginVO((HttpServletRequest)asyncContext.getRequest());
 			if(null == sendLoginVO){
+				System.out.println("6666");
+
 				continue;
 			}
 			
-			if(false == isMessageRoomEmp(roomEmpList, sendLoginVO.getEmpId())){
-				continue;
+			if(true == flag){
+				if(false == isMessageRoomEmp(roomEmpList, sendLoginVO.getEmpId())){
+					System.out.println("77777");
+	
+					continue;
+				}
 			}
 			
 			PrintWriter writer;
 			try {
+				System.out.println("88888");
+
 				JSONObject obj = new JSONObject();
 				asyncContext.getResponse().setContentType("application/json;  charset=UTF-8");
 				obj.put("korNm", loginVO.getKorNm());
@@ -172,7 +186,7 @@ public class MessagePushController {
                 obj.put("empImgSrc", messageVo.getEmpImgSrc());
                 obj.put("type", messageVo.getType());
 				writer = asyncContext.getResponse().getWriter();
-				System.out.println("obj:"+obj);
+				System.out.println("지금 보내느중인뎅.. obj:"+obj);
 				writer.println(obj);
 				writer.flush();
 				asyncContext.complete();
@@ -218,9 +232,8 @@ public class MessagePushController {
 	}
 	
 	public int getListIndex(String empId){
-		/*for (AsyncContext asyncContext : contexts) 
-		*/
 		int size = contexts.size();
+		System.out.println("size:"+size);
 		for(int i = 0; i < size; ++i ){
 		LoginVO loginVO = getLoginVO((HttpServletRequest)contexts.get(i).getRequest());
 			if(true == empId.equals(loginVO.getEmpId())){
