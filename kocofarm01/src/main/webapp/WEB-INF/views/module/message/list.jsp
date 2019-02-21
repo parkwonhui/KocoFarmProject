@@ -83,9 +83,7 @@
 						
 						</div>
 					</div>
-					<div class='message-room-top-title'>
-							제목
-						</div>
+					<div class="message-room-title"></div>
 					<div class="mesgs">
 						<div class="msg_history">
 						</div>

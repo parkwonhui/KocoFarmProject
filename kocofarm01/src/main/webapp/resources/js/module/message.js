@@ -1,6 +1,7 @@
 $(function() {
 	// 메시지 요청
 	var bRequestMessage = true;
+	var selectMessageRoomName;
 
 	// message room list
 	var addMessageRoomList = function(data) {
@@ -43,8 +44,9 @@ $(function() {
 	var addMessageList = function(data) {
 		$('.msg_history').empty();
 
-		console.log(data);
 		const strEmpId = $('#message-my-emp-id').val();
+		addMessageRoomTitle();
+		
 		var nLength = data.length;
 
 		var text = "";
@@ -235,7 +237,7 @@ $(function() {
 		var messageRoom = $(this).children('.chat_people').children('.chat_ib').children('h5').children('p').html();
 		// 현재 선택한 방 id 저장
 		$('#click-message-room-id').val(roomID);
-		$('#click-message-room-name').val(messageRoom);
+		selectMessageRoomName = messageRoom;
 
 		ajaxRequest("listMessage", data, "get", addMessageList);
 	});
@@ -326,6 +328,13 @@ $(function() {
 	/* 스크롤바 맨 아래로 이동 */
 	function moveScrollbarDown(){
 		$(".msg_history").scrollTop($(".msg_history")[0].scrollHeight);
+	}
+	
+	/* 메시지 룸 타이틀 생성 */
+	function addMessageRoomTitle(){
+		$('.message-room-title').empty();
+		var html = "<div class='message-room-top-title '>"+selectMessageRoomName+"</div>";
+		$('.message-room-title').append(html);
 	}
 	
 	/* 메시지 룸 리스트 가져오기 */
