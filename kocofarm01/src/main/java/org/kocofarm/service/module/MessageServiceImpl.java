@@ -131,8 +131,11 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public int delMessagePush(MessagePushVO messagePushVo){
-		return mapper.delMessagePush(messagePushVo);
+	@Transactional
+	public int delMessagePush(MessagePushVO messagePushVo, MessageVO messageVo){
+		int re = mapper.setMessage(messageVo);
+		re = mapper.delMessagePush(messagePushVo);
+		return re;
 	}
 
 }

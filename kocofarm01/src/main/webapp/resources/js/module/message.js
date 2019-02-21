@@ -44,41 +44,16 @@ $(function() {
 	var addMessageList = function(data) {
 		$('.msg_history').empty();
 
-		const strEmpId = $('#message-my-emp-id').val();
 		addMessageRoomTitle();
 		
 		var nLength = data.length;
-
 		var text = "";
 		for (var i = 0; i < nLength; ++i) {
-			if (strEmpId == data[i].empId) {
-				text += '<div class="outgoing_msg">';
-				text += '<div class="sent_msg">';
-				text += '<p>' + data[i].contents + '</p>';
-				text += '<span class="time_date">' + data[i].dateString
-						+ '</span>';
-				text += '</div>';
-				text += '</div>';
-			} else {
-				text += '<div class="incoming_msg">';
-				text += '<div  class="incoming_msg_img">';
-				text += '<img  src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
-				text += '</div>';
-				text += '<div class="received_msg">';
-				text += '<p>' + data[i].korNm + '</p>';
-				text += '<div  class="received_withd_msg">';
-				text += '<p>' + data[i].contents + '</p>';
-				text += '<span  class="time_date">' + data[i].dateString
-						+ '</span>';
-				text += '</div>';
-				text += '</div>';
-				text += '</div>';
-				text += '</div>';
-			}
-
-			$('.msg_history').append(text);
-			text="";
+			text += addMessageHtml(data[i]);
 		}
+		
+		$('.msg_history').append(text);
+
 		moveScrollbarDown();
 		addWriteMessageBox();
 	}
@@ -93,20 +68,52 @@ $(function() {
 			for(var i = 0; i < length; ++i){
 				console.log($(massageRoomList[i]).val());
 				if($(massageRoomList[i]).val() == data.roomId){
-					$(massageRoomList[i]).parent().children('.chat_people').children('.chat_ib').children('h5').append('<span>New</span>');				
+					$(massageRoomList[i]).parent().children('.chat_people').children('.chat_ib').children('h5').append('<span>New</span>');
+					return;
 				}
 			}
-			
-			return;
 		}
 
-		console.log(data);
-		console.log(data.empId);
-		const
-		strEmpId = $('#message-my-emp-id').val();
+		var text = addMessageHtml(data);
+		$('.msg_history').append(text);
+		moveScrollbarDown();
+	}
+
+	// message room 초대할 유저 list
+	var addEmpFunction = function addEmpList(data) {
+		$("#emp-list").empty();
+		var length = data.length;
+		var text = '<ul class="add-message-room-emp-list">';
+		for (var i = 0; i < length; ++i) {
+			text += '<li class="add-message-room-emp">';
+			// text += '<img src="/resources/img/comm/'+data[i].empImaSrc+'" >';
+			text += '<input type="hidden" name="empId" value=' + data[i].empId
+					+ ' />';
+			text += '<div class="add-message-chat-img"><img src="https://ptetutorials.com/images/user-profile.png" ></div>';
+			text += '<p class="add-message-emp-name">' + data[i].empName
+					+ '</p>';
+			text += '</li>';
+		}
+		text += '</ul>';
+
+		$("#emp-list").append(text);
+	}
+	
+	
+	function addMessageHtml(data){
+		const strEmpId = $('#message-my-emp-id').val();
 
 		var text = '';
-		if (strEmpId == data.empId) {
+
+		// 누군가 나갔다
+		if(data.type == 2){
+			text += '<div class="message-room-exit-message">'+ data.contents +'</div>';
+			
+			if(strEmpId == data.empId){
+				$('.msg_history').empty();
+			}
+			
+		}else if (strEmpId == data.empId) {
 			text += '<div class="outgoing_msg">';
 			text += '<div class="sent_msg">';
 			text += '<p>' + data.contents + '</p>';
@@ -128,31 +135,8 @@ $(function() {
 			text += '</div>';
 			text += '</div>';
 		}
-
-		$('.msg_history').append(text);
 		
-		moveScrollbarDown();
-
-	}
-
-	// message room 초대할 유저 list
-	var addEmpFunction = function addEmpList(data) {
-		$("#emp-list").empty();
-		var length = data.length;
-		var text = '<ul class="add-message-room-emp-list">';
-		for (var i = 0; i < length; ++i) {
-			text += '<li class="add-message-room-emp">';
-			// text += '<img src="/resources/img/comm/'+data[i].empImaSrc+'" >';
-			text += '<input type="hidden" name="empId" value=' + data[i].empId
-					+ ' />';
-			text += '<div class="add-message-chat-img"><img src="https://ptetutorials.com/images/user-profile.png" ></div>';
-			text += '<p class="add-message-emp-name">' + data[i].empName
-					+ '</p>';
-			text += '</li>';
-		}
-		text += '</ul>';
-
-		$("#emp-list").append(text);
+		return text;
 	}
 	
 	function addWriteMessageBox(){
@@ -243,6 +227,7 @@ $(function() {
 	$(document).on("click", ".msg_send_btn", function(){
 		var roomId = searchMessageRoomId();
 		var text = $('.write_msg').val();
+		console.log('roomId:'+roomId);
 		var data = {
 			"contents" : text,
 			"messageRoomId" : roomId
@@ -267,7 +252,7 @@ $(function() {
 	$(document).on("click", ".message-room-emp-exit", function(){
 		var roomId = $('#click-message-room-id').val();
 		var data = {"messageRoomId":roomId};
-		ajaxRequest("delMessagePush", data, "post", requestMessageRoomList);
+		ajaxRequest("push/delMessagePush", data, "post", requestMessageRoomList);
 	});
 
 
@@ -281,6 +266,7 @@ $(function() {
 			success : function(data) {
 				console.log('데이터 받았다!!!!:');
 				console.log(data);
+				
 				bRequestMessage = true;
 				addMessage(data);
 				return true;

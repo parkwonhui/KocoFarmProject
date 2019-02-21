@@ -1,6 +1,8 @@
 package org.kocofarm.controller.module;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -41,6 +43,12 @@ public class MessageController {
 		public static final int UNKNOWN_ERROR = -1;
 		public static final int SUCCESS = 1;
 	};
+	
+	public static final class MESSAGE_TYPE{
+		public static final int TEXT = 0;
+		public static final int FILE = 1;
+		public static final int EXIT = 2;
+	}
 	
 	@GetMapping("/")
 	private String getMessageInfo(HttpSession session, Model model){
@@ -136,24 +144,9 @@ public class MessageController {
 		return RESULT.SUCCESS;
 	}
 	
-	@ResponseBody
-	@PostMapping("/delMessagePush")
-	private int setMessageRoom(HttpSession session, MessagePushVO messagePushVO){
-		
-		if(0 == messagePushVO.getMessageRoomId()){
-			return RESULT.UNKNOWN_ERROR;
-		}
-		
-		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		if(null == loginVO.getEmpId()){
-			return RESULT.UNKNOWN_ERROR;
-		}
-		
-		messagePushVO.setEmpId(loginVO.getEmpId());
-		if(1 != service.delMessagePush(messagePushVO)){
-			return RESULT.UNKNOWN_ERROR;
-		}
-		
-		return RESULT.SUCCESS;
+	public String getCurrentDateToString(){
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");			
+		String dateToString = transFormat.format(new Date());
+		return dateToString;
 	}
 }

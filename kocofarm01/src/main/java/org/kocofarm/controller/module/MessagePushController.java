@@ -124,7 +124,7 @@ public class MessagePushController {
 		// 나갔다는 메시지 생성
 		MessageVO messageVo = new MessageVO();
 		messageVo.setMessageRoomId(messagePushVO.getMessageRoomId());
-		messageVo.setContents(loginVO.getEngNm()+"님이 대화방을 나갔습니다");
+		messageVo.setContents(loginVO.getKorNm()+"님이 대화방을 나갔습니다");
 		messageVo.setEmpId(loginVO.getEmpId());
 		messageVo.setType(MESSAGE_TYPE.EXIT);
 		messageVo.setDateString(getCurrentTime());	
