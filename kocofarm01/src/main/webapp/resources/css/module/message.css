@@ -1,3 +1,8 @@
+
+/* left bar 간격 조정 */
+.cont_wrap{
+    margin-left: 150px;
+}
 .container {
 	max-width: 1170px;
 	margin: auto;
@@ -118,6 +123,14 @@ img {
 	background: #ebebeb;
 }
 
+.incoming_msg{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	
+}
+
 .incoming_msg_img {
 	display: inline-block;
 	width: 6%;
@@ -153,8 +166,8 @@ img {
 
 .mesgs {
 	float: left;
-	padding: 30px 15px 0 25px;
-	width: 55%;
+	/*padding: 30px 15px 0 25px;*/
+	width: 60%;
 }
 
 .sent_msg p {
@@ -214,6 +227,49 @@ img {
 	overflow-y: auto;
 }
 
+/* 사용자 보기, 채팅방 나가기 드랍 메뉴 박스 */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  left: -40px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content div {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content div:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
 /* 메신저 방 만들기 emp 리스트 */
 .add-message-room-emp-list{
 	margin-top: 20px;
@@ -228,6 +284,41 @@ img {
 .add-message-room-emp{
 	border-bottom : 1px solid #FAFAFA;
 	cursor: pointer;
+}
+
+/* 메신저 방 초대 리스트 */
+.invite-message-room-emp-list{
+	margin-top: 20px;
+	margin-bottom : 20px;
+    width: 300px;
+    height: 200px; 
+    overflow-y: scroll;
+    overflow-x:hidden;
+}
+
+/* 메신저 방 초대 리스트 각 하나의 요소 */
+.invite-message-room-emp{
+	border-bottom : 1px solid #FAFAFA;
+	cursor: pointer;
+}
+
+/* 메신저 방만들기 초대 이미지 */
+.invite-message-chat-img{
+	width:13%;
+	display: inline-block;
+}
+
+/* 메신저 방만들기 emp 이름 */
+.invite-message-emp-name{
+	display : inline-block;
+	margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
+.invite-message-room-emp-list .checked{
+	background-color: #FAFAFA;  	
 }
 
 /* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
@@ -252,4 +343,29 @@ img {
 	margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+
+/* 메시지 방 타이틀 */
+.message-room-top-title {
+	background-color: #1cff2b;
+    height:50px;
+}
+
+/* 메시지 방 타이틀 more */
+.message-room-top-more{
+	display:inline-block;
+	float:right;
+	width : 32px;
+	height : 32px;	
+	cursor: pointer;
+}
+
+/* 나갔다는 메시지 */
+.message-room-exit-message{
+	width: 100%;
+	height: 30px;
+	text-align:center;
+	background-color: #ddd;
+	margin-top : 10px;
+	margin-bottom : 10px;
 }

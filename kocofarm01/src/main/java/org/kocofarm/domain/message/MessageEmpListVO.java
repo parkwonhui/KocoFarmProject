@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageEmpListVO {
-	String empName;
+	String korNm;
 	String empId;
-	String empImaSrc;
+	String empImg;
 }

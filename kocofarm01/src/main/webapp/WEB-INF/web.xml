@@ -25,6 +25,8 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<!-- ASYNC -->
+		<async-supported>true</async-supported>
 	<!-- 서블릿 예하 파일 다운롣즈 설정 변경 -->
 		<multipart-config>
 		<location>C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\temp</location>
@@ -44,6 +46,8 @@
 	<filter>
 		<filter-name>encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<!-- ASYNC -->
+	    <async-supported>true</async-supported>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
@@ -54,7 +58,5 @@
 		<filter-name>encoding</filter-name>
 		<servlet-name>appServlet</servlet-name>
 	</filter-mapping>
-
-
 	
 </web-app>
