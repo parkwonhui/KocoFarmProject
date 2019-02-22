@@ -88,4 +88,13 @@ select emp_id, kor_nm, emp_img from emp where emp_id not in
 (select emp_id from message_push
 where message_room_id = #{messageRoomId})
 </select>
+
+<!-- message room 정보 가져오기 -->
+<!-- <select id="" parameterType="" resultType="">
+	select message_room_id, room_title, last_message,
+	last_message_emp_id, last_message_date 
+	from message_room
+	where e
+</select> -->
+
 </mapper>

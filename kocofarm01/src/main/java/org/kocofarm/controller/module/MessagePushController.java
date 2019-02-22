@@ -211,8 +211,6 @@ public class MessagePushController {
 		
 		addEmpName.append(" 님을 초대했습니다");
 		
-		// 방 추가된 사람은 메시지 룸 추가가 필요하다 . 갱신된 메시지 정보를 전달해야한다
-		
 		// 누군가 들어왔다는 메시지를 저장한다
 		// 초대한 사람 empId 저장하자 임의로
 	 	MessageVO messageVo = new MessageVO();
@@ -226,6 +224,11 @@ public class MessagePushController {
 		
 		// 기존에 있던 유저들은 누구누구를 초대했다는 메시지가 떠야한다
 		pushMessage(roomId, loginVO, befoeEmpList, messageVo, PUSH_TYPE.MESSAGE, true);
+		
+		// 방 추가된 사람은 메시지 룸 추가가 필요하다 . 갱신된 메시지 정보를 전달해야한다
+		// 메시지 룸 정보 들고 오는 mapper 없나?
+		MessageRoomListVO messageRoomVo = new MessageRoomListVO();
+		//messageRoomVo.setRoomTitle(roomTitle);
 		
 		return RESULT.SUCCESS;
 	}
