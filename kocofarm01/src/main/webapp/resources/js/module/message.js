@@ -13,32 +13,35 @@ $(function() {
 		$(".inbox_chat").empty();
 		var length = data.length;
 		for (var i = 0; i < length; ++i) {
-
-			var text = '<div class="chat_list">';
-			text += '<input type="hidden" name="messageRoomId" value='
-					+ data[i].messageRoomId + ' />';
-			text += '<div class="chat_people">';
-			text += '<div class="chat_img">';
-			text += '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
-			text += '</div>';
-			text += '<div class="chat_ib">';
-			text += '<h5>';
-			text += '<p>' + data[i].roomTitle + '</p>';
-			if (null != data[i].lastMessageEmpName) {
-				text += data[i].lastMessageEmpName
-						+ ' <span class="chat_date">'
-						+ data[i].lastMessageDateToString + '</span>';
-			}
-			text += '</h5>';
-			if (null != data[i].lastMessageEmpName) {
-				text += '<p>' + data[i].lastMessage + '</p>';
-			}
-			text += '</div>';
-			text += '</div>';
-			text += '</div>';
-
-			$(".inbox_chat").append(text);
+			addMessageRoom(data[i]);
 		}
+	}
+	
+	var addMessageRoom = function(data){
+		var text = '<div class="chat_list">';
+		text += '<input type="hidden" name="messageRoomId" value='
+				+ data.messageRoomId + ' />';
+		text += '<div class="chat_people">';
+		text += '<div class="chat_img">';
+		text += '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
+		text += '</div>';
+		text += '<div class="chat_ib">';
+		text += '<h5>';
+		text += '<p>' + data.roomTitle + '</p>';
+		if (null != data.lastMessageEmpName) {
+			text += data.lastMessageEmpName
+					+ ' <span class="chat_date">'
+					+ data.lastMessageDateToString + '</span>';
+		}
+		text += '</h5>';
+		if (null != data.lastMessageEmpName) {
+			text += '<p>' + data.lastMessage + '</p>';
+		}
+		text += '</div>';
+		text += '</div>';
+		text += '</div>';
+
+		$(".inbox_chat").append(text);
 	}
 
 	var addMessageList = function(data) {
@@ -386,9 +389,12 @@ $(function() {
 
 				bRequestMessage = true;
 				if(0 == data.pushType){
+					console.log('44444444444');
 					addMessage(data);
 				}else{
-					
+					console.log('55555555555');
+
+					addMessageRoom(data);
 				}
 					
 				return true;

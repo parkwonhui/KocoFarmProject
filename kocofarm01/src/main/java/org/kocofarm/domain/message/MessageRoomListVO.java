@@ -19,6 +19,7 @@ public class MessageRoomListVO {
 	String 	lastMessageEmpId;
 	String 	lastMessageEmpName;
 	String 	lastMessage;
+	String  empImg;
 	Date 	lastMessageDate;
 	String 	lastMessageDateToString;
 

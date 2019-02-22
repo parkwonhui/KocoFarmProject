@@ -90,11 +90,14 @@ where message_room_id = #{messageRoomId})
 </select>
 
 <!-- message room 정보 가져오기 -->
-<!-- <select id="" parameterType="" resultType="">
-	select message_room_id, room_title, last_message,
-	last_message_emp_id, last_message_date 
-	from message_room
-	where e
-</select> -->
+<select id="getMessageRoom" parameterType="int" resultType="MessageRoomListVO">
+
+SELECT * FROM
+(select m.message_room_id, m.room_title, m.last_message_emp_id, m.last_message_date, e.emp_img, 
+e.kor_nm from message_room m
+left outer join emp e
+on m.last_message_emp_id = e.emp_id)
+where message_room_id = #{messageRoomId}
+</select>
 
 </mapper>

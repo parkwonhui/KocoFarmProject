@@ -27,6 +27,7 @@ import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.message.MessageEmpListVO;
 import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.message.MessageRoomListVO;
+import org.kocofarm.domain.message.MessageRoomVO;
 import org.kocofarm.domain.message.MessageVO;
 import org.kocofarm.service.module.EmpService;
 import org.kocofarm.service.module.MessageService;
@@ -126,7 +127,7 @@ public class MessagePushController {
 		
 		List<String> roomEmpList = service.getMessageRoomEmpList(roomId);
 
-		pushMessage(roomId, loginVO, roomEmpList, messageVo, PUSH_TYPE.MESSAGE,true);
+		pushMessage(roomId, loginVO, roomEmpList, messageVo, true);
 	}
 	
 	@ResponseBody
@@ -155,8 +156,10 @@ public class MessagePushController {
 		if(1 != service.delMessagePush(messagePushVO, messageVo)){
 			return RESULT.UNKNOWN_ERROR;
 		}
+
+		System.out.println("RoomId():"+messagePushVO.getMessageRoomId());
 		List<String> roomEmpList = service.getMessageRoomEmpList(messagePushVO.getMessageRoomId()); 
-		pushMessage(messagePushVO.getMessageRoomId(), loginVO, roomEmpList, messageVo, PUSH_TYPE.MESSAGE, false);
+		pushMessage(messagePushVO.getMessageRoomId(), loginVO, roomEmpList, messageVo, false);
 
 		
 		return RESULT.SUCCESS;
@@ -223,20 +226,22 @@ public class MessagePushController {
 		service.setMessage(messageVo);
 		
 		// 기존에 있던 유저들은 누구누구를 초대했다는 메시지가 떠야한다
-		pushMessage(roomId, loginVO, befoeEmpList, messageVo, PUSH_TYPE.MESSAGE, true);
+		pushMessage(roomId, loginVO, befoeEmpList, messageVo, true);
 		
 		// 방 추가된 사람은 메시지 룸 추가가 필요하다 . 갱신된 메시지 정보를 전달해야한다
 		// 메시지 룸 정보 들고 오는 mapper 없나?
-		MessageRoomListVO messageRoomVo = new MessageRoomListVO();
-		//messageRoomVo.setRoomTitle(roomTitle);
+		
+		System.out.println("roomId:"+roomId);
+		MessageRoomListVO messageRoomListVo = service.getMessageRoom(roomId);		
+		pushMessageRoom(roomId, loginVO, afterEmpList, messageRoomListVo, true);
 		
 		return RESULT.SUCCESS;
 	}
 	
-	public void pushMessage(int roomId, LoginVO loginVO, List<String> roomEmpList, MessageVO messageVo,final int pushType,final boolean flag){
+	public void pushMessage(int roomId, LoginVO loginVO, List<String> roomEmpList, MessageVO messageVo,final boolean flag){
 		System.out.println("2222222");
 		List<AsyncContext> asyncContexts = new CopyOnWriteArrayList<AsyncContext>(this.contexts);
-		this.contexts.clear();
+		//this.contexts.clear();
 
 		if(null == roomEmpList){
 			System.out.println("333333333");
@@ -245,20 +250,18 @@ public class MessagePushController {
 		}
 		
 		int i = 0;
-		for (AsyncContext asyncContext : asyncContexts) {
+		for (AsyncContext asyncContext : contexts) {
 			System.out.println("444444444");
 			
 			LoginVO sendLoginVO = getLoginVO((HttpServletRequest)asyncContext.getRequest());
 			if(null == sendLoginVO){
 				System.out.println("6666");
-
 				continue;
 			}
 			
 			if(true == flag){
 				if(false == isMessageRoomEmp(roomEmpList, sendLoginVO.getEmpId())){
-					System.out.println("77777");
-	
+					System.out.println("77777");	
 					continue;
 				}
 			}
@@ -267,25 +270,67 @@ public class MessagePushController {
 			try {
 				
 				asyncContext.getResponse().setContentType("application/json;  charset=UTF-8");
-				
-				JSONObject obj = null;
-				if(PUSH_TYPE.MESSAGE == pushType){
-					obj = getMessageTypeObject(roomId, loginVO, messageVo);
-				}else{
-					
-				}
-				
+				JSONObject obj = getMessageTypeObject(roomId, loginVO, messageVo);		
 				writer = asyncContext.getResponse().getWriter();
 				System.out.println("지금 보내느중인뎅.. obj:"+obj);
 				writer.println(obj);
 				writer.flush();
 				asyncContext.complete();
+				System.out.println("remove:"+contexts.remove(asyncContext));
 			} catch (IOException e) {
 				e.printStackTrace();
 				continue;
 			}
 		}
 	}
+	
+	public void pushMessageRoom(int roomId, LoginVO loginVO, List<String> roomEmpList, MessageRoomListVO messageRoomListVo,final boolean flag){
+		System.out.println("pushMessageRoom");
+		//List<AsyncContext> asyncContexts = new CopyOnWriteArrayList<AsyncContext>(this.contexts);
+		//this.contexts.clear();
+
+		if(null == roomEmpList){
+			System.out.println("pushMessageRoom 333333333");
+
+			return;
+		}
+		
+		int i = 0;
+		for (AsyncContext asyncContext : contexts) {
+			System.out.println("pushMessageRoom 444444444");
+			
+			LoginVO sendLoginVO = getLoginVO((HttpServletRequest)asyncContext.getRequest());
+			if(null == sendLoginVO){
+				System.out.println("pushMessageRoom 6666");
+				continue;
+			}
+			
+			if(true == flag){
+				if(false == isMessageRoomEmp(roomEmpList, sendLoginVO.getEmpId())){
+					System.out.println("pushMessageRoom 77777");	
+					continue;
+				}
+			}
+			
+			PrintWriter writer;
+			try {
+				
+				asyncContext.getResponse().setContentType("application/json;  charset=UTF-8");
+				JSONObject obj = getMessageRoomTypeObject(messageRoomListVo);		
+				writer = asyncContext.getResponse().getWriter();
+				System.out.println("지금 메시지룸 보내느중인뎅.. obj:"+obj);
+				writer.println(obj);
+				writer.flush();
+				asyncContext.complete();
+				System.out.println("remove:"+contexts.remove(asyncContext));
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				continue;
+			}
+		}
+	}
+
 	
 	public JSONObject getMessageTypeObject(int roomId, LoginVO loginVO, MessageVO messageVo){
 		JSONObject obj = new JSONObject();
