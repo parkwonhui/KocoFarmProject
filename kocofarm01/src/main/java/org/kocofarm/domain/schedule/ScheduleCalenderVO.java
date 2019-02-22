@@ -27,6 +27,9 @@ public class ScheduleCalenderVO implements Serializable{
 	private int xPos;
 	private int yPos;
 	private int categoryId;
+	private String tagName;
+	private String tagColor;
+	
 		
 	public int getxPos() {
 		return xPos;

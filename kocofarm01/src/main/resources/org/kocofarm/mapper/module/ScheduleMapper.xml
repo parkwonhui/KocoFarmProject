@@ -3,9 +3,6 @@
 
 <mapper namespace="org.kocofarm.mapper.module.ScheduleMapper">
 <select id="getProjectList" resultType="ScheduleProjectVO" parameterType="ScheduleProjectSearchVO">
-	select * from project
-=======
-<select id="getProjectList" resultType="ScheduleProjectVO" parameterType="ScheduleProjectSearchVO">
 	select
 	/*+ INDEX_ASC(project PROJECT_ID_PK) */
 	 * from project
@@ -83,16 +80,16 @@
 <!-- 태그 xml -->
 <insert id ="setTag" parameterType="ScheduleTagVO">
 	insert into Tag (TAG_ID, CALENDER_ID, TAG_NAME, TAG_COLOR) 
-	values(tag_id_seq.nextva0l,#{calenderId}, #{tagName}, #{tagColor})
+	values(tag_id_seq.nextval,#{calenderId}, #{tagName}, #{tagColor})
 </insert>
 
 <update id="setUpTag" parameterType="ScheduleTagVO">
 	<trim prefix="SET" suffixOverrides=",">
        <if test="title != null">
-        tag = #{tagName},
+        tag_name = #{tagName},
        </if>
        <if test="tagColr != null">
-        tagColor = #{tagColor},
+        tag_color = #{tagColor},
         </if>
        where tag_id = #{tagId}
        </trim>
@@ -102,6 +99,11 @@
 	delete from tag where tag_id = #{tagId}
 </delete>
 
+<select id="getTagList" resultType="ScheduleTagVO">
+	select *
+	from tag
+	where calender_id = #{calenderId} 
+</select>
 
 <delete id="delCalenderWithCategory" parameterType="ScheduleCategoryVO">
 	delete calender where calender_id IN(select cal.calender_id from
@@ -176,5 +178,4 @@ select * from project where project_id = #{projectId}
 	on cat.CATEGORY_ID = cal.CATEGORY_ID
 	and cat.project_id = #{projectId} )
 </delete>
-
 </mapper>

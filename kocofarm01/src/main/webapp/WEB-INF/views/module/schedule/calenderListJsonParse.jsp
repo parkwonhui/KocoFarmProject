@@ -13,3 +13,4 @@
 	category_list = (List<ScheduleCalenderListVO>)request.getAttribute("calenderList");
 	out.println(JSONArray.fromObject(category_list).toString());
 %>
+

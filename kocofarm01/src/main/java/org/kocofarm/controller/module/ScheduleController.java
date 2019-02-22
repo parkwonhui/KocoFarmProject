@@ -19,6 +19,7 @@ import org.kocofarm.domain.schedule.ScheduleMemberVO;
 import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.domain.schedule.ScheduleTagVO;
 import org.kocofarm.service.module.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -162,6 +163,26 @@ public class ScheduleController {
 		return "/module/schedule/calenderListJsonParse";
 	}
 	
+	@PostMapping("/listTag")
+	private String getTagList(HttpSession session, int calenderId, Model model){
+		
+		if(null == session){
+			
+			return null;
+		}
+		
+		List<ScheduleTagVO> list = service.getTagList(calenderId);
+		if(list == null){ return "";}
+		
+		model.addAttribute("tagVOList", list);
+		
+		return "/module/schedule/calenderTagListJson";
+
+	}
+	
+	
+	
+	
 	@ResponseBody
 	@PostMapping("/insertCalender")
 	private int setCalender(HttpSession session, ScheduleCalenderVO calender){
@@ -179,6 +200,21 @@ public class ScheduleController {
 		String bPublic = projectVO.getPublicUse();
 		ScheduleProcess process = getScheduleProcess(bPublic, service, projectVO); 
 		int re = process.setCalender(session, calender);
+		
+		return re;
+	}
+	
+	@ResponseBody
+	@PostMapping("/insertTag")
+	private int setTag(HttpSession session, ScheduleTagVO tag){
+		log.info("/inserttag..........");
+		log.info(session);
+		if(null == session){
+			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
+		}
+		
+		int scheduleId = (int)session.getAttribute("selectedCalenderId");
+		int re = service.setTag(tag);
 		
 		return re;
 	}
