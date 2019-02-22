@@ -324,4 +324,16 @@
 		where comment_id = #{commentId}	
 	</update>
 	
+	<!-- 검색기능 -->
+	<select id="selectDraft">
+		select draft_id as draftId,
+				draft_name as draftName,
+				draft_dt as draftDt,
+				draft_title as draftTitle,
+				emp_id as empId,
+				draft_year as draftYear,
+				form_id as formId
+				from ( 
+				select )
+	</select>
 </mapper>
