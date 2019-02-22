@@ -17,5 +17,7 @@ public interface MessageService {
 	public MessagePushVO getEmpMessageRoom(MessagePushVO messagePushVo);
 	public List<String> getMessageRoomEmpList(int roomId);
 	public int delMessagePush(MessagePushVO messagePushVo, MessageVO messageVo);
+	public List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId);
+	public int setMessagePush(MessagePushVO messagePushVO);
 
 }

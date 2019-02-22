@@ -2,6 +2,7 @@ package org.kocofarm.mapper.module;
 
 import java.util.List;
 
+import org.kocofarm.domain.message.MessageEmpListVO;
 import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.message.MessageRoomListVO;
 import org.kocofarm.domain.message.MessageRoomVO;
@@ -20,5 +21,5 @@ public interface MessageMapper {
 	public int delMessage(int messageRoomId);
 	public int delMessageRoom(int messageRoomId);
 	public int getMessageRoomEmpCount(int messageRoomId);
-	public int getMessageRoomInvite(int messageRoomId);
+	public List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId);
 }

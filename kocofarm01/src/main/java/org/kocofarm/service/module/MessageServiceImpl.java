@@ -144,5 +144,14 @@ public class MessageServiceImpl implements MessageService {
 		}
 		return re;
 	}
+	
+	public int setMessagePush(MessagePushVO messagePushVo){
+		return mapper.setMessagePush(messagePushVo);
+	}
+
+	@Override
+	public List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId) {
+		return mapper.getMessageRoomInvite(messageRoomId);
+	}
 
 }

@@ -44,12 +44,6 @@ public class MessageController {
 		public static final int SUCCESS = 1;
 	};
 	
-	public static final class MESSAGE_TYPE{
-		public static final int TEXT = 0;
-		public static final int FILE = 1;
-		public static final int EXIT = 2;
-	}
-	
 	@GetMapping("/")
 	private String getMessageInfo(HttpSession session, Model model){
 		log.info("[message] /");
@@ -142,6 +136,20 @@ public class MessageController {
 		log.info(service.getMessageRoomList(loginVO.getEmpId()));
 		
 		return RESULT.SUCCESS;
+	}
+	
+	@ResponseBody
+	@PostMapping("/messageRoomInvite")
+	private List<MessageEmpListVO> getMessageRoomInvite(HttpSession session, int messageRoomId){
+		log.info("[getMessageRoomInvite]");
+		List<MessageEmpListVO> list = service.getMessageRoomInvite(messageRoomId);
+		if(null == list){
+			return null;
+		}
+		
+		log.info(list);
+		
+		return list;
 	}
 	
 	public String getCurrentDateToString(){

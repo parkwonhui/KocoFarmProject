@@ -286,6 +286,41 @@ img {
 	cursor: pointer;
 }
 
+/* 메신저 방 초대 리스트 */
+.invite-message-room-emp-list{
+	margin-top: 20px;
+	margin-bottom : 20px;
+    width: 300px;
+    height: 200px; 
+    overflow-y: scroll;
+    overflow-x:hidden;
+}
+
+/* 메신저 방 초대 리스트 각 하나의 요소 */
+.invite-message-room-emp{
+	border-bottom : 1px solid #FAFAFA;
+	cursor: pointer;
+}
+
+/* 메신저 방만들기 초대 이미지 */
+.invite-message-chat-img{
+	width:13%;
+	display: inline-block;
+}
+
+/* 메신저 방만들기 emp 이름 */
+.invite-message-emp-name{
+	display : inline-block;
+	margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
+.invite-message-room-emp-list .checked{
+	background-color: #FAFAFA;  	
+}
+
 /* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
 .add-message-room-emp-list .checked{
 	background-color: #FAFAFA;  	

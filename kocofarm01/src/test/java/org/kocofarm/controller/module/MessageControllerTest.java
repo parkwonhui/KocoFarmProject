@@ -96,6 +96,6 @@ public class MessageControllerTest {
 	
 	@Test
 	public void getMessageRoomInvite(){
-		//mapper.getMessageRoomInvite(61);
+		log.info(mapper.getMessageRoomInvite(61));
 	}
 }
