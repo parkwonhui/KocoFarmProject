@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.oeg.dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kocofarm.mapper.module.CarResMapper">
+
+<!-- Basic -->
+<sql id = "basic">
+<!-- DB 명 // VO 명 -->
+	RES_ID AS resId,
+	WRITER AS resWriter,
+	RES_USER AS resUser,
+	PURPOSE AS purpose,
+	ST_ADDR AS stAddr,
+	DE_ADDR AS deAddr,
+	TO_CHAR(REG_DT, 'yyyy-MM-dd') AS regDt,
+	TO_CHAR(UP_DT, 'yyyy-MM-dd') AS upDt
+	CAR_ID AS carId,
+	ST_DATE AS stDate,
+	EN_DATE AS enDate,
+	ST_TIME AS stTime,
+	EN_TIME AS enTime
+</sql>
+
+<!-- 목록 -->
+<select id = "getCarResList" resultType = "org.kocofarm.domain.rentCar.CarResVO">
+SELECT
+	r.RES_ID AS resId,
+	a.kor_nm AS resWriter,
+	b.kor_nm AS resUser,
+	r.PURPOSE AS purpose,
+	r.CAR_ID AS carId,
+  	r.REG_DT AS regDt
+
+FROM CAR_RES r
+	LEFT JOIN RENTCAR_DETAIL d ON r.CAR_ID = d.CAR_ID
+	LEFT JOIN EMP a ON r.WRITER= a.emp_id
+	LEFT JOIN EMP b ON r.RES_USER = b.emp_id
+	LEFT JOIN CAR_APP P ON r.res_id = p.res_id  
+  
+
+
+ORDER BY r.REG_DT 
+
+<!-- where P.APP_SF IS NULL -->
+
+</select>
+
+<!-- 예약 등록 -->
+<insert id = "setCarRes">
+		INSERT INTO CAR_RES
+		(RES_ID, WRITER, RES_USER, CAR_ID, PURPOSE, ST_ADDR, DE_ADDR,ST_DATE, EN_DATE,ST_TIME, EN_TIME, REG_DT)<!-- ST_TIME, EN_TIME, -->
+		
+	VALUES
+	( car_res_seq.nextval, #{resWriter}, #{resUser}, #{carId,jdbcType=VARCHAR},
+				 #{purpose,jdbcType=VARCHAR}, #{stAddr,jdbcType=VARCHAR}, #{deAddr,jdbcType=VARCHAR},
+					 #{stDate}, #{enDate},#{stTime}, #{enTime},sysdate )	 								
+</insert>
+
+
+<!-- 차량예약시, AJAX 중복체크 -->
+<select id = "getResCar" resultType = "org.kocofarm.domain.rentCar.CarResVO">
+SELECT CAR_ID AS carId
+FROM RENTCAR_DETAIL d
+	LEFT JOIN CAR_RES r ON r.CAR_ID = d.CAR_ID
+ 
+</select>
+
+<!-- 조회 -->
+<select id = "getCarRes" resultType = "org.kocofarm.domain.rentCar.CarResVO">
+SELECT
+	r.RES_ID AS resId,
+	a.kor_nm AS resWriter,
+	b.kor_nm AS resUser,
+	r.PURPOSE AS purpose,
+	r.ST_ADDR AS stAddr,
+	r.DE_ADDR AS deAddr,
+	r.CAR_ID AS carId,
+	r.ST_DATE AS stDate,
+	r.EN_DATE AS enDate,
+	r.ST_TIME AS stTime,
+	r.EN_TIME AS enTime,
+  	r.REG_DT AS regDt
+
+FROM CAR_RES r
+	LEFT JOIN RENTCAR_DETAIL d ON r.CAR_ID = d.CAR_ID
+	LEFT JOIN EMP a ON r.WRITER= a.emp_id
+	LEFT JOIN EMP b ON r.RES_USER = b.emp_id
+
+WHERE RES_ID = #{resId}
+
+ORDER BY r.REG_DT
+</select>
+
+
+<!-- ===============예약결제=============== -->
+
+<!-- 등록 -->
+<insert id ="setCarApp">
+INSERT INTO CAR_APP
+		(APP_ID, RES_ID, APP_SF, REG_DT)
+	VALUES
+	(car_app_seq.nextval,#{resId,jdbcType=VARCHAR }, #{appSF,jdbcType=VARCHAR}, sysdate)
+</insert> 
+
+<!-- 목록 -->
+<select id = "getCarAppList" resultType = "org.kocofarm.domain.rentCar.CarAppVO">
+SELECT
+	P.APP_ID AS appId,
+  r.RES_ID AS resId,  
+	a.kor_nm AS resWriter,
+	b.kor_nm AS resUser,
+	 r.CAR_ID AS carId,
+	r.PURPOSE AS purpose,
+  p.APP_SF AS appSF, 
+  P.REG_DT AS regDt
+
+FROM CAR_RES r
+	LEFT JOIN EMP a ON r.WRITER= a.emp_id
+	LEFT JOIN EMP b ON r.RES_USER = b.emp_id
+  LEFT JOIN RENTCAR_DETAIL d ON r.CAR_ID = d.CAR_ID
+  LEFT JOIN CAR_APP P ON r.res_id = p.res_id  
+  
+WHERE P.APP_SF = 'Y' OR P.APP_SF = 'N'
+</select>
+
+
+
+
+
+</mapper>
