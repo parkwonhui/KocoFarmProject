@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+
 <web-app
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
@@ -27,7 +29,8 @@
 		<load-on-startup>1</load-on-startup>
 	<!-- 서블릿 예하 파일 다운롣즈 설정 변경 -->
 		<multipart-config>
-		<location>C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\temp</location>
+		<!-- <location>C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\temp</location> -->
+		<location>C:\\Users\\kim sunhaeng\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\img\\approval</location>
 		<max-file-size>20971520</max-file-size><!-- 1MB * 20 -->
 		<max-request-size>41943040</max-request-size><!-- 1MB * 40 -->
 		<file-size-threshold>20971520</file-size-threshold><!-- 1MB * 20 -->
@@ -49,6 +52,8 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
+	
+	
 	
 	<filter-mapping>
 		<filter-name>encoding</filter-name>

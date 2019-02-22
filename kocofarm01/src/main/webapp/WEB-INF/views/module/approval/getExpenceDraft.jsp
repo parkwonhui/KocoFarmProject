@@ -8,7 +8,27 @@
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<script type="text/javascript">
+function ieExecWB( intOLEcmd, intOLEparam )
+{
+// 웹 브라우저 컨트롤 생성
+var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+ 
+// 웹 페이지에 객체 삽입
+document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
+ 
+// if intOLEparam이 정의되어 있지 않으면 디폴트 값 설정
+if ( ( ! intOLEparam ) || ( intOLEparam < -1 )  || (intOLEparam > 1 ) )
+        intOLEparam = 1;
+ 
+// ExexWB 메쏘드 실행
+WebBrowser1.ExecWB( intOLEcmd, intOLEparam );
+ 
+// 객체 해제
+WebBrowser1.outerHTML = "";
+}
+ 
+</script>
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false"></jsp:include>
 <link rel="stylesheet" type="text/css"
@@ -54,48 +74,109 @@ h1 {
 				</div>
 				
 				<div class="draft_wrap">
-					<h1 class="txt_c">결재자 정보</h1>
-					<div class="inf_wrap_box">
-						<table border = 0 height = "100%" width = 100%>
-							<thead>
-								<tr>
-									<th width = 20%>부서 </th>
-									<th width = 20%>직위</th>
-									<th width = 20%>이름</th>
-									<th width = 10%>결재</th>
-									<th width = 10%>반려</th>
-									<th width = 10%>sign</th>
+							<h1 class="txt_c">결재자 정보</h1>
+							<div class="inf_wrap_box">
+								<table>
+									<thead>
+										<tr>
+											<th width = 10%>번호 </th>
+											<th width = 10%>부서 </th>
+											<th width = 10%>직위</th>
+											<th width = 10%>사번</th>
+											<th width = 20%>이름</th>
+											<th width = 10%>결재</th>
+											<th width = 10%>반려</th>
+											<th width = 10%>sign</th>
 											
-								</tr>
-							</thead>
+										</tr>
+									</thead>
 									
-							<tbody>
-								<c:forEach var="ApprEmployee" items="${apprEmp }">
-									<tr>
-										<td>${ApprEmployee.deptNm }</td>
-										<td>${ApprEmployee.positionNm }</td>
-										<td>${ApprEmployee.empId}</td>
-										<td>
-											<c:if  test= "${ApprEmployee.empId eq loginVO.empId }">
-											<input type="button" class="approveBtn" id ="apprState" value="결재" width ="20px"/>											
-											
-											
-											</c:if>
-										</td>
-										<td>
-											<c:if  test= "${ApprEmployee.empId eq loginVO.empId }">
-											<input type="button" class="returnBtn" id ="apprState" value="반려" width ="20px" />
-											</c:if>
-										</td>
-										<td id = 'signImage'></td>
-									</c:forEach>
-								</tbody>
-							</table>		
-						</div>				
-					<p></p>
-					<p></p>
+								
+									<tbody>
+										<c:forEach var="ApprEmployee" items="${apprEmpList }"  varStatus="vs">
+											<tr>
+												
+												<td id = 'count'>${vs.count }</td>
+												<td>${ApprEmployee.deptNm }</td>
+												<td>${ApprEmployee.positionNm }</td>
+												<td id = 'position${vs.count }' class = "${ApprEmployee.empId}">${ApprEmployee.empId}</td>
+												<td>${ApprEmployee.korNm}</td>
+												
+												<!-- 로그인 된 empId에 해당하는 컬럼 -->
+												<c:if  test= "${ApprEmployee.empId eq loginVO.empId }">
+													<td>
+														<input type="button" class="approveBtn" id ="apprState" value="결재" width ="100%"/>
+													</td>
+													
+													<td>
+														<input type="button" class="returnBtn" id ="apprState" value="반려" width ="100%" />
+													</td>
+													
+													<c:if test = "${apprEmp.apprOption eq '미확인' }" >
+														<td id = 'signImage' class = "empSign"></td>
+													</c:if>
+													
+													<c:if test = "${apprEmp.apprOption eq '결재' }" >
+														<td id = 'signImage' class = "empSign">
+														
+														<c:if test =  "${ApprEmployee.empSign eq null }" >
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
+														</c:if>
+														
+														<c:if test =  "${ApprEmployee.empSign ne null }" >
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />
+														</c:if>
+														
+														</td>
+													</c:if>
+													
+													<c:if test = "${apprEmp.apprOption eq '반려' }" >
+														<td id = 'signImage' class = "empSign">
+														반려
+														</td>
+													</c:if>
+												</c:if>
+												<!-- 로그인 된 empId에 해당하는 컬럼 끝 -->
+												
+												<!-- 다른  empId에 해당하는 컬럼 -->
+												<c:if  test= "${ApprEmployee.empId ne loginVO.empId }">
+													<td>
+													</td>
+													<td>
+													</td>
+													<td class = "empSign">
+														<c:if test = "${ApprEmployee.draftSign ne null}">
+															<c:if test =  "${ApprEmployee.empSign eq null }" >
+															<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
+															</c:if>
 		
-				</div>
+															<c:if test =  "${ApprEmployee.empSign ne null }" >
+																
+																<c:if test = "${ApprEmployee.draftSign ne 'return'}">
+																		<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />				
+																</c:if>
+																
+																<c:if test = "${ApprEmployee.draftSign eq 'return'}">
+																	반려
+																</c:if>
+															</c:if>
+														</c:if>
+													</td>
+													
+												</c:if>	
+											
+									
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>	
+								<input type = "hidden" id = "empSign" value = "${loginEmp.empSign}" />
+								<input type = "button" class="apprSubmit" value = "저장" />	
+							</div>
+							<p></p>
+							<p></p>
+				
+						</div>
 				<!-- expence table 시작 -->
 				<div class="vac_table">
 					<table width=54% height=80% border=1 cellpadding=0 cellspacing=0
@@ -201,13 +282,22 @@ h1 {
 
 				<input type = "hidden" name="draftId" id="draftId" value ="${draft.draftId}" />
 				<input type = "hidden" name="formId" id="formId" value ="2" />
+						
+						
 									
 				<!-- btn -->
+				
 					<div class="btn_wrap">
 						<div class="flt_r">
 							<input type="button" data-oper = "list" class="list_btn" value="목록" />
 							<input type="button" data-oper = "setUp" class="expEdit_btn" value="수정" />
 							<input type="button" data-oper = "delete" class="expDel_btn" value="삭제" />
+							<c:if test="${draft.approveState eq '결재완료' }">
+								<input type=button value="인쇄 미리 보기" onclick="window.ieExecWB(7)">  
+								<input type=button value="페이지 설정" onclick="window.ieExecWB(8)">  
+								<input type=button value="인쇄하기(대화상자 표시)" onclick="window.ieExecWB(6)">  
+								<input type=button value="인쇄 바로 하기" onclick="window.ieExecWB(6, -1)">																							
+							</c:if>
 						</div>
 					</div>					
 					
@@ -218,4 +308,5 @@ h1 {
 		</div>
 </HTML>
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
+
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false"></jsp:include>

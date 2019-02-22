@@ -126,7 +126,7 @@
 								 	</colgroup>
 								 	<tr>
 								 		<th class="inputText" scope="col">사번 </th>
-								 		<td><input type='text' name="replacementId" onclick = "window.open('/approval/searchReplaceEmp','사원 검색','resizable=no width=700 height=700');return false">
+								 		<td><input type='text' name="replacementId" onclick = "window.open('/approval/searchReplaceEmp','사원 검색','resizable=no width=700 height=700'); return false">
 
 								 	</tr>
 								 	

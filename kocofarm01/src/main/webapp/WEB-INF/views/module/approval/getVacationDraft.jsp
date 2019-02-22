@@ -4,6 +4,13 @@
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
+<script type="text/javascript">
+	var initBody;
+	function beforePrint(){
+		boxes = document
+		
+	}
+</script>
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
@@ -36,7 +43,8 @@
 				
 				<!-- 기안서 보기 -->
 				
-					<div class="vacation_wrap">
+				<div class="vacation_wrap">
+					<div id = "printForm">
 						<div class="title">
 							<h1>휴 가 신 청 서</h1>
 						</div>
@@ -44,7 +52,7 @@
 						<div class="draft_wrap">
 							<h1 class="txt_c">결재자 정보</h1>
 							<div class="inf_wrap_box">
-								<table border = 0 height = "100%" width = 100%>
+								<table>
 									<thead>
 										<tr>
 											<th width = 10%>번호 </th>
@@ -59,29 +67,92 @@
 										</tr>
 									</thead>
 									
+								
 									<tbody>
-										<c:forEach var="ApprEmployee" items="${apprEmp }"  varStatus="vs">
+										<c:forEach var="ApprEmployee" items="${apprEmpList }"  varStatus="vs">
 											<tr>
+												
 												<td id = 'count'>${vs.count }</td>
 												<td>${ApprEmployee.deptNm }</td>
 												<td>${ApprEmployee.positionNm }</td>
 												<td id = 'position${vs.count }' class = "${ApprEmployee.empId}">${ApprEmployee.empId}</td>
 												<td>${ApprEmployee.korNm}</td>
+												
+												<!-- 로그인 된 empId에 해당하는 컬럼 -->
 												<c:if  test= "${ApprEmployee.empId eq loginVO.empId }">
 													<td>
-														<input type="button" class="approveBtn" id ="apprState" value="결재" width ="20px"/>
+														<input type="button" class="approveBtn" id ="apprState" value="결재" width ="100%"/>
+													</td>
+													
+													<td>
+														<input type="button" class="returnBtn" id ="apprState" value="반려" width ="100%" />
+													</td>
+													
+													<c:if test = "${apprEmp.apprOption eq '미확인' }" >
+														<td id = 'signImage' class = "empSign"></td>
+													</c:if>
+													<c:if test = "${apprEmp.apprOption eq '결재' }" >
+														<td id = 'signImage' class = "empSign">
+														
+														<c:if test =  "${ApprEmployee.empSign eq null }" >
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
+														</c:if>
+														
+														<c:if test =  "${ApprEmployee.empSign ne null }" >
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />
+														</c:if>
+														
+														</td>
+													</c:if>
+													
+													<c:if test = "${apprEmp.apprOption eq '반려' }" >
+														<td id = 'signImage' class = "empSign">
+														반려
+														</td>
+													</c:if>
+												</c:if>
+												<!-- 로그인 된 empId에 해당하는 컬럼 끝 -->
+												
+												<!-- 다른  empId에 해당하는 컬럼 -->
+												<c:if  test= "${ApprEmployee.empId ne loginVO.empId }">
+													<td>
 													</td>
 													<td>
-														<input type="button" class="returnBtn" id ="apprState" value="반려" width ="20px" />
 													</td>
-													<td id = 'signImage' class = "getSign" ></td>
-												</c:if>
-												
+													<td class = "empSign">
+														<c:if test = "${ApprEmployee.draftSign ne null}"> <!-- 결재 정보에 사인값이 널이 아닐 때 -->
+															<c:if test =  "${ApprEmployee.empSign eq null }" > <!-- 사용자 사인을 안 갖고 있을때 -->
+																<c:if test = "${ApprEmployee.draftSign ne 'return'}">
+																	<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
+																</c:if>
+																
+																<c:if test = "${ApprEmployee.draftSign eq 'return'}">
+																	반려
+																</c:if>	
+															</c:if>
+																
+															<c:if test =  "${ApprEmployee.empSign ne null }" > <!-- 사용자 사인을 갖고 있을때 -->
+																
+																<c:if test = "${ApprEmployee.draftSign ne 'return'}">
+																	<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />				
+																</c:if>
+																
+																<c:if test = "${ApprEmployee.draftSign eq 'return'}">
+																	반려
+																</c:if>
+															</c:if>
+														</c:if>
+													</td>
+													
+												</c:if>	
+											
+									
 											</tr>
 										</c:forEach>
 									</tbody>
-								</table>	
-								
+								</table>
+							
+								<input type = "hidden" id = "empSign" value = "${loginEmp.empSign}" />
 								<input type = "button" class="apprSubmit" value = "저장" />	
 							</div>
 							<p></p>
@@ -177,6 +248,7 @@
 							</table>
 						</div>
 						<!-- vacation table 끝 -->
+					</div> <!-- print form 끝 -->
 						
 						<input type = "hidden" name="draftId" id="draftId" value ="${draft.draftId}" />
 						<input type = "hidden" name="formId" id="formId" value ="4" />
@@ -188,6 +260,9 @@
 								<input type="button" class="list_btn" value="목록" />
 								<input type="button" class="vacEdit_btn" value="수정" /> 
 								<input type="button" class="vacDel_btn" value="삭제" />
+								<c:if test="${draft.approveState eq '결재완료' }">
+								<INPUT TYPE="button" VALUE="인쇄하기" style="background-color: #000000; font-size: 10pt; color: #ffffff; " onclick="printWin()">
+								</c:if>
 								
 							</div>
 						</div>			

@@ -9,4 +9,6 @@ public class ApprEmpDraftDetailVO {
 	private String empId;
 	private String apprOption;
 	private int apprLineId;
+	private String draftSign;
+	
 }

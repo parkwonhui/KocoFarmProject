@@ -41,6 +41,7 @@
 							</select>
 							<input type="text" name="schWord" id="schWord" placeholder="검색어를 입력 해 주세요" />
 							<input type="button" class="schBtn" id="schBtn" value="검색" />
+							
 						</div>
 					</div>
 				</div>
@@ -48,22 +49,19 @@
 		
 			<!-- list -->
 			<div class="contents">
-				 <div class = "tab_menu">
+				 <div class = "tab_menu_4">
 				 	<input id = "tab1" type = "radio" name = "tabs" checked>
 				 	<label for  = "tab1"> 전체 보기</label>
 				 	
 				 	<input id = "tab2" type = "radio" name = "tabs">
-				 	<label for  = "tab2"> 기안 중</label>
+				 	<label for  = "tab2"> 미확인</label>
 				 	
 				 	<input id = "tab3" type = "radio" name = "tabs" >
-				 	<label for  = "tab3"> 결재 중</label>
+				 	<label for  = "tab3"> 결재</label>
 				 	
 				 	<input id = "tab4" type = "radio" name = "tabs" >
-				 	<label for  = "tab4"> 반려 </label>
+				 	<label for  = "tab4"> 반려</label>
 				 	
-				 	<input id = "tab5" type = "radio" name = "tabs" >
-				 	<label for  = "tab5"> 결재 완료</label>
-				 
 				 	<br><br>
 				 	<table class="contents_tb" id="contTb">
 							<tr>
@@ -86,11 +84,68 @@
 									<td width = 15%>${ApprEmpDraftVO.draftDt }</td>
 									<td width = 15%>${ApprEmpDraftVO.korNm }</td>
 									<td width = 15%>${ApprEmpDraftVO.apprOption }</td>
-									</tr>
+								</tr>
+								<input type = "hidden" id = "loginEmpId" value = "${ApprEmpDraftVO.empId }" />
+								
 							</c:forEach>
 						</table>
-				 	</section>
-				 
+					</section>
+					
+					<section id = "content2">
+				 		<table class="contents_tb" id="contTb">
+					
+							<c:forEach var="ApprEmpDraftVO" items="${perDraftList }">
+								<c:if test = "${ApprEmpDraftVO.apprOption eq '미확인' }">
+								<tr>
+									<td width = 10%>${ApprEmpDraftVO.draftId }</td>
+									<td width = 30%><a href = "/approval/getDraft?draftId=${ApprEmpDraftVO.draftId }">${ApprEmpDraftVO.draftName }</a></td>
+									<td width = 15%>${ApprEmpDraftVO.modeName }</td>
+									<td width = 15%>${ApprEmpDraftVO.draftDt }</td>
+									<td width = 15%>${ApprEmpDraftVO.korNm }</td>
+									<td width = 15%>${ApprEmpDraftVO.apprOption }</td>
+								</tr>
+								<input type = "hidden" id = "loginEmpId" value = "${ApprEmpDraftVO.empId }" />
+								</c:if>
+							</c:forEach>
+						</table>
+					</section>
+					
+					<section id = "content3">
+				 		<table class="contents_tb" id="contTb">		
+							<c:forEach var="ApprEmpDraftVO" items="${perDraftList }">
+								<c:if test = "${ApprEmpDraftVO.apprOption eq '결재' }">
+								<tr>
+									<td width = 10%>${ApprEmpDraftVO.draftId }</td>
+									<td width = 30%><a href = "/approval/getDraft?draftId=${ApprEmpDraftVO.draftId }">${ApprEmpDraftVO.draftName }</a></td>
+									<td width = 15%>${ApprEmpDraftVO.modeName }</td>
+									<td width = 15%>${ApprEmpDraftVO.draftDt }</td>
+									<td width = 15%>${ApprEmpDraftVO.korNm }</td>
+									<td width = 15%>${ApprEmpDraftVO.apprOption }</td>
+								</tr>
+								<input type = "hidden" id = "loginEmpId" value = "${ApprEmpDraftVO.empId }" />
+								</c:if>
+							</c:forEach>
+						</table>
+					</section>
+					
+					<section id = "content4">
+				 		<table class="contents_tb" id="contTb">
+							<c:forEach var="ApprEmpDraftVO" items="${perDraftList }">
+								<c:if test = "${ApprEmpDraftVO.apprOption eq '반려' }">
+								<tr>
+									<td width = 10%>${ApprEmpDraftVO.draftId }</td>
+									<td width = 30%><a href = "/approval/getDraft?draftId=${ApprEmpDraftVO.draftId }">${ApprEmpDraftVO.draftName }</a></td>
+									<td width = 15%>${ApprEmpDraftVO.modeName }</td>
+									<td width = 15%>${ApprEmpDraftVO.draftDt }</td>
+									<td width = 15%>${ApprEmpDraftVO.korNm }</td>
+									<td width = 15%>${ApprEmpDraftVO.apprOption }</td>
+								</tr>
+								<input type = "hidden" id = "loginEmpId" value = "${ApprEmpDraftVO.empId }" />
+								</c:if>
+							</c:forEach>
+						</table>
+					</section>
+				 	
 					<!-- pagination start -->
 					<div class = 'pull-right '>
 						<ul class = "pagination">

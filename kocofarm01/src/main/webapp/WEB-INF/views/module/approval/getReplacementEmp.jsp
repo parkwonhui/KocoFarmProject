@@ -42,10 +42,10 @@
   			(function(tmp){
   				links[tmp].onclick=function(){
   					if(tmp%4 == 0){
-  					window.opener.document.setVac.replacementId.value = links[tmp].innerHTML;
-  					window.opener.document.setVac.korNm.value =  links[tmp+1].innerHTML; 
-  					window.opener.document.setVac.positionNm.value =  links[tmp+2].innerHTML; 
-  					window.opener.document.setVac.cellPhone.value =  links[tmp+3].innerHTML; 
+  					window.opener.document.setEmpId.replacementId.value = links[tmp].innerHTML;
+  					window.opener.document.setEmpId.korNm.value =  links[tmp+1].innerHTML; 
+  					window.opener.document.setEmpId.positionNm.value =  links[tmp+2].innerHTML; 
+  					window.opener.document.setEmpId.cellPhone.value =  links[tmp+3].innerHTML; 
   					self.close();
   					}
   				}

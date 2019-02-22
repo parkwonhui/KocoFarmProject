@@ -37,18 +37,33 @@
 		order by draft_id DESC
 	</select>
 
- 	<!-- 결재자 리스트 불러오기  -->
- 	<select id = "getApprEmpList" resultType = "org.kocofarm.domain.emp.EmpVO">
+ 	<!-- 결재자(EMP) 리스트 불러오기  -->
+ 	<select id = "getApprEmpInfoList" resultType = "org.kocofarm.domain.approval.ApprEmpPerDraftVO">
 		select 	d.dept_nm as deptNm,
 				e.kor_nm as korNm,
 		 		p.position_nm as positionNm,
-		 		e.emp_id as empId
+		 		e.emp_id as empId,
+		 		e.emp_sign as empSign,
+		 		a.draft_sign as draftSign
 		from emp e, appr_emp a, departments d, position p
 		where	e.emp_id = a.emp_id and
       			e.position_id = p.position_id and
       			e.dept_id = d.dept_id and 
  		 		a.draft_id = #{draftId}
  	</select>
+	
+	<!-- 기안서 별 결재자(APPR_EMP) 리스트 불러오기  -->
+	<select id = "getApprEmpList" resultType = "org.kocofarm.domain.approval.ApprEmpDraftDetailVO">
+		select 	apprline_id as apprlineId,
+				appr_dt as apprDt,
+				emp_id as empId,
+				appr_option as apprOption,
+				draft_id as draftId,
+				draft_sign as draftSign			
+		from 	appr_emp
+		where	draft_id = #{draftId}
+ 	</select>
+	
 	
 	
 	<!-- 로그인 회원이 결재할 기안서 개수 가져오기  -->
@@ -59,17 +74,19 @@
   		and appr_option = '미확인'
 	</select>
 	
-	
+	<!-- 등록된 기안서의 결재자 정보  -->
 	<select id = "getApprEmp" resultType ="org.kocofarm.domain.approval.ApprEmpDraftDetailVO">
 		select 	apprline_id as apprlineId,
 				appr_dt as apprDt,
 				appr_option as apprOption,
 				draft_id as draftId,
+				draft_sign as draftSign,
 				emp_id as empId
 		from 	appr_emp
   		where 	draft_id = #{draftId} and 
   				emp_id = #{empId}
 	</select>
+
 	
 	<!-- 사원별 기안서 정보  불러오기 -->
 	<select id = "getEmpDraftList" resultType ="org.kocofarm.domain.approval.ApprEmpDraftVO">
@@ -77,6 +94,7 @@
 				d.draft_name as draftName,
 				f.mode_name as modeName,
 				d.draft_dt as draftDt,
+				e.emp_id as empId,
 				e.kor_nm as korNm,
 				a.appr_option as apprOption
     	from 	appr_emp a, 
@@ -212,6 +230,12 @@
 	</insert>
 	<!-- ****************************** 수정 ****************************** -->
 
+	<!-- EMP에 SIGN 추가 -->
+	<update id = "setUpSign" parameterType="String">
+		update emp 
+		set emp_sign = #{empSign}
+		where emp_id = #{empId}
+	</update>
 	<!-- 기본 기안서 정보 수정 -->
 	<update id="setUpDraft" parameterType="org.kocofarm.domain.approval.ApprDraftVO">
 		update DRAFT 
@@ -262,7 +286,8 @@
 	
 	<update id = "setUpApprOption" parameterType = "org.kocofarm.domain.approval.ApprEmpDraftDetailVO">
 		update 	appr_emp
-		set 	appr_option = #{apprOption}
+		set 	appr_option = #{apprOption},
+				draft_Sign = #{draftSign}
 		where 	draft_id = #{draftId} and
 				emp_id = #{empId}
 	</update>

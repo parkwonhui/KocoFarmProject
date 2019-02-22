@@ -1,5 +1,6 @@
 package org.kocofarm.controller.module;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -43,7 +45,6 @@ import lombok.extern.log4j.Log4j;
 public class ApprovalController {
 	private ApprovalService service;
 	private EmpService eService;
-	
 	
 	/*전체 기안서 리스트 가져오기*/
 	/*	@GetMapping("/getDraftList")
@@ -76,12 +77,17 @@ public class ApprovalController {
 	
 	/* 특정 기안서 가져오기 */
 	@GetMapping("/getDraft")
-	public String getDraft(@RequestParam("draftId") int draftId, Model model){
-		
+	public String getDraft(@RequestParam("draftId") int draftId, Model model , HttpSession session){
 		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
+		
+		LoginVO login = (LoginVO) session.getAttribute("loginVO");
+		String empId = login.getEmpId();
+		model.addAttribute("loginEmp",eService.getEmp(empId));
 		model.addAttribute("draft",service.getDraft(draftId));
-		model.addAttribute("empVO",eService.getEmp(service.getDraft(draftId).getEmpId()));
-		model.addAttribute("apprEmp",service.getApprEmpList(draftId));
+		
+		model.addAttribute("apprEmp",service.getApprEmp(draftId, empId));
+		model.addAttribute("empVO",eService.getEmp(service.getDraft(draftId).getEmpId())); //기안자 정보
+		model.addAttribute("apprEmpList",service.getApprEmpInfoList(draftId));
 		int formId = service.getDraft(draftId).getFormId();
 		
 		if(formId == 2){
@@ -119,10 +125,10 @@ public class ApprovalController {
 	@PostMapping("/setExpence")
 	public String setExpence(ApprDraftVO draft,ApprExpenceVO expence,HttpServletRequest request){
 		
-			service.setApprEmp(request);
 			service.setDraft(draft);
 			service.setExpence(expence);
 			service.setExpenceCont(request);
+			service.setApprEmp(request);
 
 		return "redirect:/approval/getDraftList";
 	}
@@ -131,9 +137,9 @@ public class ApprovalController {
 	@PostMapping("/setVacation")
 	public String setVacation(ApprEmpVO apprEmp, ApprDraftVO draft, ApprVacationVO vacation,HttpServletRequest request){
 	
-		service.setApprEmp(request);
 		service.setDraft(draft);
 		service.setVacation(vacation);
+		service.setApprEmp(request);
 		return "redirect:/approval/getDraftList";
 	}
 	
@@ -161,6 +167,8 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
+	
+	
 	/* 휴가 신청서 수정 페이지로 이동 */
 	@GetMapping("/getSetUpVacPage")
 	public String getsetUpVacPage(@RequestParam("draftId") int draftId, Model model ) throws Exception{
@@ -183,25 +191,51 @@ public class ApprovalController {
 		return "redirect:/approval/getDraftList";
 	}
 	
-	/* 결재 상태 수정 (버튼에 따라 다름) */
+	/* 결재 상태 수정 -- 저장버튼 (버튼에 따라 다름) */
 	@GetMapping("/setUpApprState")
-	public String setUpApprState(HttpSession session , @RequestParam("draftId") int draftId, @RequestParam("apprState") int apprState){
+	public String setUpApprState(HttpSession session ,HttpServletRequest request, @RequestParam("draftId") int draftId, @RequestParam("apprState") int apprState){
 		ApprDraftVO draft = service.getDraft(draftId);
 		LoginVO login = (LoginVO) session.getAttribute("loginVO");
 		String empId = login.getEmpId();
 		ApprEmpDraftDetailVO empDraft = service.getApprEmp(draftId, empId);
-	
 		//service.getApprEmp(draftId,empId);
+		
 		if(apprState == 0){
 			draft.setApproveState("반려");
 			empDraft.setApprOption("반려");
+			empDraft.setDraftSign("return");
 		}else if(apprState == 1){
+			String draftSign = request.getParameter("tmpSignImage");
+			log.info(draftSign);
 			draft.setApproveState("결재중");
 			empDraft.setApprOption("결재");
+			empDraft.setDraftSign(draftSign);
 		}
 		
 		service.setUpDraft(draft);
 		service.setUpApprOption(empDraft);
+		
+		int count = 0;
+		int refuse = 0;
+		List<ApprEmpDraftDetailVO> apprEmpList = service.getApprEmpList(draftId);
+
+		for(int i = 0; i < apprEmpList.size(); i++){
+			
+			if(apprEmpList.get(i).getDraftSign() == null){
+				count = 0;
+				log.info(count);
+			}else if(apprEmpList.get(i).getDraftSign().equals("return")){
+				refuse = 1;
+			}else{
+				count = 1;
+				log.info(count);
+			}
+		}
+		
+		if(count == 1 && refuse == 0){
+			draft.setApproveState("결재완료");
+			service.setUpDraft(draft);
+		}
 		return "redirect:/approval/getEmpDraftList";
 	}
 	
@@ -224,11 +258,7 @@ public class ApprovalController {
 		return "module/approval/getApprovalEmp";
 	}
 	
-	/*@GetMapping("/test")
-	public String tset(){
-		return "module/approval/test";
-	}*/
-	
+
 	/* 로그인 후 내가 결재할 기안서 리스트 불러오기*/
 	@GetMapping("/getEmpDraftList")
 	public String getEmpDraftList(HttpSession session, Model model){
@@ -239,6 +269,64 @@ public class ApprovalController {
 		model.addAttribute("perDraftList",service.getEmpDraftList(empId));
 		return "module/approval/getEmpDraftList";
 	}
+	
+	/* sign 등록 페이지로 이동 */
+	@GetMapping("/setEmpSign")
+	public String setEmpSign(HttpSession session, Model model){
+		model.addAttribute("moduleNm", "approval");
+		LoginVO login = (LoginVO) session.getAttribute("loginVO");
+		String empId = login.getEmpId();
+		model.addAttribute("emp", eService.getEmp(empId));
+		return "module/approval/setEmpSign";
+	}
+	
+	/* sign imgage 저장 */
+	@PostMapping("/uploadSign")
+	public String uploadAjaxPost(HttpSession session,MultipartFile[] uploadFile){
+		
+		String uploadFolder = "C:\\Users\\kim sunhaeng\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\img\\approval";
+		
+		for(MultipartFile multipartFile : uploadFile){
+			log.info("------------------------------------------");
+			log.info("Upload file name : "+multipartFile.getOriginalFilename());
+			log.info("upload file size : "+multipartFile.getSize());
+			LoginVO login = (LoginVO) session.getAttribute("loginVO");
+			String empId = login.getEmpId();
+			String empSign = multipartFile.getOriginalFilename();
+			
+			empSign = empSign.substring(empSign.lastIndexOf("\\") + 1);
+			log.info("only file name : "+empSign);
+			
+			File saveFile = new File(uploadFolder, empSign);
+			try {
+				multipartFile.transferTo(saveFile);
+				service.setUpSign(empId, empSign);
+				
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+			
+		}
+		return "module/approval/setEmpSign";
+	}
+	
 
+	@GetMapping("/test")
+	public String test(){
+	
+		return "module/approval/index";
+	}
+/*	
+	@GetMapping("/save")
+	public String saveget(){
+	
+		return "module/approval/save";
+	}*/
+	
+	@PostMapping("/save")
+	public String savepost( Model model){
+
+		return "module/approval/save";
+	}
 	
 }

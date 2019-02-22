@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
 import org.kocofarm.domain.approval.ApprEmpDraftVO;
+import org.kocofarm.domain.approval.ApprEmpPerDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
@@ -31,16 +32,18 @@ public interface ApprovalService {
 	/* 휴가 신청서 정보 가져오기 */
 	public ApprVacationVO getVacation(int draftId);
 	
-	/* 결재자 리스트 불러오기 */
-	public List<EmpVO> getApprEmpList(int draftId);
+	/* 결재자 정보 (emp) 리스트 불러오기 */
+	public List<ApprEmpPerDraftVO> getApprEmpInfoList(int draftId);
+	/* 결재자 (apprempdraftDetail) 리스트 불러오기 */
+	public List<ApprEmpDraftDetailVO> getApprEmpList(int draftId);
+	/* 결재자 정보  가져오기 */
+	public ApprEmpDraftDetailVO getApprEmp(int draftId , String empId);
 	
 	
 	/*로그인 회원이 결재할 기안서 개수 가져오기 */
 	public int getNumberOfDraft(String empId);
 	/* 결재할 기안서 리스트 번호 가져오기 ----여기에 기안서 정보도 추가*/
 	public List<ApprEmpDraftVO> getEmpDraftList(String empId);
-	/* 결재자 정보  가져오기 */
-	public ApprEmpDraftDetailVO getApprEmp(int draftId , String empId);
 	
 	
 	/*페이징 처리한 draft 목록 가져오기 */
@@ -70,6 +73,9 @@ public interface ApprovalService {
 	/* 지출명세서 내역 삭제*/
 	public void delExpenceCont(int draftId);
 	
+	
+	/* emp에 sign 추가 수정 */
+	public int setUpSign(String empId, String empSign);
 	/* 기안서 수정 */
 	public int setUpDraft(ApprDraftVO draft);
 	/* 휴가 신청서 수정*/

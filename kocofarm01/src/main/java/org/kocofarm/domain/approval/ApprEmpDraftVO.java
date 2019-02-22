@@ -8,6 +8,7 @@ public class ApprEmpDraftVO {
 	private String draftName;
 	private String modeName;
 	private String draftDt;
+	private String empId;
 	private String korNm;
 	private String apprOption;
 } 

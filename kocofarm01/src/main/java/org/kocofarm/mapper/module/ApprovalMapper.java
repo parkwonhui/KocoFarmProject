@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
 import org.kocofarm.domain.approval.ApprEmpDraftVO;
+import org.kocofarm.domain.approval.ApprEmpPerDraftVO;
 import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
@@ -38,8 +39,11 @@ public interface ApprovalMapper {
 	/*--------------기타 정보 가져오기 --------------*/
 	/* 최근 기안서 번호 가져오기 */
 	public int getDraftNo();
-	/* 결재자 정보 리스트 가져오기 */
-	public List<EmpVO> getApprEmpList(int draftId);
+	/* 결재자 정보(emp) 리스트 가져오기 */
+	public List<ApprEmpPerDraftVO> getApprEmpInfoList(int draftId);
+	/* 결재자 정보(emp) 리스트 가져오기 */
+	public List<ApprEmpDraftDetailVO> getApprEmpList(int draftId);
+	
 	/* 결재할 기안서 갯수 가져오기 */
 	public int getNumberOfDraft(String empId);
 	/* 결재할 기안서 리스트 번호 가져오기 ----여기에 기안서 정보도 추가*/
@@ -59,6 +63,8 @@ public interface ApprovalMapper {
 	
 	
 	/*--------------수정--------------*/
+	/* emp에 sign 추가 */
+	public int setUpSign(@Param("empId") String empId, @Param("empSign") String empSign);
 	/* 기본 기안서 정보 수정 */
 	public int setUpDraft(ApprDraftVO draft);
 	/* 휴가 신청서 정보 수정 */

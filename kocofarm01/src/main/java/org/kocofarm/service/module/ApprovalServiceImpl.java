@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
 import org.kocofarm.domain.approval.ApprEmpDraftVO;
+import org.kocofarm.domain.approval.ApprEmpPerDraftVO;
 import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
@@ -85,9 +86,15 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.getVacation(draftId);
 	}
 
+	/* 결재자 정보 리스트 불러오기 */
+	@Override
+	public List<ApprEmpPerDraftVO> getApprEmpInfoList(int draftId) {
+		return mapper.getApprEmpInfoList(draftId);
+	}
+	
 	/* 결재자 리스트 불러오기 */
 	@Override
-	public List<EmpVO> getApprEmpList(int draftId) {
+	public List<ApprEmpDraftDetailVO> getApprEmpList(int draftId) {
 		return mapper.getApprEmpList(draftId);
 	}
 	
@@ -164,6 +171,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		String empIdList = request.getParameter("empIdList");
 		String[] empId =empIdList.split(",");
 		int draftId = mapper.getDraftNo();
+		log.info(draftId);
 		for(int i = 0; i<empId.length; i++){
 			apprEmp.setDraftId(draftId);
 			apprEmp.setEmpId(empId[i]);
@@ -226,6 +234,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int setUpApprOption(ApprEmpDraftDetailVO empDraft) {
 		return mapper.setUpApprOption(empDraft);
+	}
+	
+	/* emp에 sign 추가 수정 */
+	@Override
+	public int setUpSign(String empId,String empSign) {
+		return mapper.setUpSign(empId,empSign);
 	}
 	
 }
