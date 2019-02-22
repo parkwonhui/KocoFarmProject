@@ -36,7 +36,6 @@
 		DEPT_NM AS deptNm
 		FROM DEPARTMENTS
 	</select>
-<<<<<<< HEAD
 
 	<!-- 부서별 목록 -->
 	<select id="getEmpByDept" resultType="org.kocofarm.domain.emp.EmpVO">
@@ -50,6 +49,4 @@
 	  	ORDER BY A.KOR_NM DESC
 	</select>
 
-=======
->>>>>>> refs/heads/master
 </mapper>
