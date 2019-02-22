@@ -3,6 +3,8 @@ package org.kocofarm.mapper.module;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
+import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
 import org.kocofarm.domain.approval.ApprEmpDraftVO;
@@ -92,4 +94,15 @@ public interface ApprovalMapper {
 	public List<ApprDraftVO> getListWithPaging(Criteria cri);
 	/*전체 기안서 개수 */
 	public int getTotalCount(Criteria cri);
+	
+	
+	/*--------------댓글--------------*/
+	/*등록*/
+	public int setComment(ApprCommentVO comment);
+	/*조회*/
+	public List<ApprCommentVO> getCommentList(int draftId);
+	/*삭제*/
+	public int delComment(int commentId);
+	/*수정*/
+	public int setUpComment(ApprCommentVO comment);
 }

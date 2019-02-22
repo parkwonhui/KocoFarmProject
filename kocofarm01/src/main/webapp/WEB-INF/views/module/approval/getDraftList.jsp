@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/comm/comm.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/comm/common.css" />
 
 
 	<div class="cont_wrap">

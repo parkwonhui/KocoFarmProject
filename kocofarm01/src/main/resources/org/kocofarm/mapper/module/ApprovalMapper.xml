@@ -323,5 +323,42 @@
 	</delete>
 
 	
-
+	<!-- ****************************** 댓글 ****************************** -->
+	<!--  등록 -->
+	<insert id="setComment" parameterType="org.kocofarm.domain.approval.ApprCommentVO">
+	insert into DRAFT_COMMENT 
+	values (seq_comment.nextval, #{draftId}, #{empId}, #{commentContents},SYSDATE <!-- #{commentDt} -->)
+	</insert>
+	
+	<!--  조회 -->
+	<select id="getCommentList" resultType="org.kocofarm.domain.approval.ApprCommentVO">
+		select * from DRAFT_COMMENT where draft_id = #{draftId}
+	</select>
+	
+	<!-- 삭제 -->
+	<delete id="delComment">
+	delete from DRAFT_COMMENT where comment_id = #{commentId}
+	</delete>
+	
+	<!-- 수정 -->
+	<update id="setUpComm" >
+		update DRAFT_COMMENT
+		set
+		comment_contents = #{commentContents},
+		comment_dt = SYSDATE
+		where comment_id = #{commentId}	
+	</update>
+	
+	<!-- 검색기능 -->
+	<select id="selectDraft">
+		select draft_id as draftId,
+				draft_name as draftName,
+				draft_dt as draftDt,
+				draft_title as draftTitle,
+				emp_id as empId,
+				draft_year as draftYear,
+				form_id as formId
+				from ( 
+				select )
+	</select>
 </mapper>

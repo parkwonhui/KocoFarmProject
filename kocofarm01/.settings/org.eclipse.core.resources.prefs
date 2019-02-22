@@ -1,8 +1,11 @@
-=\=\=\=\=\=\=
-<<<<<<<=HEAD
->>>>>>>=refs/remotes/origin/master
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//src/main/java/org/kocofarm/mapper/module/ApprovalMapper.java=UTF-8
 encoding//src/main/webapp/WEB-INF/views/home.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/module/file_room=UTF-8
 encoding//src/main/webapp/WEB-INF/views/module/file_room/fileCheck.jsp=UTF-8
+=======
+encoding//src/main/java/org/kocofarm/controller/module/ApprovalController.java=UTF-8
+encoding//src/main/java/org/kocofarm/service/module/ApprovalService.java=UTF-8
+encoding/<project>=UTF-8
+>>>>>>> refs/remotes/origin/Cheol

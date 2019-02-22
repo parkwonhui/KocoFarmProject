@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
 import org.kocofarm.domain.approval.ApprEmpDraftVO;
@@ -80,7 +81,6 @@ public interface ApprovalService {
 	public int setUpDraft(ApprDraftVO draft);
 	/* 휴가 신청서 수정*/
 	public int setUpVacation(ApprVacationVO vacation);
-	public int setUpVacHit(int draft);
 	/* 지출명세서 수정*/
 	public int setUpExpence(ApprExpenceVO expence);
 	/* 지출명세서 내역 수정*/
@@ -88,4 +88,10 @@ public interface ApprovalService {
 	/* 결재 상태 수정 (버튼에 따라 다름) */
 	public int setUpApprOption(ApprEmpDraftDetailVO empDraft);
 	
+	/* 댓글 등록*/
+	public int setComment(ApprCommentVO comment);
+	/* 댓글 목록 */
+	public List<ApprCommentVO> getCommentList(int draftId);
+	/* 댓글 삭제 */
+	public int delComment(int commentId);
 }

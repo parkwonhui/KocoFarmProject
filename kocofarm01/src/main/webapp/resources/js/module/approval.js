@@ -187,3 +187,44 @@ WebBrowser1.ExecWB( intOLEcmd, intOLEparam );
 WebBrowser1.outerHTML = "";
 }
  
+$(".commentInsertBtn").click(function(){
+	var commentContents = $("#commentContents").val();
+	var draftId = $("#draftId").val();
+	var empId = $("#empId").val();
+	
+	var param = {"commentContents" : commentContents, "draftId" : draftId, "empId" : empId};
+	
+		$.ajax({
+			type : "POST",
+			url : "setComment",
+			data : param,
+			success : function(){
+				alert("댓글이 등록되었습니다.");
+				$("#commentContents").val("");
+				getCommentList();
+				}
+		});
+});
+
+
+$(function(){
+	getCommentList();
+});
+
+
+function getCommentList(){
+	var commentContents = $("#commentContents").val();
+	var draftId = $("#draftId").val();
+	var empId = $("#empId").val();
+	console.log(draftId, empId);
+	
+	var param = {"commentContents" : commentContents, "draftId" : draftId, "empId" : empId};
+	$.ajax({
+		type : "GET",
+		url : "getCommentList",
+		data : param,
+		success : function (result){
+			$("#getCommentList").html(result);
+		}
+	});
+}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
@@ -37,7 +38,7 @@ public class ApprovalMapperTest {
 	public void testDetailDraft(){
 		mapper.getDraft(165);
 	}*/
-	@Test
+	//@Test
 	/*public void testSetDraft(){
 		ApprDraftVO draft = new ApprDraftVO();
 		draft.setDraftDt("2018-02-11");
@@ -118,13 +119,40 @@ public class ApprovalMapperTest {
 	public void testDeleteExpence(){
 		log.info("DELETE COUNT : " + mapper.delExpence(44));
 	}*/
-	public void testPaging(){
+	/*public void testPaging(){
 		Criteria cri = new Criteria();
 		
 		cri.setAmount(5);
 		cri.setPageNum(1);
 		List<ApprDraftVO> list = mapper.getListWithPaging(cri);
 		list.forEach(draft -> log.info(draft.getDraftId()));
-	}
+	}*/
 	
+	/*public void testComm(){
+		ApprCommentVO comment = new ApprCommentVO();
+		comment.setDraftId(42);
+		comment.setEmpId("EMP_001");
+		comment.setCommentContents("댓글테스트");
+		
+		mapper.insertComm(comment);
+	}*/
+	
+	/*public void testReadComm(){
+		List<ApprCommentVO> listComm = mapper.readComm(42);
+	}*/
+	
+	/*public void testDelComm(){
+		log.info(mapper.delComm(1));
+	}*/
+	
+	/*public void testSetUpComm(){
+		List<ApprCommentVO> vo = mapper.readComm(42);
+		ApprCommentVO comment = new ApprCommentVO();
+		comment.setCommentId(2);
+		comment.setDraftId(42);
+		comment.setEmpId("EMP_001");
+		comment.setCommentContents("UPDATE");
+		
+		mapper.setUpComm(comment);		
+	}*/
 }

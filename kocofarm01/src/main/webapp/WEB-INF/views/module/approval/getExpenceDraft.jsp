@@ -301,6 +301,26 @@ h1 {
 						</div>
 					</div>					
 					
+						<!--  댓글  -->
+    <div class="container">
+        <label for="content">comment</label>
+        <form name="commentInsertForm"  style="margin-left: 350;">
+            <div class="input-group">
+                 <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/>
+<%--                <input type="hidden" name="empId" value="${DRAFT_COMMENT.empId }"/> --%>
+               <input type="text"  width="70%"   class="form-control" id="commentContents" 
+               name="commentContents" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <input type="button" class="commentInsertBtn" value="등록"/>
+               </span>
+              </div>
+        </form>
+    </div>
+    
+    <div class="container">
+        <div id = "getCommentList"></div>
+    </div>
+					
 
 			</div>
 

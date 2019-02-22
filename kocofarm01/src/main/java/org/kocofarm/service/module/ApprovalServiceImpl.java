@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
 import org.kocofarm.domain.approval.ApprEmpDraftVO;
@@ -242,4 +243,20 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.setUpSign(empId,empSign);
 	}
 	
+
+
+	@Override
+	public int setComment(ApprCommentVO comment){
+		return mapper.setComment(comment);
+	}
+	
+	@Override
+	public List<ApprCommentVO> getCommentList(int draftId){
+		return mapper.getCommentList(draftId);
+	}
+	
+	@Override
+	public int delComment(int commentId){
+		return mapper.delComment(commentId);
+	}
 }

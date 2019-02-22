@@ -9,8 +9,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.SqlSession;
+import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
 import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
 import org.kocofarm.domain.approval.ApprEmpDraftVO;
@@ -29,6 +29,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -258,7 +263,32 @@ public class ApprovalController {
 		return "module/approval/getApprovalEmp";
 	}
 	
-
+@PostMapping("/setComment")
+	@ResponseBody
+	public String setComment(@RequestParam("draftId") int draftId, @RequestParam("empId") String empId,
+		ApprCommentVO comment){
+		service.setComment(comment);
+		return "redirect:/approval/getDraft?draftId=${ApprDraftVO.draftId }";
+	}
+	
+	/* �뙎湲� 由ъ뒪�듃 蹂닿린 */
+	@GetMapping("/getCommentList")
+	public String getCommentList(@RequestParam("draftId") int draftId,@RequestParam("empId") String empId,
+			Model model){
+		List<ApprCommentVO> list = service.getCommentList(draftId);
+		model.addAttribute("list", list);
+		return "/module/approval/getCommentList";
+	}
+	
+	/* 댓글 삭제 */
+	@PostMapping("/delComment")
+	public String delComment(@RequestParam("draftId") int draftId,@RequestParam("commentId") int commentId, ApprCommentVO comment){
+	System.out.println("####");
+	System.out.println(commentId);
+	System.out.println("$$$$");
+	service.delComment(commentId);
+	return "/module/approval/getVacationDraft";
+	}
 	/* 로그인 후 내가 결재할 기안서 리스트 불러오기*/
 	@GetMapping("/getEmpDraftList")
 	public String getEmpDraftList(HttpSession session, Model model){
