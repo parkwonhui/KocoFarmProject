@@ -53,6 +53,27 @@
 		</div>
 	</div>
 	
+	<!-- Modal 초대 -->
+	<div class="modal fade" id="invite-message-room" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">메시지 방 초대</h4>
+				</div>
+				<div class="modal-body">
+					<div id="invite-emp-list" ></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="invite-message-room-request" class="btn btn-primary" data-dismiss="modal">초대</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
 		<!-- list -->
 		<div class="contents">
 			<div class="messaging">

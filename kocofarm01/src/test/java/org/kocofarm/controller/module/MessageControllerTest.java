@@ -81,16 +81,21 @@ public class MessageControllerTest {
 		log.info(mapper.delMessagePush(vo));
 	}
 */
-	@Test
+/*	@Test
 	public void delMessagePush(){
 		// 회색??
 		//mapper.delMessage(225);
 		//mapper.delMessageRoom(225);
 	}
-/*	
+*//*	
 	@Test
 	public void delMessagePush(){
 		mapper.getMessageRoomEmpCount(143);
 	}
 	*/
+	
+	@Test
+	public void getMessageRoomInvite(){
+		//mapper.getMessageRoomInvite(61);
+	}
 }

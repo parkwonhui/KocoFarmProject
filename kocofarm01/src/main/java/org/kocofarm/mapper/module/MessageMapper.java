@@ -20,4 +20,5 @@ public interface MessageMapper {
 	public int delMessage(int messageRoomId);
 	public int delMessageRoom(int messageRoomId);
 	public int getMessageRoomEmpCount(int messageRoomId);
+	public int getMessageRoomInvite(int messageRoomId);
 }

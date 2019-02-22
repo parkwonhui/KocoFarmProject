@@ -216,6 +216,7 @@ $(function() {
 	$(document).on("click", ".add-message-room-emp", function() {
 		$(this).toggleClass('checked');
 	});
+	
 
 	// 메시지 방 선택 
 	$(document).on("click", ".chat_list", function() {
@@ -266,6 +267,10 @@ $(function() {
 	});
 	
 	$(document).on("click", ".message-room-emp-list-print", function(){
+	});
+
+	$(document).on("click", ".message-room-emp-list-invite", function(){
+	
 	});
 	
 	$(document).on("click", ".message-room-emp-exit", function(){
@@ -363,6 +368,7 @@ $(function() {
 		html += "<img src = '/resources/img/message/more.png' class='message-room-top-more' />";
 		html += "<div class='dropdown-content'>";
 		html += '<div class="message-room-emp-list-print">참여자</div>';
+		html += '<div class="message-room-emp-list-invite">초대</div>';
 		html += '<div class="message-room-emp-exit">나가기</div>';
 		html += '</div>';
 		html += '</div>';

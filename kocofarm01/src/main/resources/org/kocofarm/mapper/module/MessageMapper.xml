@@ -82,4 +82,10 @@ where message_room_id = #{messageRoomId}
 	where message_room_id = #{messageRoomId}
 </select>
 
+<!-- message room 초대 -->
+<select id="getMessageRoomInvite" parameterType="int" resultType="org.kocofarm.domain.emp.EmpVO">
+select emp_id, kor_nm, emp_img from emp where emp_id not in
+(select emp_id from message_push
+where message_room_id = #{messageRoomId})
+</select>
 </mapper>
