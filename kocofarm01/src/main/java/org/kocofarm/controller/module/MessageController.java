@@ -1,6 +1,8 @@
 package org.kocofarm.controller.module;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,7 @@ import org.json.simple.parser.ParseException;*/
 import org.kocofarm.domain.comm.LoginVO;
 import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.message.MessageEmpListVO;
+import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.message.MessageRoomListVO;
 import org.kocofarm.domain.message.MessageVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
@@ -45,10 +48,6 @@ public class MessageController {
 	private String getMessageInfo(HttpSession session, Model model){
 		log.info("[message] /");
 		
-		if(null == session){
-			return "/main";
-		}
-		
 		LoginVO loginVO = (LoginVO) session.getAttribute("loginVO");
 		if(null == loginVO){
 			return "redirect:/main";
@@ -63,10 +62,6 @@ public class MessageController {
 	@GetMapping("/listMessageRoom")
 	private List<MessageRoomListVO> getMessageRoomList(HttpSession session){
 		log.info("[message] /list");
-		
-		if(null == session){
-			return null;
-		}
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
@@ -87,11 +82,8 @@ public class MessageController {
 	@ResponseBody
 	@GetMapping("/listMessage")
 	private List<MessageVO> listMessage(HttpSession session, int roomId){
-		if(null == session){
-			return null;
-		}
-		log.info("roomId:"+roomId);
-		
+		log.info("[listMessage]");
+
 		List<MessageVO> list = service.getMessageList(roomId);
 
 		return list;
@@ -100,9 +92,7 @@ public class MessageController {
 	@ResponseBody
 	@GetMapping("/empList")
 	private List<MessageEmpListVO> getMessageEmpList(HttpSession session){
-		if(null == session){
-			return null;
-		}
+		log.info("[empList]");
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
@@ -116,14 +106,10 @@ public class MessageController {
 	@ResponseBody
 	@PostMapping("/addMessageRoom")
 	private int setMessageRoom(HttpSession session, @RequestBody String list){
-		log.info("/addMessageRoom");
+		log.info("[addMessageRoom]");
 		log.info(list);
 		
 		JSONObject jsonObject =  JSONObject.fromObject(list);
-		if(null == session){
-			return RESULT.UNKNOWN_ERROR;
-		}
-		
 		if(null == list){
 			return RESULT.UNKNOWN_ERROR;
 		}
@@ -134,7 +120,7 @@ public class MessageController {
 		}
 		
 		String title = (String) jsonObject.get("0");		// title
-		int lenght = (int)jsonObject.get("1");		// length
+		int lenght = (int)jsonObject.get("1");				// length
 		
 		List<String> empList = new ArrayList<String>();
 		for(int i = 2; i < lenght+2; ++i){
@@ -150,5 +136,25 @@ public class MessageController {
 		log.info(service.getMessageRoomList(loginVO.getEmpId()));
 		
 		return RESULT.SUCCESS;
+	}
+	
+	@ResponseBody
+	@PostMapping("/messageRoomInvite")
+	private List<MessageEmpListVO> getMessageRoomInvite(HttpSession session, int messageRoomId){
+		log.info("[getMessageRoomInvite]");
+		List<MessageEmpListVO> list = service.getMessageRoomInvite(messageRoomId);
+		if(null == list){
+			return null;
+		}
+		
+		log.info(list);
+		
+		return list;
+	}
+	
+	public String getCurrentDateToString(){
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");			
+		String dateToString = transFormat.format(new Date());
+		return dateToString;
 	}
 }

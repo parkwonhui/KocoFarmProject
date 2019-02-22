@@ -130,4 +130,28 @@ public class MessageServiceImpl implements MessageService {
 		return mapper.getMessageRoomEmpList(roomId);
 	}
 
+	@Override
+	@Transactional
+	public int delMessagePush(MessagePushVO messagePushVo, MessageVO messageVo){
+		int messageRoomId = messageVo.getMessageRoomId();
+		int re = mapper.setMessage(messageVo);
+		re = mapper.delMessagePush(messagePushVo);
+		
+		int count = mapper.getMessageRoomEmpCount(messageRoomId);
+		if(0 == count){
+			mapper.delMessage(messageRoomId);
+			mapper.delMessageRoom(messageRoomId);
+		}
+		return re;
+	}
+	
+	public int setMessagePush(MessagePushVO messagePushVo){
+		return mapper.setMessagePush(messagePushVo);
+	}
+
+	@Override
+	public List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId) {
+		return mapper.getMessageRoomInvite(messageRoomId);
+	}
+
 }

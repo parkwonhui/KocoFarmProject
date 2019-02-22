@@ -67,11 +67,35 @@ public class MessageControllerTest {
 		log.info(mapper.getEmpMessageRoom(vo));
 	}
 */
-
-	@Test
+/*	@Test
 	public void getMessageRoomList(){
 		log.info(mapper.getMessageRoomList("EMP_006"));
 	}
+*/
+/*	@Test
+	public void delMessagePush(){
+		MessagePushVO vo = new MessagePushVO();
+		vo.setEmpId("EMP_007");
+		vo.setMessageRoomId(21);
 
+		log.info(mapper.delMessagePush(vo));
+	}
+*/
+/*	@Test
+	public void delMessagePush(){
+		// 회색??
+		//mapper.delMessage(225);
+		//mapper.delMessageRoom(225);
+	}
+*//*	
+	@Test
+	public void delMessagePush(){
+		mapper.getMessageRoomEmpCount(143);
+	}
+	*/
 	
+	@Test
+	public void getMessageRoomInvite(){
+		log.info(mapper.getMessageRoomInvite(61));
+	}
 }
