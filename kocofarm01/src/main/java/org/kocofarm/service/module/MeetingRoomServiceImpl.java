@@ -20,7 +20,6 @@ public class MeetingRoomServiceImpl implements MeetingRoomService{
 	public void setMroom(MeetingRoomVO mroom){
 		
 	 	mapper.setMroom(mroom);
-		
 	}
 
 	//조회
@@ -49,6 +48,13 @@ public class MeetingRoomServiceImpl implements MeetingRoomService{
 	public List<MeetingRoomVO> getMroomList() {
 
 		return mapper.getMroomList();
+	}
+
+	//회의실 번호 확인
+	@Override
+	public MeetingRoomVO getIdChk(int mId) {
+		
+		return mapper.getIdChk(mId);
 	}
 	
 	

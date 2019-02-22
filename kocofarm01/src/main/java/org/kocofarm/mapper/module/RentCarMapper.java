@@ -3,21 +3,26 @@ package org.kocofarm.mapper.module;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
+import org.kocofarm.domain.comm.Criteria;
 import org.kocofarm.domain.rentCar.RentCarVO;
 
 public interface RentCarMapper {
 	
 	//ëª©ë¡
-	//@Select("select * from RENTCAR_DETAIL")
 	public List<RentCarVO> getRentCarDetailList();	
-	/*//?“±ë¡?
+	//ë“±ë¡
 	public void setRentCarDetail(RentCarVO rentCar);
 	//ì¡°íšŒ
 	public RentCarVO getRentCarDetail(String carId);
-	//?‚­? œ
+	//ì‚­ì œ
 	public int delRentCarDetail(String carId); 	
-	//?ˆ˜? •
-	public int setUpRentCarDetail(RentCarVO rentCar);*/
+	//ìˆ˜ì •
+	public int setUpRentCarDetail(RentCarVO rentCar);	
+	//í˜ì´ì§•
+	public List<RentCarVO> getListWithPaging(Criteria cri);
+	//ê¸€ ê°¯ìˆ˜
+	public int getTotalCount(Criteria cri);
 	
-
+	
+	
 }

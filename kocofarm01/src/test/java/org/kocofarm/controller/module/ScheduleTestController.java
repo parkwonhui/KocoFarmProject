@@ -1,4 +1,4 @@
-package org.kocofarm.controller.comm;
+package org.kocofarm.controller.module;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
+import org.kocofarm.domain.schedule.ScheduleMemberVO;
+import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
+import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.mapper.module.ScheduleMapper;
 import org.kocofarm.service.module.ScheduleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,10 @@ import lombok.extern.log4j.Log4j;
 public class ScheduleTestController {
 	@Setter(onMethod_ = {@Autowired})
 	private ScheduleMapper mapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private EmpMapper empMapper;
+	
 	
 	@Before
 	public void setup(){
@@ -123,10 +131,12 @@ public class ScheduleTestController {
 		
 /*	@Test
 	public void setProject(){
-		ScheduleProject project = new ScheduleProject(5,"졸려","","", "",0,0,false);
+		ScheduleProjectVO project = new ScheduleProjectVO(5,"졸려","", "",0,0,false, "EMP_002");
 		mapper.setProject(project);
-	}*/
-	
+		
+		mapper.getProjectList(null);
+	}
+*/	
 /*	@Test
 	public void setUpProject(){
 		ScheduleProject project = new ScheduleProject(101,"졸려BBBBB222BB","2019-03-22","2019-05-22", "",80,0,true);
@@ -135,9 +145,46 @@ public class ScheduleTestController {
 		List<ScheduleProject> list = mapper.getProjectList();
 		log.info(list);
 	}*/
-	
+/*	
 	@Test
 	public void delCategory(){
 		mapper.delCategory(66);
 	}	
+	
+	@Test
+	public void getProjectEmp(){
+		ScheduleProjectSearchVO search = new ScheduleProjectSearchVO("EMP_006");
+		mapper.getProjectList(search);
+	}
+	*/
+	
+/*	@Test
+	public void test(){
+		empMapper.getDeptListEmp("EMP_006");
+	}
+*/
+/*	@Test
+	public void setProject(){
+		//ScheduleProjectVO project = new ScheduleProjectVO(5,"졸려","EMP_002","", "",0,0,false);
+		//mapper.setProject(project);
+		mapper.setMember(new ScheduleMemberVO(1000, 0, 0, "EMP_002", 142, 2));
+		//mapper.getProjectList(null);
+	}*/
+	
+/*	@Test
+	public void getProjectWithManager(){
+		log.info(mapper.getManagerProjectList("EMP_006"));
+	}*/
+	
+/*	@Test
+	public void getSelectProject(){
+		log.info(mapper.getSelectProject(42));
+	}
+*/
+	
+	/*@Test
+	public void getMember(){
+		log.info(mapper.getMember(142));
+	}*/
+	
 }

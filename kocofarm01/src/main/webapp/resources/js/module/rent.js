@@ -4,74 +4,63 @@ $(function(){
 	//차량등록
 	$("#enroll").click(function() {
 		if(confirm("등록하시겠습니까?")){
-			//여기에 유효성 겁사 - 함수 만들기
-			chkReq();				
-									
+			//여기에 유효성 겁사
+			chkReq();										
 		}
 		return false;
 	})
 	
 	//수정버튼 눌렀을 떄
-	$("#updateForm").click(function() {
-		/*위치이동*/
-		location.href = "rentCarDetailEditForm.do?car_id="+$("#car_id").val()
-		
-		/*여기에 삽입해 봄*/
-		
-		
+	$("#updateForm").click(function() {		
+		$('#rentCarDetailForm').attr("action", "/rent/rentCarDetailEdit")
+		$("#rentCarDetailForm").submit();		
 		return false;
 	})
 	
 	
+	//상세보기에서 - 목록버튼 눌렀을 때 기존페이지로 이동한다. 
+	$("#listBtn").click(function() {		
+		$('#rentCarDetailForm').attr("action", "/rent/rentCarDetailList")
+		$("#rentCarDetailForm").submit();		
+			
+	})
+	
+	//내용수정(update.jsp)에서 - 목록버튼 눌렀을떄 =>1페이지로 이동돼ㅠ
+	$("#listBtn2").click(function() {		
+		$('#rentCarEditForm').attr("action", "/rent/rentCarDetailList").attr("method", "get")
+		 var pageNumTag = $("input[name = 'pageNum']").clone();
+	     var amountTag = $("input[name = 'amount']").clone();
+	   /*  var keywordTag = $("input[name = 'keyword']").clone();
+	     var typeTag = $("input[name = 'type']").clone();*/
+	     
+	     $('#rentCarEditForm').empty();
+	     
+	     $('#rentCarEditForm').append(pageNumTag);
+	     $('#rentCarEditForm').append(amountTag);
+	    /* $('#rentCarEditForm').append(keywordTag);
+	     $('#rentCarEditForm').append(typeTag);*/
+		
+		$("#rentCarEditForm").submit()		
+		//기존 : location.href = "/rent/rentCarDetailList";		
+	}) 
 	
 
-	//수정시, 체크박스 값 유지 -- 이거 할지, 말지 고민해 보기(시간관계상)
-	function test(){
-	
-		
-		$("input[name = 'carModel']").each(function() {
-			var thisVal = $(this).val();
-			if(thisVal.length>0){
-				$(this).attr("checked", true)
-			}
-		})
-		
-		$("input[name = 'condition']").each(function() {
-			var thisVal = $(this).val();
-			if(thisVal.length>0){
-				$(this).attr("checked", true)
-			}
-		})
-		
-		$("input[name = 'oil_Type']").each(function() {
-			var thisVal = $(this).val();
-			if(thisVal.length>0){
-				$(this).attr("checked", true)
-			}
-		})
-		
-		
-	}
-	
-	
 	//수정내용 등록
 	$("#Upenroll").click(function() {
 		if(confirm("수정완료 하시겠습니까?")){
-			
 			chkReq2();
 		}
 		return false;
 	})
 	
-		
-	
-	
 	//삭제
 	$("#delete").click(function() {
 		if(confirm("삭제하시겠습니까?")){
 			/*페이지 이동*/
-			location.href = "rentCarDetailDelAction.do?car_id=" +$("#car_id").val()
-			
+			/*location.href = "/rent/rentCarDetailDel?carId=" +$("#car_id").val()*/
+			//location.href = "/rent/rentCarDetailDel?carId="+$("#car_id").val();	
+			$('#rentCarEditForm').attr("action", "/rent/rentCarDetailDel").attr("method", "get")
+			$("#rentCarEditForm").submit()
 		}	
 	})
 	
@@ -117,10 +106,34 @@ $(function(){
 		})
 
 		
-	}
+	})
 	
 	
-	)
+	
+	//페이징처리
+	var actionForm = $("#actionForm");
+	$(".paginate_button a").on(
+			"click",
+			function(e) {
+
+				e.preventDefault();
+				console.log('click');
+				actionForm.find("input[name='pageNum']").val($(this).attr("href"));				
+				actionForm.submit();
+			});
+	
+	//페이징처리 - 이벤트
+	$(".move")
+	.on(
+			"click",
+			function(e) {
+				e.preventDefault();
+				actionForm
+						.append("<input type='hidden' name='carId' value='"
+								+ $(this).attr("href") + "'>");
+				actionForm.attr("action", "/rent/rentCarDetailView");
+				actionForm.submit();
+			});
 
 
 });/*전체function 괄호*/
@@ -172,28 +185,17 @@ function chkReq(){
 		return false;
 	}
 	
-	if($('input[name = "oil_Type"]:checked').val() == null || $('input[name = "oil_Type"]:checked').val() == "" ){
+	if($('input[name = "oilType"]:checked').val() == null || $('input[name = "oilType"]:checked').val() == "" ){
 		alert("유종을 선택해주세요.");
 		$("#oil_Type").focus();
 		return false;
 	}
 	
-	
-	/*if( $("#car_id").val() == null && $("#modelName").val() == null
-			&& $('input[name = "carModel"]:checked').val() == null
-			&& $('input[name = "condition"]:checked').val() == null
-			&& $("#price").val() == null
-			&& $("#year").val() == null
-			&& $('input[name = "oil_Type"]:checked').val() == null
-	){
-		location.href= "rentCarDetailWrite.do"	
-	}*/
-	
-	
-	
+
+	/*여기 주석처리*/
 	var mode = $("#mode").val();
 	if("write" == mode){
-		$('#rentCarWriteForm').attr("action", "rentCarDetailWrite.do")
+		$('#rentCarWriteForm').attr("action", "/rent/rentCarDetailWrite")
 		$("#rentCarWriteForm").submit()
 	
 	}
@@ -201,8 +203,10 @@ function chkReq(){
 	
 }
 
-//수정 필수값 체크
+//수정완료 버튼 후, 필수값 체크
 function chkReq2(){
+	
+	
 	
 	if($("#modelName").val() == null || $("#modelName").val() == "" ){
 		alert("차량모델명을 입력해주세요.");
@@ -236,25 +240,16 @@ function chkReq2(){
 		return false;
 	}
 	
-	if($('input[name = "oil_Type"]:checked').val() == null || $('input[name = "oil_Type"]:checked').val() == "" ){
+	if($('input[name = "oilType"]:checked').val() == null || $('input[name = "oilType"]:checked').val() == "" ){
 		alert("유종을 선택해주세요.");
 		$("#oil_Type").focus();
 		return false;
-	}
+	}	
 	
-	var mode = $("#mode").val();
-	if (mode == "edit" ) { 
-		$('#rentCarEditForm').attr("action", "rentCarDetailEdit.do")
+	var mode = $("#mode").val();	
+	if (mode == "edit" ) { 	
+		$('#rentCarEditForm').attr("action", "/rent/rentCarDetailEdit");		
 		$("#rentCarEditForm").submit()
 	}
 }
 
-//유효성검사 함수 - 예외처리
-function isvalid(){
-	var car_id = //
-	//차량번호
-	functop
-	
-	//차량이름
-	
-}

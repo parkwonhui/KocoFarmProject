@@ -27,4 +27,17 @@
 	<context:annotation-config />
 	<context:component-scan base-package="org.kocofarm.controller" />
 	
+	<!-- Login Interceptor -->
+	<beans:bean id="LoginInterceptor" class="org.kocofarm.Interceptor.LoginInterceptor"></beans:bean>
+    
+    <interceptors>
+        <interceptor>
+            <mapping path="/approval/*"/>
+            <mapping path="/rent/*"/>
+            <mapping path="/schedule/*"/>
+            <beans:ref bean="LoginInterceptor"/>
+        </interceptor>
+    </interceptors>
+	
 </beans:beans>
+
