@@ -209,19 +209,29 @@ public class ScheduleServiceImpl implements ScheduleService{
 	// TAG 부분 정의
 	@Override
 	public int setTag(ScheduleTagVO tag) {
-		// TODO Auto-generated method stub
-		return 0;
+		int re = mapper.setTag(tag);
+		return re;
 	}
 
 	@Override
 	public int setUpTag(ScheduleTagVO tag) {
-		// TODO Auto-generated method stub
-		return 0;
+		int re = mapper.setUpTag(tag);
+		return re;
+
 	}
 
 	@Override
 	public int delTag(int tagId) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int re = mapper.delTag(tagId);
+		return re;
+	}
+
+	@Override
+	public List<ScheduleTagVO> getTagList(int calenderId) {
+		
+		List<ScheduleTagVO> re = mapper.getTagList(calenderId);
+		
+		return re;
 	}
 }

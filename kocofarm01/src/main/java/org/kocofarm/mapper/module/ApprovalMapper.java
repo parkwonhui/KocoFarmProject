@@ -2,12 +2,20 @@ package org.kocofarm.mapper.module;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import org.kocofarm.domain.approval.ApprCommentVO;
 import org.kocofarm.domain.approval.ApprDraftVO;
+import org.kocofarm.domain.approval.ApprEmpDraftDetailVO;
+import org.kocofarm.domain.approval.ApprEmpDraftVO;
+import org.kocofarm.domain.approval.ApprEmpPerDraftVO;
+import org.kocofarm.domain.approval.ApprEmpVO;
 import org.kocofarm.domain.approval.ApprExpenceContVO;
 import org.kocofarm.domain.approval.ApprExpenceVO;
 import org.kocofarm.domain.approval.ApprFormVO;
 import org.kocofarm.domain.approval.ApprVacationVO;
 import org.kocofarm.domain.comm.Criteria;
+import org.kocofarm.domain.emp.EmpVO;
 
 public interface ApprovalMapper {
 	/*--------------목록 불러오기--------------*/
@@ -26,12 +34,24 @@ public interface ApprovalMapper {
 	public void setExpence(ApprExpenceVO expence);
 	/* 지출명세서 내역 입력 */
 	public void setExpenceCont(ApprExpenceContVO expenceCont);
+	/* 결재자 입력*/
+	public void setApprEmp(ApprEmpVO apprEmp);
 	
 	
 	/*--------------기타 정보 가져오기 --------------*/
 	/* 최근 기안서 번호 가져오기 */
 	public int getDraftNo();
+	/* 결재자 정보(emp) 리스트 가져오기 */
+	public List<ApprEmpPerDraftVO> getApprEmpInfoList(int draftId);
+	/* 결재자 정보(emp) 리스트 가져오기 */
+	public List<ApprEmpDraftDetailVO> getApprEmpList(int draftId);
 	
+	/* 결재할 기안서 갯수 가져오기 */
+	public int getNumberOfDraft(String empId);
+	/* 결재할 기안서 리스트 번호 가져오기 ----여기에 기안서 정보도 추가*/
+	public List<ApprEmpDraftVO> getEmpDraftList(String empId);
+	/* 결재자 정보  가져오기 */
+	public ApprEmpDraftDetailVO getApprEmp(@Param("draftId") int draftId, @Param("empId") String empId);
 	
 	/*--------------기안서 가져오기--------------*/
 	/* 특정 기안서 불러오기 */
@@ -45,15 +65,19 @@ public interface ApprovalMapper {
 	
 	
 	/*--------------수정--------------*/
+	/* emp에 sign 추가 */
+	public int setUpSign(@Param("empId") String empId, @Param("empSign") String empSign);
 	/* 기본 기안서 정보 수정 */
 	public int setUpDraft(ApprDraftVO draft);
 	/* 휴가 신청서 정보 수정 */
 	public int setUpVacation(ApprVacationVO vacation);
+	public int setUpVacHit(int draft);
 	/* 지출 결의서 정보 수정*/
 	public int setUpExpence(ApprExpenceVO expence);
 	/* 지출 결의서 내역 수정*/
 	public int setUpExpenceCont(ApprExpenceContVO expenceCont);
-	
+	/* 결재 상태 수정 (버튼에 따라 다름) */
+	public int setUpApprOption(ApprEmpDraftDetailVO empDraft);
 
 	/*--------------삭제--------------*/
 	/* 기안서 삭제*/
@@ -70,4 +94,15 @@ public interface ApprovalMapper {
 	public List<ApprDraftVO> getListWithPaging(Criteria cri);
 	/*전체 기안서 개수 */
 	public int getTotalCount(Criteria cri);
+	
+	
+	/*--------------댓글--------------*/
+	/*등록*/
+	public int setComment(ApprCommentVO comment);
+	/*조회*/
+	public List<ApprCommentVO> getCommentList(int draftId);
+	/*삭제*/
+	public int delComment(int commentId);
+	/*수정*/
+	public int setUpComment(ApprCommentVO comment);
 }

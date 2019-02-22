@@ -7,7 +7,9 @@ public class AttachFileVO {
 
 	private String FileName;
 	private String FilePath;
-	private String uuid;
+	private String Uuid;
 	private boolean image;
+	
+	private long bno;
 	
 }

@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/comm/comm.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/comm/common.css" />
 
 
 	<div class="cont_wrap">
@@ -19,11 +19,10 @@
 				</div>
 			</div>
 		</div>
-	
-		<form id = 'actionForm' action = "/approval/getDraftList" method = 'get'>
+		<%-- <form id = 'actionForm' action = "/approval/getDraftList" method = 'get'>
 			<input type = 'hidden' name = 'pageNum' value = '${pageMaker.cri.pageNum }'>
 			<input type = 'hidden' name = 'amount' value = '${pageMaker.cri.amount }'>
-		</form>
+		</form> --%>
 		<!-- Contents Area -->
 		<div class="contents_wrap">
 			<!-- sch_top -->
@@ -35,13 +34,20 @@
 				<div class="sch_toggle_wrap">
 					<div class="sch_box_wrap">
 						<div class="right">
-							<select name="schType" id="schType">
-								<option value="">전체</option>
-								<option value="title">제목</option>
-								<option value="contents">내용</option>
+						<form id= 'actionForm' action="/approval/getDraftList" method='get' >
+							<select name="Type" id="Type">
+								<option value="">--</option>
+								<option value="N">제목</option>
+								<option value="T">내용</option>
+								<option value="F">번호</option>
+								<option value="D">날짜</option>
 							</select>
-							<input type="text" name="schWord" id="schWord" placeholder="검색어를 입력 해 주세요" />
-							<input type="button" class="schBtn" id="schBtn" value="검색" />
+							<input type="text" name="keyword" placeholder="검색어를 입력 해 주세요" />
+							<input type = 'hidden' name = 'pageNum' value = '${pageMaker.cri.pageNum }'>
+							<input type = 'hidden' name = 'amount' value = '${pageMaker.cri.amount }'>
+							<button class="btn btn-default" style="height: 33; box-shadow: 4px 2px black; background-color: #ecceea; text-shadow: 0px 0px 3px black; " >찾어라</button>
+							<!-- <input type="button" class="schBtn" id="schBtn" value="검색" /> -->
+							</form>
 						</div>
 					</div>
 				</div>
@@ -110,7 +116,7 @@
 							<c:forEach var="ApprDraftVO" items="${draftList }">
 								<c:if test = "${ApprDraftVO.approveState eq '결재중' }">
 								<tr>
-									<td width = 10%>${ApprovalDraft.draftId }</td>
+									<td width = 10%>${ApprDraftVO.draftId }</td>
 									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
 									<td width = 10%>${ApprDraftVO.formId}</td>
 									<td width = 20%>${ApprDraftVO.draftDt }</td>

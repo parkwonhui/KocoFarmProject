@@ -157,8 +157,37 @@ $( function() {
   						  <input type="text" name="addCompletionPer" id="calenderCompletionPerVal" value="0"></input>
 						</div>
 					</div>
-					<div class="tag-selectbox-container">
-						<button class="enter-tag-selectbox" name="tagcontainerbutton">태그 선택</button>
+					<div>
+						<div style = "height: 20px; display:inline-block;" id= "add-tag_bar" ></div>
+						<div id = "add-tag_bar2"></div>
+						<button class="btn btn-warning" data-target="#select-tag-popup" data-toggle="modal" name="tag" id="add-tag">태그 추가</button>
+					</div>
+					<div class="modal fade" id="add-tag-popup" >
+					 <div class="modal-dialog">
+					   <div class="modal-content">
+					     <!-- header -->
+					     <div class="tag-select-header">
+					       <!-- 닫기(x) 버튼 -->
+					       <button type="button" class="close" data-dismiss="modal">×</button>
+					       <!-- header title -->
+					       <h4 class="tag-select-title">Tag선택</h4>
+					     </div>
+					     <!-- body -->
+					     <div class="modal-body">
+					          Tag name
+					         <div><input type="text" value="" onclick="this.value=''" name= "addtagName" class="tag-name-select" id = "tag-name-select"></div>
+					          
+					          Tag color
+					         <div><input type="color"  value="#ffff" class="tag-color-select" name= "addtagColor" id="tag-color-select"></div>
+					         
+					     </div>
+					     <!-- Footer -->
+					      <div class="tag-select-footer">
+					        <input type="button" class="btn btn-tag-add" id="tag-add" value="add"></input>
+					        <input type="button" class="btn btn-tag-close" id="tag-close" value="Close">
+					      </div>
+					    </div>
+					  </div>
 					</div>
 					<div>
 						<button class="btn btn-secondary" name="worker_list">작업자
@@ -206,7 +235,11 @@ $( function() {
   						  <input type="text" name="editCompletionPer" id="editCalenderCompletionPerVal"></input>
 						</div>
 					<div>
-						<button class="btn btn-warning" data-target="#select-tag-popup" data-toggle="modal" name="tag">태그 선택</button>
+						<div style = "height: 20px; display:inline-block;" id="edit-tag-bar">
+						
+						</div>
+						<div id = "edit-tag_bar2"></div>
+						<button class="btn btn-warning" data-target="#select-tag-popup" data-toggle="modal" name="tag" id="edit-tag">태그 추가</button>
 					</div>
 					<div class="modal fade" id="select-tag-popup" >
 					 <div class="modal-dialog">
@@ -221,15 +254,16 @@ $( function() {
 					     <!-- body -->
 					     <div class="modal-body">
 					          Tag name
-					         <div><input type="text" value="Basic" class="tag-name-select" id = "tag-name-select"></div>
+					         <div><input type="text" value="ex)Important" onclick="this.value=''" name= "tagName" class="tag-name-select" id = "tag-name-select"></div>
 					          
 					          Tag color
-					         <div><input type="color"  value="document.getElementById('tag-color-select').value" class="tag-color-select" id="tag-color-select"></div>
+					         <div><input type="color"  value="#ffff" class="tag-color-select" name= "tagColor" id="tag-color-select"></div>
 					         
 					     </div>
 					     <!-- Footer -->
 					      <div class="tag-select-footer">
-					        <input type="button" class="btn btn-default" data-dismiss="modal" value="Close"></input>
+					        <input type="button" class="btn btn-tag-edit" id="tag-edit" value="Edit"></input>
+					        <input type="button" class="btn btn-tag-close" id="tag-close" value="Close">
 					      </div>
 					    </div>
 					  </div>

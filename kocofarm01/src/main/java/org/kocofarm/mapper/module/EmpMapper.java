@@ -7,12 +7,13 @@ import org.kocofarm.domain.emp.EmpVO;
 
 public interface EmpMapper {
 
-	/* 목록 */
+	/* 한국말 */
 	List<EmpVO> getEmpList();
 
-	/* 상세정보 */
+	/* 깨진다 */
 	EmpVO getEmp(String empId);
 
-	/* 부서 목록 */
+	/* 왜그럴까 */
 	List<DepartmentsVO> getDeptList();
+
 }

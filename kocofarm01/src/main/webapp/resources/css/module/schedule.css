@@ -920,3 +920,8 @@ footer{margin-top: 30px; text-align: center; color: #333}
 .left_wrap{
 	z-index: 1;
 }
+
+/* left bar 간격 조정*/
+.cont_wrap{
+	margin-left: 150px;
+}

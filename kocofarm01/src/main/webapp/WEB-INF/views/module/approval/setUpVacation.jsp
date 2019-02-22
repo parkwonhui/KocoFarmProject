@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<!-- <link rel="stylesheet" type="text/css" href="/resources/css/common.css" /> -->
-<!-- <link rel="stylesheet" type="text/css" href="/resources/css/approval.css" /> -->
-<!-- <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+ <link rel="stylesheet" type="text/css" href="/resources/css/comm/common.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
+ <link rel="stylesheet" href="/code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ <link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
-<link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
@@ -26,24 +25,25 @@
 		</div>
 	
 		<!-- Contents Area -->
-		<%-- <div class="contents_wrap">
+		 <div class="contents_wrap">
 			<!-- basic draft input  -->
 			<div class="draft_wrap">
 				<h1 class="txt_c">기본 정보</h1>
 				<div class ="inf_wrap_box">
-					<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
+				<%-- 	<p class="name"><b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
 					<p class="position"><b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}
 					<p class="dep"><b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }
-					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }		 
+					<p class="form"><b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }		  --%>
 				</div>
 				<p></p>
 				<p></p>
-			</div> --%>
+			</div> 
 		
 			<!-- list -->
 			<div class="contents">
 				<!-- 기안서 보기 -->
-				<form  role = "form" action="/approval/setUpVacation" method="post">
+				<form  role = "form" action="/approval/setUpVacation?draftId=${draft.draftId} "method="post">
+					<input type="hidden"  id="draftId" name="draftId"  value="${draft.draftId}" />
 					<div class="vacation_wrap">
 						<div class="title">
 							<h1 class="txt_c">휴 가 신 청 서</h1>
@@ -62,12 +62,12 @@
 							 	<tr>
 							 		<th class="inputText" scope="col"> 기안서 제목 </th>
 							 		<td><input type="text" name="draftTitle" 
-							 		value='<c:out value="${draft.draftTitle }"/>'readonly="readonly"></td>
+							 		value='<c:out value="${draft.draftTitle }"/>'></td>
 							 	</tr>
 							 	<tr>
 							 		<th class="inputText" scope="col"> 보존 년한 </th>
 							 		<td> <input type="text" name="draftYear"
-							 		value='<c:out value="${draft.draftYear }"/>'readonly="readonly"> </td>
+							 		value='<c:out value="${draft.draftYear }"/>'> </td>
 							 	</tr>
 							 </table>
 							 
@@ -82,8 +82,7 @@
 							 	<tr>
 							 		<th class="inputText">휴가 종류</th>
 							 		<td colspan="3">
-								 		<input type="radio" name = "vacationType" 
-								 		checked value='<c:out value="{vacation_form.vacationType}"/>'>
+								 		<!-- <input type="radio" name = "vacationType" 	checked value="{vacation.vacationType}">${vacation.vacationType} -->
 								 		<input type="radio" name = "vacationType" value="병가">병가
 										<input type="radio" name = "vacationType" value="오전반차"> 오전 반차
 										<input type="radio" name = "vacationType" value="오후반차"> 오후 반차
@@ -94,16 +93,16 @@
 							 	<tr>
 							 		<th class="inputText">시작 날짜</th>
 							 		<td><input type="text" id="Startdatepicker" name = "vacationStartDt" class="date" 
-							 		value="${vacation_form.vacationStartDt }" readonly=readonly /> </td>
+							 		value="${vacation.vacationStartDt }" /> </td>
 							 		<th class="inputText">종료 날짜</th>
 							 		<td><input type="text" id="Enddatepicker" name = "vacationEndDt" class="date" 
-							value="${vacation_form.vacationEndDt }" readonly=readonly /></td>
+							value="${vacation.vacationEndDt }"/></td>
 							 	</tr>
 							 	<tr>
 							 		<th class="inputText">총 일수 </th>
 							 		<td><input type="button" class="days_btn" id="dayBtn" value="계산" />
 							 		<td colspan="2"><input type="text" id ="vacationDays" name="vacationDays"
-							 		value='<c:out value="${vacation_form.vacationDays }"/>'></td>
+							 		value='<c:out value="${vacation.vacationDays }"/>'></td>
 							 	</tr>
 							 	
 							 	<tr>
@@ -113,7 +112,7 @@
 							 	<tr>
 							 		<td colspan="4" class="inputText txt_c">
 							 			<textarea rows="6" cols="120" name="vacationReason" class="wth100p">
-							 			<c:out value="${vacation_form.vacationReason}"/></textarea>
+							 			<c:out value="${vacation.vacationReason}"/></textarea>
 									</td>
 							 	</tr>
 							 	</table>
@@ -127,7 +126,7 @@
 								 	<tr>
 								 		<th class="inputText" scope="col">이름</th>
 								 		<td><input type=text  name="replacementId" 
-								 		value= '<c:out value="${vacation_form.replacementId }"/>'></td>
+								 		value= '<c:out value="${vacation.replacementId }"/>'></td>
 								 	</tr>
 								 	
 								 	<tr>
@@ -148,9 +147,10 @@
 			
 						<div class= flt_r>
 						<br><br>
-							<input type="hidden" name="formId" value="${form.formId}" />
-							<input type="hidden" name="empId" value="${empVO.empId }" />
-							<input type="submit" class="submitBtn" value="제출">
+							<%-- <input type="hidden" name="formId" value="${form.formId}" />
+							<input type="hidden" name="empId" value="${empVO.empId }" /> --%>
+							<input type="submit"  class="submitBtn" id="Save" value="제출" />
+							
 							<br><br>
 						</div>
 					</div>
@@ -158,6 +158,6 @@
 			</div>
 		
 		</div>
-
+</div>
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

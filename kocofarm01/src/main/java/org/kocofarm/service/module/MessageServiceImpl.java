@@ -11,6 +11,7 @@ import org.kocofarm.domain.message.MessageEmpListVO;
 import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.message.MessageRoomListVO;
 import org.kocofarm.domain.message.MessageRoomVO;
+import org.kocofarm.domain.message.MessageVO;
 import org.kocofarm.mapper.module.EmpMapper;
 import org.kocofarm.mapper.module.MessageMapper;
 import org.kocofarm.mapper.module.ScheduleMapper;
@@ -89,8 +90,68 @@ public class MessageServiceImpl implements MessageService {
 				return -1;
 			}
 		}
-		
 		return re;
 		
 	}	
+	
+	@Override
+	public List<MessageVO> getMessageList(int roomId){
+		if(0 == roomId){
+			return null;
+		}
+		List<MessageVO> list = mapper.getMessageList(roomId);
+		
+		for(MessageVO vo : list){
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");			
+			String dateToString = transFormat.format(vo.getDt());
+			vo.setDateString(dateToString);
+
+		}	
+		
+		return list;
+	}
+
+	@Override
+	public int setMessage(MessageVO messageVO){
+		if(null == messageVO){
+			return -1;
+		}
+		
+		return mapper.setMessage(messageVO);
+	}
+	
+	@Override
+	public MessagePushVO getEmpMessageRoom(MessagePushVO messagePushVo){
+		return mapper.getEmpMessageRoom(messagePushVo);
+	}
+	
+	@Override
+	public List<String> getMessageRoomEmpList(int roomId){
+		return mapper.getMessageRoomEmpList(roomId);
+	}
+
+	@Override
+	@Transactional
+	public int delMessagePush(MessagePushVO messagePushVo, MessageVO messageVo){
+		int messageRoomId = messageVo.getMessageRoomId();
+		int re = mapper.setMessage(messageVo);
+		re = mapper.delMessagePush(messagePushVo);
+		
+		int count = mapper.getMessageRoomEmpCount(messageRoomId);
+		if(0 == count){
+			mapper.delMessage(messageRoomId);
+			mapper.delMessageRoom(messageRoomId);
+		}
+		return re;
+	}
+	
+	public int setMessagePush(MessagePushVO messagePushVo){
+		return mapper.setMessagePush(messagePushVo);
+	}
+
+	@Override
+	public List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId) {
+		return mapper.getMessageRoomInvite(messageRoomId);
+	}
+
 }

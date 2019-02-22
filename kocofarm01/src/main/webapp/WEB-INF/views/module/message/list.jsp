@@ -53,6 +53,27 @@
 		</div>
 	</div>
 	
+	<!-- Modal 초대 -->
+	<div class="modal fade" id="invite-message-room" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">메시지 방 초대</h4>
+				</div>
+				<div class="modal-body">
+					<div id="invite-emp-list" ></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="invite-message-room-request" class="btn btn-primary" data-dismiss="modal">초대</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
 		<!-- list -->
 		<div class="contents">
 			<div class="messaging">
@@ -60,6 +81,8 @@
 					<div class="inbox_people">
 						<div class="headind_srch">
 							<div class="recent_heading">
+								<input type="hidden" id="message-my-emp-id" value='${loginVO.empId}' />
+								<input type="hidden" id="click-message-room-id" value='' />
 								<h4>Recent</h4>
 							</div>
 							<div class="srch_bar">
@@ -80,66 +103,12 @@
 						
 						</div>
 					</div>
+					<div class="message-room-title"></div>
 					<div class="mesgs">
 						<div class="msg_history">
-							<div class="incoming_msg">
-								<div class="incoming_msg_img">
-									<img src="https://ptetutorials.com/images/user-profile.png"
-										alt="sunil">
-								</div>
-								<div class="received_msg">
-									<div class="received_withd_msg">
-										<p>Test which is a new approach to have all solutions</p>
-										<span class="time_date"> 11:01 AM | June 9</span>
-									</div>
-								</div>
-							</div>
-							<div class="outgoing_msg">
-								<div class="sent_msg">
-									<p>Test which is a new approach to have all solutions</p>
-									<span class="time_date"> 11:01 AM | June 9</span>
-								</div>
-							</div>
-							<div class="incoming_msg">
-								<div class="incoming_msg_img">
-									<img src="https://ptetutorials.com/images/user-profile.png"
-										alt="sunil">
-								</div>
-								<div class="received_msg">
-									<div class="received_withd_msg">
-										<p>Test, which is a new approach to have</p>
-										<span class="time_date"> 11:01 AM | Yesterday</span>
-									</div>
-								</div>
-							</div>
-							<div class="outgoing_msg">
-								<div class="sent_msg">
-									<p>Apollo University, Delhi, India Test</p>
-									<span class="time_date"> 11:01 AM | Today</span>
-								</div>
-							</div>
-							<div class="incoming_msg">
-								<div class="incoming_msg_img">
-									<img src="https://ptetutorials.com/images/user-profile.png"
-										alt="sunil">
-								</div>
-								<div class="received_msg">
-									<div class="received_withd_msg">
-										<p>We work directly with our designers and suppliers, and
-											sell direct to you, which means quality, exclusive products,
-											at a price anyone can afford.</p>
-										<span class="time_date"> 11:01 AM | Today</span>
-									</div>
-								</div>
-							</div>
 						</div>
 						<div class="type_msg">
 							<div class="input_msg_write">
-								<input type="text" class="write_msg"
-									placeholder="Type a message" />
-								<button class="msg_send_btn" type="button">
-									<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-								</button>
 							</div>
 						</div>
 					</div>
