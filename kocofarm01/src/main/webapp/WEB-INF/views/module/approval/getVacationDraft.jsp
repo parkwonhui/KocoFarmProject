@@ -263,8 +263,7 @@
 			</div>
 		
 		</div>
-		
-		<!-- 댓글 -->
+
 		<!--  댓글  -->
     <div class="container">
         <label for="content">comment</label>

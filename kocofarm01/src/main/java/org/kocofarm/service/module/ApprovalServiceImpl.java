@@ -214,10 +214,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return mapper.setUpVacation(vacation);
 	}
 
-	@Override
-	public int setUpVacHit(int draft){
-		return mapper.setUpVacHit(draft);
-	}
 	
 	@Override
 	public int setUpExpence(ApprExpenceVO expence) {
