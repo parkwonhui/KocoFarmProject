@@ -36,11 +36,122 @@
 				
 				<!-- 기안서 보기 -->
 				
-					<div class="vacation_wrap">
+				<div class="vacation_wrap">
+					<div id = "printForm">
 						<div class="title">
 							<h1>휴 가 신 청 서</h1>
 						</div>
 						
+						<div class="draft_wrap">
+							<h1 class="txt_c">결재자 정보</h1>
+							<div class="inf_wrap_box">
+								<table>
+									<thead>
+										<tr>
+											<th width = 10%>번호 </th>
+											<th width = 10%>부서 </th>
+											<th width = 10%>직위</th>
+											<th width = 10%>사번</th>
+											<th width = 20%>이름</th>
+											<th width = 10%>결재</th>
+											<th width = 10%>반려</th>
+											<th width = 10%>sign</th>
+											
+										</tr>
+									</thead>
+									
+								
+									<tbody>
+										<c:forEach var="ApprEmployee" items="${apprEmpList }"  varStatus="vs">
+											<tr>
+												
+												<td id = 'count'>${vs.count }</td>
+												<td>${ApprEmployee.deptNm }</td>
+												<td>${ApprEmployee.positionNm }</td>
+												<td id = 'position${vs.count }' class = "${ApprEmployee.empId}">${ApprEmployee.empId}</td>
+												<td>${ApprEmployee.korNm}</td>
+												
+												<!-- 로그인 된 empId에 해당하는 컬럼 -->
+												<c:if  test= "${ApprEmployee.empId eq loginVO.empId }">
+													<td>
+														<input type="button" class="approveBtn" id ="apprState" value="결재" width ="100%"/>
+													</td>
+													
+													<td>
+														<input type="button" class="returnBtn" id ="apprState" value="반려" width ="100%" />
+													</td>
+													
+													<c:if test = "${apprEmp.apprOption eq '미확인' }" >
+														<td id = 'signImage' class = "empSign"></td>
+													</c:if>
+													<c:if test = "${apprEmp.apprOption eq '결재' }" >
+														<td id = 'signImage' class = "empSign">
+														
+														<c:if test =  "${ApprEmployee.empSign eq null }" >
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
+														</c:if>
+														
+														<c:if test =  "${ApprEmployee.empSign ne null }" >
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />
+														</c:if>
+														
+														</td>
+													</c:if>
+													
+													<c:if test = "${apprEmp.apprOption eq '반려' }" >
+														<td id = 'signImage' class = "empSign">
+														반려
+														</td>
+													</c:if>
+												</c:if>
+												<!-- 로그인 된 empId에 해당하는 컬럼 끝 -->
+												
+												<!-- 다른  empId에 해당하는 컬럼 -->
+												<c:if  test= "${ApprEmployee.empId ne loginVO.empId }">
+													<td>
+													</td>
+													<td>
+													</td>
+													<td class = "empSign">
+														<c:if test = "${ApprEmployee.draftSign ne null}"> <!-- 결재 정보에 사인값이 널이 아닐 때 -->
+															<c:if test =  "${ApprEmployee.empSign eq null }" > <!-- 사용자 사인을 안 갖고 있을때 -->
+																<c:if test = "${ApprEmployee.draftSign ne 'return'}">
+																	<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
+																</c:if>
+																
+																<c:if test = "${ApprEmployee.draftSign eq 'return'}">
+																	반려
+																</c:if>	
+															</c:if>
+																
+															<c:if test =  "${ApprEmployee.empSign ne null }" > <!-- 사용자 사인을 갖고 있을때 -->
+																
+																<c:if test = "${ApprEmployee.draftSign ne 'return'}">
+																	<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />				
+																</c:if>
+																
+																<c:if test = "${ApprEmployee.draftSign eq 'return'}">
+																	반려
+																</c:if>
+															</c:if>
+														</c:if>
+													</td>
+													
+												</c:if>	
+											
+									
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							
+								<input type = "hidden" id = "empSign" value = "${loginEmp.empSign}" />
+								<input type = "button" class="apprSubmit" value = "저장" />	
+							</div>
+							<p></p>
+							<p></p>
+				
+						</div>
 						<!-- vacation table 시작 -->
 						<div class="vac_table">
 							<table width = 80% height = 80% border=1 cellpadding=0 cellspacing=0 align="center">
@@ -104,9 +215,9 @@
 									<td>ID</td>
 									<td>${vacation.replacementId }</td>
 									<td>이름</td>
-									<td>대체근무자 이름</td>
+									<td>${replaceEmp.korNm }</td>
 									<td>직위</td>
-									<td>직위라능</td>
+									<td>${replaceEmp.positionNm }</td>
 								</tr>
 								<tr>
 									<!-- 신청내용   -->
@@ -130,10 +241,11 @@
 							</table>
 						</div>
 						<!-- vacation table 끝 -->
+					</div> <!-- print form 끝 -->
 						
 						<input type = "hidden" name="draftId" id="draftId" value ="${draft.draftId}" />
 						<input type = "hidden" name="formId" id="formId" value ="4" />
-						
+						<input type = "hidden" name = "empId" id="empId" value="${loginVO.empId}" />
 						<!-- btn -->
 						
 						<div class="btn_wrap">
@@ -141,6 +253,9 @@
 								<input type="button" class="list_btn" value="목록" />
 								<input type="button" class="vacEdit_btn" value="수정" /> 
 								<input type="button" class="vacDel_btn" value="삭제" />
+								<c:if test="${draft.approveState eq '결재완료' }">
+								<INPUT TYPE="button" VALUE="인쇄하기" style="background-color: #000000; font-size: 10pt; color: #ffffff; " onclick="printWin()">
+								</c:if>
 								
 							</div>
 						</div>			
@@ -148,100 +263,30 @@
 			</div>
 		
 		</div>
-		
-<!-- 댓글달기 -->
-<!-- 댓글 부분 -->
-    <div id="comment" align="center" >
-    <!-- 댓글 목록 -->    
-   	<div id = "ListComment" style="width: 54%; text-align: left;">
-   		<c:forEach var="item" items="${draftList }" varStatus="status">
-   		<table style="border: 1px solid #A4A4A4; border-radius : 3px; width : 100%; margin-top: 5px; font-size:12px;">
-   			<tr style="height : 15px; background-color : #F6E3CE; ">
-   				<td>
-   					작성자 &nbsp; ${item.empId }
-   				</td>
-   				<td style="text-align: right !important ;">
-   					작성일 &nbsp; ${item.commentDt }
-   				</td>
-   			</tr>
-   			<tr>
-   				<td style="width:15%;">
-   					댓글내용
-   				</td>
-   				<td >
-   					<div style=" height: 40px; overflow:auto;">${item.commentContents }</div>
-   				</td>
-   			</tr>
-   		</table>
-   		</c:forEach>
-   	</div>
-	<div id="commentPaging">
-	
-	
-	
-	
-	</div>   	
-	<!-- 로그인 했을 경우만 댓글 작성가능 -->
-            
-		<!--  댓글작성창 -->
-		<form id="commentForm" style="margin-top : 10px;">
-			<div class=re_writer style="width:54%;">
-					<input type="hidden" name="draftId" id="draftId" value="${draft.draftId}" />
-					<textarea id="commentContents" name="commentContents" style="height: 60; width: 90%; vertical-align: middle; border : 1px solid #A4A4A4; border-radius:3px; resize:none;"></textarea>
-					<input type="button" id="setCommentBtn" value="댓글등록" style="vertical-align: middle; width:76px;height: 60px; line-height: 33px; border : 1px solid #A4A4A4; border-radius:3px;">
-			</div>
-			<div style="padding-left: 800;">
-			
-			</div>
-		</form>
-		<!-- 댓글목록들 -->
-	
+
+		<!--  댓글  -->
+    <div class="container">
+        <label for="content">comment</label>
+        <form name="commentInsertForm"  style="margin-left: 350;">
+            <div class="input-group">
+                 <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/>
+<%--                <input type="hidden" name="empId" value="${DRAFT_COMMENT.empId }"/> --%>
+               <input type="text"  width="70%"   class="form-control" id="commentContents" 
+               name="commentContents" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <input type="button" class="commentInsertBtn" value="등록"/>
+               </span>
+              </div>
+        </form>
+    </div>
+    
+    <div class="container">
+        <div id = "getCommentList"></div>
+    </div>
 </div>
-<script>
-	$(function() {
-			 $("#setCommentBtn").click(function(){
-					var draftId = $("#draftId").val();
-					var commentContents = $("#commentContents").val();
-					commentContents = commentContents.replace(/(?:\r\n|\r|\n)/g, '<br />');
-					var commentId = 1;
-					var data = {
-							draftId : draftId,
-							commentContents : commentContents,
-							commentId : commentId
-					}
-					
-					$.ajax({
-						url : "insertComment.do",
-						type : "GET",
-						data : data,
-						success : function(){
-							var today = new Date();
-							var dd = today.getDate();
-							var mm = (today.getMonth()+1).toString();
-							if (mm.length < 2) {
-								mm = '0' + mm;
-							}
-							var yyyy = today.getFullYear();
-							var hour = today.getHours();
-							var min = today.getMinutes();
-							var sec = today.getSeconds();
-							
-							var date = yyyy+'-'+mm+'-'+dd+' '+hour+':'+min+':'+sec;
-							var html = '<table style="border: 1px solid #A4A4A4; width : 100%; font-size:12px; margin-top:5px; border-radius:5px;">';
-								html += '<tr style="height:15px;  background-color : #F6E3CE; "><td>작성자 &nbsp; '+commentId+'</td><td style="text-align:right !important ;"> 작성일 &nbsp; '+ date + '</td></tr>';
-								html += '<tr><td style="width:15%;">댓글내용</td><td><div style=" height: 40px; overflow:auto;">'+commentContents+'</div></td></tr></table>';
-								
-							$('#ListComment').append(html);
-							if ($('#ListComment table').length > 5) {
-								$('#ListComment').children()[0].remove();
-								 $("#commentContents").val("");
-							}
-						}
-					});
-			}); 
-		});
-		
-</script>
+ </div>
+
+
 
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false" ></jsp:include>

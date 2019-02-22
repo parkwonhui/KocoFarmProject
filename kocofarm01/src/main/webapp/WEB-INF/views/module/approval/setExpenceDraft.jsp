@@ -53,28 +53,30 @@
 			<h1 class="txt_c">기본 정보</h1>
 			<div class="inf_wrap_box">
 				<p class="name">
-					<b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.korNm }
+					<b>이름</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.korNm }
 				</p>
 				<p class="position">
-					<b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.positionNm}
+					<b>직위</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.positionNm}
 				</p>
 				<p class="dep">
-					<b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${empVO.deptNm }
+					<b>부서</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${loginEmp.deptNm }
 				</p>
-				<p class="form">
-					<b>양식</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${form.modeName }
-				</p>
+				
 			</div>
 			<p></p>
 			<p></p>
 
 		</div>
-
+		<form action="/approval/setExpence " name="setEmpId" method="post">
+			<div class = "appr_wrap_box">
+					<p class="ApprEmp">결재자<input type='text' name="empNameList" onclick = "window.open('/approval/searchApprovalEmp','결재자 검색','resizable=no width=600 height=600');return false">
+					<p class="ApprEmpId">결재자Id<input type='text' name="empIdList" /></p>
+			</div>
 		<!-- list -->
 
 		<div class="contents">
 			<!-- 기안서 보기 -->
-			<form action="/approval/setExpence " method="post">
+			
 				<div class="expence_wrap">
 					<div class="title" align="center">
 						<h1 class="txt_c">지 출 결 의 서</h1>
@@ -152,13 +154,13 @@
 				<div class=flt_r align="center">
 					<br><br> 
 					<input type="hidden" name="formId" value="2" />
-					<%-- <input type="hidden" name="empId" value="${empVO.empId }" /> --%> 
+					<input type="hidden" name="empId" value="${loginEmp.empId }" />
 					<input type="submit" class="submitBtn" value="제출"> <br>
 					<br>
 				</div>
 
-			</form>
-		</div>
+			</div>
+		</form>
 	</div>
 
 </div>

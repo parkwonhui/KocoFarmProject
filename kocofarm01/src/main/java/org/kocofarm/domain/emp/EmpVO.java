@@ -31,6 +31,14 @@ public class EmpVO implements Serializable {
 	private String startDt;
 	private String endDt;
 	private String salt;
+	private String empSign;
+	
+	public String getEmpSign() {
+		return empSign;
+	}
+	public void setEmpSign(String empSign) {
+		this.empSign = empSign;
+	}
 	public String getEmpId() {
 		return empId;
 	}

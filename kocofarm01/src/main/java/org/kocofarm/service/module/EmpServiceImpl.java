@@ -35,4 +35,12 @@ public class EmpServiceImpl implements EmpService{
 		return empMapper.getDeptList();
 	}
 
+	@Override
+	public List<EmpVO> getEmpByDept() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
 }

@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
 <body>
-<h2>testPage</h2>
+<p>Click the button to set the href value to https://www.w3schools.com.</p>
+<button onclick="myFunction()">Take me to w3schools.com</button>
+<script>
+function myFunction() {
+  alert('Are you ready?');
+  location.href = "https://www.w3schools.com";
+}
+</script>
+
 </body>
 </html>

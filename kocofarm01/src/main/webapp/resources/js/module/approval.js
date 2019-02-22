@@ -1,4 +1,4 @@
-$(function() {
+
 		var no = 1;
 		/* datePicker */
 		$("#Startdatepicker, #Enddatepicker, #expenceDt").datepicker({
@@ -64,13 +64,14 @@ $(function() {
 		});
 		
 		/* ---------------------기안서 버튼 기능 --------------------- */
+		
 		$(".list_btn").click(function(){
 			location.href="listDraft.do";
 			return false;
 		});
 		
 		$(".vacEdit_btn").click(function(){
-			location.href="setUpVacation?draftId="+$("#draftId").val();
+			location.href="/approval/getSetUpVacPage?draftId="+$("#draftId").val();
 			return false;
 		});
 		
@@ -80,7 +81,7 @@ $(function() {
 		});
 		
 		$(".expEdit_btn").click(function(){
-			location.href="";
+			location.href="/approval/getSetUpExpPage?draftId="+$("#draftId").val();
 			return false;
 		});
 		
@@ -89,6 +90,158 @@ $(function() {
 			return false;
 		});
 		
-});	
+		
+		/* ---------------------기안서 결재/반려 ---------------------- */
+		$(".approveBtn").click(function(){
+			alert('승인 하시겠습니까?');
+			/*$("#signImage").val("<input type = 'text' value =' 바보' readonly='readonly' >");*/
+			var a = document.getElementById('signImage');
+			
+			if( $("#empSign").val() != ''){
+				a.innerHTML = " <input type='image' id = 'tmpSignImage' name = 'tmpSignImage' value='"+$("#empSign").val()+"' src = '/resources/img/approval/"+$("#empSign").val()+"' />";
+				console.log(a.innerHTML);
+			}else if ($("#empSign").val() == ''){
+				var sign = confirm('사인이 없습니다. 등록하시겠습니까? ')
+				if(sign){
+					location.href = "/approval/setEmpSign";
+				}else{
+					window.open('/approval/test','결재자 검색','resizable=no width=600 height=600');
+					}
+			}
+	
+		});
+
+		$(".returnBtn").click(function(){
+			alert('반려 하시겠습니까?');
+			var a = document.getElementById('signImage');
+
+			console.log(a.innerHtml);
+			a.innerHTML = "반려";
+			console.log(a.innerHTML);
+			
+		});
+		
+		
+		$(".apprSubmit").click(function(){
+			alert('저장 하시겠습니까?');
+			var a = document.getElementById('signImage').innerHTML;
+			if(a == ''){ //선택 안 했을 시
+				alert('결재 여부를 선택하세요.')
+			}else if(a == '반려'){ //반려 선택 했을 시
+				location.href="/approval/setUpApprState?draftId="+$("#draftId").val()+"&apprState="+0;
+				
+			}else{ //결재 -> sign img 들어가 있을 시
+				location.href="/approval/setUpApprState?draftId="+$("#draftId").val()+"&apprState="+1+"&tmpSignImage="+$("#tmpSignImage").val();
+												
+			}
+		});
+		
+		$("#uploadSignBtn").on("click",function(e){
+			
+			var formData = new FormData();
+			var inputFile = $("input[name ='uploadFile']");
+			var files = inputFile[0].files;
+			
+			console.log(files);
+			
+			for(var i = 0 ; i<files.length; i++){
+				formData.append("uploadFile", files[i]);
+			}
+			
+			$.ajax({
+				url :'/approval/uploadSign',
+					processData : false,
+					contentType : false,
+					data : formData,
+					type :'POST',
+					success : function(result){
+						alert("Uploaded");
+						location.href = "/approval/setEmpSign";
+					}
+				
+			}); //$.ajax끝
+		});
+
+function getApprDraftList(empId) {
+	  alert(empId);
+	  
+	  location.href = "/approval/getEmpDraftList?empId="+empId;
+}
+
+function ieExecWB( intOLEcmd, intOLEparam )
+{
+// 웹 브라우저 컨트롤 생성
+var WebBrowser = '<OBJECT ID="WebBrowser1" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+ 
+// 웹 페이지에 객체 삽입
+document.body.insertAdjacentHTML('beforeEnd', WebBrowser);
+ 
+// if intOLEparam이 정의되어 있지 않으면 디폴트 값 설정
+if ( ( ! intOLEparam ) || ( intOLEparam < -1 )  || (intOLEparam > 1 ) )
+        intOLEparam = 1;
+ 
+// ExexWB 메쏘드 실행
+WebBrowser1.ExecWB( intOLEcmd, intOLEparam );
+ 
+// 객체 해제
+WebBrowser1.outerHTML = "";
+}
+ 
+$(".commentInsertBtn").click(function(){
+	var commentContents = $("#commentContents").val();
+	var draftId = $("#draftId").val();
+	var empId = $("#empId").val();
+	
+	var param = {"commentContents" : commentContents, "draftId" : draftId, "empId" : empId};
+	
+		$.ajax({
+			type : "POST",
+			url : "setComment",
+			data : param,
+			success : function(){
+				alert("댓글이 등록되었습니다.");
+				$("#commentContents").val("");
+				getCommentList();
+				}
+		});
+});
 
 
+$(function(){
+	getCommentList();
+});
+
+
+function getCommentList(){
+	var commentContents = $("#commentContents").val();
+	var draftId = $("#draftId").val();
+	var empId = $("#empId").val();
+	console.log(draftId, empId);
+	
+	var param = {"commentContents" : commentContents, "draftId" : draftId, "empId" : empId};
+	$.ajax({
+		type : "GET",
+		url : "getCommentList",
+		data : param,
+		success : function (result){
+			$("#getCommentList").html(result);
+		}
+	});
+}
+
+var actionForm = $("#actionForm");
+$("#actionForm button").on("click",function(e){
+	if(!actionForm.find("option:selected").val()){
+		alert("자네..검색종류는 좀 선택해주지않겠나?");
+		return false;
+	}
+	
+	if(!actionForm.find("input[name='keyword']").val()){
+		alert("자네....아무것도 입력하지않고 찾을것인가?");
+		return false;
+	}
+	actionForm.find("input[name='pageNum']").val("1");
+	e.preventDefault();
+	
+	actionForm.submit();
+})
