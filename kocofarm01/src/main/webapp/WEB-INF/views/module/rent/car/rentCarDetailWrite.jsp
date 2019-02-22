@@ -20,7 +20,8 @@
 	
 		<div class="contents_wrap">
 			<!-- write -->
-			<form action="" method="post" id = "rentCarWriteForm">
+			<!-- <form action="" method="post" id = "rentCarWriteForm"> -->
+			<form action="/rent/rentCarDetailWrite" method="post" id = "rentCarWriteForm">			
 				<input type="hidden" name="mode" id="mode" value="write" />
 				
 				<div class="contents">
@@ -36,7 +37,7 @@
 							<tr>
 								<th scope="col">차량 번호</th>
 								<td class="left">
-									<input type="text" name="car_id" id = "car_id">
+									<input type="text" name="carId" id = "car_id">
 									<input type = "button" id = "checkCar_Id" class="btn_y" value="중복확인">
 								</td>
 								<th scope="col">차량 모델 명</th>
@@ -70,9 +71,9 @@
 							</tr>
 							<tr>
 								<th scope="col">유종</th>
-								<td class="left" colspan="3">
-									<input type = "radio" class="radio_btn" name="oil_Type" value="휘발유">휘발유
-				 					<input type = "radio" class="radio_btn" name="oil_Type" value="경유">경유	
+								<td class="left" colspan="3"><!-- oil_Type -> oilType 으로 변경-->
+									<input type = "radio" class="radio_btn" name="oilType" value="휘발유">휘발유
+				 					<input type = "radio" class="radio_btn" name="oilType" value="경유">경유	
 								</td>
 							</tr>
 						</tbody>
@@ -83,7 +84,7 @@
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r">
-					<input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = 'rentCarDetailList.do'" />
+					<input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = '/rent/rentCarDetailList'" />
 <%-- 					 <c:if test="${param.mode eq 'write'}"> --%>
 						 <input type="button" class="write_btn" value="등록" id = "enroll" >
 					<%-- </c:if>

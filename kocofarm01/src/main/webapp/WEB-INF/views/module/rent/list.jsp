@@ -18,18 +18,16 @@
 		</div>
 		
 		
-		<!-- 대여 목록 -->
-		
-		
+		<!-- 대여 목록 -->		
 		<div class="contents_wrap">		
 			<ul>
-			    <li><a href="rentCarDetailList">차량목록(관리자)</a>
-				<li><a href="">차량정비일지</a>
+			    <li><a href="/rent/rentCarDetailList">차량목록(관리자)</a>
+				<li><a href="/rent/car">차량정비일지</a>
 				<li><a href="">차량예약</a>
 				<li><a href="">차량운행일지</a>
 				<hr>
 			  	<li><a href="/meetingroom/mroomlist">회의실 목록</a></li>
-			  	<li><a href="reservlist">회의실 예약 목록</a></li>
+			  	<li><a href="/reservation/reservlist">회의실 예약 목록</a></li>
 			</ul>
 		</div>
 	</div>

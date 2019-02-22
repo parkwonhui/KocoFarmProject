@@ -1,8 +1,12 @@
 package org.kocofarm.domain.comm;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class LoginVO {
 	private String empId;
 	private transient String pw;
@@ -18,11 +22,12 @@ public class LoginVO {
 	private String deptId;
 	private String jobId;
 	private String positionId;
-	private String mangerId;
+	private String managerId;
 	private int authority;
 	private int salary;
 	private String regDt;
 	private String upDt;
 	private String emgImg;
 	private int re;
+
 }

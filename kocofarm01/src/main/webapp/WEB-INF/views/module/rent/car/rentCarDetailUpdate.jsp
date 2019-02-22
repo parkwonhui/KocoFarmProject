@@ -18,10 +18,13 @@
 		</div>
 	
 		<div class="contents_wrap">
-			<!-- write -->
-			<form action="" method = "post" id = "rentCarEditForm">
+			<!-- write --><!-- action에 /rent/rentCarDetailUpdate  넣어봄,id = "rentCarEditForm" 삭제함 -->
+			<form id = "rentCarEditForm" action="" method = "post" >
 				<input type="hidden" name="mode" id="mode" value="edit" />
-				<input type="hidden" name="car_id" value="${rentCarDetail.carId }">
+				<input type="hidden" id = "car_id" name="carId" value="${rentCarDetail.carId }"/>
+				<input type = "hidden" name  = "pageNum" value = "${cri.pageNum}">
+  				<input type = "hidden" name  = "amount" value = "${cri.amount}"> 
+				
 				
 				<div class="contents">
 					<!-- 등록 -->
@@ -36,7 +39,7 @@
 							<tr>
 								<th scope="col">차량 모델 명</th>
 								<td class="left">
-									<input type = "text" name = "modelName" id="modelName" value="${rentCarDetail.modelName }">
+									<input type = "text" name = "modelName" id="modelName" value='<c:out value="${rentCarDetail.modelName}"/>'>
 								</td>
 								<th scope="col">차종</th>
 								<td class="left">
@@ -48,8 +51,7 @@
 							</tr>
 							<tr>
 								<th scope="col">구입 조건</th>
-								<td class="left">
-									<input type = "hidden" name = "condition" value="${rentCarDetail.condition }">
+								<td class="left">									
 									<input type = "radio" name="condition" value="신차" >신차
 									<input type = "radio" name="condition" value="중고차">중고차	
 								</td>
@@ -64,10 +66,9 @@
 									<input type = "text" name = "year" id = "year" value="${rentCarDetail.year }">	
 								</td>
 								<th scope="col">유종</th>
-								<td class="left">
-									<input type = "hidden" name = "oil_Type" value="${rentCarDetail.oilType }">
-									<input type = "radio" name="oil_Type" value="휘발유">휘발유
-									<input type = "radio" name="oil_Type" value="경유">경유
+								<td class="left">									
+									<input type = "radio" name="oilType" value="휘발유">휘발유
+									<input type = "radio" name="oilType" value="경유">경유
 								</td>
 							</tr>
 						</tbody>
@@ -78,13 +79,9 @@
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r">
-					<input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = 'rentCarDetailList.do'" />
-<%-- 					 <c:if test="${param.mode eq 'write'}"> --%>
-						 <input type="button" class="auto_wth_btn_y" value="수정완료" id = "Upenroll">
-					<%-- </c:if>
-					<c:if test="${param.mode eq 'edit'}">
-						<input type="button" class="edit_btn" id="editProCBtn" value="수정" />
-					</c:if>  --%>
+					<input type="button" class="list_btn2" id="listBtn2" value="목록"  />
+					<input type="button" class="auto_wth_btn_r" value="   삭제   " id = "delete" >
+					 <input type="button" class="auto_wth_btn_y" value="수정완료" id = "Upenroll">				
 				</div>
 			</div>
 		</div>
