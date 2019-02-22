@@ -23,10 +23,12 @@ import javax.servlet.http.HttpSession;
 
 import org.kocofarm.controller.module.MessageController.RESULT;
 import org.kocofarm.domain.comm.LoginVO;
+import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.message.MessageEmpListVO;
 import org.kocofarm.domain.message.MessagePushVO;
 import org.kocofarm.domain.message.MessageRoomListVO;
 import org.kocofarm.domain.message.MessageVO;
+import org.kocofarm.service.module.EmpService;
 import org.kocofarm.service.module.MessageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,7 +53,8 @@ public class MessagePushController {
 	public static final class MESSAGE_TYPE{
 		public static final int TEXT = 0;
 		public static final int FILE = 1;
-		public static final int NOTICE = 2;	// emp 나가거나 들어왔을 때
+		public static final int EXIT = 2;	// emp 나감
+		public static final int INVITE = 3; // emp 초대
 	}
 	
 	public static final class PUSH_TYPE{
@@ -60,6 +63,7 @@ public class MessagePushController {
 	}
 	
 	private MessageService service;
+	private EmpService empService;
 	
 	private static List<AsyncContext> contexts = new CopyOnWriteArrayList<AsyncContext>();
 	
@@ -122,7 +126,7 @@ public class MessagePushController {
 		
 		List<String> roomEmpList = service.getMessageRoomEmpList(roomId);
 
-		pushMessage(roomId, loginVO, roomEmpList, messageVo, true);
+		pushMessage(roomId, loginVO, roomEmpList, messageVo, PUSH_TYPE.MESSAGE,true);
 	}
 	
 	@ResponseBody
@@ -145,15 +149,83 @@ public class MessagePushController {
 		messageVo.setMessageRoomId(messagePushVO.getMessageRoomId());
 		messageVo.setContents(loginVO.getKorNm()+"님이 대화방을 나갔습니다");
 		messageVo.setEmpId(loginVO.getEmpId());
-		messageVo.setType(MESSAGE_TYPE.NOTICE);
+		messageVo.setType(MESSAGE_TYPE.EXIT);
 		messageVo.setDateString(getCurrentTime());	
 		
 		if(1 != service.delMessagePush(messagePushVO, messageVo)){
 			return RESULT.UNKNOWN_ERROR;
 		}
-		List<String> roomEmpList = service.getMessageRoomEmpList(messagePushVO.getMessageRoomId());
-		pushMessage(messagePushVO.getMessageRoomId(), loginVO, roomEmpList, messageVo, false);
+		List<String> roomEmpList = service.getMessageRoomEmpList(messagePushVO.getMessageRoomId()); 
+		pushMessage(messagePushVO.getMessageRoomId(), loginVO, roomEmpList, messageVo, PUSH_TYPE.MESSAGE, false);
 
+		
+		return RESULT.SUCCESS;
+	}
+	
+
+	@ResponseBody
+	@PostMapping("/inviteMessageRoom")
+	public int pushMessage(HttpSession session, @RequestBody String list){
+		log.info("[addMessageRoom]");
+		log.info(list);
+		
+		JSONObject jsonObject =  JSONObject.fromObject(list);
+		if(null == list){
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO){
+			return RESULT.UNKNOWN_ERROR;
+		}
+				
+		int roomId = (int)jsonObject.get("0");			// title
+		int lenght = (int)jsonObject.get("1");			// length
+		
+		if(false == isWrongRequest(loginVO.getEmpId(), roomId)){
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		// 유저 추가 전 기존 방에 있던 유저 정보
+		List<String> befoeEmpList = service.getMessageRoomEmpList(roomId);
+		List<String> afterEmpList = new ArrayList<String>();
+		
+		StringBuilder addEmpName = new StringBuilder();
+		// 정보 파서
+		for(int i = 2; i < lenght+2; ++i){
+			String empId = (String)jsonObject.get(i+"");
+			afterEmpList.add(empId);
+			MessagePushVO messageVo = new MessagePushVO();
+			messageVo.setEmpId(empId);
+			messageVo.setMessageRoomId(roomId);		
+			service.setMessagePush(messageVo);
+			EmpVO empVO = empService.getEmp(empId);
+		
+			if(null == empVO){
+				continue;
+			}
+			
+			addEmpName.append(empVO.getKorNm());
+			addEmpName.append(", ");
+		}
+		
+		addEmpName.append(" 님을 초대했습니다");
+		
+		// 방 추가된 사람은 메시지 룸 추가가 필요하다 . 갱신된 메시지 정보를 전달해야한다
+		
+		// 누군가 들어왔다는 메시지를 저장한다
+		// 초대한 사람 empId 저장하자 임의로
+	 	MessageVO messageVo = new MessageVO();
+	 	messageVo.setEmpId(loginVO.getEmpId());
+		messageVo.setKorNm(loginVO.getKorNm());
+		messageVo.setContents(addEmpName.toString());
+		messageVo.setType(MESSAGE_TYPE.INVITE);
+		String strTime = getCurrentTime();
+		messageVo.setDateString(strTime);
+		service.setMessage(messageVo);
+		
+		// 기존에 있던 유저들은 누구누구를 초대했다는 메시지가 떠야한다
+		pushMessage(roomId, loginVO, befoeEmpList, messageVo, PUSH_TYPE.MESSAGE, true);
 		
 		return RESULT.SUCCESS;
 	}
@@ -193,8 +265,9 @@ public class MessagePushController {
 				
 				asyncContext.getResponse().setContentType("application/json;  charset=UTF-8");
 				
+				JSONObject obj = null;
 				if(PUSH_TYPE.MESSAGE == pushType){
-					getMessageTypeObject(roomId, loginVO, messageVo);
+					obj = getMessageTypeObject(roomId, loginVO, messageVo);
 				}else{
 					
 				}
@@ -225,63 +298,20 @@ public class MessagePushController {
         return obj;
 	}
 	
-	//public JSONObject getMessageType
-	
-	@ResponseBody
-	@PostMapping("inviteMessageRoom")
-	public int pushMessage(HttpSession session, @RequestBody String list){
-		log.info("[addMessageRoom]");
-		log.info(list);
+	public JSONObject getMessageRoomTypeObject(MessageRoomListVO roomListVo){
+		JSONObject obj = new JSONObject();
+		obj.put("pushType", PUSH_TYPE.MESSAGE_ROOM);
+		obj.put("messageRoomId", roomListVo.getMessageRoomId());
+		obj.put("roomTitle", roomListVo.getRoomTitle());
+		obj.put("lastMessageEmpId", roomListVo.getLastMessageEmpId());
+		obj.put("lastMessageEmpName", roomListVo.getLastMessageEmpName());
+		obj.put("lastMessage", roomListVo.getLastMessage());
+		obj.put("lastMessageDate", roomListVo.getLastMessageDate());
+		obj.put("lastMessageDateToString", roomListVo.getLastMessageDateToString());		
 		
-		JSONObject jsonObject =  JSONObject.fromObject(list);
-		if(null == list){
-			return RESULT.UNKNOWN_ERROR;
-		}
-		
-		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		if(null == loginVO){
-			return RESULT.UNKNOWN_ERROR;
-		}
-				
-		int roomId = (int)jsonObject.get("0");			// title
-		int lenght = (int)jsonObject.get("1");			// length
-		
-		if(false == isWrongRequest(loginVO.getEmpId(), roomId)){
-			return RESULT.UNKNOWN_ERROR;
-		}
-		
-		// 유저 추가 전 기존 방에 있던 유저 정보
-		List<String> befoeEmpList = service.getMessageRoomEmpList(roomId);
-		List<String> afterEmpList = new ArrayList<String>();
-		
-		// 정보 파서
-		for(int i = 2; i < lenght+2; ++i){
-			String empId = (String)jsonObject.get(i+"");
-			afterEmpList.add(empId);
-			MessagePushVO messageVo = new MessagePushVO();
-			messageVo.setEmpId(empId);
-			messageVo.setMessageRoomId(roomId);		
-			service.setMessagePush(messageVo);
-			
-
-		}
-		
-		// 방 추가된 사람은 메시지 룸 추가가 필요하다 . 갱신된 메시지 정보를 전달해야한다
-		
-		// 누군가 들어왔다는 메시지를 저장한다
-		// 초대한 사람 empId 저장하자 임의로
-	 	MessageVO messageVo = new MessageVO();
-	 	messageVo.setEmpId(loginVO.getEmpId());
-		messageVo.setKorNm(loginVO.getKorNm());
-		String strTime = getCurrentTime();
-		messageVo.setDateString(strTime);
-		service.setMessage(messageVo);
-		
-		// 기존에 있던 유저들은 누구누구를 초대했다는 메시지가 떠야한다
-		pushMessage(roomId, loginVO, afterEmpList, messageVo, true);
+		return obj;
 	}
 		
-	
 	public boolean isWrongRequest(final String empId, final int roomId){
 		MessagePushVO messagePushVo = new MessagePushVO();
 		messagePushVo.setEmpId(empId);

@@ -131,7 +131,7 @@ $(function() {
 		var text = '';
 
 		// 누군가 나갔다
-		if (data.type == 2) {
+		if (2 == data.type) {
 			console.log('1111111111111');
 			text += '<div class="message-room-exit-message">' + data.contents
 					+ '</div>';
@@ -144,30 +144,39 @@ $(function() {
 				text = '';
 			}
 
-		} else if (strEmpId == data.empId) {
-			console.log('222222222222222');
-
-			text += '<div class="outgoing_msg">';
-			text += '<div class="sent_msg">';
-			text += '<p>' + data.contents + '</p>';
-			text += '<span class="time_date">' + data.dateString + '</span>';
-			text += '</div>';
-			text += '</div>';
-		} else {
-			console.log('3333333333333333');
-			text += '<div class="incoming_msg">';
-			text += '<div  class="incoming_msg_img">';
-			text += '<img  src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
-			text += '</div>';
-			text += '<div class="received_msg">';
-			text += '<p>' + data.korNm + '</p>';
-			text += '<div  class="received_withd_msg">';
-			text += '<p>' + data.contents + '</p>';
-			text += '<span  class="time_date">' + data.dateString + '</span>';
-			text += '</div>';
-			text += '</div>';
-			text += '</div>';
-			text += '</div>';
+		}else if(3 == data.type){
+			// 누군가 초대되었다
+			text = '<div class="message-room-exit-message">' + data.contents
+			+ '</div>';
+			return text;
+			
+		}else if(0 == data.type){
+			
+			if (strEmpId == data.empId) {
+				console.log('222222222222222');
+	
+				text += '<div class="outgoing_msg">';
+				text += '<div class="sent_msg">';
+				text += '<p>' + data.contents + '</p>';
+				text += '<span class="time_date">' + data.dateString + '</span>';
+				text += '</div>';
+				text += '</div>';
+			} else {
+				console.log('3333333333333333');
+				text += '<div class="incoming_msg">';
+				text += '<div  class="incoming_msg_img">';
+				text += '<img  src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
+				text += '</div>';
+				text += '<div class="received_msg">';
+				text += '<p>' + data.korNm + '</p>';
+				text += '<div  class="received_withd_msg">';
+				text += '<p>' + data.contents + '</p>';
+				text += '<span  class="time_date">' + data.dateString + '</span>';
+				text += '</div>';
+				text += '</div>';
+				text += '</div>';
+				text += '</div>';
+			}
 		}
 
 		return text;
@@ -229,7 +238,7 @@ $(function() {
 		var length = empList.length;
 		var list = {};
 		var index = 0;
-		list[index + ""] = $("#click-message-room-id").val();
+		list[index + ""] = parseInt($("#click-message-room-id").val());
 		++index;
 		++index;
 		var count = 0;
