@@ -155,4 +155,15 @@ public class ApprovalMapperTest {
 		
 		mapper.setUpComm(comment);		
 	}*/
+	
+	@Test
+	public void testSearch(){
+		Criteria cri = new Criteria();
+		cri.setKeyword("이름");
+		cri.setType("N");
+		
+		List<ApprDraftVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(draft -> log.info(draft));
+	}
 }

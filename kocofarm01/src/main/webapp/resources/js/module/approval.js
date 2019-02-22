@@ -228,3 +228,20 @@ function getCommentList(){
 		}
 	});
 }
+
+var actionForm = $("#actionForm");
+$("#actionForm button").on("click",function(e){
+	if(!actionForm.find("option:selected").val()){
+		alert("자네..검색종류는 좀 선택해주지않겠나?");
+		return false;
+	}
+	
+	if(!actionForm.find("input[name='keyword']").val()){
+		alert("자네....아무것도 입력하지않고 찾을것인가?");
+		return false;
+	}
+	actionForm.find("input[name='pageNum']").val("1");
+	e.preventDefault();
+	
+	actionForm.submit();
+})

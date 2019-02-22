@@ -163,6 +163,29 @@
 	
 	
 	<!-- ****************************** 페이징 처리 ****************************** -->
+	<!-- 검색 -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+					<foreach item="Type" collection="typeArr">
+						<trim prefix="OR">
+							<choose>
+								<when test="Type == 'N'.toString()">
+									draft_name like '%'||#{keyword}||'%'
+								</when>
+								<when test="Type == 'T'.toString()">
+									draft_title like '%'||#{keyword}||'%'
+								</when>
+								<when test="Type == 'F'.toString()">
+									form_id like '%'||#{keyword}||'%'
+								</when>
+								<when test="Type == 'D'.toString()">
+									draft_dt like '%'||#{keyword}||'%'
+								</when>
+							</choose>
+						</trim>
+					</foreach>
+				</trim>
+	</sql>
 	<!-- index 정렬후 페이징 목록 가져오기 -->
 	<select id="getListWithPaging" resultType = "org.kocofarm.domain.approval.ApprDraftVO">
 		<![CDATA[
@@ -186,7 +209,13 @@
 						form_id,
 						approve_state
 				from draft
-				where rownum <= #{pageNum} * #{amount}
+				where 
+				]]>
+				
+				<include refid="criteria"></include>
+				
+				<![CDATA[
+				rownum <= #{pageNum} * #{amount}
 			)
 		where rn > (#{pageNum} -1 ) * #{amount}
 	]]>
@@ -349,16 +378,5 @@
 		where comment_id = #{commentId}	
 	</update>
 	
-	<!-- 검색기능 -->
-	<select id="selectDraft">
-		select draft_id as draftId,
-				draft_name as draftName,
-				draft_dt as draftDt,
-				draft_title as draftTitle,
-				emp_id as empId,
-				draft_year as draftYear,
-				form_id as formId
-				from ( 
-				select )
-	</select>
+	
 </mapper>
