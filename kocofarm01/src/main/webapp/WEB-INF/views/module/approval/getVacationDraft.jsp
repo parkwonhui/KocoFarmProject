@@ -4,13 +4,6 @@
 
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
-<script type="text/javascript">
-	var initBody;
-	function beforePrint(){
-		boxes = document
-		
-	}
-</script>
 
 	<div class="cont_wrap">
 		<!-- SubTitle Area -->
