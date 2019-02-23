@@ -20,4 +20,5 @@ public interface MessageService {
 	public List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId);
 	public int setMessagePush(MessagePushVO messagePushVO);
 	public MessageRoomListVO getMessageRoom(int messageRoomId);
+	public List<MessageEmpListVO> getMessageRoomEmpInfoList(int messageRoomId);
 }

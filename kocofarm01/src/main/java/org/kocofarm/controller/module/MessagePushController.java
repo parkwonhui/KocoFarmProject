@@ -395,10 +395,18 @@ public class MessagePushController {
 	}
 	
 	public int getListIndex(String empId){
+		if(null == empId){
+			return -1;
+		}
+		
 		int size = contexts.size();
 		System.out.println("size:"+size);
 		for(int i = 0; i < size; ++i ){
 		LoginVO loginVO = getLoginVO((HttpServletRequest)contexts.get(i).getRequest());
+			if(null == loginVO.getEmpId()){
+				continue;
+			}
+		
 			if(true == empId.equals(loginVO.getEmpId())){
 				return i;
 			}

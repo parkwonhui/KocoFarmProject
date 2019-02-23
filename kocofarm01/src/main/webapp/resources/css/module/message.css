@@ -316,6 +316,18 @@ img {
     margin-bottom: 10px;
 }
 
+.message-room-emp-list-name{
+	border-bottom : 1px solid #FAFAFA;
+	margin-left : 10px;
+	margin-bottom : 100px;
+	display:inline-block;
+}
+
+.message-room-emp-list-img{
+	width:10%;
+	display: inline-block;
+}
+
 /* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
 .invite-message-room-emp-list .checked{
 	background-color: #FAFAFA;  	

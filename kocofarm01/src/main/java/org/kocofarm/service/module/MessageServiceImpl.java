@@ -159,5 +159,10 @@ public class MessageServiceImpl implements MessageService {
 	public List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId) {
 		return mapper.getMessageRoomInvite(messageRoomId);
 	}
+	
+	@Override
+	public List<MessageEmpListVO> getMessageRoomEmpInfoList(int messageRoomId){
+		return mapper.getMessageRoomEmpInfoList(messageRoomId);
+	}
 
 }
