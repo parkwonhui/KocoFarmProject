@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.taglibs.standard.resources.Resources;
-import org.kocofarm.domain.fileRoom.AttachFileVO;
+import org.kocofarm.domain.comm.AttachFileVO;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +29,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,12 +42,20 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
 public class UploadController {
 
-	@GetMapping("/uploadAjax")
+/*	@GetMapping("/uploadAjax")
 	public void uploadAjax() {
 		log.info("uploadAjax");
 
 	}// get mapping
+*/
+	@GetMapping("/uploadForm")
+	public String uploadForm() {
+		log.info("uploadForm");
+		return "/module/fileRoom/uploadForm";
 
+	}
+	
+	
 	private String GetFolder(){
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -62,11 +73,13 @@ public class UploadController {
 		try {
 			String contentType = Files.probeContentType(file.toPath());
 			
+			log.info("contentType" + contentType);
 			return contentType.startsWith("image");
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		
 	}
 	
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -114,9 +127,11 @@ public class UploadController {
 			
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
+				log.info("SAVEFILE:"+saveFile);
 				multipartFile.transferTo(saveFile);
 				
-				attachFileVO.setFilePath(uploadFolderPath);
+				
+				attachFileVO.setUploadPath(uploadFolderPath);
 				attachFileVO.setUuid(uuid.toString());
 				
 				log.info("uploadfolderpath : "+uploadFolderPath);
@@ -124,11 +139,12 @@ public class UploadController {
 				// chech image file
 				if(checkImageType(saveFile)) {
 					
-					attachFileVO.setImage(true);
+					
+					attachFileVO.setFileType(true);
 					
 					FileOutputStream thumnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 					
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumnail, 100, 100);
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumnail, 300, 300);
 					
 					thumnail.close();
 				}
@@ -169,7 +185,7 @@ public class UploadController {
 	
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
-	public ResponseEntity<Resource> downloadFile(String fileName) {
+	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 		
 		log.info("download file : " + fileName);
 		
@@ -177,19 +193,86 @@ public class UploadController {
 		
 		log.info("resource : " + resource);
 		
+		if(resource.exists() == false){
+			
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			
+		}
+		
 		String resourceName = resource.getFilename();
+		
+		//UUID remove
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") +1);
+		
 		
 		HttpHeaders headers = new HttpHeaders();
 		
 		try {
-			headers.add("Context-Disposition","attachment; filename=" + new String(resourceName.getBytes("UTF-8"),
-					"ISO-8859-1"));
+			
+			String downloadName = null;
+			
+			if(userAgent.contains("Trident")){
+				log.info("IE explore");
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+"," ");
+			}else if(userAgent.contains("Edge")) {
+				log.info("Edge brower");
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8");
+				
+			}else{ 
+				log.info("chrome");
+				downloadName = new String(resourceOriginalName.getBytes("UTF-8"),"ISO-8859-1");
+				
+			}
+			log.info("downloadName : " + downloadName);
+			
+			
+			headers.add("Content-Disposition","attachment; filename=" + downloadName);
+			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		
 		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
+	
+	@PostMapping(value="/deleteFile")
+	@ResponseBody
+	public ResponseEntity<String> deleteFile(String fileName, String type){
+		
+		log.info("delfile : " + fileName);
+		
+		File file;
+		
+		
+		try {
+			file = new File("C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\"+URLDecoder.decode(fileName,"UTF-8"));
+			log.info("delfile: "+file);
+			file.delete();
+			
+			// 확장자명 list TF result 하는것 필요
+			/*String[] Ext = new String []{"jpg", "jpeg", "png", "gif"};*/
+			/*if(fileExtention.equals("jpg")||fileExtention.equals("png")||fileExtention.equals("jpeg")||fileExtention.equals("gif")){*/
+			if(type.equals("image")){
+			
+				String uuidFileName = file.getAbsolutePath().replace("s_", "");
+				
+				file = new File(uuidFileName);
+				
+				file.delete();
+				
+			}
+			
+			
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+
+		return new ResponseEntity<String>("deleted", HttpStatus.OK);
+		
+	}
+	
 	
 	
 }// controller end

@@ -24,6 +24,9 @@ public class ScheduleCalenderListVO implements Serializable {
 	private String 	categoryName;
 	private int 	projectId;
 	private int 	calenderId;
+	
+	
+	
 	private String 	title;
 	private String 	startDt;
 	private String 	endDt;
@@ -32,6 +35,10 @@ public class ScheduleCalenderListVO implements Serializable {
 	private int 	xPos;				// 일정의 X좌표
 	private int 	yPos;				// 일정의 Y좌표
 	private List<EmpVO> memberList;		// 작업자 정보 
+	private List<ScheduleTagVO> tagDataList;
+	private String tag_name;
+	private String tag_color;
+	
 	
 	public int getxPos() {
 		return xPos;

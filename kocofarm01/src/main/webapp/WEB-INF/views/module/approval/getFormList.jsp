@@ -17,7 +17,7 @@
 				</div>
 			</div>
 		</div>
-	
+		<input type="hidden" name = "loginEmpId" value = "${LoginVO.empId }" />
 		<!-- Contents Area -->
 		<div class="contents_wrap">
 			<!-- sch_top -->

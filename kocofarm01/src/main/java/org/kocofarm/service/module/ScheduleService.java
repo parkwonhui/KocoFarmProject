@@ -35,4 +35,6 @@ public interface ScheduleService {
 	public int setTag(ScheduleTagVO tag);
 	public int setUpTag(ScheduleTagVO tag);
 	public int delTag(int tagId);
+	public List<ScheduleTagVO> getTagList(int calenderId);
+	
 }

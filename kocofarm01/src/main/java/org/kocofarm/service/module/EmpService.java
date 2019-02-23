@@ -15,4 +15,6 @@ public interface EmpService {
 	// 부서 목록
 	public List<DepartmentsVO> getDeptList();
 	
+	/* 부서별 사원 목록 by KSH*/
+	public List<EmpVO> getEmpByDept();
 }
