@@ -21,7 +21,7 @@
 					<h2>RentCar Reservation<span>차량 예약 신청 목록을 확인할 수 있습니다.</span></h2>
 					<ul class="sub_nav">
 						<li>홈 > </li>
-						<li class="on">차량 예약 목록</li>
+						<li class="on">차량 대여 결제</li>
 					</ul>
 				</div>
 			</div>

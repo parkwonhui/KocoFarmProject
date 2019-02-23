@@ -62,23 +62,11 @@
 							<col width="15%">
 							<col width="35%">
 						</colgroup>
-						<tbody>
+						<tbody>						
 							<tr>
 								<th scope="col">예약번호</th>
-								<td class="left">${CarReserve.resId }</td>
-								
-								<%--<th scope="col">승인여부</th>
-								
-								
-								<td class="left">
-								
-								 <c:if test="${loginVO.authority == 99}">
-									<!-- <a href="/rent/rentCarDetailWrite">
-									<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
-									</a> -->
-									예약승인
-								</c:if> 								
-								</td>--%>
+								<td class="left">${CarReserve.resId }</td>																															
+								</td> 
 							</tr>
 							<tr>
 								<th scope="col">예약자</th>
@@ -130,16 +118,13 @@
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r"><!-- onclick="location.href = '/rent/CarResList'" -->
-					<input type="button" class="list_btn" id="carReslist2" value="목록"  />
-					<button name = "acceptBtn"   class ="write_btn"  value = "Y">승인</button>
-					<button name = "acceptBtn" class ="del_btn" value = "N">반려</button>
+					<input type="button" class="list_btn" id="carReslist2" value="목록"  />					
 					
 						<!-- 관리자 권한주기 -->
-				<%-- <c:if test="${loginVO.authority == 99}">
-						<a href="/rent/rentCarDetailWrite">
-					<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
-						</a>
-				</c:if>	 --%>
+				 <c:if test="${loginVO.authority == 99}">
+					<button name = "acceptBtn"   class ="write_btn"  value = "Y">승인</button>
+					<button name = "acceptBtn" class ="del_btn" value = "N">반려</button>
+				</c:if>	 
 									 	
 				</div>
 			</div>

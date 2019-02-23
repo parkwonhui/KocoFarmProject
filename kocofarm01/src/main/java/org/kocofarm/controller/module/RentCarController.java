@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
@@ -35,17 +36,13 @@ public class RentCarController {
 	//목록
 	@GetMapping("/rentCarDetailList")
 
-	private String rentCarDetailList(Criteria cri, Model model){
-		
-		//log.info("rentCarDetailList : " + cri);		
-		model.addAttribute("list", rentCarService.getRentCarDetailList(cri));
-		
+	private String rentCarDetailList(Criteria cri, Model model){		
+				
+		model.addAttribute("list", rentCarService.getRentCarDetailList(cri));		
 		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		
 		int total = rentCarService.getTotal(cri);
-		//log.info("total : " + total);		
 		model.addAttribute("pageMaker", new PageDTO(cri, total));		
-
 
 		return "/module/rent/car/rentCarDetailList";
 	}
@@ -64,18 +61,30 @@ public class RentCarController {
 		log.info("rentCarDetailWrite : " + rentCar);
 		rentCarService.setRentCarDetail(rentCar);
 		rttr.addFlashAttribute("result", rentCar.getCarId());
-		
-		
-		/*return "redirect:/rent/car/rentCarDetailList";	*/	
+
 		return "redirect:rentCarDetailList";
 	}
+	
+
+	//차량번호 중복확인
+	@ResponseBody
+	@PostMapping("/getcarIdChk")
+	public int getcarIdChk(@RequestParam("carId") String carId){
+		RentCarVO getcarIdChk = rentCarService.getcarIdChk(carId);
+		
+		int result = 0;
+		if(getcarIdChk != null){//carId가 이미 존재한다면
+			result = 1;
+		}
+		return result;
+	}//getcarIdChk
+	
 	
 	//조회
 	@GetMapping("/rentCarDetailView")
 	public String rentCarDetailView(@RequestParam("carId") String carId, 
 									@ModelAttribute("cri") Criteria cri ,Model model ){
-		
-		log.info("rentCarDetailView...");
+
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
 		
 		return "/module/rent/car/rentCarDetailView";
@@ -86,9 +95,6 @@ public class RentCarController {
 	public String rentCarDetailEdit(@RequestParam("carId") String carId,
 									@ModelAttribute("cri") Criteria cri, Model model){
 		
-		log.info("rentCarDetailEdit...수정페이지");
-		log.info("rentCarDetailEdit : " +rentCarService.getRentCarDetail(carId));
-		
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
 		
 		return "/module/rent/car/rentCarDetailUpdate";
@@ -98,9 +104,7 @@ public class RentCarController {
 	@PostMapping("/rentCarDetailEdit")
 	//@GetMapping("/rentCarDetailEdit")
 	public String rentCarDetailEdit(RentCarVO rentCar,
-									@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
-		log.info("rentCarDetailEdit...수정처리");		
-		log.info("rentCarDetailEdit :" + rentCar);		
+									@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){		
 		
 		if(rentCarService.setUpRentCarDetail(rentCar)){
 			rttr.addFlashAttribute("result", "success");
@@ -116,7 +120,6 @@ public class RentCarController {
 	@GetMapping("/rentCarDetailDel")
 	public String rentCarDetailDel(@RequestParam("carId") String carId, 
 								@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
-		log.info("rentCarDetailDel.." + carId);
 		
 		if(rentCarService.delRentCarDetail(carId)){
 			rttr.addFlashAttribute("result", "success");

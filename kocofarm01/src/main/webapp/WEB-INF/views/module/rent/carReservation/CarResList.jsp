@@ -113,15 +113,8 @@
 	
 		<!-- btn -->
 		<div class="btn_wrap">
-			<div class="flt_r">
-				<!-- 차량등록 권한 부여 - 관리자만 -->
-				<%-- <c:if test="${loginVO.authority == 99}"> --%>
-				<!-- <a href="/rent/rentCarDetailWrite">
-					<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
-				</a> -->
-				<%-- </c:if> --%>
-				
-				<input type="button" class="auto_wth_btn_b" value="승인목록" id = "carAppBtn" />
+			<div class="flt_r">	
+				<input type="button" class="auto_wth_btn_b" value="결제목록" id = "carAppBtn" />
 			</div>
 		</div>	
 		

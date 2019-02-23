@@ -39,28 +39,18 @@
 										<c:out value="${pageMaker.cri.type eq 'I'?'selected':''}"/>>차량번호</option>
 								<option  value="M"
 										<c:out value="${pageMaker.cri.type eq 'M'?'selected':''}"/>>차량모델명</option>
-								 
-								
+								 								
 								<%-- <option value="" 
 										value="${pageMaker.cri.type == null?'selected':''}">전체</option>
 								<option  value="I"
 										value="${pageMaker.cri.type eq 'I'?'selected':''}">차량번호</option>
 								<option  value="M"
 										value="${pageMaker.cri.type eq 'M'?'selected':''}">차량모델명</option> --%>
-								
-								
-								
-								
-								
+							
 								
 								</select>
 								
-								
-								
-								
-								
-								
-								<%--  value='<c:out value="${pageMaker.cri.keyword}" --%>
+							<%--  value='<c:out value="${pageMaker.cri.keyword}" --%>
 								<%-- <input type="text" name="keyword" id="schWord"
 								value = "${pageMaker.cri.keyword}" placeholder="검색어를 입력 해 주세요" />
 								<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
@@ -177,14 +167,14 @@
 		<!-- btn -->
 		<div class="btn_wrap">
 			<div class="flt_r">
-				<!-- 차량등록 권한 부여 - 관리자만 -->
 				<c:if test="${loginVO.authority == 99}">
 				<a href="/rent/rentCarDetailWrite">
 					<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
 				</a>
 				</c:if>
 			</div>
-		</div>			
+		</div>	
+				
 		</div>
 	</div>
 

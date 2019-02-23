@@ -37,7 +37,6 @@ FROM CAR_RES r
 	LEFT JOIN EMP a ON r.WRITER= a.emp_id
 	LEFT JOIN EMP b ON r.RES_USER = b.emp_id
 	LEFT JOIN CAR_APP P ON r.res_id = p.res_id  
-  
 
 
 ORDER BY r.REG_DT 

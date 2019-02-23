@@ -78,8 +78,7 @@ $(function(){
 					alert("사용 가능한 차량 번호 입니다.");
 				}
 			}	
-		})//ajax
-		
+		})		
 	})
 	
 	
@@ -268,23 +267,17 @@ $(function(){
 	})
 
 	
-	//예약승인 버튼 누르면 - insert되도록 설정
-	$('button[ name = "acceptBtn" ]').click(function() {
-		alert("acceptBtn 들어옴");
-		
+	//예약 버튼 누르면 - insert되도록 설정
+	$('button[ name = "acceptBtn" ]').click(function() {		
 		var appSF = $(this).val();
-		alert("appSF : " + appSF);
 		var resId = $("#resId").val();		
-		
-		location.href = "/rent/setCarApp?appSF="+appSF+"&resId="+resId;
-		
+		location.href = "/rent/setCarApp?appSF="+appSF+"&resId="+resId;		
 		
 	})
 	
 	
 	/*승인 목록 페이지로 이동*/
-	$("#carAppBtn").click(function() {
-		//alert("버튼 눌렀당");		
+	$("#carAppBtn").click(function() {	
 		location.href = "/rent/CarAppList";		
 		 
 	})	
