@@ -13,7 +13,7 @@ img {
 }
 
 .inbox_people {
-	background: #f8f8f8 none repeat scroll 0 0;
+	background: #f8f8f8 none repeat  0 0;
 	float: left;
 	overflow: hidden;
 	width: 40%;
@@ -319,7 +319,7 @@ img {
 .message-room-emp-list-name{
 	border-bottom : 1px solid #FAFAFA;
 	margin-left : 10px;
-	margin-bottom : 100px;
+	margin-bottom : 10px;
 	display:inline-block;
 }
 
