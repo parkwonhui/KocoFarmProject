@@ -15,6 +15,13 @@
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <style>
 /* 여기에 스타일 넣기 */ 
+
+.btn_wrap button.edit_btn{width:80px;height:40px;line-height:40px;background:#ffce0b;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
+
+.btn_wrap button.del_btn{width:80px;height:40px;line-height:40px;background:#ED1B00;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
+.btn_wrap button.write_btn{width:80px;height:40px;line-height:40px;background:#010372;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
+
+
 </style>
 
 
@@ -60,18 +67,18 @@
 								<th scope="col">예약번호</th>
 								<td class="left">${CarReserve.resId }</td>
 								
-								<th scope="col">승인여부</th>
+								<%--<th scope="col">승인여부</th>
 								
 								
 								<td class="left">
 								
-								<c:if test="${loginVO.authority == 99}">
-									<a href="/rent/rentCarDetailWrite">
+								 <c:if test="${loginVO.authority == 99}">
+									<!-- <a href="/rent/rentCarDetailWrite">
 									<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
-									</a>
-								</c:if>
-								
-								</td>
+									</a> -->
+									예약승인
+								</c:if> 								
+								</td>--%>
 							</tr>
 							<tr>
 								<th scope="col">예약자</th>
@@ -124,8 +131,8 @@
 			<div class="btn_wrap">
 				<div class="flt_r"><!-- onclick="location.href = '/rent/CarResList'" -->
 					<input type="button" class="list_btn" id="carReslist2" value="목록"  />
-					<button name = "acceptBtn" value = "Y">승인</button>
-					<button name = "acceptBtn" value = "N">반려</button>
+					<button name = "acceptBtn"   class ="write_btn"  value = "Y">승인</button>
+					<button name = "acceptBtn" class ="del_btn" value = "N">반려</button>
 					
 						<!-- 관리자 권한주기 -->
 				<%-- <c:if test="${loginVO.authority == 99}">

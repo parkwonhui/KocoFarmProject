@@ -21,4 +21,7 @@ public interface CarResService {
 		
 		//전체 승인목록 불러오기(승인한것들 목록)
 		public List<CarAppVO> getCarAppList();
+		
+		/*결제상세내역보기 - 승인번호 불러오기*/
+		public CarAppVO getCarApp(String appId);
 }

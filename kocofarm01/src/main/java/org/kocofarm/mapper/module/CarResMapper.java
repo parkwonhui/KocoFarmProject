@@ -26,9 +26,11 @@ public interface CarResMapper {
 	/*승인목록 (승인한것들 목록)*/
 	public List<CarAppVO> getCarAppList();
 	
-	/*결제상세내역보기
-	public CarAppVO getCarApp(String appId);*/
+	/*결제상세내역보기 - 승인번호 불러오기*/
+	public CarAppVO getCarApp(String appId);
 	
-	/*결제내역불러오기*/
+	/*승인번호 불러오기 */
+	//public void getCarApp(String appId);
+	
 
 }

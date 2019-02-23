@@ -42,20 +42,22 @@ public class CarResServiceImpl implements CarResService {
 	}
 	
 	
-	/*전체 승인목록 불러오기(승인한것들 목록)*/
-	
 	/*승인여부 등록 */
 	@Override
 	public void setCarApp(CarAppVO carAppVo){
 		carResMapper.setCarApp(carAppVo);
-	}
+	}	
 	
-	
-	
+	/*전체 승인목록 불러오기(승인한것들 목록)*/
 	@Override
 	public List<CarAppVO> getCarAppList(){
 		log.info("getCarAppList....");
 		return carResMapper.getCarAppList();
+	}
+	
+	@Override
+	public CarAppVO getCarApp(String appId){
+		return carResMapper.getCarApp(appId);
 	}
 	
 	

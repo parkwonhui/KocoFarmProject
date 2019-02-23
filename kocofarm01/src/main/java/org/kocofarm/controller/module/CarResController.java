@@ -1,8 +1,10 @@
 package org.kocofarm.controller.module;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.kocofarm.domain.rentCar.CarAppVO;
 import org.kocofarm.domain.rentCar.CarResVO;
 import org.kocofarm.service.module.CarResService;
@@ -80,12 +82,10 @@ public class CarResController {
 	//승인 등록
 	@GetMapping("/setCarApp")
 	private String setCarApp( CarAppVO carApp,
-			 Model model, RedirectAttributes rttr ){
-				
-		carResService.setCarApp(carApp);
-		//carResService.getCarRes(resId);
-	
+			 Model model, RedirectAttributes rttr ,@RequestParam HashMap<String, String> paramMap ){
 		
+		carResService.setCarApp(carApp);
+		//carResService.getCarRes(resId);		
 		model.addAttribute("moduleNm", "rent");//*leftbar*/			
 		//return "redirect:CarResList";
 		return "redirect:CarResList";
@@ -95,11 +95,8 @@ public class CarResController {
 	//승인된 내용 목록
 	@GetMapping("/CarAppList")
 	public String getCarAppList(Model model){
-		log.info("==차량목록==");
-		//model.addAttribute("lit", carResService.getCarResList());
 		
-		model.addAttribute("list", carResService.getCarAppList());
-	
+		model.addAttribute("list", carResService.getCarAppList());	
 		model.addAttribute("moduleNm", "rent");/*leftbar*/	
 		
 		return "/module/rent/carReservation/CarAppList";

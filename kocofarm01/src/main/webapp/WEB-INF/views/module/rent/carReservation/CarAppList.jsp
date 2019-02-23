@@ -66,8 +66,11 @@
 								<td>${CarAppr.resUser }</td> 
 								<td>${CarAppr.carId}</td>
 								<td>${CarAppr.purpose}</td>	 --%>
-								 <td>${CarAppr.appSF}</td> 
-								<td>${CarAppr.regDt}</td>
+								 <td>${CarAppr.appSF}</td> 								
+								<td>
+									<fmt:parseDate var ="dateString" value="${CarAppr.regDt }"	pattern="yyyy-MM-dd"/>
+									<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd"/>
+								</td>
 							</tr>
 						</c:forEach> 
 					</tbody>

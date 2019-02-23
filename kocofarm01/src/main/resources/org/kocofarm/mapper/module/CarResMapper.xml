@@ -107,13 +107,13 @@ INSERT INTO CAR_APP
 <select id = "getCarAppList" resultType = "org.kocofarm.domain.rentCar.CarAppVO">
 SELECT
 	P.APP_ID AS appId,
-  r.RES_ID AS resId,  
+  	r.RES_ID AS resId,  
 	a.kor_nm AS resWriter,
 	b.kor_nm AS resUser,
-	 r.CAR_ID AS carId,
+	r.CAR_ID AS carId,
 	r.PURPOSE AS purpose,
-  p.APP_SF AS appSF, 
-  P.REG_DT AS regDt
+  	p.APP_SF AS appSF, 
+  	P.REG_DT AS regDt
 
 FROM CAR_RES r
 	LEFT JOIN EMP a ON r.WRITER= a.emp_id
@@ -125,7 +125,17 @@ WHERE P.APP_SF = 'Y' OR P.APP_SF = 'N'
 </select>
 
 
+<!-- 승인번호 출력 -->
+<select id = "getCarApp" resultType = "org.kocofarm.domain.rentCar.CarAppVO">
+SELECT
+	APP_ID AS appId,
+	RES_ID AS resId,
+	APP_SF AS assSF,
+	REG_DT AS regDt
 
+FROM CAR_APP
 
+WHERE RES_ID= #{resId}
+</select>
 
 </mapper>

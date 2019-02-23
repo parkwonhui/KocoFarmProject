@@ -117,7 +117,7 @@
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r">
-					<input type="button" class="list_btn" id="carReslist" value="목록" /> 
+					<!-- <input type="button" class="list_btn" id="carReslist" value="목록" />  -->
 					<input type="button" class="write_btn" value="예약신청" id = "carRes" >
 				</div>
 			</div>

@@ -114,10 +114,9 @@ $(function(){
 	//검색버튼 클릭
 	$("#schBtn").click(function() {
 		
-		alert("검색버튼 눌렀당")
+		//alert("검색버튼 눌렀당")
 		
-		//actionForm.attr("action", "/rent/rentCarDetailList");
-		
+		//actionForm.attr("action", "/rent/rentCarDetailList");		
 		
 		/*if (!searchForm.find("option:selected")
 				.val()) {
@@ -244,13 +243,8 @@ $(function(){
 	})
 	
 	$("#checkCar").click(function() {
-		alert("클릭햇당")
+		//alert("클릭햇당")
 		
-		//예약 가능한 차량 보여주기 
-		/*운행시작시간과 운행종료 시간 참고하기*/
-		
-		//window.open('https://www.google.co.kr/', 'google', 'width=500,height=500');
-		window.open('/module/rent/carReservation/a.jsp', 'rentCarDetailList' ,'width=500,height=500,location=no,status=no,scrollbars=yes');
 		
 
 	})
@@ -280,10 +274,8 @@ $(function(){
 		
 		var appSF = $(this).val();
 		alert("appSF : " + appSF);
-		var resId = $("#resId").val();
+		var resId = $("#resId").val();		
 		
-		//location.href = "/rent/rentCarDetailDel?carId="+$("#car_id").val();
-		//location.href = "/rent/setCarApp?state="+state;
 		location.href = "/rent/setCarApp?appSF="+appSF+"&resId="+resId;
 		
 		
@@ -292,16 +284,10 @@ $(function(){
 	
 	/*승인 목록 페이지로 이동*/
 	$("#carAppBtn").click(function() {
-		alert("버튼 눌렀당");
-		
-		location.href = "/rent/CarAppList";
-		
-		/* $('#carResDetailForm').attr("action", "/rent/CarResList").attr("method", "get")
-			$("#carResDetailForm").submit();*/
+		//alert("버튼 눌렀당");		
+		location.href = "/rent/CarAppList";		
 		 
-		 
-	})
-	
+	})	
 	
 	
 });/*전체function 괄호*/
