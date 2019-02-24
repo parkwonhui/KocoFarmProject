@@ -22,14 +22,14 @@ public class ApproalServiceTest {
 	
 	@Setter(onMethod_= {@Autowired})
 	private ApprovalService service;
-	@Test
+	/*@Test
 	public void testExist(){
 		log.info(service);
 		assertNotNull(service);
-	}
+	}*/
 	
 
-/*	@Test
+	/*@Test
 	public void setDraft(){
 		ApprDraftVO draft = new ApprDraftVO();
 		draft.setDraftDt("2018-02-11");
@@ -42,12 +42,12 @@ public class ApproalServiceTest {
 		
 		service.setDraft(draft);
 		log.info("생성된 게시물 번호 :"+service.getDraftNo());
-	}
-	*/
-	@Test
+	}*/
+	
+	/*@Test
 	public void testGetDraftList(){
 		service.getDraftList(new Criteria(1,5)).forEach(draft -> log.info(draft));
-	}
+	}*/
 	
 	/*
 	@Test

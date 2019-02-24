@@ -139,10 +139,10 @@ public class ScheduleController {
 		
 		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
 		if(null == list){
-			return "";		// error url
+			return "";// error url
 		}
 		
-		model.addAttribute("calenderList", list);
+		model.addAttribute("calenderList", list);	
 		
 		return "/module/schedule/calenderListJsonParse";
 	}
