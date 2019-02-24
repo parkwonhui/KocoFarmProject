@@ -79,8 +79,9 @@ public class MessageController {
 	@ResponseBody
 	@GetMapping("/listMessage")
 	private List<MessageVO> listMessage(HttpSession session, int roomId){
-
+		log.info("[listMessage]");
 		List<MessageVO> list = service.getMessageList(roomId);
+		log.info(list);
 
 		return list;
 	}
@@ -99,38 +100,10 @@ public class MessageController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/addMessageRoom")
-	private int setMessageRoom(HttpSession session, @RequestBody String list){
-		
-		JSONObject jsonObject =  JSONObject.fromObject(list);
-		if(null == list){
-			return RESULT.UNKNOWN_ERROR;
-		}
-		
-		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		if(null == loginVO){
-			return RESULT.UNKNOWN_ERROR;
-		}
-		
-		String title = (String) jsonObject.get("0");		// title
-		int lenght = (int)jsonObject.get("1");				// length
-		
-		List<String> empList = new ArrayList<String>();
-		for(int i = 2; i < lenght+2; ++i){
-			String empId = (String)jsonObject.get(i+"");
-			empList.add(empId);
-		}
-		
-		empList.add(loginVO.getEmpId());
-		
-		service.setMessageRoom(empList, title);
-		
-		return RESULT.SUCCESS;
-	}
-	
-	@ResponseBody
 	@PostMapping("/messageRoomInvite")
 	private List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId){
+		log.info("[messageRoomInvite]");
+
 		List<MessageEmpListVO> list = service.getMessageRoomInvite(messageRoomId);
 		if(null == list){
 			return null;

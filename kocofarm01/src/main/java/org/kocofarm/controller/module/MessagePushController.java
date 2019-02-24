@@ -85,11 +85,48 @@ public class MessagePushController {
 		final AsyncContext asyncContext = request.startAsync(request, response);
 		asyncContext.setTimeout(10 * 60 * 1000);
 		contexts.add(asyncContext);
+		log.info(loginVo.getEmpId()+"가 접속하였습니다");
+	}
+	
+	@ResponseBody
+	@PostMapping("/addMessageRoom")
+	private int addMessageRoom(HttpSession session, @RequestBody String list){
+		log.info("[addMessageRoom]");
+		JSONObject jsonObject =  JSONObject.fromObject(list);
+		if(null == list){
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO){
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		String title = (String) jsonObject.get("0");		// title
+		int lenght = (int)jsonObject.get("1");				// length
+		
+		List<String> empList = new ArrayList<String>();
+		for(int i = 2; i < lenght+2; ++i){
+			String empId = (String)jsonObject.get(i+"");
+			empList.add(empId);
+		}
+		
+		empList.add(loginVO.getEmpId());
+		
+		int roomId = service.setMessageRoom(empList, title);
+		if(-1 == roomId){
+			return RESULT.UNKNOWN_ERROR;
+		}
+		
+		MessageRoomListVO messageRoomListVo = service.getMessageRoom(roomId);		
+		pushMessageRoom(roomId, loginVO, empList, messageRoomListVo, true);
+		
+		return RESULT.SUCCESS;
 	}
 
 	@PostMapping("/sendMessage")
 	public void sendMessage(HttpServletRequest request, HttpServletResponse response, MessageVO messageVo){
-
+		log.info("[sendMessage]");
 		HttpSession session = request.getSession();
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
@@ -105,7 +142,7 @@ public class MessagePushController {
 		
 
 		if(null == empId || null == name ){
-			System.out.println("444444");
+			
 			return;
 		}
 				
@@ -119,6 +156,7 @@ public class MessagePushController {
 		messageVo.setKorNm(name);
 		String strTime = getCurrentTime();
 		messageVo.setDateString(strTime);
+		log.info("strTime!!!!!!:"+strTime);
 		
 		service.setMessage(messageVo);
 		
@@ -129,7 +167,7 @@ public class MessagePushController {
 	
 	@ResponseBody
 	@PostMapping("/delMessagePush")
-	private int setMessageRoom(HttpSession session, MessagePushVO messagePushVO){
+	private int delMessageRoom(HttpSession session, MessagePushVO messagePushVO){
 		
 		if(0 == messagePushVO.getMessageRoomId()){
 			return RESULT.UNKNOWN_ERROR;
@@ -165,15 +203,17 @@ public class MessagePushController {
 
 	@ResponseBody
 	@PostMapping("/inviteMessageRoom")
-	public int pushMessage(HttpSession session, @RequestBody String list){
-		
+	public int setMessageRoom(HttpSession session, @RequestBody String list){
+		log.info("inviteMessageRoom");
 		JSONObject jsonObject =  JSONObject.fromObject(list);
 		if(null == list){
+			log.info("null == list");
 			return RESULT.UNKNOWN_ERROR;
 		}
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
+			log.info("null == loginVO");
 			return RESULT.UNKNOWN_ERROR;
 		}
 				
@@ -181,6 +221,7 @@ public class MessagePushController {
 		int lenght = (int)jsonObject.get("1");			// length
 		
 		if(false == isWrongRequest(loginVO.getEmpId(), roomId)){
+			log.info("null == isWrongRequest");
 			return RESULT.UNKNOWN_ERROR;
 		}
 		
@@ -194,12 +235,16 @@ public class MessagePushController {
 			String empId = (String)jsonObject.get(i+"");
 			afterEmpList.add(empId);
 			MessagePushVO messageVo = new MessagePushVO();
+			messageVo.setMessageRoomId(roomId);
 			messageVo.setEmpId(empId);
 			messageVo.setMessageRoomId(roomId);		
 			service.setMessagePush(messageVo);
+			log.info(messageVo);
 			EmpVO empVO = empService.getEmp(empId);
 		
 			if(null == empVO){
+				log.info("null == null == empVO");
+
 				continue;
 			}
 			
@@ -207,11 +252,12 @@ public class MessagePushController {
 			addEmpName.append(", ");
 		}
 		
-		addEmpName.append(" 님을 초대했습니다");
+		addEmpName.append("님을 초대했습니다");
 		
 		// 누군가 들어왔다는 메시지를 저장한다
 		// 초대한 사람 empId 저장하자 임의로
 	 	MessageVO messageVo = new MessageVO();
+	 	messageVo.setMessageRoomId(roomId);
 	 	messageVo.setEmpId(loginVO.getEmpId());
 		messageVo.setKorNm(loginVO.getKorNm());
 		messageVo.setContents(addEmpName.toString());
@@ -226,7 +272,7 @@ public class MessagePushController {
 		// 방 추가된 사람은 메시지 룸 추가가 필요하다 . 갱신된 메시지 정보를 전달해야한다
 		// 메시지 룸 정보 들고 오는 mapper 없나?
 		
-		System.out.println("roomId:"+roomId);
+		System.out.println("방 추가 메시지 전달!!! roomId:"+roomId);
 		MessageRoomListVO messageRoomListVo = service.getMessageRoom(roomId);		
 		pushMessageRoom(roomId, loginVO, afterEmpList, messageRoomListVo, true);
 		
@@ -383,7 +429,7 @@ public class MessagePushController {
 	public String getCurrentTime(){
 		Calendar calendar = Calendar.getInstance();
         java.util.Date date = calendar.getTime();
-        String strTime = (new SimpleDateFormat("yyyyMMddHHmmss").format(date));
+        String strTime = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 
         //String strTime = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
         return strTime;

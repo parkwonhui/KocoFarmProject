@@ -77,9 +77,10 @@ $(function() {
 					$(massageRoomList[i]).parent().children('.chat_people')
 							.children('.chat_ib').children('h5').append(
 									'<span>New</span>');
-					return;
 				}
 			}
+			
+			return;
 		}
 
 		var text = addMessageHtml(data);
@@ -220,10 +221,7 @@ $(function() {
 		$('.input_msg_write').append(text);
 
 	}
-
-	// Context 등록하기
-	// requestNewMessage();
-
+	
 	// 메시지 룸 리스트 가져오기
 	ajaxRequest("listMessageRoom", null, "get", addMessageRoomList);
 
@@ -256,7 +254,7 @@ $(function() {
 
 		list["1"] = count;
 
-		ajaxRequestStringList("addMessageRoom", list, requestMessageRoomList);
+		ajaxRequestStringList("push/addMessageRoom", list, null);
 
 	});
 
@@ -324,28 +322,28 @@ $(function() {
 	});
 
 	// 메시지 방 선택
-	$(document).on(
-			"click",
-			".chat_list",
-			function() {
-				$(this).toggleClass('checked');
-				initSelectMessageRoomColor(this);
-				removeNew();
+	$(document).on(	"click",".chat_list",function() {
+		$(this).toggleClass('checked');
+		initSelectMessageRoomColor(this);
+		removeNew();
+	
+		var roomID = $(this).children("input[name=messageRoomId]").val();
 
-				var roomID = $(this).children("input[name=messageRoomId]")
-						.val();
-				$(this).children("input[name=messageRoomId]").val();
-				var data = {
-					"roomId" : roomID
-				};
+		$(this).children("input[name=messageRoomId]").val();
+		var data = {
+			"roomId" : roomID
+		};
+	
+		// new가 있다면 없애주기
+		$(this).children('.chat_people').children('.chat_ib').children('h5').children('span').html("");
 
-				var messageRoom = $(this).children('.chat_people').children(
-						'.chat_ib').children('h5').children('p').html();
-				// 현재 선택한 방 id 저장
-				$('#click-message-room-id').val(roomID);
-				selectMessageRoomName = messageRoom;
-				ajaxRequest("listMessage", data, "get", addMessageList);
-			});
+		var messageRoom = $(this).children('.chat_people').children('.chat_ib').children('h5').children('p').html();
+
+		// 현재 선택한 방 id 저장
+		$('#click-message-room-id').val(roomID);
+		selectMessageRoomName = messageRoom;
+		ajaxRequest("listMessage", data, "get", addMessageList);
+	});
 
 	function removeNew() {
 		var newTextParent = $(this).children('.chat_people').children(
@@ -416,6 +414,7 @@ $(function() {
 				bRequestMessage = true;
 				if(0 == data.pushType){
 					console.log('44444444444');
+					// 해당 방을 클릭했는지 확인
 					addMessage(data);
 				}else{
 					console.log('55555555555');
