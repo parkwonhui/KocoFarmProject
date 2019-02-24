@@ -13,6 +13,7 @@ import org.kocofarm.controller.comm.ScheduleEnum;
 import org.kocofarm.domain.comm.LoginVO;
 import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMemberMiniVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
 import org.kocofarm.domain.schedule.ScheduleMemberVO;
@@ -382,13 +383,29 @@ public class ScheduleController {
 		return re;
 	}
 	
+
+	@ResponseBody
+	@PostMapping("/getCalenderInviteMember")
+	public List<ScheduleCalenderMemberMiniVO>  getCalenderInviteMember(HttpSession session, int calenderId){
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		
+		if(null == projectVO){
+			return null;
+		}		
+
+		String strPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(strPublic, service,  projectVO);
+		List<ScheduleCalenderMemberMiniVO> list = process.getCalenderMember(session, calenderId);
+		
+		log.info(list);
+		return list;
+	}
+		
+	
 	@ResponseBody
 	@PostMapping("/delProject")
 	public int delProject(HttpSession session, int projectId){
-		
-		if(null == session){
-			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
-		}
 		
 		if(false == isManager(session)){
 			return ScheduleEnum.ERROR.AUTH_FAIL;
@@ -402,7 +419,7 @@ public class ScheduleController {
 		int re = service.delProject(projectId);
 		return re;
 	}
-		
+	
 	// 팀장 여부 체크
 	public boolean isManager(HttpSession session){
 

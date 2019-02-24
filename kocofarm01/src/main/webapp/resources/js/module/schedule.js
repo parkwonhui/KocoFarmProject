@@ -932,5 +932,96 @@ $(document).on("click",
 
 /* 작업자 추가 버튼 클릭 */
 $("#edit-calender-emp").click(function(){
-	console.log('작업자 추가 버튼 클릭');
+	console.log('calender_id:'+add_calender_id);
+
+	$.ajax({
+		type : "POST",
+		data : { "calenderId": add_calender_id	},
+		dataType : "json",
+		url : "getCalenderInviteMember",
+		success : function(data) {
+			console.log(data);
+			if(undefined == data)
+				return;
+			
+			addCalenderInviteMember(data);
+		},
+		error : function(error) {
+		}, // error
+	});// ajax
 });
+
+function addCalenderInviteMember(data){
+	$("#no-claender-emp-list").empty();
+	$("#current-claender-emp-list").empty();
+	
+	var length = data.length;
+	var notMemberList = "";
+	var MemberList = "";
+
+	for(var i = 0; i < length; ++i){
+		if(1 == data[i].isMember){
+			MemberList += addCalenderInviteMemberList(data[i], "current-claender-emp-list");
+		}else{
+			notMemberList += addCalenderInviteMemberList(data[i], "no-claender-emp-list");
+		}
+	}
+	
+	$("#no-claender-emp-list").append(notMemberList);
+	$("#current-claender-emp-list").append(MemberList);
+}
+
+function addCalenderInviteMemberList(data, id){
+	var text="";
+	if("current-claender-emp-list" == id){
+		text += '<li class="invite-message-room-emp checked">';
+	}else{		
+		text += '<li class="invite-message-room-emp">';
+	}
+	// text += '<img src="/resources/img/comm/'+data[i].empImg+'" >';
+	text += '<input type="hidden" name="empId" value=' + data.empId	+ ' />';
+	text += '<div class="calender-member-invite-list-img"><img src="/resources/img/message/user-profile.png" ></div>';
+	text += '<p class="calender-member-invite-list-name">' + data.korNm + '</div></p>';
+	text += '</li>';
+	
+	return text;
+}
+
+$(document).on("click", ".invite-message-room-emp", function() {
+	$(this).toggleClass('checked');
+	
+	var parent = $(this).parent();
+	$(parent).children("input[value="+$(this).empId + "]").remove();
+	
+	if(true == $(this).hasClass('checked')){
+		$("#current-claender-emp-list").append($(this));		
+		
+	}else{
+		$("#no-claender-emp-list").append($(this));		
+	}
+	
+});
+
+
+/*$('#edit-calender-emp-list-button').click(){
+	var empList = $('#current-claender-emp-list');
+	var length = $("#current-claender-emp-list").length;
+	var list = {};
+	var index = 0;
+	list[index + ""] = calenderId;
+	++index;
+	++index;
+	var count = 0;
+	for (var i = 0; i < length; ++i) {
+
+		list[index + ""] = $(empList[i]).children(
+				"input[name=empId]").val();
+		++index;
+		++count;
+	}
+
+	list["1"] = count;
+
+	
+}
+*/

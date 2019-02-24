@@ -317,7 +317,7 @@ $( function() {
 					<li>a</li>
 					<li>b</li>
 					<li>c</li>
-					</ul>
+					</ul>			
 					<ul id="current-claender-emp-list" class="claender-emp-list">
 					<li>1</li>
 					<li>2</li>

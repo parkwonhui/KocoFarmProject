@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kocofarm.controller.comm.ScheduleEnum;
 import org.kocofarm.domain.comm.LoginVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMemberMiniVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
@@ -151,5 +152,13 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 		
 		int re = super.delCategory(session, category);
 		return re;
-	}	
+	}
+	
+	public List<ScheduleCalenderMemberMiniVO> getCalenderMember(HttpSession session, int calenderId){
+		if(false == isProjectManager(session, projectVO)){
+			return null;
+		}
+		
+		return super.getCalenderMember(session, calenderId);
+	}
 }
