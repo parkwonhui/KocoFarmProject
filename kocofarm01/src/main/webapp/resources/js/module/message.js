@@ -354,6 +354,10 @@ $(function() {
 	$(document).on("click", ".msg_send_btn", function() {
 		var roomId = searchMessageRoomId();
 		var text = $('.write_msg').val();
+		if("" == text){
+			return;
+		}
+		
 		console.log('roomId:' + roomId);
 		var data = {
 			"contents" : text,
