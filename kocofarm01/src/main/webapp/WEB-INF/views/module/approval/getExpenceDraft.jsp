@@ -107,7 +107,6 @@ h1 {
 													<td>
 														<input type="button" class="approveBtn" id ="apprState" value="결재" width ="100%"/>
 													</td>
-													
 													<td>
 														<input type="button" class="returnBtn" id ="apprState" value="반려" width ="100%" />
 													</td>
@@ -118,18 +117,16 @@ h1 {
 													
 													<c:if test = "${apprEmp.apprOption eq '결재' }" >
 														<td id = 'signImage' class = "empSign">
-														
 														<c:if test =  "${ApprEmployee.empSign eq null }" >
-														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' 
+														src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
 														</c:if>
-														
 														<c:if test =  "${ApprEmployee.empSign ne null }" >
-														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}'
+														 src = '/resources/img/approval/${ApprEmployee.draftSign}' />
 														</c:if>
-														
 														</td>
 													</c:if>
-													
 													<c:if test = "${apprEmp.apprOption eq '반려' }" >
 														<td id = 'signImage' class = "empSign">
 														반려
@@ -147,15 +144,14 @@ h1 {
 													<td class = "empSign">
 														<c:if test = "${ApprEmployee.draftSign ne null}">
 															<c:if test =  "${ApprEmployee.empSign eq null }" >
-															<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
+															<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' 
+															src = '/resources/img/approval/tmpSign/${ApprEmployee.draftSign}' />
 															</c:if>
-		
 															<c:if test =  "${ApprEmployee.empSign ne null }" >
-																
 																<c:if test = "${ApprEmployee.draftSign ne 'return'}">
-																		<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />				
+																		<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${ApprEmployee.draftSign}' 
+																		src = '/resources/img/approval/${ApprEmployee.draftSign}' />				
 																</c:if>
-																
 																<c:if test = "${ApprEmployee.draftSign eq 'return'}">
 																	반려
 																</c:if>
@@ -293,10 +289,7 @@ h1 {
 							<input type="button" data-oper = "setUp" class="expEdit_btn" value="수정" />
 							<input type="button" data-oper = "delete" class="expDel_btn" value="삭제" />
 							<c:if test="${draft.approveState eq '결재완료' }">
-								<input type=button value="인쇄 미리 보기" onclick="window.ieExecWB(7)">  
-								<input type=button value="페이지 설정" onclick="window.ieExecWB(8)">  
-								<input type=button value="인쇄하기(대화상자 표시)" onclick="window.ieExecWB(6)">  
-								<input type=button value="인쇄 바로 하기" onclick="window.ieExecWB(6, -1)">																							
+								<input type="button" VALUE="인쇄하기" style="background-color: #000000; font-size: 10pt; color: #ffffff; " onclick="printWin()">																	
 							</c:if>
 						</div>
 					</div>					

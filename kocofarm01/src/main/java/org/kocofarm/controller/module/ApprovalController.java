@@ -130,6 +130,7 @@ public class ApprovalController {
 	@PostMapping("/setExpence")
 	public String setExpence(ApprDraftVO draft,ApprExpenceVO expence,HttpServletRequest request){
 		
+			
 			service.setDraft(draft);
 			service.setExpence(expence);
 			service.setExpenceCont(request);
@@ -153,6 +154,7 @@ public class ApprovalController {
 	public String delVacDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
 		log.info("삭제:"+draftId);
+		service.delApprEmp(draftId);
 		service.delVacation(draftId);
 		service.delDraft(draftId);
 		
@@ -165,6 +167,7 @@ public class ApprovalController {
 
 		int expenceId = service.getExpence(draftId).getExpenceId();
 		log.info("삭제:"+draftId);
+		service.delApprEmp(draftId);
 		service.delExpenceCont(expenceId);
 		service.delExpence(draftId);
 		service.delDraft(draftId);
@@ -178,27 +181,50 @@ public class ApprovalController {
 	@GetMapping("/getSetUpVacPage")
 	public String getsetUpVacPage(@RequestParam("draftId") int draftId, Model model ) throws Exception{
 		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
+		ApprDraftVO draft = service.getDraft(draftId);
+		ApprVacationVO vacation = service.getVacation(draftId);
+		model.addAttribute("emp", eService.getEmp(draft.getEmpId()));
+		model.addAttribute("replacement",eService.getEmp(vacation.getReplacementId()));
 		model.addAttribute("draft",service.getDraft(draftId));
 		model.addAttribute("vacation",service.getVacation(draftId));
-
+		String apprStringId = "";
+		String apprStringNm = "";
+		List<ApprEmpDraftDetailVO> list = service.getApprEmpList(draftId);
+		for(int i =0; i< list.size(); i++){
+			apprStringId += list.get(i).getEmpId();
+			EmpVO emp = eService.getEmp(list.get(i).getEmpId());
+			apprStringNm += emp.getKorNm();
+			if(i < list.size()-1){
+				apprStringId +=",";
+				apprStringNm +=",";
+			}
+		}
+		model.addAttribute("apprId", apprStringId);
+		model.addAttribute("apprNm", apprStringNm);
+	
 		return "module/approval/setUpVacationForm";
 	}
 	
 	/*휴가 신청서 수정 */
 	@PostMapping("/setUpVacation")
-	public String setUpVacation(@RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation, Model model){
-		draft.setDraftId(draftId);
+	public String setUpVacation(HttpServletRequest request, @RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation, Model model){
+		/* 결재자 수정 */
+		service.delApprEmp(draftId);
+		service.setApprEmp(request);
+		/* 휴가 신청서 관련 정보 수정 */
 		service.setUpVacation(vacation);
+		/* 기본 기안서 수정  */
+		draft.setApproveState("기안중");
 		service.setUpDraft(draft);
 
-		
 		log.info("Here");
 		return "redirect:/approval/getDraftList";
 	}
 	
 	/* 결재 상태 수정 -- 저장버튼 (버튼에 따라 다름) */
 	@GetMapping("/setUpApprState")
-	public String setUpApprState(HttpSession session ,HttpServletRequest request, @RequestParam("draftId") int draftId, @RequestParam("apprState") int apprState){
+	public String setUpApprState(HttpSession session ,HttpServletRequest request, 
+						@RequestParam("draftId") int draftId, @RequestParam("apprState") int apprState){
 		ApprDraftVO draft = service.getDraft(draftId);
 		LoginVO login = (LoginVO) session.getAttribute("loginVO");
 		String empId = login.getEmpId();
@@ -263,7 +289,8 @@ public class ApprovalController {
 		return "module/approval/getApprovalEmp";
 	}
 	
-@PostMapping("/setComment")
+	/* 댓글 달기 */
+	@PostMapping("/setComment")
 	@ResponseBody
 	public String setComment(@RequestParam("draftId") int draftId, @RequestParam("empId") String empId,
 		ApprCommentVO comment){
@@ -271,7 +298,7 @@ public class ApprovalController {
 		return "redirect:/approval/getDraft?draftId=${ApprDraftVO.draftId }";
 	}
 	
-	/* �뙎湲� 由ъ뒪�듃 蹂닿린 */
+	/* 댓글 정보 가져오기  */
 	@GetMapping("/getCommentList")
 	public String getCommentList(@RequestParam("draftId") int draftId,@RequestParam("empId") String empId,
 			Model model){
@@ -340,19 +367,14 @@ public class ApprovalController {
 		return "module/approval/setEmpSign";
 	}
 	
-
+	/* 사인 캔버스 불러오고/저장 경로 추후 수정 예정 ksh*/
+	
 	@GetMapping("/test")
 	public String test(){
 	
 		return "module/approval/index";
 	}
-/*	
-	@GetMapping("/save")
-	public String saveget(){
-	
-		return "module/approval/save";
-	}*/
-	
+
 	@PostMapping("/save")
 	public String savepost( Model model){
 

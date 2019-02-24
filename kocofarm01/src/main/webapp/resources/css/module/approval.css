@@ -14,7 +14,7 @@ p.sign{text-align:right;padding-right:200px;}
 .btn_wrap input.deleteBtn{width:80px;height:40px;line-height:40px;background:#861E3F;border-radius:3px;font-size:14px;font-weight:bold;color:#fff;cursor:pointer;text-indent:0;border:1px solid #ddd}
 .inf_wrap_box_sign input.fileNm{width:40%;height:26px;border:1px solid #ddd;border-radius:3px;}
 .inf_wrap_box_sign input.register{width:20%;height:26px;border:1px solid #ddd;border-radius:3px;}
-.inf_wrap_box_sign input.singImage{width:80px;height:80px;border:1px solid #ddd;border-radius:3px;}
+.inf_wrap_box_sign input.signImage{width:80px;height:80px;border:1px solid #ddd;border-radius:3px;}
 
 
 div.tab_menu section {display: none;padding:0px 0 0;}
@@ -48,7 +48,7 @@ div .input_wrap{position:relative;}
 span.sub_txt{font-size:12px;font-weight:600}
 textarea{resize:none}
 select{width:100%;height:39px;line-height:39px;border:1px solid #ddd;border-radius:3px}
-input:not([type=radio]){width:70%;height:39px;border:1px solid #ddd;border-radius:3px}
+input:not([type=radio]){width:100%;height:39px;border:1px solid #ddd;border-radius:3px}
 input.date{width:100%;height:39px;text-indent:10px;border:1px solid #ddd;border-radius:3px;text-align:center}
 .submitBtn{height:40px!important;line-height:40px;min-width:120px;padding:0 10px;background-color:#010372;color:#fff;cursor:pointer}
 
@@ -107,7 +107,9 @@ div .wrap{
 .setNullBt{
 	width:15px;height:15px;
 	}
-	
+.delExpenceRow{
+	width:15px;height:15px;
+}
 #canvas { border: 1px solid #000; }		
 
 /* sign_pad관련 */ 

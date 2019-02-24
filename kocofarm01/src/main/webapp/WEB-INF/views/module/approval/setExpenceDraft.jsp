@@ -3,8 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" type="text/css"
 	href="/resources/css/module/approval.css" />
-<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	var no = 1;
 	function expenceAdd() {
@@ -15,14 +15,24 @@
 		var expencePrice = row.insertCell(2);
 		var commOpt = row.insertCell(3);
 		var commPrice = row.insertCell(4);
+		var delOption = row.insertCell(5);
 
-		contId.innerHTML = "<input type='text' name='expence' class = 'expenceId' value='"+no+"'>";
+		contId.innerHTML = "<input type='text' name='expence' class = 'expenceId' id= 'expenceId' value='"+no+"'>";
 		customerName.innerHTML = "<input type='text' name='expence'>";
 		expencePrice.innerHTML = "<input type='text' name='expence' class='expencePrice' id ='expencePrice"+no+"'>";
-		commOpt.innerHTML = "<input type='radio' name = 'commissionType"+no+"' class='expenceOp' checked value='yes'>yes</input><input type='radio' name = 'commissionType"+no+"' class='expenceOp' value='no'>no</input>";
+		commOpt.innerHTML = "<input type='radio' name = 'commissionType"+no+"' class='expenceOp' checked value='yes'>yes</input>"+
+							"<input type='radio' name = 'commissionType"+no+"' class='expenceOp' value='no'>no</input>";
 		commPrice.innerHTML = "<input type='text' name='expence' class ='commPrice' id= 'commPrice"+no+"'>";
-
+		delOption.innerHTML = "<input type='button' id = 'delBt' class='delBt"+no+"' value = 'x' class='delExpenceRow' OnClick='delRow()' />";
 		no++;
+	}
+	
+	function delRow (){
+		var a =  document.getElementById("expenceId");
+
+		var b = $(this).val();
+		console.log(a);
+		console.log(b);
 	}
 </script>
 
@@ -133,6 +143,7 @@
 									<th class="inputText">결재 금액</th>
 									<th class="inputText">수수료 여부</th>
 									<th class="inputText">수수료 금액</th>
+									<th class="delRow">삭제</th>
 								</tr>
 							</table>
 

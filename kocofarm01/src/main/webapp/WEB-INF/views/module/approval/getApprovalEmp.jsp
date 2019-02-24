@@ -129,16 +129,22 @@
 		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","+$("#secondId").val();
 		               self.close();
 		        }else if($("#third").val() != "" && $("#fourth").val() == ""){
-		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","+$("#second").val()+","+$("#third").val();
-		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","+$("#secondId").val()+","+$("#thirdId").val();
+		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","
+		               +$("#second").val()+","+$("#third").val();
+		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","
+		               +$("#secondId").val()+","+$("#thirdId").val();
 		               self.close();
 		        }else if($("#fourth").val() != "" && $("#fifth").val() == ""){
-		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","+$("#second").val()+","+$("#third").val()+","+$("#fourth").val();
-		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","+$("#secondId").val()+","+$("#thirdId").val()+","+$("#fourthId").val();
+		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","
+		               +$("#second").val()+","+$("#third").val()+","+$("#fourth").val();
+		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","
+		               +$("#secondId").val()+","+$("#thirdId").val()+","+$("#fourthId").val();
 		               self.close();
 		        }else if($("#fifth").val() != ""){
-		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","+$("#second").val()+","+$("#third").val()+","+$("#fourth").val()+","+$("#fifth").val();
-		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","+$("#secondId").val()+","+$("#thirdId").val()+","+$("#fourthId").val()+","+$("#fifthId").val();
+		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","
+		               +$("#second").val()+","+$("#third").val()+","+$("#fourth").val()+","+$("#fifth").val();
+		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","
+		               +$("#secondId").val()+","+$("#thirdId").val()+","+$("#fourthId").val()+","+$("#fifthId").val();
 		               self.close();
 		        }
 	

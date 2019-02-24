@@ -80,6 +80,8 @@ public interface ApprovalMapper {
 	public int setUpApprOption(ApprEmpDraftDetailVO empDraft);
 
 	/*--------------삭제--------------*/
+	/* 결재자 정보 삭제 */
+	public int delApprEmp(int draftId);
 	/* 기안서 삭제*/
 	public int delDraft(int draftId);
 	/* 휴가 신청서 삭제*/

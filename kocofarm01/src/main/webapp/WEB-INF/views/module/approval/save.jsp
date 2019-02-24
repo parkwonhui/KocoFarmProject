@@ -13,11 +13,7 @@
 
 	FileUtils.writeByteArrayToFile(new File("C:\\Users\\kim sunhaeng\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\img\\approval\\tmpSign\\"+fileName), Base64.decodeBase64(sign));
 
-	
-	
-	
 %>
-
 {
 	"filename" : "<%= fileName %>"
 }

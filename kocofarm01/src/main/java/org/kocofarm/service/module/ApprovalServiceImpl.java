@@ -182,28 +182,37 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 	
 	/* --------------------- 삭제 --------------------- */
+	/* 결재자 정보 삭제 */
 	@Override
-	public boolean delDraft(int draftId) {
-		return mapper.delDraft(draftId) == 1 ;
+	public void delApprEmp(int draftId) {
+		mapper.delApprEmp(draftId);
+		
+	}
+	/* 기안서 삭제 */
+	@Override
+	public void delDraft(int draftId) {
+		mapper.delDraft(draftId);
 		
 	}
 
+	/* 휴가신청서 삭제 */
 	@Override
 	public void delVacation(int draftId) {
 		mapper.delVacation(draftId);
 	}
 
+	/* 지출명세서 삭제 */
 	@Override
 	public void delExpence(int draftId) {
 		mapper.delExpence(draftId);
 	}
-
+	
+	/* 지출명세서 내역 삭제 */
 	@Override
 	public void delExpenceCont(int expenceId) {
 		mapper.delExpenceCont(expenceId);
 	}
 
-	
 	/* --------------------- 수정 --------------------- */
 	@Override
 	public int setUpDraft(ApprDraftVO draft) {
@@ -255,4 +264,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int delComment(int commentId){
 		return mapper.delComment(commentId);
 	}
+
+	
 }

@@ -60,8 +60,8 @@ public class ApproalServiceTest {
 	
 	}*/
 	
-	@Test
-	/*public void setDraft(){
+	/*@Test
+	public void setDraft(){
 		ApprDraftVO draft = new ApprDraftVO();
 		ApprVacationVO vacation = new ApprVacationVO();
 		draft.setDraftDt("2018-02-11");
@@ -86,7 +86,5 @@ public class ApproalServiceTest {
 		service.setVacation(vacation);
 		log.info("생성된 게시물 번호 :"+service.getDraftNo());
 	}*/
-	public void testDelete(){
-		log.info("remove result  : "+service.delDraft(166));
-	}
+
 }

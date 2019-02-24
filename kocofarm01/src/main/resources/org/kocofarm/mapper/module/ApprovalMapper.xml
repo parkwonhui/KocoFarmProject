@@ -277,13 +277,14 @@
 		where 	expence_id = #{expenceId}  
 	</update>
 	
-	
+	<!-- 기안서 상태 수정(기안중/결재중/반려/결재완료 -->
 	<update id = "setUpApprState" parameterType = "org.kocofarm.domain.approval.ApprDraftVO">
 		update 	draft
 		set 	approve_state = #{approveState}
 		where 	draft_id = #{draftId}
 	</update>
 	
+	<!-- 결재자 결재 여부 수정(결재/반려/미확인) -->
 	<update id = "setUpApprOption" parameterType = "org.kocofarm.domain.approval.ApprEmpDraftDetailVO">
 		update 	appr_emp
 		set 	appr_option = #{apprOption},
@@ -293,6 +294,13 @@
 	</update>
 	
 	<!-- ****************************** 삭제 ****************************** -->
+	
+	<!-- 기존 결재자 정보 삭제(수정 전단계) -->
+	<delete id ="delApprEmp">
+		delete
+		from appr_emp
+		where draft_id = #{draftId}
+	</delete>
 	
 	<!-- 기본 기안서 정보 삭제  -->
 	<delete id = "delDraft" >

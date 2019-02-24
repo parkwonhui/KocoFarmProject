@@ -64,9 +64,10 @@ public interface ApprovalService {
 	/* 결재자 정보 입력*/
 	public void setApprEmp(HttpServletRequest request);
 	
-
+	/* 결재자 정보 삭제 */
+	public void delApprEmp(int draftId);
 	/* 기안서 삭제*/
-	public boolean delDraft(int draftId);
+	public void delDraft(int draftId);
 	/* 휴가 신청서 삭제*/
 	public void delVacation(int draftId);
 	/* 지출명세서 삭제*/
