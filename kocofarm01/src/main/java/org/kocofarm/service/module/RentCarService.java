@@ -19,7 +19,8 @@ public interface RentCarService {
 		public boolean setUpRentCarDetail(RentCarVO rentCar);
 		//글개수
 		public int getTotal(Criteria cir);
-		
+		//차량번호 중복확인
+		public RentCarVO getcarIdChk(String carID);
 		
 		
 }

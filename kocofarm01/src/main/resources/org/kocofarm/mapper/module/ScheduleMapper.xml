@@ -178,4 +178,20 @@ select * from project where project_id = #{projectId}
 	on cat.CATEGORY_ID = cal.CATEGORY_ID
 	and cat.project_id = #{projectId} )
 </delete>
+
+<!-- 일정 member 리스트 가져오기 -->
+<select id="getCalenderMember" parameterType="int" resultType="ScheduleCalenderMemberMiniVO" >
+select emp_id, emp_img, kor_nm from emp
+where emp_id  in
+(select EMP_ID from member where calender_id= #{calenderId})
+</select>
+
+<!-- 일정 member가 아닌 emp 가져오기 -->
+<select id="getCalenderNotMember" parameterType="int" resultType="ScheduleCalenderMemberMiniVO" >
+select emp_id, emp_img, kor_nm from emp
+where emp_id not in
+(select EMP_ID from member where calender_id= #{calenderId})
+</select>
+
+
 </mapper>

@@ -79,7 +79,7 @@
 								</x:forEach>
 							</tbody>
 						</table>
-					</div>
+					</div><!-- news E -->
 					
 				</div><!-- main_contents E --> 
 			</div><!-- main_box E -->

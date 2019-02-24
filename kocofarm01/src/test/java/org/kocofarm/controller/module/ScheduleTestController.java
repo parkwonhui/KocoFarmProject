@@ -187,4 +187,9 @@ public class ScheduleTestController {
 		log.info(mapper.getMember(142));
 	}*/
 	
+	@Test
+	public void getCalenderMember(){
+		//log.info(mapper.getCalenderMember(142));
+		log.info(mapper.getCalenderNotMember(142));
+	}	
 }

@@ -50,7 +50,6 @@ public class UploadController {
 */
 	@GetMapping("/uploadForm")
 	public String uploadForm() {
-		log.info("uploadForm");
 		return "/module/fileRoom/uploadForm";
 
 	}
@@ -73,7 +72,6 @@ public class UploadController {
 		try {
 			String contentType = Files.probeContentType(file.toPath());
 			
-			log.info("contentType" + contentType);
 			return contentType.startsWith("image");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,14 +86,12 @@ public class UploadController {
 	uploadAjaxPost(MultipartFile[] uploadFile) {
 
 		List<AttachFileVO> list = new ArrayList<>();
-		log.info("update ajax post_________________");
 
 		String uploadFolder = "C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload";
 		String uploadFolderPath = GetFolder();					
 		
 		//make folder---------------------------------
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
-		log.info("upload path : " + uploadPath);
 		
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
@@ -104,10 +100,6 @@ public class UploadController {
 		// make yyyy/MM/dd folder
 		
 		for (MultipartFile multipartFile : uploadFile) {
-			
-			log.info("______________________________________________");
-			log.info("uploadFile : " + multipartFile.getOriginalFilename());
-			log.info("uploadSize : " + multipartFile.getSize());
 
 			AttachFileVO attachFileVO = new AttachFileVO();
 			
@@ -115,7 +107,6 @@ public class UploadController {
 
 			// IE has file path
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-			log.info("only file name : " + uploadFileName);
 
 			attachFileVO.setFileName(uploadFileName);
 			
@@ -127,14 +118,12 @@ public class UploadController {
 			
 			try {
 				File saveFile = new File(uploadPath, uploadFileName);
-				log.info("SAVEFILE:"+saveFile);
 				multipartFile.transferTo(saveFile);
 				
 				
 				attachFileVO.setUploadPath(uploadFolderPath);
 				attachFileVO.setUuid(uuid.toString());
 				
-				log.info("uploadfolderpath : "+uploadFolderPath);
 				
 				// chech image file
 				if(checkImageType(saveFile)) {
@@ -163,11 +152,9 @@ public class UploadController {
 	@GetMapping("/display")
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName){
-		log.info("fileName : " + fileName);
 		
 		File file = new File("C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\"+ fileName);
 		
-		log.info("file:" + file);
 		
 		ResponseEntity<byte[]> result = null;
 		
@@ -187,11 +174,9 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 		
-		log.info("download file : " + fileName);
 		
 		Resource resource = new FileSystemResource("C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\"+ fileName);
 		
-		log.info("resource : " + resource);
 		
 		if(resource.exists() == false){
 			
@@ -212,18 +197,14 @@ public class UploadController {
 			String downloadName = null;
 			
 			if(userAgent.contains("Trident")){
-				log.info("IE explore");
 				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+"," ");
 			}else if(userAgent.contains("Edge")) {
-				log.info("Edge brower");
 				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8");
 				
 			}else{ 
-				log.info("chrome");
 				downloadName = new String(resourceOriginalName.getBytes("UTF-8"),"ISO-8859-1");
 				
 			}
-			log.info("downloadName : " + downloadName);
 			
 			
 			headers.add("Content-Disposition","attachment; filename=" + downloadName);
@@ -239,14 +220,12 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName, String type){
 		
-		log.info("delfile : " + fileName);
 		
 		File file;
 		
 		
 		try {
 			file = new File("C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\"+URLDecoder.decode(fileName,"UTF-8"));
-			log.info("delfile: "+file);
 			file.delete();
 			
 			// 확장자명 list TF result 하는것 필요

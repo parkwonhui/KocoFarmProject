@@ -124,7 +124,7 @@ h1 {
 														</c:if>
 														
 														<c:if test =  "${ApprEmployee.empSign ne null }" >
-														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/img/approval/${ApprEmployee.draftSign}' />
+														<input type='image' name = 'tmpSignImage' id = 'empSignImage' value = '${apprEmp.draftSign}' src = '/resources/upload/temp/${ApprEmployee.draftSign}' />
 														</c:if>
 														
 														</td>
@@ -293,10 +293,7 @@ h1 {
 							<input type="button" data-oper = "setUp" class="expEdit_btn" value="수정" />
 							<input type="button" data-oper = "delete" class="expDel_btn" value="삭제" />
 							<c:if test="${draft.approveState eq '결재완료' }">
-								<input type=button value="인쇄 미리 보기" onclick="window.ieExecWB(7)">  
-								<input type=button value="페이지 설정" onclick="window.ieExecWB(8)">  
-								<input type=button value="인쇄하기(대화상자 표시)" onclick="window.ieExecWB(6)">  
-								<input type=button value="인쇄 바로 하기" onclick="window.ieExecWB(6, -1)">																							
+								<INPUT TYPE="button" VALUE="인쇄하기" style="background-color: #000000; font-size: 10pt; color: #ffffff; " onclick="printWin()">																					
 							</c:if>
 						</div>
 					</div>					

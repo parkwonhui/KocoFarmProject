@@ -10,7 +10,7 @@
 		<div class="sub_title">
 			<div class="sub_title_top">
 				<div class="sub_title_inner">
-					<h2>RentCar <span>등록된 차량 정보를 확인할 수 있습니다.</span></h2>
+					<h2>RentCar Detail <span>등록된 차량 정보를 확인할 수 있습니다.</span></h2>
 					<ul class="sub_nav">
 						<li>홈 > </li>
 						<li class="on">차량관리</li>
@@ -21,38 +21,70 @@
 	
 		<!-- Contents Area -->
 		<div class="contents_wrap">
-			<form action="/rent/rentCarDetailList" method="GET">
+			<form id = "searchForm" action="" method="GET">
 				<div class="sch_wrap">
 					<p class="tit">검색</p>
+					
 					<div class="sch_slide_btn">
 						<img id="slideBtnImg" class="upBtn" src="/resources/img/comm/list_up_btn.png" alt="메뉴 접기" />
 					</div>
+					
 					<div class="sch_toggle_wrap">
 						<div class="sch_box_wrap">
 							<div class="right">
 								<select name="schType" id="schType">
-								<option value="">전체</option>
-								<option name="area" id="carIdChk" value="carId">차량번호</option>
-								<option name="area" value="carModel">차량모델명</option>
+								 <option value="" 
+										<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>전체</option>
+								<option  value="I"
+										<c:out value="${pageMaker.cri.type eq 'I'?'selected':''}"/>>차량번호</option>
+								<option  value="M"
+										<c:out value="${pageMaker.cri.type eq 'M'?'selected':''}"/>>차량모델명</option>
+								 								
+								<%-- <option value="" 
+										value="${pageMaker.cri.type == null?'selected':''}">전체</option>
+								<option  value="I"
+										value="${pageMaker.cri.type eq 'I'?'selected':''}">차량번호</option>
+								<option  value="M"
+										value="${pageMaker.cri.type eq 'M'?'selected':''}">차량모델명</option> --%>
+							
+								
 								</select>
-								<input type="text" name="schWord" id="schWord" placeholder="검색어를 입력 해 주세요" />
-								<input type="button" class="schBtn" id="schBtn" value="검색" />
-							<!-- 
-								<input type="checkbox" class="chk_box" name="area" id="carIdChk" value="car_id">차량번호
-								<input type="checkbox" class="chk_box" name="area" value="carModel">차량모델명
-								<input type="text" name="searchKey" size="10"></input>
-								<input type="submit" class="schBtn" value="검색"/> -->								
+								
+							<%--  value='<c:out value="${pageMaker.cri.keyword}" --%>
+								<%-- <input type="text" name="keyword" id="schWord"
+								value = "${pageMaker.cri.keyword}" placeholder="검색어를 입력 해 주세요" />
+								<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+								<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+								<input type = "hidden" name = "type" value = "${pageMaker.cri.type}"> --%>
+								<%-- <input type = "hidden" name = "keyword" value = "${pageMaker.cri.keyword}">		 --%>										
+								
+								<!-- 여기 추가해봄 -->
+								<input type='text' name='keyword'
+									value='<c:out value="${pageMaker.cri.keyword}"/>' />
+								
+								<input 	type='hidden' name='pageNum'
+									value='<c:out value="${pageMaker.cri.pageNum}"/>' />
+								
+								<input 	type='hidden' name='amount'
+									value='<c:out value="${pageMaker.cri.amount}"/>' />
+									
+							<%-- 	<input 	type='hidden' name='type'
+									value='<c:out value="${pageMaker.cri.type}"/>' /> --%>
+								
+								<input type="button" class="schBtn" id="schBtn" value="검색" />		
+												
 							</div>
 						</div>
 					</div>
 				</div>
-			</form>
+			</form>			
 			
 			<!-- list -->
 			<div class="contents">
 				<!-- 목록 보기 -->
 				<table class="contents_tb" id="contTb">
 					<colgroup>
+						<col width="10%">
 						<col width="10%">
 						<col width="10%">
 						<col width="10%">
@@ -79,17 +111,10 @@
 						<c:forEach var="RCdetail" items="${list}"> 
 						<!-- RentCarDetailService에서 RentCarDetailListModel 중에서 list만 불러오는 것이다. -->
 							<tr>
-								<td>${RCdetail.carId }</td> 
-								<%-- <td><a class = "move" href="/rent/rentCarDetailView?carId=${RCdetail.carId}">${RCdetail.modelName }</a></td> --%>
+								<td>${RCdetail.carId }</td> 								
 								<td><a class = "move" href = '<c:out value="${RCdetail.carId}"/>'>
 									<c:out value="${RCdetail.modelName }"/></a>
-								</td>
-								<%-- <td>
-								<a class = "move" href = '<c:out value = "${board.bno}"/>'>
-									<c:out value="${board.title}"/></a>
-								</td> --%>
-								
-								
+								</td>								
 								<td>${RCdetail.carModel }</td>
 								<td>${RCdetail.condition }</td>
 								<td>${RCdetail.price }</td>
@@ -106,9 +131,11 @@
 							</tr>
 						</c:forEach> 
 					</tbody>
-				</table>
+				</table>				
 			</div>
 			
+			
+		<!-- 페이징처리 -->	
 		<div class="paging_div">
 			<ul class = "pagination">			
 			<c:if test="${pageMaker.prev}">
@@ -130,28 +157,24 @@
 		<form id='actionForm' action="/rent/rentCarDetailList" method='get'>
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
-				<%-- <input type = "hidden" name = "type" value = '<c:out value = "${pageMaker.cri.type}"/>'>
-				<input type = "hidden" name = "keyword" value = '<c:out value = "${pageMaker.cri.keyword}"/>'> --%>
+				 <input type = "hidden" name = "type" value = "${pageMaker.cri.type}">
+				<input type = "hidden" name = "keyword" value = "${pageMaker.cri.keyword}">
 				
-			</form>
+		</form>
 		
-		
-		
-		
+	
 	
 		<!-- btn -->
 		<div class="btn_wrap">
 			<div class="flt_r">
-				<!-- <input type="button" class="list_btn" value="목록" />
-				<input type="button" class="view_btn" value="상세보기" /> -->
+				<c:if test="${loginVO.authority == 99}">
 				<a href="/rent/rentCarDetailWrite">
 					<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
 				</a>
-				<!-- <input type="button" class="edit_btn" value="수정" />
-				<input type="button" class="del_btn" value="삭제" /> -->
+				</c:if>
 			</div>
-		</div>
-			
+		</div>	
+				
 		</div>
 	</div>
 

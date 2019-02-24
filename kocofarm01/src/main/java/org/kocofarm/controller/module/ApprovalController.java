@@ -152,7 +152,6 @@ public class ApprovalController {
 	@GetMapping("/delVacDraft")
 	public String delVacDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
-		log.info("삭제:"+draftId);
 		service.delVacation(draftId);
 		service.delDraft(draftId);
 		
@@ -164,7 +163,6 @@ public class ApprovalController {
 	public String delExpDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
 		int expenceId = service.getExpence(draftId).getExpenceId();
-		log.info("삭제:"+draftId);
 		service.delExpenceCont(expenceId);
 		service.delExpence(draftId);
 		service.delDraft(draftId);
@@ -191,8 +189,6 @@ public class ApprovalController {
 		service.setUpVacation(vacation);
 		service.setUpDraft(draft);
 
-		
-		log.info("Here");
 		return "redirect:/approval/getDraftList";
 	}
 	
@@ -211,7 +207,6 @@ public class ApprovalController {
 			empDraft.setDraftSign("return");
 		}else if(apprState == 1){
 			String draftSign = request.getParameter("tmpSignImage");
-			log.info(draftSign);
 			draft.setApproveState("결재중");
 			empDraft.setApprOption("결재");
 			empDraft.setDraftSign(draftSign);
@@ -228,12 +223,10 @@ public class ApprovalController {
 			
 			if(apprEmpList.get(i).getDraftSign() == null){
 				count = 0;
-				log.info(count);
 			}else if(apprEmpList.get(i).getDraftSign().equals("return")){
 				refuse = 1;
 			}else{
 				count = 1;
-				log.info(count);
 			}
 		}
 		
@@ -314,18 +307,14 @@ public class ApprovalController {
 	@PostMapping("/uploadSign")
 	public String uploadAjaxPost(HttpSession session,MultipartFile[] uploadFile){
 		
-		String uploadFolder = "C:\\Users\\kim sunhaeng\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\img\\approval";
+		String uploadFolder = "C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\temp";
 		
 		for(MultipartFile multipartFile : uploadFile){
-			log.info("------------------------------------------");
-			log.info("Upload file name : "+multipartFile.getOriginalFilename());
-			log.info("upload file size : "+multipartFile.getSize());
 			LoginVO login = (LoginVO) session.getAttribute("loginVO");
 			String empId = login.getEmpId();
 			String empSign = multipartFile.getOriginalFilename();
 			
 			empSign = empSign.substring(empSign.lastIndexOf("\\") + 1);
-			log.info("only file name : "+empSign);
 			
 			File saveFile = new File(uploadFolder, empSign);
 			try {

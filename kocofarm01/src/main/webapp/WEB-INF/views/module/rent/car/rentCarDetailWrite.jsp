@@ -84,7 +84,7 @@
 			<!-- btn -->
 			<div class="btn_wrap">
 				<div class="flt_r">
-					<input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = '/rent/rentCarDetailList'" />
+					 <input type="button" class="list_btn" id="listBtn" value="목록" onclick="location.href = '/rent/rentCarDetailList'" /> 
 <%-- 					 <c:if test="${param.mode eq 'write'}"> --%>
 						 <input type="button" class="write_btn" value="등록" id = "enroll" >
 					<%-- </c:if>

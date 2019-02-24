@@ -172,7 +172,6 @@ public class ApprovalServiceImpl implements ApprovalService {
 		String empIdList = request.getParameter("empIdList");
 		String[] empId =empIdList.split(",");
 		int draftId = mapper.getDraftNo();
-		log.info(draftId);
 		for(int i = 0; i<empId.length; i++){
 			apprEmp.setDraftId(draftId);
 			apprEmp.setEmpId(empId[i]);

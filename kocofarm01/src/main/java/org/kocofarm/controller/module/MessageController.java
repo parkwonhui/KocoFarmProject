@@ -46,7 +46,6 @@ public class MessageController {
 	
 	@GetMapping("/")
 	private String getMessageInfo(HttpSession session, Model model){
-		log.info("[message] /");
 		
 		LoginVO loginVO = (LoginVO) session.getAttribute("loginVO");
 		if(null == loginVO){
@@ -61,7 +60,6 @@ public class MessageController {
 	@ResponseBody
 	@GetMapping("/listMessageRoom")
 	private List<MessageRoomListVO> getMessageRoomList(HttpSession session){
-		log.info("[message] /list");
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
@@ -74,7 +72,6 @@ public class MessageController {
 		}
 		
 		List<MessageRoomListVO> list = service.getMessageRoomList(loginVO.getEmpId());
-		log.info(list);
 		
 		return list;
 	}
@@ -82,7 +79,6 @@ public class MessageController {
 	@ResponseBody
 	@GetMapping("/listMessage")
 	private List<MessageVO> listMessage(HttpSession session, int roomId){
-		log.info("[listMessage]");
 
 		List<MessageVO> list = service.getMessageList(roomId);
 
@@ -92,7 +88,6 @@ public class MessageController {
 	@ResponseBody
 	@GetMapping("/empList")
 	private List<MessageEmpListVO> getMessageEmpList(HttpSession session){
-		log.info("[empList]");
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
@@ -106,8 +101,6 @@ public class MessageController {
 	@ResponseBody
 	@PostMapping("/addMessageRoom")
 	private int setMessageRoom(HttpSession session, @RequestBody String list){
-		log.info("[addMessageRoom]");
-		log.info(list);
 		
 		JSONObject jsonObject =  JSONObject.fromObject(list);
 		if(null == list){
@@ -132,26 +125,31 @@ public class MessageController {
 		
 		service.setMessageRoom(empList, title);
 		
-		
-		log.info(service.getMessageRoomList(loginVO.getEmpId()));
-		
 		return RESULT.SUCCESS;
 	}
 	
 	@ResponseBody
 	@PostMapping("/messageRoomInvite")
-	private List<MessageEmpListVO> getMessageRoomInvite(HttpSession session, int messageRoomId){
-		log.info("[getMessageRoomInvite]");
+	private List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId){
 		List<MessageEmpListVO> list = service.getMessageRoomInvite(messageRoomId);
 		if(null == list){
 			return null;
 		}
 		
-		log.info(list);
-		
 		return list;
 	}
 	
+	@ResponseBody
+	@PostMapping("/messageRoomEmpInfoList")
+	private List<MessageEmpListVO> getMessageRoomEmpInfoList(int messageRoomId){
+		List<MessageEmpListVO> list = service.getMessageRoomEmpInfoList(messageRoomId);
+		if(null == list){
+			return null;
+		}
+		
+		return list;
+	}
+		
 	public String getCurrentDateToString(){
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");			
 		String dateToString = transFormat.format(new Date());

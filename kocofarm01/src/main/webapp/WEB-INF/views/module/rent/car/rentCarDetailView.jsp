@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core"%>
+    
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 
 
@@ -71,7 +73,9 @@
 			<div class="btn_wrap">
 				<div class="flt_r">
 					<input type="button" class="list_btn" id="listBtn" value="목록"  />
-					<input type="button" class="auto_wth_btn_y" value="  수정    " id = "updateForm">				
+					<c:if test="${loginVO.authority == 99}">						
+						<input type="button" class="auto_wth_btn_y" value="  수정    " id = "updateForm">	
+				</c:if>					
 				</div>
 			</div>
 		</div>	

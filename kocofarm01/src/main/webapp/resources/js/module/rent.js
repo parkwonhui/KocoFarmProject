@@ -1,6 +1,4 @@
-$(function(){
-	
-	
+$(function(){	
 	//차량등록
 	$("#enroll").click(function() {
 		if(confirm("등록하시겠습니까?")){
@@ -30,17 +28,14 @@ $(function(){
 		$('#rentCarEditForm').attr("action", "/rent/rentCarDetailList").attr("method", "get")
 		 var pageNumTag = $("input[name = 'pageNum']").clone();
 	     var amountTag = $("input[name = 'amount']").clone();
-	   /*  var keywordTag = $("input[name = 'keyword']").clone();
-	     var typeTag = $("input[name = 'type']").clone();*/
 	     
 	     $('#rentCarEditForm').empty();
 	     
 	     $('#rentCarEditForm').append(pageNumTag);
 	     $('#rentCarEditForm').append(amountTag);
-	    /* $('#rentCarEditForm').append(keywordTag);
-	     $('#rentCarEditForm').append(typeTag);*/
 		
-		$("#rentCarEditForm").submit()		
+		$("#rentCarEditForm").submit();	
+		
 		//기존 : location.href = "/rent/rentCarDetailList";		
 	}) 
 	
@@ -64,48 +59,26 @@ $(function(){
 		}	
 	})
 	
+
 	
-	
-	/*
-	//차량번호 - 중복확인(ajax 이용)
-	$("#checkCar_Id").click(function() {
+	/*차량 등록페이지 - Ajax 호출*/
+	$("#checkCar_Id").click(function(){				
+		var query = {carId : $("#car_id").val()};		
 		$.ajax({
-			type : "POST",
-			url : '/resources/rentCarDetailWriteForm.do',
-			dataType : "json",
-			error : function(){
-				alert("통신실패");
-			},
-			success : function() {
-				alert('통신성공')
-			}
-		})
-		
-	})*/
-	
-	/*Ajax 호출*/
-	$("#checkCar_Id").click(function(){
-		var ajaxMode = "getCarId";
-		$.ajax({
-			"url" : "getCarAjaxData.do",
-			"data" : {
-					"id" : $("#car_id").val(),
-					"ajaxMode" : ajaxMode
-			},
-			dataType : "json",
-			success : function(data){
-				
-				if(1 == data[0]){
-					alert("이미 존재하는 차량번호 입니다.\n정확한 차량번호를 입력 해 주세요.");
+			url : "/rent/getcarIdChk",
+			data : query,
+			type : "post",
+			dataType:"json",
+			success : function(data){				
+				if(1 == data){
+					alert("이미 존재하는 차량번호 입니다.\n차량번호를 정확히 입력 해 주세요.");
 					$("#car_id").val("");
 					$("#car_id").focus();
 				}else{
 					alert("사용 가능한 차량 번호 입니다.");
 				}
 			}	
-		})
-
-		
+		})		
 	})
 	
 	
@@ -127,6 +100,7 @@ $(function(){
 	.on(
 			"click",
 			function(e) {
+				console.log("carDetail");
 				e.preventDefault();
 				actionForm
 						.append("<input type='hidden' name='carId' value='"
@@ -135,7 +109,180 @@ $(function(){
 				actionForm.submit();
 			});
 
+	
+	//검색버튼 클릭
+	$("#schBtn").click(function() {
+		
+		//alert("검색버튼 눌렀당")
+		
+		//actionForm.attr("action", "/rent/rentCarDetailList");		
+		
+		/*if (!searchForm.find("option:selected")
+				.val()) {
+			alert("검색종류를 선택하세요");
+			return false;
+		}*/
 
+		if (!searchForm.find(
+				"input[name='keyword']").val()) {
+			alert("키워드를 입력하세요");
+			return false;
+		}
+
+		searchForm.find("input[name='pageNum']").val("1");
+		e.preventDefault();
+		
+		actionForm.submit();
+	})
+	
+	
+	
+	/*==========================차량예약========================*/
+	
+	
+	/*datepicker 사용*/
+	 var 
+      from = $( "#stDate").datepicker({
+	    	  dateFormat: 'yy/mm/dd' //Input Display Format 변경
+	          ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+	          ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+	          ,changeYear: true //콤보박스에서 년 선택 가능
+              ,changeMonth: true //콤보박스에서 월 선택 가능                
+              ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+              ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+              ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+              ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
+              ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+              ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+              ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+              ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+              ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+              ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+              ,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)       
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#enDate" ).datepicker({
+    	  dateFormat: 'yy/mm/dd' //Input Display Format 변경
+	          ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+	          ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
+	          ,changeYear: true //콤보박스에서 년 선택 가능
+              ,changeMonth: true //콤보박스에서 월 선택 가능                
+              ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+              ,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif" //버튼 이미지 경로
+              ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+              ,buttonText: "선택" //버튼에 마우스 갖다 댔을 때 표시되는 텍스트                
+              ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
+              ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
+              ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
+              ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
+              ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
+              ,minDate: "-1M" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+              ,maxDate: "+1M" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)     
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+    
+    $('#stDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+    //To의 초기값을 내일로 설정
+    $('#enDate').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+ 
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+ 
+      return date;
+    }
+	
+    /*datepicker 사용 종료*/
+    
+    
+   /* timeFormat: 'p h:mm',
+     * minTime: '09:00am',
+    maxTime: '11:00pm',
+    timepicker 사용    
+   $('#stTime').timepicker({
+        timeFormat: 'H:mm',
+        interval: 60,
+        minTime: '09:00',
+        maxTime: '23:00',
+        dynamic: true,
+        dropdown: true,
+        scrollbar: true
+
+    });
+    
+    $('#enTime').timepicker({
+    	timeFormat: 'H:mm',
+        interval: 60,
+        minTime: '09:00',
+        maxTime: '23:00',
+        dynamic: true,
+        dropdown: true,
+        scrollbar: true
+    });
+    timepicker 종료*/
+
+
+    
+  
+   
+	/*=============예약등록페이지  >>> 예약 리스트로 이동 ===============*/
+	 $("#carReslist").click(function() {
+		 $('#CarResWriteForm').attr("action", "/rent/CarResList").attr("method", "get")
+			$("#CarResWriteForm").submit();		
+			
+			
+	})
+	
+	$("#checkCar").click(function() {
+		//alert("클릭햇당")
+		
+		
+
+	})
+	
+	//예약신청 버튼 누르면, 등록되도록 설정한다. 	
+	$("#carRes").click(function() {
+		alert('예약신청이 완료되었습니다. ')		
+		
+		var mode = $("#mode").val();
+		if("write" == mode){
+			
+			$("#CarResWriteForm").submit()
+		
+		}
+	})
+	
+	
+	$("#carReslist2").click(function() {		
+		 $('#carResDetailForm').attr("action", "/rent/CarResList").attr("method", "get")
+			$("#carResDetailForm").submit();	
+	})
+
+	
+	//예약 버튼 누르면 - insert되도록 설정
+	$('button[ name = "acceptBtn" ]').click(function() {		
+		var appSF = $(this).val();
+		var resId = $("#resId").val();		
+		location.href = "/rent/setCarApp?appSF="+appSF+"&resId="+resId;		
+		
+	})
+	
+	
+	/*승인 목록 페이지로 이동*/
+	$("#carAppBtn").click(function() {	
+		location.href = "/rent/CarAppList";		
+		 
+	})	
+	
+	
 });/*전체function 괄호*/
 
 

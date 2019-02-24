@@ -929,3 +929,8 @@ $(document).on("click",
 			var color = $(this).css('background-color');
 			add_calender_color_value = hexc(color);
 		});
+
+/* 작업자 추가 버튼 클릭 */
+$("#edit-calender-emp").click(function(){
+	console.log('작업자 추가 버튼 클릭');
+});
