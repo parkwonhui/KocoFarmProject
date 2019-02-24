@@ -224,4 +224,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public List<ScheduleTagVO> getTagList(int calenderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

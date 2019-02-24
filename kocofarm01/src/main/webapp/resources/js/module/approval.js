@@ -229,3 +229,20 @@ function getCommentList(){
 	});
 }
 
+var actionForm = $("#actionForm");
+$("#actionForm button").on("click",function(e){
+	if(!actionForm.find("option:selected").val()){
+		alert("검색 종류를 선택하세요. ");
+		return false;
+	}
+	
+	if(!actionForm.find("input[name='keyword']").val()){
+		alert("검색 값을 입력해주세요. ");
+		return false;
+	}
+	actionForm.find("input[name='pageNum']").val("1");
+	e.preventDefault();
+	
+	actionForm.submit();
+})
+
