@@ -36,7 +36,6 @@ public class ScheduleServiceImpl implements ScheduleService{
 	
 	@Override
 	public JSONArray getProjectJsonArray(ScheduleProjectSearchVO project, String empId){
-		log.info("getAjson:"+project);
 		JSONArray jsonArr = new JSONArray();
 		
 		List<ScheduleProjectVO> projectList = mapper.getProjectList(project);
@@ -51,12 +50,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 			}
 		}
 		
-		log.info(projectList);
-		log.info(managerProjectList);
 		
 		projectList.addAll(addList);
 				
-		log.info("..........getProjectJsonArray:"+projectList);
 		jsonArr = JSONArray.fromObject(projectList);
 		
 		return jsonArr;

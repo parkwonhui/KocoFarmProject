@@ -45,12 +45,10 @@ public class CarResController {
 	@PostMapping("/CarResWrite")
 	private String setCarRes(Model model,CarResVO carRes, RedirectAttributes rttr){
 		
-		log.info("CarResWrite : " + carRes);		
 		carResService.setCarRes(carRes);		
 		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		
 		return "redirect:CarResList";
-//		return "/module/rent/carReservation/CarResWrite";
 	}
 	
 	//예약 목록

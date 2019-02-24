@@ -59,7 +59,6 @@ public class RentCarController {
 	@PostMapping("/rentCarDetailWrite")
 	public String rentCarDetailWrite(RentCarVO rentCar, RedirectAttributes rttr){
 		
-		log.info("rentCarDetailWrite : " + rentCar);
 		rentCarService.setRentCarDetail(rentCar);
 		rttr.addFlashAttribute("result", rentCar.getCarId());		
 		return "redirect:rentCarDetailList";
@@ -85,7 +84,6 @@ public class RentCarController {
 	public String rentCarDetailView(@RequestParam("carId") String carId, 
 									@ModelAttribute("cri") Criteria cri ,Model model ){
 		
-		log.info("rentCarDetailView...");
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
 		model.addAttribute("moduleNm", "rent");/*leftbar*/		
 		return "/module/rent/car/rentCarDetailView";
@@ -96,8 +94,6 @@ public class RentCarController {
 	public String rentCarDetailEdit(@RequestParam("carId") String carId,
 									@ModelAttribute("cri") Criteria cri, Model model){
 		
-		log.info("rentCarDetailEdit...수정페이지");
-		log.info("rentCarDetailEdit : " +rentCarService.getRentCarDetail(carId));
 		
 		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));		
 		model.addAttribute("moduleNm", "rent");/*leftbar*/
@@ -110,8 +106,6 @@ public class RentCarController {
 	//@GetMapping("/rentCarDetailEdit")
 	public String rentCarDetailEdit(RentCarVO rentCar,
 									@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
-		log.info("rentCarDetailEdit...수정처리");		
-		log.info("rentCarDetailEdit :" + rentCar);		
 		
 		if(rentCarService.setUpRentCarDetail(rentCar)){
 			rttr.addFlashAttribute("result", "success");
@@ -127,7 +121,6 @@ public class RentCarController {
 	@GetMapping("/rentCarDetailDel")
 	public String rentCarDetailDel(@RequestParam("carId") String carId, 
 								@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
-		log.info("rentCarDetailDel.." + carId);
 		
 		if(rentCarService.delRentCarDetail(carId)){
 			rttr.addFlashAttribute("result", "success");

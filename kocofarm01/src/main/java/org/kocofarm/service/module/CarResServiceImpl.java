@@ -23,21 +23,18 @@ public class CarResServiceImpl implements CarResService {
 	//목록
 	@Override
 	public List<CarResVO> getCarResList() {
-		log.info("getCarResList.......");
 		return carResMapper.getCarResList();
 	}
 
 	//등록
 	@Override
 	public void setCarRes(CarResVO carResVo) {
-		log.info("setCarRes.......");
 		carResMapper.setCarRes(carResVo);
 	}
 
 	//조회
 	@Override
 	public CarResVO getCarRes(String resId) {
-		log.info("getCarRes.......");
 		return carResMapper.getCarRes(resId);
 	}
 	
@@ -51,7 +48,6 @@ public class CarResServiceImpl implements CarResService {
 	/*전체 승인목록 불러오기(승인한것들 목록)*/
 	@Override
 	public List<CarAppVO> getCarAppList(){
-		log.info("getCarAppList....");
 		return carResMapper.getCarAppList();
 	}
 	
