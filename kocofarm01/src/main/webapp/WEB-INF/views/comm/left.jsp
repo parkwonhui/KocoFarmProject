@@ -26,8 +26,7 @@
 								<c:when test="${'rent' eq moduleNm}">
 									<li><a href="/rent/rentCarDetailList">차량 관리</a></li>
 									<li><a href="/rent/CarResWrite">차량 예약</a></li>
-									<li><a href="/rent/CarResList">차량 예약 목록</a></li>
-									<li><a href="">차량 정비 일지</a></li>
+									<li><a href="/rent/CarResList">차량 예약 목록</a></li>									
 									<li><a href="/meetingroom/mroomlist">회의실</a></li>
 									<li><a href="/reservation/reservlist">회의실 예약 목록</a></li>
 								</c:when>

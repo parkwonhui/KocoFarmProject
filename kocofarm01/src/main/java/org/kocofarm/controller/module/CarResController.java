@@ -24,10 +24,10 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-@Controller
-@RequestMapping("/rent/*") /*기존 : /module/rent/*/
 @AllArgsConstructor
 @Log4j
+@Controller
+@RequestMapping("/rent/*") 
 public class CarResController {
 	
 	@Setter(onMethod_= {@Autowired})
