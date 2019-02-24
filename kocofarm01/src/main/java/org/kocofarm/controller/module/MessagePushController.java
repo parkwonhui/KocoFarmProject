@@ -70,7 +70,6 @@ public class MessagePushController {
 	
 	@PostMapping("/getMessage")
 	public void getMessage(HttpServletRequest request, HttpServletResponse response) {
-		log.info("[getRegistry]");
 				
 		LoginVO loginVo = getLoginVO(request);
 		if(null == loginVo){
@@ -90,7 +89,6 @@ public class MessagePushController {
 
 	@PostMapping("/sendMessage")
 	public void sendMessage(HttpServletRequest request, HttpServletResponse response, MessageVO messageVo){
-		log.info("[sendMessage]");
 
 		HttpSession session = request.getSession();
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
@@ -105,7 +103,6 @@ public class MessagePushController {
 		String message = request.getParameter("message");
 		int roomId = messageVo.getMessageRoomId();
 		
-		log.info(messageVo);
 
 		if(null == empId || null == name ){
 			System.out.println("444444");
@@ -169,8 +166,6 @@ public class MessagePushController {
 	@ResponseBody
 	@PostMapping("/inviteMessageRoom")
 	public int pushMessage(HttpSession session, @RequestBody String list){
-		log.info("[addMessageRoom]");
-		log.info(list);
 		
 		JSONObject jsonObject =  JSONObject.fromObject(list);
 		if(null == list){

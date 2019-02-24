@@ -96,9 +96,8 @@
 			alert('승인 하시겠습니까?');
 			/*$("#signImage").val("<input type = 'text' value =' 바보' readonly='readonly' >");*/
 			var a = document.getElementById('signImage');
-			
 			if( $("#empSign").val() != ''){
-				a.innerHTML = " <input type='image' id = 'tmpSignImage' name = 'tmpSignImage' value='"+$("#empSign").val()+"' src = '/resources/img/approval/"+$("#empSign").val()+"' />";
+				a.innerHTML = " <input type='image' id = 'tmpSignImage' name = 'tmpSignImage' value='"+$("#empSign").val()+"' src = '/resources/upload/temp/"+$("#empSign").val()+"' />";
 				console.log(a.innerHTML);
 			}else if ($("#empSign").val() == ''){
 				var sign = confirm('사인이 없습니다. 등록하시겠습니까? ')
@@ -162,12 +161,6 @@
 			}); //$.ajax끝
 		});
 
-function getApprDraftList(empId) {
-	  alert(empId);
-	  
-	  location.href = "/approval/getEmpDraftList?empId="+empId;
-}
-
 function ieExecWB( intOLEcmd, intOLEparam )
 {
 // 웹 브라우저 컨트롤 생성
@@ -230,18 +223,21 @@ function getCommentList(){
 }
 
 var actionForm = $("#actionForm");
-$("#actionForm button").on("click",function(e){
+$("#schBtn").on("click",function(e){
 	if(!actionForm.find("option:selected").val()){
-		alert("자네..검색종류는 좀 선택해주지않겠나?");
+		alert("검색 종류를 선택해주세요.");
 		return false;
 	}
 	
 	if(!actionForm.find("input[name='keyword']").val()){
-		alert("자네....아무것도 입력하지않고 찾을것인가?");
+		alert("검색어를 입력해주세요. ");
 		return false;
 	}
 	actionForm.find("input[name='pageNum']").val("1");
-	e.preventDefault();
 	
-	actionForm.submit();
+	$("#actionForm").submit();
+	
+//	e.preventDefault();
+	
+//	actionForm.submit();
 })

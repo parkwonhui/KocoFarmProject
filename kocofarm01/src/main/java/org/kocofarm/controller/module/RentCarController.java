@@ -32,13 +32,12 @@ public class RentCarController {
 	private RentCarService rentCarService;		
 	
 	
-	
 	//목록
 	@GetMapping("/rentCarDetailList")
 
-	private String rentCarDetailList(Criteria cri, Model model){		
-				
-		model.addAttribute("list", rentCarService.getRentCarDetailList(cri));		
+	private String rentCarDetailList(Criteria cri, Model model){
+		
+		model.addAttribute("list", rentCarService.getRentCarDetailList(cri));
 		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		
 		int total = rentCarService.getTotal(cri);
@@ -50,7 +49,9 @@ public class RentCarController {
 	//등록페이지 이동
 	@GetMapping("/rentCarDetailWrite")
 	public String rentCarDetailWrite(Model model){
+		
 		model.addAttribute("moduleNm", "rent");/*leftbar*/
+		
 		return "/module/rent/car/rentCarDetailWrite";
 	}
 	
@@ -58,35 +59,33 @@ public class RentCarController {
 	@PostMapping("/rentCarDetailWrite")
 	public String rentCarDetailWrite(RentCarVO rentCar, RedirectAttributes rttr){
 		
-		log.info("rentCarDetailWrite : " + rentCar);
 		rentCarService.setRentCarDetail(rentCar);
-		rttr.addFlashAttribute("result", rentCar.getCarId());
-
+		rttr.addFlashAttribute("result", rentCar.getCarId());		
 		return "redirect:rentCarDetailList";
 	}
 	
-
 	//차량번호 중복확인
 	@ResponseBody
 	@PostMapping("/getcarIdChk")
 	public int getcarIdChk(@RequestParam("carId") String carId){
 		RentCarVO getcarIdChk = rentCarService.getcarIdChk(carId);
 		
-		int result = 0;
+		int re = 0;
 		if(getcarIdChk != null){//carId가 이미 존재한다면
-			result = 1;
+			re = 1;
 		}
-		return result;
+		return re;
 	}//getcarIdChk
+	
 	
 	
 	//조회
 	@GetMapping("/rentCarDetailView")
 	public String rentCarDetailView(@RequestParam("carId") String carId, 
 									@ModelAttribute("cri") Criteria cri ,Model model ){
-
-		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
 		
+		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
+		model.addAttribute("moduleNm", "rent");/*leftbar*/		
 		return "/module/rent/car/rentCarDetailView";
 	}
 	
@@ -95,7 +94,9 @@ public class RentCarController {
 	public String rentCarDetailEdit(@RequestParam("carId") String carId,
 									@ModelAttribute("cri") Criteria cri, Model model){
 		
-		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));
+		
+		model.addAttribute("rentCarDetail", rentCarService.getRentCarDetail(carId));		
+		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		
 		return "/module/rent/car/rentCarDetailUpdate";
 	}
@@ -104,7 +105,7 @@ public class RentCarController {
 	@PostMapping("/rentCarDetailEdit")
 	//@GetMapping("/rentCarDetailEdit")
 	public String rentCarDetailEdit(RentCarVO rentCar,
-									@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){		
+									@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr){
 		
 		if(rentCarService.setUpRentCarDetail(rentCar)){
 			rttr.addFlashAttribute("result", "success");
@@ -127,7 +128,6 @@ public class RentCarController {
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
-/*		return "redirect:/rent/car/rentCarDetailList";*/
 		return "redirect:rentCarDetailList";
 	}
 

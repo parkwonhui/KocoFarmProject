@@ -46,7 +46,7 @@
 					<b>사인</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					
 					<c:if test = "${emp.empSign  ne null}" >
-						<input type='image' class="singImage" id ='signImage' src ='/resources/img/approval/${emp.empSign}' />								
+						<input type='image' class="singImage" id ='signImage' src ='/resources/upload/temp/${emp.empSign}' />								
 						<input type = "button" class="register" id ="uploadSignBtn" value ="수정하기" />
 					</c:if>
 					<c:if test = "${emp.empSign eq null}" >
