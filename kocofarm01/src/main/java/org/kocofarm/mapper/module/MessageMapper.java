@@ -22,4 +22,7 @@ public interface MessageMapper {
 	public int delMessageRoom(int messageRoomId);
 	public int getMessageRoomEmpCount(int messageRoomId);
 	public List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId);
+	public MessageRoomListVO getMessageRoom(int messageRoomId);
+	public List<MessageEmpListVO> getMessageRoomEmpInfoList(int messageRoomId);
+	 
 }

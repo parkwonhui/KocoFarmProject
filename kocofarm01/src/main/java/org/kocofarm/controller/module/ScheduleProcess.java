@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpSession;
 
 import org.kocofarm.controller.comm.ScheduleEnum;
+import org.kocofarm.controller.comm.ScheduleEnum.ERROR;
 import org.kocofarm.domain.comm.LoginVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
@@ -198,6 +199,17 @@ public class ScheduleProcess {
 		int re = service.delTag(tag_id);
 		return re;
 	}
+	
+	/*public int getCalenderMember(HttpSession session, int calenderId){
+		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
+		if(null == loginVO){
+			return ERROR.UNKNOWN_ERROR;
+		}
+		
+	
+		
+		
+	}*/
 	
 	// 현재 접속 중인 프로젝트의 팀장인지 체크
 	public boolean isProjectManager(HttpSession session, ScheduleProjectVO projectVO){

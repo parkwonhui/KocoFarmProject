@@ -269,7 +269,7 @@ $( function() {
 					  </div>
 					</div>
 
-					<div><button class="btn btn-secondary" name="worker_list">작업자 선택</button></div>
+					<div><button class="btn btn-secondary" name="worker_list" id="edit-calender-emp" data-target="#edit-calender-emp-list" data-toggle="modal">작업자 선택</button></div>
 					<button class="btn btn-primary" id="calender_edit">일정 수정</Button>
 					<button type="button" class="btn btn-danger" id="calender_del">일정 삭제</button>
 				</div><!-- myBody -->
@@ -300,4 +300,36 @@ $( function() {
 			</div>
 		</div>
 	</div>
+	
+	<!-- 카테고리 삭제. 하위 일정도 같이 삭제됨 -->
+	<div class="modal fade" id="edit-calender-emp-list" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">일정 작업자 추가</h4>
+				</div>
+				<div class="modal-body">
+					<p>일정 작업자를 선택해주세요</p>
+					<div class="add-calender-emp-lists">
+					<ul id="no-claender-emp-list" class="claender-emp-list">
+					<li>a</li>
+					<li>b</li>
+					<li>c</li>
+					</ul>
+					<ul id="current-claender-emp-list" class="claender-emp-list">
+					<li>1</li>
+					<li>2</li>
+					<li>3</li>
+					</ul>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal" id="edit-calender-emp-list-button">추가</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<script src="/resources/js/module/schedule.js"></script>

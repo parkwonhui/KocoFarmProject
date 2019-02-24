@@ -140,7 +140,7 @@ public class MessageController {
 	
 	@ResponseBody
 	@PostMapping("/messageRoomInvite")
-	private List<MessageEmpListVO> getMessageRoomInvite(HttpSession session, int messageRoomId){
+	private List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId){
 		log.info("[getMessageRoomInvite]");
 		List<MessageEmpListVO> list = service.getMessageRoomInvite(messageRoomId);
 		if(null == list){
@@ -152,6 +152,20 @@ public class MessageController {
 		return list;
 	}
 	
+	@ResponseBody
+	@PostMapping("/messageRoomEmpInfoList")
+	private List<MessageEmpListVO> getMessageRoomEmpInfoList(int messageRoomId){
+		log.info("[messageRoomEmpInfoList]");
+		List<MessageEmpListVO> list = service.getMessageRoomEmpInfoList(messageRoomId);
+		if(null == list){
+			return null;
+		}
+		
+		log.info(list);
+		
+		return list;
+	}
+		
 	public String getCurrentDateToString(){
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");			
 		String dateToString = transFormat.format(new Date());

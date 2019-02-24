@@ -13,32 +13,35 @@ $(function() {
 		$(".inbox_chat").empty();
 		var length = data.length;
 		for (var i = 0; i < length; ++i) {
-
-			var text = '<div class="chat_list">';
-			text += '<input type="hidden" name="messageRoomId" value='
-					+ data[i].messageRoomId + ' />';
-			text += '<div class="chat_people">';
-			text += '<div class="chat_img">';
-			text += '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
-			text += '</div>';
-			text += '<div class="chat_ib">';
-			text += '<h5>';
-			text += '<p>' + data[i].roomTitle + '</p>';
-			if (null != data[i].lastMessageEmpName) {
-				text += data[i].lastMessageEmpName
-						+ ' <span class="chat_date">'
-						+ data[i].lastMessageDateToString + '</span>';
-			}
-			text += '</h5>';
-			if (null != data[i].lastMessageEmpName) {
-				text += '<p>' + data[i].lastMessage + '</p>';
-			}
-			text += '</div>';
-			text += '</div>';
-			text += '</div>';
-
-			$(".inbox_chat").append(text);
+			addMessageRoom(data[i]);
 		}
+	}
+	
+	var addMessageRoom = function(data){
+		var text = '<div class="chat_list">';
+		text += '<input type="hidden" name="messageRoomId" value='
+				+ data.messageRoomId + ' />';
+		text += '<div class="chat_people">';
+		text += '<div class="chat_img">';
+		text += '<img src="/resources/img/message/user-profile.png" alt="sunil">';
+		text += '</div>';
+		text += '<div class="chat_ib">';
+		text += '<h5>';
+		text += '<p>' + data.roomTitle + '</p>';
+		if (null != data.lastMessageEmpName) {
+			text += data.lastMessageEmpName
+					+ ' <span class="chat_date">'
+					+ data.lastMessageDateToString + '</span>';
+		}
+		text += '</h5>';
+		if (null != data.lastMessageEmpName) {
+			text += '<p>' + data.lastMessage + '</p>';
+		}
+		text += '</div>';
+		text += '</div>';
+		text += '</div>';
+
+		$(".inbox_chat").append(text);
 	}
 
 	var addMessageList = function(data) {
@@ -94,7 +97,7 @@ $(function() {
 			// text += '<img src="/resources/img/comm/'+data[i].empImg+'" >';
 			text += '<input type="hidden" name="empId" value=' + data[i].empId
 					+ ' />';
-			text += '<div class="add-message-chat-img"><img src="https://ptetutorials.com/images/user-profile.png" ></div>';
+			text += '<div class="add-message-chat-img"><img src="/resources/img/message/user-profile.png" ></div>';
 			text += '<p class="add-message-emp-name">' + data[i].korNm + '</p>';
 			text += '</li>';
 		}
@@ -113,7 +116,7 @@ $(function() {
 			// text += '<img src="/resources/img/comm/'+data[i].empImg+'" >';
 			text += '<input type="hidden" name="empId" value=' + data[i].empId
 					+ ' />';
-			text += '<div class="invite-message-chat-img"><img src="https://ptetutorials.com/images/user-profile.png" ></div>';
+			text += '<div class="invite-message-chat-img"><img src="/resources/img/message/user-profile.png" ></div>';
 			text += '<p class="invite-message-emp-name">' + data[i].korNm
 					+ '</p>';
 			text += '</li>';
@@ -121,6 +124,31 @@ $(function() {
 
 		text += '</ul>';
 		$("#invite-emp-list").append(text);
+	}
+	
+	var empListmessageRoom = function(data){
+		if(undefined == data){		
+			return;
+		}
+		
+		$('#message-room-emp-list').empty();
+		
+		var nLength = data.length;
+		var text = '<ul>';
+		for(var i = 0; i < nLength; ++i){
+			text += '<li class="invite-message-room-emp">';
+			// text += '<img src="/resources/img/comm/'+data[i].empImg+'" >';
+			text += '<input type="hidden" name="empId" value=' + data[i].empId
+					+ ' />';
+			text += '<div class="message-room-emp-list-img"><img src="/resources/img/message/user-profile.png" ></div>';
+			text += '<p class="message-room-emp-list-name">' + data[i].korNm + '</div></p>';
+			text += '</li>';
+		}
+		
+		text += '</ul>';
+		console.log("empListmessageRoom");
+		console.log(text);
+		$("#message-room-emp-list").append(text);
 	}
 
 	function addMessageHtml(data) {
@@ -165,7 +193,7 @@ $(function() {
 				console.log('3333333333333333');
 				text += '<div class="incoming_msg">';
 				text += '<div  class="incoming_msg_img">';
-				text += '<img  src="https://ptetutorials.com/images/user-profile.png" alt="sunil">';
+				text += '<img  src="/resources/img/message/user-profile.png" alt="sunil">';
 				text += '</div>';
 				text += '<div class="received_msg">';
 				text += '<p>' + data.korNm + '</p>';
@@ -350,14 +378,15 @@ $(function() {
 	});
 
 	$(document).on("click", ".message-room-emp-list-print", function() {
+		var messageRoomId = $('#click-message-room-id').val();
+		var data = {"messageRoomId": messageRoomId };
+		ajaxRequest("messageRoomEmpInfoList", data, "post", empListmessageRoom);
+	
 	});
 
 	$(document).on("click", ".message-room-emp-list-invite", function() {
-		console.log('클릭 클릭');
 		var messageRoomId = $('#click-message-room-id').val();
-		var data = {
-			"messageRoomId" : messageRoomId
-		};
+		var data = { "messageRoomId" : messageRoomId };
 		ajaxRequest("messageRoomInvite", data, "post", messageRoomInvite);
 	});
 
@@ -386,9 +415,12 @@ $(function() {
 
 				bRequestMessage = true;
 				if(0 == data.pushType){
+					console.log('44444444444');
 					addMessage(data);
 				}else{
-					
+					console.log('55555555555');
+
+					addMessageRoom(data);
 				}
 					
 				return true;
@@ -466,7 +498,7 @@ $(function() {
 		html += '<div class="dropdown">';
 		html += "<img src = '/resources/img/message/more.png' class='message-room-top-more' />";
 		html += "<div class='dropdown-content'>";
-		html += '<div class="message-room-emp-list-print">참여자</div>';
+		html += '<div class="message-room-emp-list-print" data-toggle="modal" data-target="#emp-list-message-room">참여자</div>';
 		html += '<div class="message-room-emp-list-invite" data-toggle="modal" data-target="#invite-message-room">초대</div>';
 		html += '<div class="message-room-emp-exit">나가기</div>';
 		html += '</div>';
