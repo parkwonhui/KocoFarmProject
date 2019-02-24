@@ -1,20 +1,15 @@
 package org.kocofarm.controller.module;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.kocofarm.domain.rentCar.CarAppVO;
 import org.kocofarm.domain.rentCar.CarResVO;
 import org.kocofarm.service.module.CarResService;
 import org.kocofarm.service.module.EmpService;
-import org.kocofarm.service.module.RentCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,13 +43,14 @@ public class CarResController {
 
 	//차량 예약 등록
 	@PostMapping("/CarResWrite")
-	private String setCarRes(Model model,CarResVO carRes){
+	private String setCarRes(Model model,CarResVO carRes, RedirectAttributes rttr){
 		
 		log.info("CarResWrite : " + carRes);		
 		carResService.setCarRes(carRes);		
 		model.addAttribute("moduleNm", "rent");/*leftbar*/
 		
-		return "/module/rent/carReservation/CarResWrite";
+		return "redirect:CarResList";
+//		return "/module/rent/carReservation/CarResWrite";
 	}
 	
 	//예약 목록

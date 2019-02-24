@@ -314,7 +314,7 @@ public class ApprovalController {
 	@PostMapping("/uploadSign")
 	public String uploadAjaxPost(HttpSession session,MultipartFile[] uploadFile){
 		
-		String uploadFolder = "C:\\Users\\kim sunhaeng\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\img\\approval";
+		String uploadFolder = "C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\temp";
 		
 		for(MultipartFile multipartFile : uploadFile){
 			log.info("------------------------------------------");
