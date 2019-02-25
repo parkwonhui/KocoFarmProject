@@ -266,9 +266,9 @@ $( function() {
 					    </div>
 					  </div>
 					</div>
-
-					<div><button class="btn btn-secondary" name="worker_list" id="edit-calender-emp" data-target="#edit-calender-emp-list" data-toggle="modal">작업자 선택</button></div>
-					<button class="btn btn-primary" id="calender_edit">일정 수정</Button>
+					<!-- <div><button class="btn btn-secondary" name="worker_list" id="edit-calender-emp" data-target="#edit-calender-emp-list" data-toggle="modal">작업자 선택</button></div>
+					 -->
+					 <button class="btn btn-primary" id="calender_edit">일정 수정</Button>
 					<button type="button" class="btn btn-danger" id="calender_del">일정 삭제</button>
 				</div><!-- myBody -->
 				<!-- body -->

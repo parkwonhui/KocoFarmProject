@@ -662,7 +662,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
 /* 일정 태그 */
 .tag-important { 
   color: #FFFFFF; 
-  background-color: #ff2b92; 
+  background-color: #ff577f; 
   border-color: #ffc4e9; 
   border: none;
   padding: 15px 32px;
@@ -690,7 +690,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
 
 .tag-quickly { 
   color: #FFFFFF; 
-  background-color: #3253a1; 
+  background-color: #154cc3; 
   border-color: #787cf0; 
   border: none;
   padding: 15px 32px;

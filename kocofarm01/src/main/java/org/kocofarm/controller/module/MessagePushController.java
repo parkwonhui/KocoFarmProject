@@ -231,7 +231,6 @@ public class MessagePushController {
 			EmpVO empVO = empService.getEmp(empId);
 		
 			if(null == empVO){
-
 				continue;
 			}
 			

@@ -89,7 +89,6 @@ public class ScheduleController {
 	/*@ResponseBody
 	@GetMapping("/getProjectListSearch")
 	private List<ScheduleProjectVO> getProjectListSearch(HttpSession session, Model model){
-		log.info("/getProjectListSearch..........");
 		LoginVO loginVo = (LoginVO) session.getAttribute("loginVO");
 		// NULL이면 리다이렉션 처리해야함
 		if(null == loginVo){

@@ -496,7 +496,7 @@ $(function() {
 	function addMessageRoomTitle() {
 		$('.message-room-title').empty();
 
-		var html = "<div class='message-room-top-title '>"
+		var html = "<div class='message-room-top-title'>"
 				+ selectMessageRoomName
 		html += '<div class="dropdown">';
 		html += "<img src = '/resources/img/message/more.png' class='message-room-top-more' />";
