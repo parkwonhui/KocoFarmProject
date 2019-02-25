@@ -579,7 +579,7 @@ function addDynamicHtml(data) {
 						.children(".modal-content").children(".modal-body");
 				add_calender_color_value = hexc(color);
 
-				$("#edit-tag-bar").empty();
+				$("#edit-tag-bar").empty(); // 이거 주석해주면 ㅇㄴ없어 지나
 				$(".tag-name-select").val("ex)Important");
 				$(".tag-color-select").val("");
 				
