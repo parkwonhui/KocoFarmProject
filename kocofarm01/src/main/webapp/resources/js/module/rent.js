@@ -402,11 +402,6 @@ function chkReq2(){
 //예약신청 필수값체크
 function chkReq3(){
 	
-	/*if($("stTime").val == null || $("stTime").val() = ""){
-		alert("여기")
-		return false;
-	}*/
-	
 	if($("#stTime").val() == null || $("#stTime").val() == "" ){
 		alert("운행시작시간을 선택해주세요.");
 		$("#stTime").focus();
