@@ -225,10 +225,10 @@ $( function() {
 						<label>캘린더 칼라</label>
 					</div>
 					<div>
-					 	<input type="button" class="tag-important btn btn-xs" value="red"/>
-					  	<input type="button" class="tag-approve btn btn-xs" value="green" />
-					   	<input type="button" class="tag-quickly btn btn-xs" value="blue" />
-					   	<input type="button" class="tag-request btn btn-xs" value="yellow" />
+					 	<input type="button" class="tag-important btn"/>
+					  	<input type="button" class="tag-approve btn" />
+					   	<input type="button" class="tag-quickly btn" />
+					   	<input type="button" class="tag-request btn" />
 					</div>
 						<label>진행상황</label>
 						<div class="edit-calender-slidecontainer">
@@ -266,9 +266,9 @@ $( function() {
 					    </div>
 					  </div>
 					</div>
-
-					<div><button class="btn btn-secondary" name="worker_list" id="edit-calender-emp" data-target="#edit-calender-emp-list" data-toggle="modal">작업자 선택</button></div>
-					<button class="btn btn-primary" id="calender_edit">일정 수정</Button>
+					<!-- <div><button class="btn btn-secondary" name="worker_list" id="edit-calender-emp" data-target="#edit-calender-emp-list" data-toggle="modal">작업자 선택</button></div>
+					 -->
+					 <button class="btn btn-primary" id="calender_edit">일정 수정</Button>
 					<button type="button" class="btn btn-danger" id="calender_del">일정 삭제</button>
 				</div><!-- myBody -->
 				<!-- body -->

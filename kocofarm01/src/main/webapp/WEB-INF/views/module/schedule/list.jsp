@@ -148,7 +148,6 @@ $("#create-project-button").on("click", function(){
 	
 	var check = 0;
 	var accessCheckBox = $("input[name=projectAccess]");
-	console.log(accessCheckBox);
 	var size = accessCheckBox.length;
 	for(var i = 0; i < size; ++i){
 		if(true == accessCheckBox[i].checked){
@@ -306,8 +305,7 @@ function projectList(data){
      var managerId = '<c:out value="${loginVO.managerId}" />';
      if(managerId == empId){
      $('.contents').append('<div>'+
-     	'<button type="button" class="btn project-info-style h3" data-toggle="modal" data-target="#create-project-modal">create'+
-			'project..</button>'+
+     	'<button type="button" class="btn project-info-style h3" data-toggle="modal" data-target="#create-project-modal"><h4>createproject..</h4></button>'+
 			'</div>');
      }
      
