@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -61,7 +62,14 @@ public class ApprovalController {
 	
 	/*페이징 처리한 리스트 가져오기 */
 	@GetMapping("/getDraftList")
-	public String getDraftList(Criteria cri , Model model){
+	public String getDraftList( HttpSession session , Criteria cri , Model model){
+
+		LoginVO login = (LoginVO) session.getAttribute("loginVO");
+		model.addAttribute("loginEmp",login);
+		String empId = login.getEmpId();
+		EmpVO emp = eService.getEmp(empId);
+		model.addAttribute("Emp",emp);
+		
 		model.addAttribute("moduleNm", "approval");//leftbar띄우기
 		model.addAttribute("draftList", service.getDraftList(cri));
 		int total = service.getTotal(cri);
@@ -152,6 +160,8 @@ public class ApprovalController {
 	@GetMapping("/delVacDraft")
 	public String delVacDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
+		log.info("삭제:"+draftId);
+		service.delApprEmp(draftId);
 		service.delVacation(draftId);
 		service.delDraft(draftId);
 		
@@ -163,6 +173,8 @@ public class ApprovalController {
 	public String delExpDraft(@RequestParam("draftId") int draftId, RedirectAttributes rttr){
 
 		int expenceId = service.getExpence(draftId).getExpenceId();
+		log.info("삭제:"+draftId);
+		service.delApprEmp(draftId);
 		service.delExpenceCont(expenceId);
 		service.delExpence(draftId);
 		service.delDraft(draftId);
@@ -176,19 +188,44 @@ public class ApprovalController {
 	@GetMapping("/getSetUpVacPage")
 	public String getsetUpVacPage(@RequestParam("draftId") int draftId, Model model ) throws Exception{
 		model.addAttribute("moduleNm", "approval"); //leftbar띄우기
+		ApprDraftVO draft = service.getDraft(draftId);
+		ApprVacationVO vacation = service.getVacation(draftId);
+		model.addAttribute("emp", eService.getEmp(draft.getEmpId()));
+		model.addAttribute("replacement",eService.getEmp(vacation.getReplacementId()));
 		model.addAttribute("draft",service.getDraft(draftId));
 		model.addAttribute("vacation",service.getVacation(draftId));
-
+		String apprStringId = "";
+		String apprStringNm = "";
+		List<ApprEmpDraftDetailVO> list = service.getApprEmpList(draftId);
+		for(int i =0; i< list.size(); i++){
+			apprStringId += list.get(i).getEmpId();
+			EmpVO emp = eService.getEmp(list.get(i).getEmpId());
+			apprStringNm += emp.getKorNm();
+			if(i < list.size()-1){
+				apprStringId +=",";
+				apprStringNm +=",";
+			}
+		}
+		model.addAttribute("apprId", apprStringId);
+		model.addAttribute("apprNm", apprStringNm);
+	
 		return "module/approval/setUpVacationForm";
 	}
 	
+	
 	/*휴가 신청서 수정 */
 	@PostMapping("/setUpVacation")
-	public String setUpVacation(@RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation, Model model){
-		draft.setDraftId(draftId);
+	public String setUpVacation(HttpServletRequest request, @RequestParam("draftId") int draftId, ApprDraftVO draft, ApprVacationVO vacation, Model model){
+		/* 결재자 수정 */
+		service.delApprEmp(draftId);
+		service.setApprEmp(request);
+		/* 휴가 신청서 관련 정보 수정 */
 		service.setUpVacation(vacation);
+		/* 기본 기안서 수정  */
+		draft.setApproveState("기안중");
 		service.setUpDraft(draft);
 
+		log.info("Here");
 		return "redirect:/approval/getDraftList";
 	}
 	
@@ -199,7 +236,6 @@ public class ApprovalController {
 		LoginVO login = (LoginVO) session.getAttribute("loginVO");
 		String empId = login.getEmpId();
 		ApprEmpDraftDetailVO empDraft = service.getApprEmp(draftId, empId);
-		//service.getApprEmp(draftId,empId);
 		
 		if(apprState == 0){
 			draft.setApproveState("반려");
@@ -264,7 +300,7 @@ public class ApprovalController {
 		return "redirect:/approval/getDraft?draftId=${ApprDraftVO.draftId }";
 	}
 	
-	/* �뙎湲� 由ъ뒪�듃 蹂닿린 */
+	/* 댓글 리스트 가져오기  */
 	@GetMapping("/getCommentList")
 	public String getCommentList(@RequestParam("draftId") int draftId,@RequestParam("empId") String empId,
 			Model model){
@@ -285,7 +321,7 @@ public class ApprovalController {
 		model.addAttribute("moduleNm", "approval");
 		LoginVO login = (LoginVO) session.getAttribute("loginVO");
 		String empId = login.getEmpId();
-		
+	
 		model.addAttribute("perDraftList",service.getEmpDraftList(empId));
 		return "module/approval/getEmpDraftList";
 	}

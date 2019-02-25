@@ -27,7 +27,7 @@
 			eDate = new Date(endDate);
 			
 			dateResult = (eDate - sDate)/1000/60/60/24;  
-			$('#vacationDays').val(dateResult); 
+			$('#vacationDays').val(dateResult+1); 
 			
 			return false;
 		});
@@ -66,7 +66,7 @@
 		/* ---------------------기안서 버튼 기능 --------------------- */
 		
 		$(".list_btn").click(function(){
-			location.href="listDraft.do";
+			location.href="/approval/getDraftList";
 			return false;
 		});
 		
@@ -84,12 +84,11 @@
 			location.href="/approval/getSetUpExpPage?draftId="+$("#draftId").val();
 			return false;
 		});
-		
+		13900
 		$(".expDel_btn").click(function(){
 			location.href="/approval/delExpDraft?draftId="+$("#draftId").val();
 			return false;
 		});
-		
 		
 		/* ---------------------기안서 결재/반려 ---------------------- */
 		$(".approveBtn").click(function(){
