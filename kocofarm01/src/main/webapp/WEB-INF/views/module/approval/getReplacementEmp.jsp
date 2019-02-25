@@ -27,16 +27,13 @@
 				// IE doesn't register the blur when sorting
 				// so trigger focusout handlers to remove .ui-state-focus
 				ui.item.children("h3").triggerHandler("focusout");
-
 				// Refresh accordion to handle new order
 				$(this).accordion("refresh");
 			}
 		});
 	});
-
 	window.onload = function(){
 		var links = document.getElementsByTagName('a');
-
 		/* Å¬·ÎÀú,,, */
   		for(var i =0; i<links.length; i++){
   			(function(tmp){
@@ -95,11 +92,6 @@
 			</c:forEach>
 		</div>
 
-
-
-
 	</div>
 </body>
 </html>
-
-

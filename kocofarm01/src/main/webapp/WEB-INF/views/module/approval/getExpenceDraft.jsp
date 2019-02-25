@@ -76,17 +76,17 @@ h1 {
 				<div class="draft_wrap">
 							<h1 class="txt_c">결재자 정보</h1>
 							<div class="inf_wrap_box">
-								<table>
+								<table width = 100%>
 									<thead>
 										<tr>
 											<th width = 10%>번호 </th>
 											<th width = 10%>부서 </th>
 											<th width = 10%>직위</th>
-											<th width = 10%>사번</th>
+											<th width = 15%>사번</th>
 											<th width = 20%>이름</th>
-											<th width = 10%>결재</th>
-											<th width = 10%>반려</th>
-											<th width = 10%>sign</th>
+											<th width = 15%>결재</th>
+											<th width = 15%>반려</th>
+											<th width = 5%>sign</th>
 											
 										</tr>
 									</thead>
@@ -94,7 +94,7 @@ h1 {
 								
 									<tbody>
 										<c:forEach var="ApprEmployee" items="${apprEmpList }"  varStatus="vs">
-											<tr>
+											<tr height = 20px>
 												
 												<td id = 'count'>${vs.count }</td>
 												<td>${ApprEmployee.deptNm }</td>
@@ -179,7 +179,7 @@ h1 {
 						</div>
 				<!-- expence table 시작 -->
 				<div class="vac_table">
-					<table width=54% height=80% border=1 cellpadding=0 cellspacing=0
+					<table width=80% height=80% border=1 cellpadding=0 cellspacing=0
 						align="center" name="expence">
 						<tr>
 							<td rowspan="2">기안서 정보</td>
@@ -195,7 +195,7 @@ h1 {
 						<tr>
 							<!--기안서 정보-->
 							<td>기안서 양식</td>
-							<td></td>
+							<td>지출 명세서</td>
 							<td>보존년한</td>
 							<td>${draft.draftYear }
 						</tr>
@@ -289,40 +289,40 @@ h1 {
 				
 					<div class="btn_wrap">
 						<div class="flt_r">
-							<input type="button" data-oper = "list" class="list_btn" value="목록" />
-							<input type="button" data-oper = "setUp" class="expEdit_btn" value="수정" />
-							<input type="button" data-oper = "delete" class="expDel_btn" value="삭제" />
-							<c:if test="${draft.approveState eq '결재완료' }">
-								<INPUT TYPE="button" VALUE="인쇄하기" style="background-color: #000000; font-size: 10pt; color: #ffffff; " onclick="printWin()">																					
-							</c:if>
+							<input type="button" class="list_btn" value="목록" />
+								<c:if test = "${empVO.empId eq loginVO.empId} ">
+									<c:if test="${draft.approveState eq '기안중' }">
+										<input type="button" class="vacEdit_btn" value="수정" /> 
+										<input type="button" class="vacDel_btn" value="삭제" />
+									</c:if>
+								</c:if>
+								
+								<c:if test="${draft.approveState eq '결재완료' }">
+								<input type="button" VALUE="인쇄하기" style="background-color: #000000; font-size: 10pt; color: #ffffff; " onclick="printWin()">
+								</c:if>
 						</div>
 					</div>					
 					
 						<!--  댓글  -->
-    <div class="container">
-        <label for="content">comment</label>
-        <form name="commentInsertForm"  style="margin-left: 350;">
-            <div class="input-group">
-                 <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/>
-<%--                <input type="hidden" name="empId" value="${DRAFT_COMMENT.empId }"/> --%>
-               <input type="text"  width="70%"   class="form-control" id="commentContents" 
-               name="commentContents" placeholder="내용을 입력하세요.">
-               <span class="input-group-btn">
-                    <input type="button" class="commentInsertBtn" value="등록"/>
-               </span>
-              </div>
-        </form>
-    </div>
-    
-    <div class="container">
-        <div id = "getCommentList"></div>
-    </div>
-					
-
-			</div>
-
-
+		    <div class="container">
+		        <form name="commentInsertForm"  >
+		            <div class="input-group">
+		                 <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/>
+		               <input type="text"  width="70%"   class="form-control" id="commentContents" 
+		               name="commentContents" placeholder="내용을 입력하세요.">
+		               <span class="input-group-btn">
+		                    <input type="button" class="commentInsertBtn" value="등록"/>
+		               </span>
+		              </div>
+		        </form>
+		    </div>
+		    
+		    <div class="container">
+		        <div id = "getCommentList"></div>
+		    </div>
 		</div>
+</div>
+
 </HTML>
 <script type="text/javascript" src="/resources/js/module/approval.js"></script>
 
