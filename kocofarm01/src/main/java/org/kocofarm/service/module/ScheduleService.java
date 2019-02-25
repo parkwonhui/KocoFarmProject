@@ -5,6 +5,7 @@ import java.util.List;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMemberMiniVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
 import org.kocofarm.domain.schedule.ScheduleMemberVO;
@@ -36,5 +37,6 @@ public interface ScheduleService {
 	public int setUpTag(ScheduleTagVO tag);
 	public int delTag(int tagId);
 	public List<ScheduleTagVO> getTagList(int calenderId);
+	public List<ScheduleCalenderMemberMiniVO> getCalenderMember(int calenderId);
 	
 }

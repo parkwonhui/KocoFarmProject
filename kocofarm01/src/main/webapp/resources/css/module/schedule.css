@@ -662,7 +662,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
 /* 일정 태그 */
 .tag-important { 
   color: #FFFFFF; 
-  background-color: #ff2b92; 
+  background-color: #ff577f; 
   border-color: #ffc4e9; 
   border: none;
   padding: 15px 32px;
@@ -690,7 +690,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
 
 .tag-quickly { 
   color: #FFFFFF; 
-  background-color: #3253a1; 
+  background-color: #154cc3; 
   border-color: #787cf0; 
   border: none;
   padding: 15px 32px;
@@ -795,6 +795,10 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	background-color: #0049A3;
 }
 
+.calender_info img{
+	filter: invert(100%);
+}
+
 /* 카테고리 입력 박스 */
 .category-name-input{
   width: 90%;
@@ -840,14 +844,19 @@ footer{margin-top: 30px; text-align: center; color: #333}
 .project-info-style{
     display:inline;
     float:left;
-    background-color:#B2B1B1;
+    background-color:#002351;
      margin: 10px;
-     padding: 5px;
+     padding:20px;
      width:250px;
      height:130px;
      border-radius: 20px;
      cursor:pointer;
      z-index : 1;
+     color:#fff;
+}
+
+.project-info-style img{
+	filter: invert(100%);
 }
 
 
@@ -885,7 +894,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
     	
 	width: 30px;
 	height: 30px;
-    
+    float: right;
 }
 
 /* 진행률 */
@@ -903,7 +912,25 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	margin-right :-15px;
 	margin-bottom : 5px;
 	
-	height:20px;
+	height:15px;
+}
+
+/* 일정 시작 날짜 */
+.calender_detail_startDt{
+	font-size:14px;
+	color:#6E6E6E;
+}
+
+/* 일정 종료 날짜 */
+.calender_detail_endDt{
+	font-size:14px;
+	color:#6E6E6E;
+}
+
+.rounded {
+  background: silver;
+  height: 50px; width: 200px;
+  border-radius: 5px;
 }
 
 /* 카테고리 삭제 버튼 */
@@ -922,9 +949,9 @@ footer{margin-top: 30px; text-align: center; color: #333}
 }
 
 /* left bar 간격 조정*/
-.cont_wrap{
+/* .cont_wrap{
 	margin-left: 150px;
-}
+} */
 
 /* 작업자 리스트 */
 .add-calender-emp-lists{
@@ -936,7 +963,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	display: inline-block;
 	float:left;
 	width:150px;
-	height: 500px;
+	height: 300px;
     overflow-y: scroll;
     overflow-x:hidden;
     border-bottom : 1px solid #FAFAFA;
@@ -944,3 +971,29 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	margin-right:50px;
 }
 
+.calender-member-invite-list-img img{
+	width:30%;
+    display: inline-block;
+}
+
+.calender-member-invite-list-name{
+       border-bottom : 1px solid #FAFAFA;
+       margin-left : 10px;
+       margin-bottom : 10px;
+       display:inline-block;
+}
+
+/* 멤버 이름 테두리 */
+.calender-member-info{
+	display:inline-block;
+	border:1px solid #1bf;
+	padding:2px;
+    border-radius: 20px;
+    font-size:10px;
+}
+
+/* 멤버 타이틀 */
+.calender_detail_title{
+	margin-top:20px;
+	margin-bottom:10px;
+}

@@ -206,16 +206,17 @@ img {
 
 .msg_send_btn {
 	background: #05728f none repeat scroll 0 0;
+	background-image: url("/resources/img/message/iconfinder_circle.png");
 	border: medium none;
 	border-radius: 50%;
 	color: #fff;
 	cursor: pointer;
 	font-size: 17px;
-	height: 33px;
+	height: 32px;
 	position: absolute;
 	right: 0;
 	top: 11px;
-	width: 33px;
+	width: 32px;
 }
 
 .messaging {
@@ -240,13 +241,14 @@ img {
 .dropdown {
   position: relative;
   display: inline-block;
+  float: right;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  left: -40px;
+  left: -100px;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -330,17 +332,17 @@ img {
 
 /* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
 .invite-message-room-emp-list .checked{
-	background-color: #FAFAFA;  	
+	background-color: #d9d9d9;  	
 }
 
 /* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
 .add-message-room-emp-list .checked{
-	background-color: #FAFAFA;  	
+	background-color: #d9d9d9;  	
 }
 
 /* 메시지 방 선택 시 배경색 변경*/
 .inbox_chat .checked{
-	background-color: #F6CED8;  
+	background-color: #d9d9d9;  
 }
 
 /* 메신저 방만들기 초대 이미지 */
@@ -359,8 +361,15 @@ img {
 
 /* 메시지 방 타이틀 */
 .message-room-top-title {
-	background-color: #1cff2b;
-    height:50px;
+	background-color: #dddddd;
+    height:90px;
+    padding: 20px;
+}
+
+.message-room-top-title .title{
+	font-size: 20px;
+	display : inline-block;
+	margin-left : 20px;
 }
 
 /* 메시지 방 타이틀 more */

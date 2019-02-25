@@ -3,14 +3,15 @@ package org.kocofarm.mapper.comm;
 import java.util.List;
 
 import org.kocofarm.domain.comm.AttachFileVO;
+import org.kocofarm.domain.comm.Criteria;
 
 public interface AttachFileMapper {
 	
 	public void setFile(AttachFileVO vo);
 
-	public void delFile(String uuid);
+	public String delFile(String uuid);
 	
-	public List<AttachFileVO> getFileList(long bno);
+	public List<AttachFileVO> getFileList(Criteria cri);
 	
 
 }

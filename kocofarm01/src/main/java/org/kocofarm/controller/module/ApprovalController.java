@@ -312,9 +312,6 @@ public class ApprovalController {
 	/* 댓글 삭제 */
 	@PostMapping("/delComment")
 	public String delComment(@RequestParam("draftId") int draftId,@RequestParam("commentId") int commentId, ApprCommentVO comment){
-	System.out.println("####");
-	System.out.println(commentId);
-	System.out.println("$$$$");
 	service.delComment(commentId);
 	return "/module/approval/getVacationDraft";
 	}
