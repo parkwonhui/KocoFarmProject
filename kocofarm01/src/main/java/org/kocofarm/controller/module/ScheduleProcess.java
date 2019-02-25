@@ -147,7 +147,7 @@ public class ScheduleProcess {
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		String tagName = tag.getTag_name();
+		String tagName = tag.getTagName();
 		if(null == tagName){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
@@ -156,7 +156,7 @@ public class ScheduleProcess {
 			return ScheduleEnum.ERROR.CATEGORY_NAME_LENGHT_FAIL;
 		}
 		
-		String tagColor = tag.getTag_color();
+		String tagColor = tag.getTagColor();
 		if(tagColor.length() > ScheduleEnum.CHECK.TAG_TITLE_LENGTH){
 			return ScheduleEnum.ERROR.TAG_NAME_LENGTH_FAIL;
 		}
@@ -174,7 +174,7 @@ public class ScheduleProcess {
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		String tagName = tag.getTag_name();
+		String tagName = tag.getTagName();
 		if(null == tagName){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
@@ -183,7 +183,7 @@ public class ScheduleProcess {
 			return ScheduleEnum.ERROR.CATEGORY_NAME_LENGHT_FAIL;
 		}
 		
-		String tagColor = tag.getTag_color();
+		String tagColor = tag.getTagColor();
 		if(tagColor.length() > ScheduleEnum.CHECK.TAG_TITLE_LENGTH){
 			return ScheduleEnum.ERROR.TAG_NAME_LENGTH_FAIL;
 		}

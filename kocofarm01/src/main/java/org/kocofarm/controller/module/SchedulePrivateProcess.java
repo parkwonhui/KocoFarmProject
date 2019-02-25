@@ -55,7 +55,7 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 	
 	public int setTag(HttpSession session, ScheduleTagVO tag){
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		int calenderId =tag.getCalender_id();
+		int calenderId =tag.getCalenderId();
 		boolean isMember = isMember(calenderId, loginVO); 
 		if(false == isMember && false == isProjectManager(session, projectVO)){
 			//해당 캘린더에 속해있는 사람인지 확인해야함
@@ -68,7 +68,7 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 	
 	public int setUpTag(HttpSession session, ScheduleTagVO tag){
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		int calenderId =tag.getCalender_id();
+		int calenderId =tag.getCalenderId();
 		boolean isMember = isMember(calenderId, loginVO); 
 		if(false == isMember && false == isProjectManager(session, projectVO)){
 
@@ -82,14 +82,14 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 	public int delTag(HttpSession session, ScheduleTagVO tag){
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		int calenderId =tag.getCalender_id();
+		int calenderId =tag.getCalenderId();
 		
 		boolean isMember = isMember(calenderId, loginVO);
 		if(false == isMember && false == isProjectManager(session, projectVO)){
 
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
-		int tagId = tag.getTag_id();
+		int tagId = tag.getTagId();
 		int re = super.delTag(session, tagId);
 		return re;
 	}

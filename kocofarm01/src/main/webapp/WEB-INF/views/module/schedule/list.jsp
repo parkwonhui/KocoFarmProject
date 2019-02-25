@@ -29,7 +29,7 @@
 	<!-- Contents Area -->
 	<div class="contents_wrap">
 		<!-- sch_top -->
-		<div class="sch_wrap">
+		<!-- <div class="sch_wrap">
 			<p class="tit">검색</p>
 			<div class="sch_slide_btn">
 				<img id="slideBtnImg" class="upBtn"
@@ -48,15 +48,15 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<!-- Tab -->
-		<div class="tab_wrap">
+<!-- 		<div class="tab_wrap">
 			<ul class="tab_ul">
 				<li class="tab_li on" id="rvTab">목록 보기</li>
 				<li class="tab_li" id="photoTab">달력 보기</li>
 			</ul>
-		</div>
+		</div> -->
 
 		<!-- project list -->
 		<div class="contents">
