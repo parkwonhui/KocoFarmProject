@@ -235,7 +235,7 @@ public class MessagePushController {
 			}
 			
 			addEmpName.append(empVO.getKorNm());
-			addEmpName.append(", ");
+			addEmpName.append(" ");
 		}
 		
 		addEmpName.append("님을 초대했습니다");
