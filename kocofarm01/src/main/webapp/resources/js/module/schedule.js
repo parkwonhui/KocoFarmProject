@@ -728,8 +728,7 @@ function calenderList() {
 	$.ajax({
 		type : "POST",
 		data : {
-			"projectId" : add_project_id
-		},
+			"projectId" : add_project_id},
 		dataType : "json",
 		url : "listCalender",
 		success : function(data) {

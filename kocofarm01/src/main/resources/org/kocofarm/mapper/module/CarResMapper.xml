@@ -126,7 +126,7 @@ WHERE P.APP_SF = 'Y' OR P.APP_SF = 'N'
 
 <!-- 승인번호 출력 -->
 <select id = "getCarApp" resultType = "org.kocofarm.domain.rentCar.CarAppVO">
-SELECT
+ SELECT
 	APP_ID AS appId,
 	RES_ID AS resId,
 	APP_SF AS assSF,
@@ -135,6 +135,27 @@ SELECT
 FROM CAR_APP
 
 WHERE RES_ID= #{resId}
+
+ORDER BY APP_ID 
+
+
+
+<!-- SELECT
+	a.APP_ID AS appId,
+	a.RES_ID AS resId,
+	a.APP_SF AS assSF,
+	a.REG_DT AS regDt
+
+FROM CAR_APP a
+LEFT JOIN CAR_RES r ON r.RES_ID = a.RES_ID
+LEFT JOIN EMP e ON e.EMP_ID = r.WRITER
+
+
+WHERE r.WRITER= #{empId}
+ORDER BY a.APP_ID; 
+
+WHERE  r.WRITER = #{userId}-->
+
 </select>
 
 </mapper>

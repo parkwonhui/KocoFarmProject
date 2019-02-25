@@ -28,16 +28,16 @@ public class RentCarServiceTests {
 		assertNotNull(rentCarService);
 	}*/
 	
-	/*@Test
+/*	@Test
 	public void testsetRentCarDetail(){
 		
 		RentCarVO rentCar = new RentCarVO();
-		rentCar.setCarId("사1234");
-		rentCar.setModelName("새차-1호");
-		rentCar.setCarModel("새차");
-		rentCar.setCondition("새차");
+		rentCar.setCarId("휴1234");
+		rentCar.setModelName("레이-5호");
+		rentCar.setCarModel("레이");
+		rentCar.setCondition("신차");
 		rentCar.setPrice(5000);
-		rentCar.setYear(2020);
+		rentCar.setYear(2019);
 		rentCar.setOilType("휘발유");
 		
 		rentCarService.setRentCarDetail(rentCar);
@@ -47,11 +47,12 @@ public class RentCarServiceTests {
 	}*/
 	
 	
-	/*@Test
+	@Test
 	public void testgetRentCarDetailList(){
 		//rentCarService.getRentCarDetailList().forEach(rentCar->log.info(rentCar));
-		rentCarService.getRentCarDetailList(new Criteria(2,10)).forEach(rentCar->log.info(rentCar));
-	}*/
+		rentCarService.getRentCarDetailList
+		(new Criteria(2,10)).forEach(rentCar->log.info(rentCar));
+	}
 	
 	/*@Test
 	public void testgetRentCarDetail(){

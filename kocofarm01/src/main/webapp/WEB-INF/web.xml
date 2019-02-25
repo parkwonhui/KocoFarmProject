@@ -28,13 +28,15 @@
 		<!-- ASYNC -->
 		<async-supported>true</async-supported>
 	<!-- 서블릿 예하 파일 다운롣즈 설정 변경 -->
+	
 		<multipart-config>
-		<location>C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\temp</location>
-		<max-file-size>20971520</max-file-size><!-- 1MB * 20 -->
-		<max-request-size>41943040</max-request-size><!-- 1MB * 40 -->
-		<file-size-threshold>20971520</file-size-threshold><!-- 1MB * 20 -->
-		<!-- 위 파일 설정은 WAS 설정입니다. spring 파일 업로드는 multipartResolver 로 하는 것임 -->
-	</multipart-config>
+			<location>C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload\\temp</location>
+			<max-file-size>20971520</max-file-size><!-- 1MB * 20 -->
+			<max-request-size>41943040</max-request-size><!-- 1MB * 40 -->
+			<file-size-threshold>20971520</file-size-threshold><!-- 1MB * 20 -->
+			<!-- 위 파일 설정은 WAS 설정입니다. spring 파일 업로드는 multipartResolver 로 하는 것임 -->
+		</multipart-config>
+	
 	</servlet>
 		
 	<servlet-mapping>

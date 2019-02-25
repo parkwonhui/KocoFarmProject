@@ -15,21 +15,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
-/*@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-@Log4j*/
-/*public class ApproalServiceTest {
+@Log4j
+public class ApproalServiceTest {
 	
 	@Setter(onMethod_= {@Autowired})
 	private ApprovalService service;
-	@Test
+	/*@Test
 	public void testExist(){
 		log.info(service);
 		assertNotNull(service);
-	}
+	}*/
 	
 
-	@Test
+	/*@Test
 	public void setDraft(){
 		ApprDraftVO draft = new ApprDraftVO();
 		draft.setDraftDt("2018-02-11");
@@ -42,14 +42,14 @@ import lombok.extern.log4j.Log4j;
 		
 		service.setDraft(draft);
 		log.info("생성된 게시물 번호 :"+service.getDraftNo());
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void testGetDraftList(){
 		service.getDraftList(new Criteria(1,5)).forEach(draft -> log.info(draft));
-	}
+	}*/
 	
-	
+	/*
 	@Test
 	public void testGetFormList(){
 		service.getFormList().forEach(form ->log.info(form));
@@ -58,10 +58,10 @@ import lombok.extern.log4j.Log4j;
 	public void testGetDraft(){
 		service.getDraft(165);
 	
-	}
+	}*/
 	
 	@Test
-	public void setDraft(){
+	/*public void setDraft(){
 		ApprDraftVO draft = new ApprDraftVO();
 		ApprVacationVO vacation = new ApprVacationVO();
 		draft.setDraftDt("2018-02-11");
@@ -85,9 +85,8 @@ import lombok.extern.log4j.Log4j;
 		
 		service.setVacation(vacation);
 		log.info("생성된 게시물 번호 :"+service.getDraftNo());
-	}
-	
+	}*/
 	public void testDelete(){
 		log.info("remove result  : "+service.delDraft(166));
 	}
-}*/
+}
