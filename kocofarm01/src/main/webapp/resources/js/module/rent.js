@@ -250,14 +250,9 @@ $(function(){
 	
 	//예약신청 버튼 누르면, 등록되도록 설정한다. 	
 	$("#carRes").click(function() {
-		alert('예약신청이 완료되었습니다. ')		
+		chkReq3();
 		
-		var mode = $("#mode").val();
-		if("write" == mode){
-			
-			$("#CarResWriteForm").submit()
 		
-		}
 	})
 	
 	
@@ -268,8 +263,14 @@ $(function(){
 
 	
 	//예약 버튼 누르면 - insert되도록 설정
-	$('button[ name = "acceptBtn" ]').click(function() {		
+	$('button[ name = "acceptBtn" ]').click(function() {	
 		var appSF = $(this).val();
+		if(appSF == 'Y'){
+			alert("예약이 승인되었습니다.")
+		}else{
+			alert("예약이 반려되었습니다.")
+		}
+		
 		var resId = $("#resId").val();		
 		location.href = "/rent/setCarApp?appSF="+appSF+"&resId="+resId;		
 		
@@ -352,9 +353,7 @@ function chkReq(){
 
 //수정완료 버튼 후, 필수값 체크
 function chkReq2(){
-	
-	
-	
+		
 	if($("#modelName").val() == null || $("#modelName").val() == "" ){
 		alert("차량모델명을 입력해주세요.");
 		$("#modelName").focus();
@@ -397,6 +396,60 @@ function chkReq2(){
 	if (mode == "edit" ) { 	
 		$('#rentCarEditForm').attr("action", "/rent/rentCarDetailEdit");		
 		$("#rentCarEditForm").submit()
+	}
+}
+
+//예약신청 필수값체크
+function chkReq3(){
+	
+	/*if($("stTime").val == null || $("stTime").val() = ""){
+		alert("여기")
+		return false;
+	}*/
+	
+	if($("#stTime").val() == null || $("#stTime").val() == "" ){
+		alert("운행시작시간을 선택해주세요.");
+		$("#stTime").focus();
+		return false;
+	}
+	
+	if($("#enTime").val() == null || $("#enTime").val() == "" ){
+		alert("운행종료시간을 선택해주세요.");
+		$("#enTime").focus();
+		return false;
+	}
+	
+	if($("#car_id").val() == null || $("#car_id").val() == "" ){
+		alert("차량번호를 입력해주세요.");
+		$("#car_id").focus();
+		return false;
+	}
+	
+	if($("#purpose").val() == null || $("#purpose").val() == "" ){
+		alert("사용목적을 입력해주세요.");
+		$("#purpose").focus();
+		return false;
+	}
+	
+	if($("#address").val() == null || $("#address").val() == "" ){
+		alert("출발지 주소를 입력해주세요.");
+		$("#address").focus();
+		return false;
+	}
+	
+	if($("#address2").val() == null || $("#address2").val() == "" ){
+		alert("도착지 주소를 입력해주세요.");
+		$("#address2").focus();
+		return false;
+	}
+	
+	
+	var mode = $("#mode").val();
+	if("write" == mode){
+		
+		alert('예약신청이 완료되었습니다. ')		
+		$("#CarResWriteForm").submit()
+	
 	}
 }
 
