@@ -2,28 +2,28 @@ package org.kocofarm.controller.module;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.controller.comm.ScheduleEnum;
 import org.kocofarm.domain.comm.LoginVO;
-import org.kocofarm.domain.emp.DepartmentsVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMemberMiniVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderVO;
+import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
 import org.kocofarm.domain.schedule.ScheduleMemberVO;
 import org.kocofarm.domain.schedule.ScheduleProjectSearchVO;
-import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
 import org.kocofarm.domain.schedule.ScheduleProjectVO;
 import org.kocofarm.domain.schedule.ScheduleTagVO;
 import org.kocofarm.service.module.ScheduleService;
+import org.kocofarm.service.module.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,19 +31,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import net.sf.json.JSONArray;
 @Log4j
 @Controller
 @RequestMapping("/schedule/*")
-@AllArgsConstructor
+//@AllArgsConstructor
 public class ScheduleController {
 	
+	@Setter(onMethod_ = @Autowired)
 	private ScheduleService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private TagService tagService;
 	
 	@GetMapping("/")
 	private String getProjectList(HttpSession session, Model model){
@@ -130,6 +135,7 @@ public class ScheduleController {
 	private String getProjectCalenderList(HttpSession session, int projectId, Model model){
 		
 		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
+		
 		if(null == list){
 			return "";// error url
 		}
@@ -191,7 +197,7 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/editCalender")
-	public int setUpCalender(HttpSession session, ScheduleCalenderVO calender){
+	public int setUpCalender(HttpSession session, ScheduleCalenderVO calender, ScheduleTagVO tagVO){
 		// 팀장이거나 해당 캘린더의 작업자인지 확인		
 		
 		if(null == calender){
@@ -207,6 +213,10 @@ public class ScheduleController {
 		String bPublic = projectVO.getPublicUse();
 		ScheduleProcess process = getScheduleProcess(bPublic, service, projectVO); 
 		int re =process.setUpCalender(session, calender);
+		
+		// 태그 테이블 insert
+		
+		tagService.setTag(tagVO);
 		
 		return re;
 	}
@@ -382,13 +392,28 @@ public class ScheduleController {
 		return re;
 	}
 	
+
+	@ResponseBody
+	@PostMapping("/getCalenderInviteMember")
+	public List<ScheduleCalenderMemberMiniVO>  getCalenderInviteMember(HttpSession session, int calenderId){
+		int projectId = (int)session.getAttribute("selectProjectId");
+		ScheduleProjectVO projectVO = service.getSelectProject(projectId);	
+		
+		if(null == projectVO){
+			return null;
+		}		
+
+		String strPublic = projectVO.getPublicUse();
+		ScheduleProcess process = getScheduleProcess(strPublic, service,  projectVO);
+		List<ScheduleCalenderMemberMiniVO> list = process.getCalenderMember(session, calenderId);
+		
+		return list;
+	}
+		
+	
 	@ResponseBody
 	@PostMapping("/delProject")
 	public int delProject(HttpSession session, int projectId){
-		
-		if(null == session){
-			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
-		}
 		
 		if(false == isManager(session)){
 			return ScheduleEnum.ERROR.AUTH_FAIL;
@@ -402,7 +427,7 @@ public class ScheduleController {
 		int re = service.delProject(projectId);
 		return re;
 	}
-		
+	
 	// 팀장 여부 체크
 	public boolean isManager(HttpSession session){
 
@@ -460,4 +485,14 @@ public class ScheduleController {
 			return new SchedulePrivateProcess(service, projectVO);
 		}		
 	}
+	
+	@GetMapping(value = "/getTagList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<ScheduleTagVO>> getTagList(@RequestParam("calendarId") int calendarId){
+		
+		List<ScheduleTagVO> tagList = service.getTagList(calendarId);
+		
+		return new ResponseEntity<List<ScheduleTagVO>>(tagList, HttpStatus.OK);
+	}
+	
 }

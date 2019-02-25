@@ -105,17 +105,7 @@
 							<div class="recent_heading">
 								<input type="hidden" id="message-my-emp-id" value='${loginVO.empId}' />
 								<input type="hidden" id="click-message-room-id" value='' />
-								<h4>Recent</h4>
-							</div>
-							<div class="srch_bar">
-								<div class="stylish-input-group">
-									<input type="text" class="search-bar" placeholder="Search">
-									<span class="input-group-addon">
-										<button type="button">
-											<i class="fa fa-search" aria-hidden="true"></i>
-										</button>
-									</span>
-								</div>
+								<h4>MessageRoom</h4>
 							</div>
 						</div>
 						<div>

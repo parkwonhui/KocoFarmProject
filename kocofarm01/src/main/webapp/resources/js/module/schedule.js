@@ -466,19 +466,13 @@ function addDynamicHtml(data) {
 			
 			var tagName = data[i].tagName;
 			var tagColor = data[i].tagColor;
-			if("" != tagName || "" != tagColor) {
-				html += '<div id = list-tag-bar>';
-				html += '<div style=" height: 20px; margin:3px; padding-left: 10px;  padding-right: 10px; color : white; background-color:'+ tagColor +'; border-radius:10px; display:inline-block"'
-				html += '>'+ tagName + '</div>';
-				html += '</div>'
-				/*html += '<div id = list-tag-bar>';	
-				html += '<div style=" height: 20px; margin:3px; padding-left: 10px;  padding-right: 10px; color : white; background-color:'+ tagColor +'; border-radius:10px; display:inline-block"'
-				html += '>'+ tagName + '</div>';
-				html += '</div>'*/
-			}
 			
 			html += '<input type="hidden" class="calender_detail_completionPer" value="'
 					+ data[i].completionPer + '"></input>';
+			
+			html += "<div id='list-tag-bar"+data[i].calenderId+"'>";
+			html += getTagList(data[i].calenderId);
+			html += "</div>";
 			
 			
 			html += '<div class="calender-progress-bar">';
@@ -489,8 +483,8 @@ function addDynamicHtml(data) {
 					+ '</div>'
 			html += '</div>';
 
-			html += '<div id = list-tag-bar></div>';
-		/*	html += '<div class="calender_tag">';
+			/*	html += '<div id = list-tag-bar></div>';
+			html += '<div class="calender_tag">';
 			html += '<div style=" height: 20px; background-color:'+ data[i].tag_color +'; border-radius:10px">'
 					+ data[i].tag_name + '</div>';
 			html += '<div class="schedule-tag-list"></div>';
@@ -586,7 +580,7 @@ function addDynamicHtml(data) {
 						.children(".modal-content").children(".modal-body");
 				add_calender_color_value = hexc(color);
 
-				$("#edit-tag-bar").empty();
+				$("#edit-tag-bar").empty(); // 이거 주석해주면 ㅇㄴ없어 지나
 				$(".tag-name-select").val("ex)Important");
 				$(".tag-color-select").val("");
 				
@@ -652,6 +646,10 @@ function addDynamicHtml(data) {
 		add_category_id = parent.children(".this_category_id").val();
 		add_project_id = parent.children(".this_project_id").val();
 	});
+	
+	// 태그 관련 리스트 호출
+//	getTagList($("#calendarId").val());
+	
 }// end addDynamicHtml
 ////////////////////////////////////////////////////////////////////
 
@@ -677,18 +675,21 @@ $("#edit-tag").click(function(){
 	var tagName = $("input[name=tagName]").val();
 	var tagColor = $("input[name=tagColor]").val();
 	
-	$('.schedule-tag-list').append('<div>'+ '<button 태그이름 태그 색사>' +'</div>');
+	$('.schedule-tag-list').append('<div>'+ '<button 태그이름 태그 색상>' +'</div>');
 	
 });
 
 ///
 function ajaxRequest(sendUrl, sendData) {
+	$("#calendarId").val(sendData.calenderId);
+	
 	$.ajax({
 		type : "POST",
 		data : sendData,
 		dataType : "json",
 		url : sendUrl,
 		success : function(data) {
+			
 			if (1001 == data) {
 				alert('[실패] 카테고리 이름을 확인해주세요(1~50자)');
 
@@ -726,7 +727,6 @@ function ajaxRequest(sendUrl, sendData) {
 }
 
 function calenderList() {
-
 	$.ajax({
 		type : "POST",
 		data : {
@@ -847,11 +847,8 @@ $('#calender_edit').click(function() {
 	var completion_per = $("#editCalenderCompletionPerVal").val();
 	var startDt = par.children("input[name=editDatepickerStart]").val();
 	var endDt = par.children("input[name=editDatepickerEnd]").val();
-	var tagName = $("input[name=tagName]").val();
+	var tagName = $("#edit-tag-bar div").text();
 	var tagColor = $("#edit-tag-bar div").css("background-color");
-		
-	console.log(tagName);
-	console.log(tagColor);
 	
 	var data = {
 		projectId : add_project_id,
@@ -866,8 +863,10 @@ $('#calender_edit').click(function() {
 		endDt : endDt
 
 	};
+	
 	var url = "editCalender";
 	ajaxRequest(url, data);
+	
 	$('#tag-name-select').val('ex)Important');
 	$('#calenderModify').modal('toggle');
 
@@ -931,5 +930,118 @@ $(document).on("click",
 
 /* 작업자 추가 버튼 클릭 */
 $("#edit-calender-emp").click(function(){
-	console.log('작업자 추가 버튼 클릭');
+	console.log('calender_id:'+add_calender_id);
+
+	$.ajax({
+		type : "POST",
+		data : { "calenderId": add_calender_id	},
+		dataType : "json",
+		url : "getCalenderInviteMember",
+		success : function(data) {
+			console.log(data);
+			if(undefined == data)
+				return;
+			
+			addCalenderInviteMember(data);
+		},
+		error : function(error) {
+		}, // error
+	});// ajax
 });
+
+function addCalenderInviteMember(data){
+	$("#no-claender-emp-list").empty();
+	$("#current-claender-emp-list").empty();
+	
+	var length = data.length;
+	var notMemberList = "";
+	var MemberList = "";
+
+	for(var i = 0; i < length; ++i){
+		if(1 == data[i].isMember){
+			MemberList += addCalenderInviteMemberList(data[i], "current-claender-emp-list");
+		}else{
+			notMemberList += addCalenderInviteMemberList(data[i], "no-claender-emp-list");
+		}
+	}
+	
+	$("#no-claender-emp-list").append(notMemberList);
+	$("#current-claender-emp-list").append(MemberList);
+}
+
+function addCalenderInviteMemberList(data, id){
+	var text="";
+	if("current-claender-emp-list" == id){
+		text += '<li class="invite-message-room-emp checked">';
+	}else{		
+		text += '<li class="invite-message-room-emp">';
+	}
+	// text += '<img src="/resources/img/comm/'+data[i].empImg+'" >';
+	text += '<input type="hidden" name="empId" value=' + data.empId	+ ' />';
+	text += '<div class="calender-member-invite-list-img"><img src="/resources/img/message/user-profile.png" ></div>';
+	text += '<p class="calender-member-invite-list-name">' + data.korNm + '</div></p>';
+	text += '</li>';
+	
+	return text;
+}
+
+$(document).on("click", ".invite-message-room-emp", function() {
+	$(this).toggleClass('checked');
+	
+	var parent = $(this).parent();
+	$(parent).children("input[value="+$(this).empId + "]").remove();
+	
+	if(true == $(this).hasClass('checked')){
+		$("#current-claender-emp-list").append($(this));		
+		
+	}else{
+		$("#no-claender-emp-list").append($(this));		
+	}
+	
+});
+
+
+/*$('#edit-calender-emp-list-button').click(){
+	var empList = $('#current-claender-emp-list');
+	var length = $("#current-claender-emp-list").length;
+	var list = {};
+	var index = 0;
+	list[index + ""] = calenderId;
+	++index;
+	++index;
+	var count = 0;
+	for (var i = 0; i < length; ++i) {
+
+		list[index + ""] = $(empList[i]).children(
+				"input[name=empId]").val();
+		++index;
+		++count;
+	}
+
+	list["1"] = count;
+
+	
+}
+*/
+
+
+// 태그 리스트 출력
+function getTagList(calId){
+	$.ajax({
+			url : "getTagList"
+		,	data : {
+				"calendarId" : calId
+			}
+		,	success : function(data){
+				var tagListTxt = "";
+				
+				$(data).each(function(i, obj){
+					tagListTxt += "<div style='background-color:"+obj.tagColor+";border-radius:5px;display:inline-block;margin-left:3px'>"
+					tagListTxt += "<span style='padding:10px'>"+obj.tagName+"</span></div>";
+				});
+				
+				$("#list-tag-bar"+calId).html(tagListTxt);
+			}
+	});
+	
+}

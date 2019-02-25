@@ -5,25 +5,18 @@
 
 	<!-- 파일 첨부 -->
 
-<insert id="insert">
+<insert id="setFile">
 
-	insert into files (FileName, FilePath, Uuid, image, bno)
-	value (#{fileName}, #{filePath}, #{uuid}, #{image}, #{bno})
+	insert into attachfile (fileName, uploadPath, uuid, fileType)
+	values (#{fileName}, #{uploadPath}, #{uuid}, #{fileType})
 
 </insert>
 
-<delete id="delete">
+<delete id="delFile">
 
 	delete from attach_file where uuid = #{uuid}
 	
 </delete>
 
-<select id="findByBno" parameterType="org.kocofarm.domain.fileRoom.AttachFileVO">
-
-	select *
-	from file
-	where bno = #{bno}
-
-</select>
 
 </mapper>

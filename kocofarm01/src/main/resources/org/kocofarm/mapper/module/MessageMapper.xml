@@ -43,7 +43,7 @@
 <insert id="setMessage" parameterType="MessageVO">
 	insert into
 	message(message_id, message_room_id, emp_id, contents, dt, type)
-	values(message_room_id_seq.nextval, #{messageRoomId}, #{empId}, #{contents}, TO_DATE(#{dateString}, 'yyyyMMddHH24miss'), #{type})
+	values(message_room_id_seq.nextval, #{messageRoomId}, #{empId}, #{contents}, TO_DATE(#{dateString}, 'yyyy-MM-dd HH24:mi:ss'), #{type})
 </insert>
 
 <!-- 메시지방의 참여 유저인지 확인 -->

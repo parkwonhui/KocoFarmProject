@@ -1,8 +1,5 @@
 package org.kocofarm.controller.module;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,8 +13,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.taglibs.standard.resources.Resources;
 import org.kocofarm.domain.comm.AttachFileVO;
+import org.kocofarm.service.module.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -30,11 +28,10 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -42,6 +39,8 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Log4j
 public class UploadController {
 
+	@Setter(onMethod_ = @Autowired) 
+	private FileService service;
 /*	@GetMapping("/uploadAjax")
 	public void uploadAjax() {
 		log.info("uploadAjax");
@@ -83,8 +82,8 @@ public class UploadController {
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<AttachFileVO>>
-	uploadAjaxPost(MultipartFile[] uploadFile) {
-
+	uploadAjaxPost(MultipartFile[] uploadFile, Model model) {
+		
 		List<AttachFileVO> list = new ArrayList<>();
 
 		String uploadFolder = "C:\\Users\\KOSTA\\git\\KocoFarmProject\\kocofarm01\\src\\main\\webapp\\resources\\upload";
@@ -105,6 +104,7 @@ public class UploadController {
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
 
+
 			// IE has file path
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 
@@ -121,11 +121,11 @@ public class UploadController {
 				multipartFile.transferTo(saveFile);
 				
 				
-				attachFileVO.setUploadPath(uploadFolderPath);
+				attachFileVO.setUploadPath(uploadFolderPath/*.replace("\\", "/")*/);// 수정하였음
 				attachFileVO.setUuid(uuid.toString());
 				
 				
-				// chech image file
+				// chec image file
 				if(checkImageType(saveFile)) {
 					
 					
@@ -137,7 +137,8 @@ public class UploadController {
 					
 					thumnail.close();
 				}
-				
+				service.setFile(attachFileVO);
+			
 				//add to list
 				list.add(attachFileVO);
 				
@@ -157,7 +158,7 @@ public class UploadController {
 		
 		
 		ResponseEntity<byte[]> result = null;
-		
+			
 		try {
 			HttpHeaders header = new HttpHeaders();
 			

@@ -33,7 +33,7 @@
 								<c:when test="${'schedule' eq moduleNm}">
 									<li><a href="/schedule/">일정 관리</a></li>
 									<li><a href="/message/">메신저</a></li>
-									<li><a href="fileList.do">파일 보관함</a></li>
+									<li><a href="/uploadForm">파일 보관함</a></li>
 								</c:when>
 							</c:choose>
 						</ul>

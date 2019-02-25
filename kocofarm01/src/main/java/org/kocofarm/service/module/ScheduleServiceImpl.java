@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.emp.EmpVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderListVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMemberMiniVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryVO;
 import org.kocofarm.domain.schedule.ScheduleMemberVO;
@@ -230,4 +231,27 @@ public class ScheduleServiceImpl implements ScheduleService{
 		
 		return re;
 	}
+	
+	@Override
+	public List<ScheduleCalenderMemberMiniVO> getCalenderMember(int calenderId){
+		List<ScheduleCalenderMemberMiniVO> list = mapper.getCalenderMember(calenderId);
+		if(null == list){
+			return null;
+		}
+		
+		for(ScheduleCalenderMemberMiniVO vo : list){
+			vo.setIsMember(1);
+		}
+
+		
+		List<ScheduleCalenderMemberMiniVO> notMemberList = mapper.getCalenderNotMember(calenderId);
+		if(null == notMemberList){
+			return null;
+		}
+		
+		list.addAll(notMemberList);
+		
+		return list;
+	}
+
 }

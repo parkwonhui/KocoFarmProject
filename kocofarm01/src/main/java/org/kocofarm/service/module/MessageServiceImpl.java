@@ -69,6 +69,7 @@ public class MessageServiceImpl implements MessageService {
 		return messageEmpVOList;
 	}
 	
+	// messageRoomId return
 	@Transactional
 	@Override
 	public int setMessageRoom(List<String> empList, String messageRoomTitle){
@@ -81,8 +82,9 @@ public class MessageServiceImpl implements MessageService {
 			return -1;
 		}	
 		
+		MessagePushVO pushVO = null;
 		for(String empId : empList){
-			MessagePushVO pushVO = new MessagePushVO();
+			pushVO = new MessagePushVO();
 			pushVO.setEmpId(empId);
 			pushVO.setMessageRoomId(roomVO.getMessageRoomId());
 			re = mapper.setMessagePush(pushVO);
@@ -90,7 +92,7 @@ public class MessageServiceImpl implements MessageService {
 				return -1;
 			}
 		}
-		return re;
+		return pushVO.getMessageRoomId();
 		
 	}	
 	

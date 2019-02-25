@@ -34,8 +34,8 @@
 						</div>
 						
 						<ul class="gnb">
-							<li class="top_menu_li"><a href="noticeList.do">공지사항</a></li>
-							<li class="top_menu_li"><a href="empList.do">인사 관리</a></li>
+							<li class="top_menu_li"><a href="">공지사항</a></li>
+							<li class="top_menu_li"><a href="">인사 관리</a></li>
 							<li class="top_menu_li"><a href="/approval/getEmpDraftList">문서 결재</a></li>
 							<li class="top_menu_li"><a href="/rent/rentCarDetailList">대여 관리</a></li>
 							<li class="top_menu_li"><a href="/schedule/">일정 관리</a></li>

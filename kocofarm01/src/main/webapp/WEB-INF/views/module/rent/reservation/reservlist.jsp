@@ -100,6 +100,5 @@
 			</form>
 		</div>
 	</div>
-	<script type="text/javascript" src="/resources/js/comm/jquery.js"></script>
 	<script type="text/javascript" src="/resources/js/module/rent.js"></script>
 	<jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false"></jsp:include>

@@ -41,12 +41,14 @@ public class ReservationController {
 		model.addAttribute("deptList", empService.getDeptList());
 		model.addAttribute("empList", empService.getEmpList());		
 		model.addAttribute("moduleNm", "rent");/*leftbar*/
+		
 		return "/module/rent/reservation/reservInsertForm";
 	}
 
 	// 등록
 	@PostMapping("/reservInsert")
 	private String reservInsert(ReservationVO reserv) {
+		
 		service.setReserv(reserv);
 
 		return "redirect:/reservation/reservlist";
