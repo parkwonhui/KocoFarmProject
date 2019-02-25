@@ -332,7 +332,7 @@ img {
 
 /* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
 .invite-message-room-emp-list .checked{
-	background-color: #afafaf;  	
+	background-color: #d9d9d9;  	
 }
 
 /* 메신저 방 만들기에서 초대할 emp 클릭 시 배경색 변경*/
