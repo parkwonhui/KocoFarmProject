@@ -82,7 +82,7 @@
 									<td width = 30%><a href = "/approval/getDraft?draftId=${ApprEmpDraftVO.draftId }">${ApprEmpDraftVO.draftName }</a></td>
 									<td width = 15%>${ApprEmpDraftVO.modeName }</td>
 									<td width = 15%>${ApprEmpDraftVO.draftDt }</td>
-									<td width = 15%>${ApprEmpDraftVO.korNm }</td>
+									<td width = 15%>${ApprEmpDraftVO.empId }</td>
 									<td width = 15%>${ApprEmpDraftVO.apprOption }</td>
 								</tr>
 								<input type = "hidden" id = "loginEmpId" value = "${ApprEmpDraftVO.empId }" />

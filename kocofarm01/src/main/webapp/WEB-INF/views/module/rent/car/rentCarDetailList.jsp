@@ -125,8 +125,11 @@
 									<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd"/>
 								</td>
 								<td>
+									<c:if test="${RCdetail.upDt == NULL}">
+										-
+									</c:if>
 									<fmt:parseDate var ="dateString" value="${RCdetail.upDt }"	pattern="yyyy-MM-dd"/>
-									<fmt:formatDate value="${dateString }" pattern="yyyy-MM-dd"/>
+									<fmt:formatDate value="${dateString }" pattern="yyyy-MM-dd"/>									
 								</td> 
 							</tr>
 						</c:forEach> 

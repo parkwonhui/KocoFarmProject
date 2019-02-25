@@ -83,13 +83,17 @@
 				 	<section id = "content1">
 				 		<table class="contents_tb" id="contTb">
 							<c:forEach var="ApprDraftVO" items="${draftList }">
-								<tr>
-									<td width = 10%>${ApprDraftVO.draftId }</td>
-									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
-									<td width = 10%>${ApprDraftVO.formId}</td>
-									<td width = 20%>${ApprDraftVO.draftDt }</td>
-									<td width = 10%>${ApprDraftVO.approveState }</td>
-								</tr>
+								<c:if test = "${emp.authority ne 99 }">
+									<c:if test = "${ApprDraftVO.empId eq loginEmp.empId }">
+									<tr>
+										<td width = 10%>${ApprDraftVO.draftId }</td>
+										<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+										<td width = 10%>${ApprDraftVO.formId}</td>
+										<td width = 20%>${ApprDraftVO.draftDt }</td>
+										<td width = 10%>${ApprDraftVO.approveState }</td>
+									</tr>
+									</c:if>
+								</c:if>
 							</c:forEach>
 						</table>
 				 	</section>
@@ -98,13 +102,17 @@
 				 		<table class="contents_tb" id="contTb">
 							<c:forEach var="ApprDraftVO" items="${draftList }">
 								<c:if test = "${ApprDraftVO.approveState eq '기안중' }">
-								<tr>
-									<td width = 10%>${ApprDraftVO.draftId }</td>
-									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
-									<td width = 10%>${ApprDraftVO.formId}</td>
-									<td width = 20%>${ApprDraftVO.draftDt }</td>
-									<td width = 10%>${ApprDraftVO.approveState }</td>
-								</tr>
+									<c:if test = "${emp.authority ne 99 }">
+									<c:if test = "${ApprDraftVO.empId eq loginEmp.empId }">
+										<tr>
+											<td width = 10%>${ApprDraftVO.draftId }</td>
+											<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+											<td width = 10%>${ApprDraftVO.formId}</td>
+											<td width = 20%>${ApprDraftVO.draftDt }</td>
+											<td width = 10%>${ApprDraftVO.approveState }</td>
+										</tr>
+									</c:if>
+									</c:if>
 								</c:if>
 							</c:forEach>
 						</table>
@@ -114,13 +122,17 @@
 				 		<table class="contents_tb" id="contTb">
 							<c:forEach var="ApprDraftVO" items="${draftList }">
 								<c:if test = "${ApprDraftVO.approveState eq '결재중' }">
-								<tr>
-									<td width = 10%>${ApprDraftVO.draftId }</td>
-									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
-									<td width = 10%>${ApprDraftVO.formId}</td>
-									<td width = 20%>${ApprDraftVO.draftDt }</td>
-									<td width = 10%>${ApprDraftVO.approveState }</td>
-								</tr>
+								<c:if test = "${emp.authority ne 99 }">
+									<c:if test = "${ApprDraftVO.empId eq loginEmp.empId }">
+										<tr>
+											<td width = 10%>${ApprDraftVO.draftId }</td>
+											<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+											<td width = 10%>${ApprDraftVO.formId}</td>
+											<td width = 20%>${ApprDraftVO.draftDt }</td>
+											<td width = 10%>${ApprDraftVO.approveState }</td>
+										</tr>
+									</c:if>
+								</c:if>
 								</c:if>
 							</c:forEach>
 						</table>
@@ -130,13 +142,17 @@
 				 		<table class="contents_tb" id="contTb">
 							<c:forEach var="ApprDraftVO" items="${draftList }">
 								<c:if test = "${ApprDraftVO.approveState eq '반려' }">
-								<tr>
-									<td width = 10%>${ApprDraftVO.draftId }</td>
-									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
-									<td width = 10%>${ApprDraftVO.formId}</td>
-									<td width = 20%>${ApprDraftVO.draftDt }</td>
-									<td width = 10%>${ApprDraftVO.approveState }</td>
-								</tr>
+								<c:if test = "${emp.authority ne 99 }">
+									<c:if test = "${ApprDraftVO.empId eq loginEmp.empId }">
+										<tr>
+											<td width = 10%>${ApprDraftVO.draftId }</td>
+											<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+											<td width = 10%>${ApprDraftVO.formId}</td>
+											<td width = 20%>${ApprDraftVO.draftDt }</td>
+											<td width = 10%>${ApprDraftVO.approveState }</td>
+										</tr>
+									</c:if>
+									</c:if>
 								</c:if>
 							</c:forEach>
 						</table>
@@ -146,13 +162,17 @@
 				 		<table class="contents_tb" id="contTb">
 							<c:forEach var="ApprDraftVO" items="${draftList }">
 								<c:if test = "${ApprDraftVO.approveState eq '결재완료' }">
-								<tr>
-									<td width = 10%>${ApprDraftVO.draftId }</td>
-									<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
-									<td width = 10%>${ApprDraftVO.formId}</td>
-									<td width = 20%>${ApprDraftVO.draftDt }</td>
-									<td width = 10%>${ApprDraftVO.approveState }</td>
-								</tr>
+									<c:if test = "${emp.authority ne 99 }">
+									<c:if test = "${ApprDraftVO.empId eq loginEmp.empId }">
+										<tr>
+											<td width = 10%>${ApprDraftVO.draftId }</td>
+											<td width = 40%><a href = "/approval/getDraft?draftId=${ApprDraftVO.draftId }" >${ApprDraftVO.draftName}</a></td>
+											<td width = 10%>${ApprDraftVO.formId}</td>
+											<td width = 20%>${ApprDraftVO.draftDt }</td>
+											<td width = 10%>${ApprDraftVO.approveState }</td>
+										</tr>
+									</c:if>
+									</c:if>
 								</c:if>
 							</c:forEach>
 						</table>

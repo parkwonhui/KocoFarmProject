@@ -43,9 +43,9 @@ public interface ApprovalService {
 	
 	/*로그인 회원이 결재할 기안서 개수 가져오기 */
 	public int getNumberOfDraft(String empId);
-	/* 결재할 기안서 리스트 번호 가져오기 ----여기에 기안서 정보도 추가*/
+	/* 결재할 기안서 정보 리스트 가져오기 */
 	public List<ApprEmpDraftVO> getEmpDraftList(String empId);
-	
+
 	
 	/*페이징 처리한 draft 목록 가져오기 */
 	public List<ApprDraftVO> getDraftList(Criteria cri);
@@ -64,9 +64,10 @@ public interface ApprovalService {
 	/* 결재자 정보 입력*/
 	public void setApprEmp(HttpServletRequest request);
 	
-
+	/* 결재자 정보 삭제 */
+	public void delApprEmp(int draftId);
 	/* 기안서 삭제*/
-	public boolean delDraft(int draftId);
+	public void delDraft(int draftId);
 	/* 휴가 신청서 삭제*/
 	public void delVacation(int draftId);
 	/* 지출명세서 삭제*/

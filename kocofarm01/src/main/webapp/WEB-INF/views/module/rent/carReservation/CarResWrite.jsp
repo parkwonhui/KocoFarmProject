@@ -96,13 +96,13 @@
 							<tr>
 								<th scope="col">출발지 주소</th>
 								<td class="left">																		
-									<input type="text" name = "stAddr" id="address" placeholder="주소">
+									<input type="text" name = "stAddr" id="address" placeholder="주소" readonly=readonly>
 									<input type="button" id = "postcodeBtn"  value="주소 검색"><br>
 									<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>										
 								</td>													
 								<th scope="col">도착지 주소</th>
 								<td class="left">																									
-									<input type="text" name = "deAddr" id="address2" placeholder="주소">
+									<input type="text" name = "deAddr" id="address2" placeholder="주소" readonly=readonly>
 									<input type="button" id = "postcodeBtn2"  value="주소 검색"><br>
 									<div id="map2" style="width:300px;height:300px;margin-top:10px;display:none"></div>	
 								</td>								

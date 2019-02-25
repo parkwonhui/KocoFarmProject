@@ -231,12 +231,11 @@ public class MessagePushController {
 			EmpVO empVO = empService.getEmp(empId);
 		
 			if(null == empVO){
-
 				continue;
 			}
 			
 			addEmpName.append(empVO.getKorNm());
-			addEmpName.append(", ");
+			addEmpName.append(" ");
 		}
 		
 		addEmpName.append("님을 초대했습니다");

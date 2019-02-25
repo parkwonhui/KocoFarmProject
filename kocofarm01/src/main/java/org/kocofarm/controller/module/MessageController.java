@@ -80,7 +80,7 @@ public class MessageController {
 	@GetMapping("/listMessage")
 	private List<MessageVO> listMessage(HttpSession session, int roomId){
 		List<MessageVO> list = service.getMessageList(roomId);
-
+		
 		return list;
 	}
 	
