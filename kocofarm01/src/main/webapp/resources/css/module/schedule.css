@@ -795,6 +795,10 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	background-color: #0049A3;
 }
 
+.calender_info img{
+	filter: invert(100%);
+}
+
 /* 카테고리 입력 박스 */
 .category-name-input{
   width: 90%;
@@ -849,6 +853,10 @@ footer{margin-top: 30px; text-align: center; color: #333}
      cursor:pointer;
      z-index : 1;
      color:#fff;
+}
+
+.project-info-style img{
+	filter: invert(100%);
 }
 
 

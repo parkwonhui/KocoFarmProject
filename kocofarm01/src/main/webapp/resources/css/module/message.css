@@ -342,7 +342,7 @@ img {
 
 /* 메시지 방 선택 시 배경색 변경*/
 .inbox_chat .checked{
-	background-color: #F6CED8;  
+	background-color: #e4e4e4;  
 }
 
 /* 메신저 방만들기 초대 이미지 */
