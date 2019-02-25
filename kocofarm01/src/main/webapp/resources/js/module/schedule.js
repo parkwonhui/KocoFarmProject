@@ -466,19 +466,13 @@ function addDynamicHtml(data) {
 			
 			var tagName = data[i].tagName;
 			var tagColor = data[i].tagColor;
-			if("" != tagName || "" != tagColor) {
-				html += '<div id = list-tag-bar>';
-				html += '<div style=" height: 20px; margin:3px; padding-left: 10px;  padding-right: 10px; color : white; background-color:'+ tagColor +'; border-radius:10px; display:inline-block"'
-				html += '>'+ tagName + '</div>';
-				html += '</div>'
-				/*html += '<div id = list-tag-bar>';	
-				html += '<div style=" height: 20px; margin:3px; padding-left: 10px;  padding-right: 10px; color : white; background-color:'+ tagColor +'; border-radius:10px; display:inline-block"'
-				html += '>'+ tagName + '</div>';
-				html += '</div>'*/
-			}
 			
 			html += '<input type="hidden" class="calender_detail_completionPer" value="'
 					+ data[i].completionPer + '"></input>';
+			
+			html += "<div id='list-tag-bar"+data[i].calenderId+"'>";
+			html += getTagList(data[i].calenderId);
+			html += "</div>";
 			
 			
 			html += '<div class="calender-progress-bar">';
@@ -489,8 +483,8 @@ function addDynamicHtml(data) {
 					+ '</div>'
 			html += '</div>';
 
-			html += '<div id = list-tag-bar></div>';
-		/*	html += '<div class="calender_tag">';
+			/*	html += '<div id = list-tag-bar></div>';
+			html += '<div class="calender_tag">';
 			html += '<div style=" height: 20px; background-color:'+ data[i].tag_color +'; border-radius:10px">'
 					+ data[i].tag_name + '</div>';
 			html += '<div class="schedule-tag-list"></div>';
@@ -652,6 +646,10 @@ function addDynamicHtml(data) {
 		add_category_id = parent.children(".this_category_id").val();
 		add_project_id = parent.children(".this_project_id").val();
 	});
+	
+	// 태그 관련 리스트 호출
+//	getTagList($("#calendarId").val());
+	
 }// end addDynamicHtml
 ////////////////////////////////////////////////////////////////////
 
@@ -677,18 +675,21 @@ $("#edit-tag").click(function(){
 	var tagName = $("input[name=tagName]").val();
 	var tagColor = $("input[name=tagColor]").val();
 	
-	$('.schedule-tag-list').append('<div>'+ '<button 태그이름 태그 색사>' +'</div>');
+	$('.schedule-tag-list').append('<div>'+ '<button 태그이름 태그 색상>' +'</div>');
 	
 });
 
 ///
 function ajaxRequest(sendUrl, sendData) {
+	$("#calendarId").val(sendData.calenderId);
+	
 	$.ajax({
 		type : "POST",
 		data : sendData,
 		dataType : "json",
 		url : sendUrl,
 		success : function(data) {
+			
 			if (1001 == data) {
 				alert('[실패] 카테고리 이름을 확인해주세요(1~50자)');
 
@@ -726,7 +727,6 @@ function ajaxRequest(sendUrl, sendData) {
 }
 
 function calenderList() {
-
 	$.ajax({
 		type : "POST",
 		data : {
@@ -848,11 +848,8 @@ $('#calender_edit').click(function() {
 	var completion_per = $("#editCalenderCompletionPerVal").val();
 	var startDt = par.children("input[name=editDatepickerStart]").val();
 	var endDt = par.children("input[name=editDatepickerEnd]").val();
-	var tagName = $("input[name=tagName]").val();
+	var tagName = $("#edit-tag-bar div").text();
 	var tagColor = $("#edit-tag-bar div").css("background-color");
-		
-	console.log(tagName);
-	console.log(tagColor);
 	
 	var data = {
 		projectId : add_project_id,
@@ -867,8 +864,10 @@ $('#calender_edit').click(function() {
 		endDt : endDt
 
 	};
+	
 	var url = "editCalender";
 	ajaxRequest(url, data);
+	
 	$('#tag-name-select').val('ex)Important');
 	$('#calenderModify').modal('toggle');
 
@@ -934,3 +933,24 @@ $(document).on("click",
 $("#edit-calender-emp").click(function(){
 	console.log('작업자 추가 버튼 클릭');
 });
+
+// 태그 리스트 출력
+function getTagList(calId){
+	$.ajax({
+			url : "getTagList"
+		,	data : {
+				"calendarId" : calId
+			}
+		,	success : function(data){
+				var tagListTxt = "";
+				
+				$(data).each(function(i, obj){
+					tagListTxt += "<div style='background-color:"+obj.tagColor+";border-radius:5px;display:inline-block;margin-left:3px'>"
+					tagListTxt += "<span style='padding:10px'>"+obj.tagName+"</span></div>";
+				});
+				
+				$("#list-tag-bar"+calId).html(tagListTxt);
+			}
+	});
+	
+}

@@ -205,7 +205,7 @@ $( function() {
 
 
 	<!-- 일정 수정 -->
-	<div class="modal fade" id="calenderModify" role="dialog">
+	<div class="modal fade" id="calenderModify" data-backdrop="static" role="dialog">
 		<div class="modal-dialog">
 
 			<!-- Modal content-->
@@ -215,6 +215,7 @@ $( function() {
 					<h4 class="modal-title">일정수정</h4>
 				</div>
 				<div class="modal-body">
+					<input type="hidden" id="calendarId" />
 					<label>일정 내용</label> <input type="text" name="write"></input>
 					<div></div>
 						시작날짜 <input type="text" name="editDatepickerStart" id="editDatepickerStart"/>
@@ -235,14 +236,11 @@ $( function() {
   						  <input type="text" name="editCompletionPer" id="editCalenderCompletionPerVal"></input>
 						</div>
 					<div>
-						<div style = "height: 20px; display:inline-block;" id="edit-tag-bar">
-						
-						</div>
-						<div id = "edit-tag_bar2"></div>
-						<button class="btn btn-warning" data-target="#select-tag-popup" data-toggle="modal" name="tag" id="edit-tag">태그 추가</button>
+						<div style = "height: 20px; display:inline-block;" id="edit-tag-bar"></div>
+						<button class="btn btn-warning" data-target="#select-tag-popup" data-toggle="modal" data-backdrop="static" name="tag" id="edit-tag">태그 추가</button>
 					</div>
 					<div class="modal fade" id="select-tag-popup" >
-					 <div class="modal-dialog">
+					 <div class="modal-dialog-edit">
 					   <div class="modal-content">
 					     <!-- header -->
 					     <div class="tag-select-header">
@@ -263,7 +261,7 @@ $( function() {
 					     <!-- Footer -->
 					      <div class="tag-select-footer">
 					        <input type="button" class="btn btn-tag-edit" id="tag-edit" value="Edit"></input>
-					        <input type="button" class="btn btn-tag-close" id="tag-close" value="Close">
+					        <input type="button" class="btn btn-tag-close" id="tagEditClose" value="Close">
 					      </div>
 					    </div>
 					  </div>
