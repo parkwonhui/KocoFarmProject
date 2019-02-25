@@ -241,6 +241,7 @@ img {
 .dropdown {
   position: relative;
   display: inline-block;
+  float: right;
 }
 
 .dropdown-content {
@@ -362,6 +363,13 @@ img {
 .message-room-top-title {
 	background-color: #97ece4;
     height:70px;
+    padding: 20px;
+}
+
+.message-room-top-title .title{
+	font-size: 20px;
+	display : inline-block;
+	margin-left : 20px;
 }
 
 /* 메시지 방 타이틀 more */

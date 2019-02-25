@@ -387,9 +387,6 @@ function calenderButtonClick(projectId, categoryId, calenderId) {
 }
 /////////////////////////////////////////////////////////////////////
 function addDynamicHtml(data) {
-	console.log('addDynamicHtml');
-	console.log(data);
-
 	$(".con").empty();
 
 	var html = "";
@@ -655,7 +652,6 @@ function addDynamicHtml(data) {
 
 
 $('#tag-edit').click(function(){
-	console.log('werwrwerwe');
 	var tagName = $("input[name=tagName]").val();
 	var tagColor = $("input[name=tagColor]").val();
 	$('#list-tag-bar').append('<div style=" height: 20px; margin:3px; padding-left: 10px;  padding-right: 10px; color : white; background-color:'+ tagColor +'; border-radius:10px; display:inline-block">'
@@ -768,9 +764,6 @@ $('#calender_add').click(function() {
 	var endDt = $("input[name=addDatepickerEnd]").val();
 	var tagName = $("input[name=tagName]").val();
 	var tagColor = $("input[name=tagColor]").val();
-	
-	console.log("## " + tagName);
-	console.log("### " +tagColor);
 	
 	if (null == write || "" == write) {
 		alert("일정 정보가 없습니다");
@@ -931,15 +924,13 @@ $(document).on("click",
 
 /* 작업자 추가 버튼 클릭 */
 $("#edit-calender-emp").click(function(){
-	console.log('calender_id:'+add_calender_id);
-
+	
 	$.ajax({
 		type : "POST",
 		data : { "calenderId": add_calender_id	},
 		dataType : "json",
 		url : "getCalenderInviteMember",
 		success : function(data) {
-			console.log(data);
 			if(undefined == data)
 				return;
 			

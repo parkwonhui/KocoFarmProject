@@ -5,8 +5,6 @@ $(function() {
 
 	// message room list
 	var addMessageRoomList = function(data) {
-		console.log(data);
-
 		if (null == data)
 			return;
 
@@ -63,13 +61,11 @@ $(function() {
 
 	/* 변경된 데이터만 전달 */
 	var addMessage = function(data) {
-		console.log(data);
 		// 현재 메시지 창을 보고 있지 않다
 		if (data.roomId != $('#click-message-room-id').val()) {
 			var massageRoomList = $("input[name=messageRoomId]");
 			var length = massageRoomList.length;
 			for (var i = 0; i < length; ++i) {
-				console.log($(massageRoomList[i]).val());
 				if ($(massageRoomList[i]).val() == data.roomId) {
 					$(massageRoomList[i]).parent().children('.chat_people')
 							.children('.chat_ib').children('h5').children(
@@ -147,8 +143,6 @@ $(function() {
 		}
 		
 		text += '</ul>';
-		console.log("empListmessageRoom");
-		console.log(text);
 		$("#message-room-emp-list").append(text);
 	}
 
@@ -156,12 +150,10 @@ $(function() {
 		const
 		strEmpId = $('#message-my-emp-id').val();
 
-		console.log(data);
 		var text = '';
 
 		// 누군가 나갔다
 		if (2 == data.type) {
-			console.log('1111111111111');
 			text += '<div class="message-room-exit-message">' + data.contents
 					+ '</div>';
 
@@ -182,8 +174,6 @@ $(function() {
 		}else if(0 == data.type){
 			
 			if (strEmpId == data.empId) {
-				console.log('222222222222222');
-	
 				text += '<div class="outgoing_msg">';
 				text += '<div class="sent_msg">';
 				text += '<p>' + data.contents + '</p>';
@@ -191,7 +181,6 @@ $(function() {
 				text += '</div>';
 				text += '</div>';
 			} else {
-				console.log('3333333333333333');
 				text += '<div class="incoming_msg">';
 				text += '<div  class="incoming_msg_img">';
 				text += '<img  src="/resources/img/message/user-profile.png" alt="sunil">';
@@ -226,7 +215,6 @@ $(function() {
 	ajaxRequest("listMessageRoom", null, "get", addMessageRoomList);
 
 	$('#add-message-room-button').click(function() {
-		console.log('방만들기!');
 		$('#add-message-room-title').val("");
 		ajaxRequest("empList", null, "get", addEmpFunction);
 	});
@@ -260,7 +248,6 @@ $(function() {
 
 	$('#invite-message-room-request').click(function() {
 		var empList = $('.invite-message-room-emp');
-		console.log(empList);
 		var length = empList.length;
 		var list = {};
 		var index = 0;
@@ -278,9 +265,6 @@ $(function() {
 			++count;
 		}
 		
-		console.log("유저 리스트");
-		console.log(list);
-
 		list["1"] = count;
 
 		ajaxRequestStringList("push/inviteMessageRoom", list);	
@@ -348,7 +332,6 @@ $(function() {
 	function removeNew() {
 		var newTextParent = $(this).children('.chat_people').children(
 				'.chat_ib').children('h5');
-		console.log($(newTextParent).children('span').val(""));
 	}
 
 	$(document).on("click", ".msg_send_btn", function() {
@@ -358,12 +341,10 @@ $(function() {
 			return;
 		}
 		
-		console.log('roomId:' + roomId);
 		var data = {
 			"contents" : text,
 			"messageRoomId" : roomId
 		};
-		console.log(data);
 
 		$('.write_msg').val("");
 
@@ -406,30 +387,21 @@ $(function() {
 
 	function ajaxRequestMessage() {
 		bRequestMessage = false;
-		console.log('요청걸기!!!');
 		$.ajax({
 			type : "post",
 			url : "push/getMessage",
 			contentType : 'json',
 			success : function(data) {
-				console.log('데이터 받았다!!!!:');
-				console.log(data);
-
 				bRequestMessage = true;
 				if(0 == data.pushType){
-					console.log('44444444444');
-					// 해당 방을 클릭했는지 확인
 					addMessage(data);
 				}else{
-					console.log('55555555555');
-
 					addMessageRoom(data);
 				}
 					
 				return true;
 			},
 			error : function(error) {
-				console.log('걸기 실패');
 				return false;
 			}, // error
 		});// ajax
@@ -442,7 +414,6 @@ $(function() {
 			dataType : "json",
 			url : sendUrl,
 			success : function(data) {
-				console.log(func);
 				if (undefined != func) {
 
 					if (-1 == data) {
@@ -497,7 +468,7 @@ $(function() {
 		$('.message-room-title').empty();
 
 		var html = "<div class='message-room-top-title'>"
-				+ selectMessageRoomName
+				+'<div class="title">'+ selectMessageRoomName+'</div>';
 		html += '<div class="dropdown">';
 		html += "<img src = '/resources/img/message/more.png' class='message-room-top-more' />";
 		html += "<div class='dropdown-content'>";

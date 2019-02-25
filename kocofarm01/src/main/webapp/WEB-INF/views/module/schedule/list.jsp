@@ -148,7 +148,6 @@ $("#create-project-button").on("click", function(){
 	
 	var check = 0;
 	var accessCheckBox = $("input[name=projectAccess]");
-	console.log(accessCheckBox);
 	var size = accessCheckBox.length;
 	for(var i = 0; i < size; ++i){
 		if(true == accessCheckBox[i].checked){
