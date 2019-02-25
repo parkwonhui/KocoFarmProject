@@ -296,6 +296,7 @@ public class MessagePushController {
 				writer.println(obj);
 				writer.flush();
 				asyncContext.complete();
+				contexts.remove(asyncContext);
 			} catch (IOException e) {
 				e.printStackTrace();
 				continue;
@@ -335,7 +336,7 @@ public class MessagePushController {
 				writer.println(obj);
 				writer.flush();
 				asyncContext.complete();
-
+				contexts.remove(asyncContext);
 			} catch (IOException e) {
 				e.printStackTrace();
 				continue;
