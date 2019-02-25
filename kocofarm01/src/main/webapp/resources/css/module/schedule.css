@@ -840,14 +840,15 @@ footer{margin-top: 30px; text-align: center; color: #333}
 .project-info-style{
     display:inline;
     float:left;
-    background-color:#B2B1B1;
+    background-color:#002351;
      margin: 10px;
-     padding: 5px;
+     padding:20px;
      width:250px;
      height:130px;
      border-radius: 20px;
      cursor:pointer;
      z-index : 1;
+     color:#fff;
 }
 
 
@@ -903,7 +904,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	margin-right :-15px;
 	margin-bottom : 5px;
 	
-	height:20px;
+	height:15px;
 }
 
 /* 일정 시작 날짜 */
