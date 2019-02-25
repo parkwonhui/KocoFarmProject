@@ -21,6 +21,11 @@ $(function() {
 				+ data.messageRoomId + ' />';
 		text += '<div class="chat_people">';
 		text += '<div class="chat_img">';
+		//var tempImage = 'onerror="this.src=\'/resources/img/message/user-profile.png\'"';
+	
+
+
+		//text += '<img src="/resources/img/comm/'+data.empImg+'" '+ 'onerror="this.src=\'/resources/img/message/user-profile.png\'"' +' >';
 		text += '<img src="/resources/img/message/user-profile.png" alt="sunil">';
 		text += '</div>';
 		text += '<div class="chat_ib">';

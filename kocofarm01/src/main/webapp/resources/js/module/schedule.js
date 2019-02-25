@@ -449,15 +449,17 @@ function addDynamicHtml(data) {
 				html += '<span class="calender_detail_endDt">'
 						+ endDt.substring(0, 10) + '</span>';
 			}
+			html += "<div>";
 			//여기에 태그 DIV 만들어야 함
 			var memberListLength = data[i].memberList.length;
 			if (0 < memberListLength) {
-				html += '<div>참여자</div>';
 				for (var k = 0; k < memberListLength; ++k) {
-					html += data[i].memberList[k].korNm;
+					html += '<div class="calender-member-info">'+data[i].memberList[k].korNm+'</div>';
 					html += ' ';
 				}
 			}
+
+			html += "</div>";
 
 			
 			

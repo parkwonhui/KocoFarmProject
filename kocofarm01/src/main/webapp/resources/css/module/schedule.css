@@ -885,7 +885,7 @@ footer{margin-top: 30px; text-align: center; color: #333}
     	
 	width: 30px;
 	height: 30px;
-    
+    float: right;
 }
 
 /* 진행률 */
@@ -904,6 +904,24 @@ footer{margin-top: 30px; text-align: center; color: #333}
 	margin-bottom : 5px;
 	
 	height:20px;
+}
+
+/* 일정 시작 날짜 */
+.calender_detail_startDt{
+	font-size:14px;
+	color:#6E6E6E;
+}
+
+/* 일정 종료 날짜 */
+.calender_detail_endDt{
+	font-size:14px;
+	color:#6E6E6E;
+}
+
+.rounded {
+  background: silver;
+  height: 50px; width: 200px;
+  border-radius: 5px;
 }
 
 /* 카테고리 삭제 버튼 */
@@ -956,3 +974,17 @@ footer{margin-top: 30px; text-align: center; color: #333}
        display:inline-block;
 }
 
+/* 멤버 이름 테두리 */
+.calender-member-info{
+	display:inline-block;
+	border:1px solid #1bf;
+	padding:2px;
+    border-radius: 20px;
+    font-size:10px;
+}
+
+/* 멤버 타이틀 */
+.calender_detail_title{
+	margin-top:20px;
+	margin-bottom:10px;
+}
