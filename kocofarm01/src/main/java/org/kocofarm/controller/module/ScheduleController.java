@@ -407,7 +407,6 @@ public class ScheduleController {
 		ScheduleProcess process = getScheduleProcess(strPublic, service,  projectVO);
 		List<ScheduleCalenderMemberMiniVO> list = process.getCalenderMember(session, calenderId);
 		
-		log.info(list);
 		return list;
 	}
 		

@@ -85,13 +85,11 @@ public class MessagePushController {
 		final AsyncContext asyncContext = request.startAsync(request, response);
 		asyncContext.setTimeout(10 * 60 * 1000);
 		contexts.add(asyncContext);
-		log.info(loginVo.getEmpId()+"가 접속하였습니다");
 	}
 	
 	@ResponseBody
 	@PostMapping("/addMessageRoom")
 	private int addMessageRoom(HttpSession session, @RequestBody String list){
-		log.info("[addMessageRoom]");
 		JSONObject jsonObject =  JSONObject.fromObject(list);
 		if(null == list){
 			return RESULT.UNKNOWN_ERROR;
@@ -126,11 +124,9 @@ public class MessagePushController {
 
 	@PostMapping("/sendMessage")
 	public void sendMessage(HttpServletRequest request, HttpServletResponse response, MessageVO messageVo){
-		log.info("[sendMessage]");
 		HttpSession session = request.getSession();
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
-			System.out.println("에러11111");
 			return;
 		}
 		
@@ -147,7 +143,6 @@ public class MessagePushController {
 		}
 				
 		if(false == isWrongRequest(empId, roomId)){
-			System.out.println("6666666");
 
 			return;
 		}
@@ -156,7 +151,6 @@ public class MessagePushController {
 		messageVo.setKorNm(name);
 		String strTime = getCurrentTime();
 		messageVo.setDateString(strTime);
-		log.info("strTime!!!!!!:"+strTime);
 		
 		service.setMessage(messageVo);
 		
@@ -192,7 +186,6 @@ public class MessagePushController {
 			return RESULT.UNKNOWN_ERROR;
 		}
 
-		System.out.println("RoomId():"+messagePushVO.getMessageRoomId());
 		List<String> roomEmpList = service.getMessageRoomEmpList(messagePushVO.getMessageRoomId()); 
 		pushMessage(messagePushVO.getMessageRoomId(), loginVO, roomEmpList, messageVo, false);
 
@@ -204,16 +197,13 @@ public class MessagePushController {
 	@ResponseBody
 	@PostMapping("/inviteMessageRoom")
 	public int setMessageRoom(HttpSession session, @RequestBody String list){
-		log.info("inviteMessageRoom");
 		JSONObject jsonObject =  JSONObject.fromObject(list);
 		if(null == list){
-			log.info("null == list");
 			return RESULT.UNKNOWN_ERROR;
 		}
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
-			log.info("null == loginVO");
 			return RESULT.UNKNOWN_ERROR;
 		}
 				
@@ -221,7 +211,6 @@ public class MessagePushController {
 		int lenght = (int)jsonObject.get("1");			// length
 		
 		if(false == isWrongRequest(loginVO.getEmpId(), roomId)){
-			log.info("null == isWrongRequest");
 			return RESULT.UNKNOWN_ERROR;
 		}
 		
@@ -239,11 +228,9 @@ public class MessagePushController {
 			messageVo.setEmpId(empId);
 			messageVo.setMessageRoomId(roomId);		
 			service.setMessagePush(messageVo);
-			log.info(messageVo);
 			EmpVO empVO = empService.getEmp(empId);
 		
 			if(null == empVO){
-				log.info("null == null == empVO");
 
 				continue;
 			}
@@ -272,7 +259,6 @@ public class MessagePushController {
 		// 방 추가된 사람은 메시지 룸 추가가 필요하다 . 갱신된 메시지 정보를 전달해야한다
 		// 메시지 룸 정보 들고 오는 mapper 없나?
 		
-		System.out.println("방 추가 메시지 전달!!! roomId:"+roomId);
 		MessageRoomListVO messageRoomListVo = service.getMessageRoom(roomId);		
 		pushMessageRoom(roomId, loginVO, afterEmpList, messageRoomListVo, true);
 		
@@ -280,29 +266,24 @@ public class MessagePushController {
 	}
 	
 	public void pushMessage(int roomId, LoginVO loginVO, List<String> roomEmpList, MessageVO messageVo,final boolean flag){
-		System.out.println("2222222");
 		List<AsyncContext> asyncContexts = new CopyOnWriteArrayList<AsyncContext>(this.contexts);
 		//this.contexts.clear();
 
 		if(null == roomEmpList){
-			System.out.println("333333333");
 
 			return;
 		}
 		
 		int i = 0;
 		for (AsyncContext asyncContext : contexts) {
-			System.out.println("444444444");
 			
 			LoginVO sendLoginVO = getLoginVO((HttpServletRequest)asyncContext.getRequest());
 			if(null == sendLoginVO){
-				System.out.println("6666");
 				continue;
 			}
 			
 			if(true == flag){
 				if(false == isMessageRoomEmp(roomEmpList, sendLoginVO.getEmpId())){
-					System.out.println("77777");	
 					continue;
 				}
 			}
@@ -313,11 +294,9 @@ public class MessagePushController {
 				asyncContext.getResponse().setContentType("application/json;  charset=UTF-8");
 				JSONObject obj = getMessageTypeObject(roomId, loginVO, messageVo);		
 				writer = asyncContext.getResponse().getWriter();
-				System.out.println("지금 보내느중인뎅.. obj:"+obj);
 				writer.println(obj);
 				writer.flush();
 				asyncContext.complete();
-				System.out.println("remove:"+contexts.remove(asyncContext));
 			} catch (IOException e) {
 				e.printStackTrace();
 				continue;
@@ -326,29 +305,24 @@ public class MessagePushController {
 	}
 	
 	public void pushMessageRoom(int roomId, LoginVO loginVO, List<String> roomEmpList, MessageRoomListVO messageRoomListVo,final boolean flag){
-		System.out.println("pushMessageRoom");
 		//List<AsyncContext> asyncContexts = new CopyOnWriteArrayList<AsyncContext>(this.contexts);
 		//this.contexts.clear();
 
 		if(null == roomEmpList){
-			System.out.println("pushMessageRoom 333333333");
 
 			return;
 		}
 		
 		int i = 0;
 		for (AsyncContext asyncContext : contexts) {
-			System.out.println("pushMessageRoom 444444444");
 			
 			LoginVO sendLoginVO = getLoginVO((HttpServletRequest)asyncContext.getRequest());
 			if(null == sendLoginVO){
-				System.out.println("pushMessageRoom 6666");
 				continue;
 			}
 			
 			if(true == flag){
 				if(false == isMessageRoomEmp(roomEmpList, sendLoginVO.getEmpId())){
-					System.out.println("pushMessageRoom 77777");	
 					continue;
 				}
 			}
@@ -359,11 +333,9 @@ public class MessagePushController {
 				asyncContext.getResponse().setContentType("application/json;  charset=UTF-8");
 				JSONObject obj = getMessageRoomTypeObject(messageRoomListVo);		
 				writer = asyncContext.getResponse().getWriter();
-				System.out.println("지금 메시지룸 보내느중인뎅.. obj:"+obj);
 				writer.println(obj);
 				writer.flush();
 				asyncContext.complete();
-				System.out.println("remove:"+contexts.remove(asyncContext));
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -441,7 +413,6 @@ public class MessagePushController {
 		}
 		
 		int size = contexts.size();
-		System.out.println("size:"+size);
 		for(int i = 0; i < size; ++i ){
 		LoginVO loginVO = getLoginVO((HttpServletRequest)contexts.get(i).getRequest());
 			if(null == loginVO.getEmpId()){

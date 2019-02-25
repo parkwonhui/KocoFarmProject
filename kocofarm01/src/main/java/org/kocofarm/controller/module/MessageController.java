@@ -79,9 +79,7 @@ public class MessageController {
 	@ResponseBody
 	@GetMapping("/listMessage")
 	private List<MessageVO> listMessage(HttpSession session, int roomId){
-		log.info("[listMessage]");
 		List<MessageVO> list = service.getMessageList(roomId);
-		log.info(list);
 
 		return list;
 	}
@@ -102,7 +100,6 @@ public class MessageController {
 	@ResponseBody
 	@PostMapping("/messageRoomInvite")
 	private List<MessageEmpListVO> getMessageRoomInvite(int messageRoomId){
-		log.info("[messageRoomInvite]");
 
 		List<MessageEmpListVO> list = service.getMessageRoomInvite(messageRoomId);
 		if(null == list){
