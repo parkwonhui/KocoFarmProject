@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.kocofarm.controller.comm.ScheduleEnum;
 import org.kocofarm.controller.comm.ScheduleEnum.ERROR;
 import org.kocofarm.domain.comm.LoginVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMemberMiniVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
@@ -146,7 +147,7 @@ public class ScheduleProcess {
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		String tagName = tag.getTag_name();
+		String tagName = tag.getTagName();
 		if(null == tagName){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
@@ -155,7 +156,7 @@ public class ScheduleProcess {
 			return ScheduleEnum.ERROR.CATEGORY_NAME_LENGHT_FAIL;
 		}
 		
-		String tagColor = tag.getTag_color();
+		String tagColor = tag.getTagColor();
 		if(tagColor.length() > ScheduleEnum.CHECK.TAG_TITLE_LENGTH){
 			return ScheduleEnum.ERROR.TAG_NAME_LENGTH_FAIL;
 		}
@@ -173,7 +174,7 @@ public class ScheduleProcess {
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
-		String tagName = tag.getTag_name();
+		String tagName = tag.getTagName();
 		if(null == tagName){
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
@@ -182,7 +183,7 @@ public class ScheduleProcess {
 			return ScheduleEnum.ERROR.CATEGORY_NAME_LENGHT_FAIL;
 		}
 		
-		String tagColor = tag.getTag_color();
+		String tagColor = tag.getTagColor();
 		if(tagColor.length() > ScheduleEnum.CHECK.TAG_TITLE_LENGTH){
 			return ScheduleEnum.ERROR.TAG_NAME_LENGTH_FAIL;
 		}
@@ -200,16 +201,14 @@ public class ScheduleProcess {
 		return re;
 	}
 	
-	/*public int getCalenderMember(HttpSession session, int calenderId){
+	public List<ScheduleCalenderMemberMiniVO> getCalenderMember(HttpSession session, int calenderId){
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
 		if(null == loginVO){
-			return ERROR.UNKNOWN_ERROR;
+			return null;
 		}
 		
-	
-		
-		
-	}*/
+		return service.getCalenderMember(calenderId);
+	}
 	
 	// 현재 접속 중인 프로젝트의 팀장인지 체크
 	public boolean isProjectManager(HttpSession session, ScheduleProjectVO projectVO){

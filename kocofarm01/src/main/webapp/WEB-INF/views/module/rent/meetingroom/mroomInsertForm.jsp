@@ -36,7 +36,8 @@
 							<td class="left">
 							<input type="text" name="mId" id="mId"
 								placeholder="회의실 번호를 확인해주세요." />
-								<button type="button" id="idChk">회의실 번호 확인</button>
+								<input type="button" id="idChk" class="auto_wth_btn_y" value="회의실 번호 확인" />
+<!-- 								<button type="button" id="idChk">회의실 번호 확인</button> -->
 							<p class="result">
 								<span class="msg"></span>
 							</p>
@@ -95,5 +96,4 @@ $(function(){
 })
 </script>
 <script type="text/javascript" src="/resources/js/module/rent.js"></script>
-<script src="/resources/js/comm/jquery.js"></script>
 <jsp:include page="/WEB-INF/views/comm/bottom.jsp" flush="false"></jsp:include>

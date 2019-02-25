@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kocofarm.controller.comm.ScheduleEnum;
 import org.kocofarm.domain.comm.LoginVO;
+import org.kocofarm.domain.schedule.ScheduleCalenderMemberMiniVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderMoveVO;
 import org.kocofarm.domain.schedule.ScheduleCalenderVO;
 import org.kocofarm.domain.schedule.ScheduleCategoryMoveVO;
@@ -54,7 +55,7 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 	
 	public int setTag(HttpSession session, ScheduleTagVO tag){
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		int calenderId =tag.getCalender_id();
+		int calenderId =tag.getCalenderId();
 		boolean isMember = isMember(calenderId, loginVO); 
 		if(false == isMember && false == isProjectManager(session, projectVO)){
 			//해당 캘린더에 속해있는 사람인지 확인해야함
@@ -67,7 +68,7 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 	
 	public int setUpTag(HttpSession session, ScheduleTagVO tag){
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		int calenderId =tag.getCalender_id();
+		int calenderId =tag.getCalenderId();
 		boolean isMember = isMember(calenderId, loginVO); 
 		if(false == isMember && false == isProjectManager(session, projectVO)){
 
@@ -81,14 +82,14 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 	public int delTag(HttpSession session, ScheduleTagVO tag){
 		
 		LoginVO loginVO = (LoginVO)session.getAttribute("loginVO");
-		int calenderId =tag.getCalender_id();
+		int calenderId =tag.getCalenderId();
 		
 		boolean isMember = isMember(calenderId, loginVO);
 		if(false == isMember && false == isProjectManager(session, projectVO)){
 
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
-		int tagId = tag.getTag_id();
+		int tagId = tag.getTagId();
 		int re = super.delTag(session, tagId);
 		return re;
 	}
@@ -151,5 +152,13 @@ public class SchedulePrivateProcess extends ScheduleProcess {
 		
 		int re = super.delCategory(session, category);
 		return re;
-	}	
+	}
+	
+	public List<ScheduleCalenderMemberMiniVO> getCalenderMember(HttpSession session, int calenderId){
+		if(false == isProjectManager(session, projectVO)){
+			return null;
+		}
+		
+		return super.getCalenderMember(session, calenderId);
+	}
 }
