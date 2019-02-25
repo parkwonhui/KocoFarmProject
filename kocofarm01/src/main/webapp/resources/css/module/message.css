@@ -361,8 +361,8 @@ img {
 
 /* 메시지 방 타이틀 */
 .message-room-top-title {
-	background-color: #97ece4;
-    height:70px;
+	background-color: #dddddd;
+    height:90px;
     padding: 20px;
 }
 
