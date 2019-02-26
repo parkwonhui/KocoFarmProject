@@ -13,8 +13,7 @@
 
 <style>
 .CommentTable {
-	width: 700px;
-	margin-left: 410;
+	width: 1098px;
 	border-top: 1px solid #444444;
 	border-collapse: collapse
 }

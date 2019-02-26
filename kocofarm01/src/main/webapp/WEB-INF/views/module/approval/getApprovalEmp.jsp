@@ -25,18 +25,15 @@
 			handle : "h3",
 			stop : function(event, ui) {
 				ui.item.children("h3").triggerHandler("focusout");
-
 				// Refresh accordion to handle new order
 				$(this).accordion("refresh");
 			}
 		});
 	});
-
 	/* 클로저 사용해서 부모 페이지 값 전달 */
 	 window.onload = function(){
 		var aLinks = document.getElementsByTagName('a');
 		var imgLinks = document.getElementsByTagName('img');
-
 		console.log(imgLinks);
 		
   		for(var i =0; i<aLinks.length-6; i++){
@@ -71,7 +68,6 @@
   		for(var j =0; j<imgLinks.length; j++){
   			(function(tmp2){
   				imgLinks[tmp2].onclick=function(){
-
 	  					if($("#first").val() != "" && imgLinks[tmp2].id == "firstBn"){
 	  						$("#first").val($("#second").val());
 	  						$("#second").val($("#third").val());
@@ -112,10 +108,8 @@
 	  						$("#fifth").val("");
 	  						$("#fifthId").val("");
 	  					}
-
   				}
   			})(j);
-
   		}
   		$(".submitApprBtn").click(function(){
 				if($("#first").val() == ""){
@@ -129,16 +123,22 @@
 		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","+$("#secondId").val();
 		               self.close();
 		        }else if($("#third").val() != "" && $("#fourth").val() == ""){
-		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","+$("#second").val()+","+$("#third").val();
-		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","+$("#secondId").val()+","+$("#thirdId").val();
+		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","
+		               +$("#second").val()+","+$("#third").val();
+		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","
+		               +$("#secondId").val()+","+$("#thirdId").val();
 		               self.close();
 		        }else if($("#fourth").val() != "" && $("#fifth").val() == ""){
-		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","+$("#second").val()+","+$("#third").val()+","+$("#fourth").val();
-		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","+$("#secondId").val()+","+$("#thirdId").val()+","+$("#fourthId").val();
+		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","
+		               +$("#second").val()+","+$("#third").val()+","+$("#fourth").val();
+		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","
+		               +$("#secondId").val()+","+$("#thirdId").val()+","+$("#fourthId").val();
 		               self.close();
 		        }else if($("#fifth").val() != ""){
-		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","+$("#second").val()+","+$("#third").val()+","+$("#fourth").val()+","+$("#fifth").val();
-		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","+$("#secondId").val()+","+$("#thirdId").val()+","+$("#fourthId").val()+","+$("#fifthId").val();
+		               window.opener.document.setEmpId.empNameList.value = $("#first").val()+","
+		               +$("#second").val()+","+$("#third").val()+","+$("#fourth").val()+","+$("#fifth").val();
+		               window.opener.document.setEmpId.empIdList.value = $("#firstId").val()+","
+		               +$("#secondId").val()+","+$("#thirdId").val()+","+$("#fourthId").val()+","+$("#fifthId").val();
 		               self.close();
 		        }
 	
@@ -251,5 +251,3 @@
 	</div>
 </body>
 </html>
-
-

@@ -5,7 +5,7 @@
 <jsp:include page="/WEB-INF/views/comm/top.jsp" flush="false" ></jsp:include>
 <link rel="stylesheet" type="text/css" href="/resources/css/module/approval.css" />
 
-	<div class="cont_wrap">
+	<div class="contents_wrap">
 		<!-- SubTitle Area -->
 		<div class="sub_title">
 			<div class="sub_title_top">
@@ -45,17 +45,17 @@
 						<div class="draft_wrap">
 							<h1 class="txt_c">결재자 정보</h1>
 							<div class="inf_wrap_box">
-								<table>
+								<table width = 100%>
 									<thead>
 										<tr>
 											<th width = 10%>번호 </th>
 											<th width = 10%>부서 </th>
 											<th width = 10%>직위</th>
-											<th width = 10%>사번</th>
+											<th width = 15%>사번</th>
 											<th width = 20%>이름</th>
-											<th width = 10%>결재</th>
-											<th width = 10%>반려</th>
-											<th width = 10%>sign</th>
+											<th width = 15%>결재</th>
+											<th width = 15%>반려</th>
+											<th width = 5%>sign</th>
 											
 										</tr>
 									</thead>
@@ -63,9 +63,9 @@
 								
 									<tbody>
 										<c:forEach var="ApprEmployee" items="${apprEmpList }"  varStatus="vs">
-											<tr>
+											<tr height = 20px>
 												
-												<td id = 'count'>${vs.count }</td>
+												<td id = 'count' >${vs.count }</td>
 												<td>${ApprEmployee.deptNm }</td>
 												<td>${ApprEmployee.positionNm }</td>
 												<td id = 'position${vs.count }' class = "${ApprEmployee.empId}">${ApprEmployee.empId}</td>
@@ -161,14 +161,19 @@
 									<td width = 15%>기안서 제목</td>
 									<td colspan="3">${draft.draftTitle }</td>
 									<td>등록 날짜</td>
-									<td colspan="3" >${draft.draftDt }</td>
+									<td colspan="3" >
+									<fmt:parseDate var="dateString" value="${draft.draftDt }"
+											pattern="yyyy-MM-dd" />
+									<fmt:formatDate value="${dateString }"
+											pattern="yyyy년  MM월  dd일" />
+									</td>
 			
 			
 								</tr>
 								<tr>
 									<!-- 기안서 정보 -->
 									<td>기안서 양식</td>
-									<td colspan="3"></td>
+									<td colspan="3">휴가 신청서</td>
 									<td>보존년한</td>
 									<td colspan="3">${draft.draftYear }</td>
 								</tr>
@@ -200,10 +205,24 @@
 									<!-- 휴가신청   -->
 									<td>휴가 일정</td>
 									<td width = 5%>시작 날짜</td>
-									<td>${vacation.vacationStartDt}</td>
+									<td>
+										
+										<fmt:parseDate var="dateString" value="${vacation.vacationStartDt}"
+											pattern="yyyy-MM-dd" />
+										<fmt:formatDate value="${dateString }"
+											pattern="yyyy년  MM월  dd일" />
+										
+									</td>
 			
 									<td width = 5%>끝 날짜</td>
-									<td>${vacation.vacationEndDt}</td>
+									<td>
+										
+										<fmt:parseDate var="dateString" value="${vacation.vacationEndDt}"
+											pattern="yyyy-MM-dd" />
+										<fmt:formatDate value="${dateString }"
+											pattern="yyyy년  MM월  dd일" />
+										
+									</td>
 									<td width = 5%>총 일 수</td>
 									<td>${vacation.vacationDays }</td>
 								</tr>
@@ -251,10 +270,14 @@
 						<div class="btn_wrap">
 							<div class="flt_r">
 								<input type="button" class="list_btn" value="목록" />
-								<input type="button" class="vacEdit_btn" value="수정" /> 
-								<input type="button" class="vacDel_btn" value="삭제" />
+									<c:if test="${draft.approveState eq '기안중' }">
+										<input type="button" class="vacEdit_btn" value="수정" /> 
+										<input type="button" class="vacDel_btn" value="삭제" />
+									</c:if>
+							
+								
 								<c:if test="${draft.approveState eq '결재완료' }">
-								<INPUT TYPE="button" VALUE="인쇄하기" style="background-color: #000000; font-size: 10pt; color: #ffffff; " onclick="printWin()">
+								<input type="button" VALUE="인쇄하기" style="background-color: #000000; font-size: 10pt; color: #ffffff; " onclick="printWin()">
 								</c:if>
 								
 							</div>
@@ -266,12 +289,10 @@
 
 		<!--  댓글  -->
     <div class="container">
-        <label for="content">comment</label>
-        <form name="commentInsertForm"  style="margin-left: 350;">
+        <form name="commentInsertForm" >
             <div class="input-group">
                  <input type="hidden" name="draftId" value="${DRAFT_COMMENT.draftId}"/>
-<%--                <input type="hidden" name="empId" value="${DRAFT_COMMENT.empId }"/> --%>
-               <input type="text"  width="70%"   class="form-control" id="commentContents" 
+               <input type="text"  width="100%"   class="form-control" id="commentContents" 
                name="commentContents" placeholder="내용을 입력하세요.">
                <span class="input-group-btn">
                     <input type="button" class="commentInsertBtn" value="등록"/>
@@ -283,8 +304,9 @@
     <div class="container">
         <div id = "getCommentList"></div>
     </div>
+    
 </div>
- </div>
+ 
 
 
 

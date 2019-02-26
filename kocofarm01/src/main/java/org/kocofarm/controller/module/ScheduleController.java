@@ -136,10 +136,10 @@ public class ScheduleController {
 		List<ScheduleCalenderListVO> list = service.getProjectCalenderList(projectId);
 		
 		if(null == list){
-			return "";		// error url
+			return "";// error url
 		}
 		
-		model.addAttribute("calenderList", list);
+		model.addAttribute("calenderList", list);	
 		
 		return "/module/schedule/calenderListJsonParse";
 	}
@@ -214,8 +214,9 @@ public class ScheduleController {
 		int re =process.setUpCalender(session, calender);
 		
 		// 태그 테이블 insert
-		
-		tagService.setTag(tagVO);
+		if(null != tagVO && !"".equals(tagVO)){
+			tagService.setTag(tagVO);
+		}
 		
 		return re;
 	}

@@ -53,11 +53,12 @@
 							<th scope="col">사용목적</th>  --> 
 							<th scope="col">승인여부</th>
 							<th scope="col">등록일자</th>
+														
 							
 						</tr>
 					</thead>
 					<tbody id="contentsTbBody">
-						<c:forEach var="CarAppr" items="${list}"> 
+					<c:forEach var="CarAppr" items="${list}"> 			
 						<!-- RentCarDetailService에서 RentCarDetailListModel 중에서 list만 불러오는 것이다. -->
 							<tr>
 								 <td>${CarAppr.appId }</td>
@@ -70,9 +71,9 @@
 								<td>
 									<fmt:parseDate var ="dateString" value="${CarAppr.regDt }"	pattern="yyyy-MM-dd"/>
 									<fmt:formatDate value="${dateString}" pattern="yyyy-MM-dd"/>
-								</td>
-							</tr>
-						</c:forEach> 
+								</td>																
+							</tr>							
+						</c:forEach> 						
 					</tbody>
 				</table>				
 			</div>

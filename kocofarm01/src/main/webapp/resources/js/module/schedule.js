@@ -728,8 +728,7 @@ function calenderList() {
 	$.ajax({
 		type : "POST",
 		data : {
-			"projectId" : add_project_id
-		},
+			"projectId" : add_project_id},
 		dataType : "json",
 		url : "listCalender",
 		success : function(data) {
@@ -1030,8 +1029,8 @@ function getTagList(calId){
 				var tagListTxt = "";
 				
 				$(data).each(function(i, obj){
-					tagListTxt += "<div style='background-color:"+obj.tagColor+";border-radius:5px;display:inline-block;margin-left:3px'>"
-					tagListTxt += "<span style='padding:10px'>"+obj.tagName+"</span></div>";
+					tagListTxt += "<div style='background-color:"+obj.tagColor+";border-radius:10px;display:inline-block;margin-left:3px'>"
+					tagListTxt += "<span style='padding:10px;color:#fff'>"+obj.tagName+"</span></div>";
 				});
 				
 				$("#list-tag-bar"+calId).html(tagListTxt);
