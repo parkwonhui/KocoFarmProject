@@ -38,5 +38,6 @@ public interface ScheduleService {
 	public int delTag(int tagId);
 	public List<ScheduleTagVO> getTagList(int calenderId);
 	public List<ScheduleCalenderMemberMiniVO> getCalenderMember(int calenderId);
+	public int setMember(int calenderId, String[] empList);
 	
 }

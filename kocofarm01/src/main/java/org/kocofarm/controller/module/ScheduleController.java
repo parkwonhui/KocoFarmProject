@@ -196,10 +196,10 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@PostMapping("/editCalender")
-	public int setUpCalender(HttpSession session, ScheduleCalenderVO calender, ScheduleTagVO tagVO){
-		// 팀장이거나 해당 캘린더의 작업자인지 확인		
+	public int setUpCalender(HttpSession session, ScheduleCalenderVO calender, ScheduleTagVO tagVO,  String empList){
+		// 팀장이거나 해당 캘린더의 작업자인지 확인	
 		
-		if(null == calender){
+		if(null == calender){ 
 			return ScheduleEnum.ERROR.UNKNOWN_ERROR;
 		}
 		
@@ -213,8 +213,15 @@ public class ScheduleController {
 		ScheduleProcess process = getScheduleProcess(bPublic, service, projectVO); 
 		int re =process.setUpCalender(session, calender);
 		
+		
+		String[] list = empList.split(",");
+		if(0 < list.length){
+			service.setMember(calender.getCalenderId(), list);
+		}
+		
 		// 태그 테이블 insert
-		if(null != tagVO && !"".equals(tagVO)){
+		if(null != tagVO && !"".equals(tagVO) && false == tagVO.getTagName().equals("")){
+			log.info(tagVO);
 			tagService.setTag(tagVO);
 		}
 		

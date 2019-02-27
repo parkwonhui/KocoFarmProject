@@ -449,7 +449,7 @@ function addDynamicHtml(data) {
 				html += '<span class="calender_detail_endDt">'
 						+ endDt.substring(0, 10) + '</span>';
 			}
-			html += "<div>";
+			html += "<div class='this-calender-emp-list'>";
 			//여기에 태그 DIV 만들어야 함
 			var memberListLength = data[i].memberList.length;
 			if (0 < memberListLength) {
@@ -592,6 +592,15 @@ function addDynamicHtml(data) {
 				$("#editCalenderCompletionPerVal").val(completionPer);
 				/*$("#tag_bar").html(tagName);*/
 				calenderButtonClick(project_id, category_id, calender_id);
+				
+				// 유저 리스트 넣기
+				$('#edit-modal-calender-emp-list').empty();
+				
+				var empList = par.children('.this-calender-emp-list');
+				console.log('일정의 유저 리스트 보기');
+				console.log(parpar);
+				console.log(empList);
+				
 			});
 
 	/* 카테고리 값 체인지 이벤트 */
@@ -845,6 +854,16 @@ $('#calender_edit').click(function() {
 	var tagName = $("#edit-tag-bar div").text();
 	var tagColor = $("#edit-tag-bar div").css("background-color");
 	
+	console.log(tagName);
+	
+	var empIdList = $("#edit-modal-calender-emp-list").children("input");
+	var length = empIdList.length;
+	var empList = "";
+	for(var i = 0; i < length; ++i){
+		empList += $(empIdList[i]).val();
+		empList += ",";
+	}
+	
 	var data = {
 		projectId : add_project_id,
 		categoryId : add_category_id,
@@ -855,7 +874,8 @@ $('#calender_edit').click(function() {
 		tagName : tagName,
 		tagColor : tagColor,
 		startDt : startDt,
-		endDt : endDt
+		endDt : endDt,
+		empList : empList
 
 	};
 	
@@ -971,7 +991,7 @@ function addCalenderInviteMemberList(data, id){
 	}
 	// text += '<img src="/resources/img/comm/'+data[i].empImg+'" >';
 	text += '<input type="hidden" name="empId" value=' + data.empId	+ ' />';
-	text += '<div class="calender-member-invite-list-img"><img src="/resources/img/message/user-profile.png" ></div>';
+	text += '<img class="calender-member-invite-list-img" src="/resources/img/message/user-profile.png">';
 	text += '<p class="calender-member-invite-list-name">' + data.korNm + '</div></p>';
 	text += '</li>';
 	
@@ -1038,3 +1058,23 @@ function getTagList(calId){
 	});
 	
 }
+
+
+$('#edit-calender-emp-list-button').click(function(){
+	$('edit-modal-calender-emp-list').empty();
+	
+	var empList = $('#current-claender-emp-list').children('li');
+	var length = empList.length;
+	var text ="";
+	
+	for(var i = 0; i < length; ++i){
+		
+		text += '<input type="hidden" value=' +$(empList[i]).children('input[name=empId]').val()+'>';
+		text += '<div class="calender-member-info">'+ $(empList[i]).children('.calender-member-invite-list-name').html()+'</div>';
+	}
+	
+	console.log(text);
+	
+	$('#edit-modal-calender-emp-list').append(text);
+	
+});

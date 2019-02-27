@@ -190,8 +190,7 @@ $( function() {
 					  </div>
 					</div>
 					<div>
-						<button class="btn btn-secondary" name="worker_list">작업자
-							선택</button>
+						<button class="btn btn-secondary" name="worker_list">작업자선택</button>
 					</div>
 					<button class="btn btn-primary" id="calender_add">일정 추가</Button>
 					<div class="modal-footer">
@@ -266,8 +265,9 @@ $( function() {
 					    </div>
 					  </div>
 					</div>
-					<!-- <div><button class="btn btn-secondary" name="worker_list" id="edit-calender-emp" data-target="#edit-calender-emp-list" data-toggle="modal">작업자 선택</button></div>
-					 -->
+					<div><button class="btn btn-secondary" name="worker_list" id="edit-calender-emp" data-target="#edit-calender-emp-list" data-toggle="modal">작업자 선택</button></div>
+					<div id="edit-modal-calender-emp-list">
+					</div>					 
 					 <button class="btn btn-primary" id="calender_edit">일정 수정</Button>
 					<button type="button" class="btn btn-danger" id="calender_del">일정 삭제</button>
 				</div><!-- myBody -->
@@ -310,21 +310,17 @@ $( function() {
 				</div>
 				<div class="modal-body">
 					<p>일정 작업자를 선택해주세요</p>
+					<!-- <p>초대할 사원</p> -->
 					<div class="add-calender-emp-lists">
 					<ul id="no-claender-emp-list" class="claender-emp-list">
-					<li>a</li>
-					<li>b</li>
-					<li>c</li>
-					</ul>			
+					</ul>
+					<!-- <p>참여자</p> -->
 					<ul id="current-claender-emp-list" class="claender-emp-list">
-					<li>1</li>
-					<li>2</li>
-					<li>3</li>
 					</ul>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal" id="edit-calender-emp-list-button">추가</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" id="edit-calender-emp-list-button">추가</button>
 				</div>
 			</div>
 		</div>

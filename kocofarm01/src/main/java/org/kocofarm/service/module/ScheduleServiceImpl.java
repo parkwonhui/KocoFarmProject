@@ -253,5 +253,24 @@ public class ScheduleServiceImpl implements ScheduleService{
 		
 		return list;
 	}
+	
+	public int setMember(final int calenderId, final String[] empList){
+
+		mapper.delMemberWithCalender(calenderId);
+		int length = empList.length;
+		int re = 0;
+		for(int i = 0; i < length; ++i){
+			ScheduleMemberVO vo = new ScheduleMemberVO();
+			vo.setCalenderId(calenderId);
+			vo.setEmpId(empList[i]);
+			System.out.println(vo);
+			re = mapper.setMember(vo);
+			if(-1 == re){
+				return -1;
+			}
+		}
+		
+		return 1;
+	}
 
 }
