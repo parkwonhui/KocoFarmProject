@@ -454,8 +454,10 @@ function addDynamicHtml(data) {
 			var memberListLength = data[i].memberList.length;
 			if (0 < memberListLength) {
 				for (var k = 0; k < memberListLength; ++k) {
-					html += '<div class="calender-member-info">'+data[i].memberList[k].korNm+'</div>';
-					html += ' ';
+					if(null != data[i].memberList[k]){
+						html += '<div class="calender-member-info">'+data[i].memberList[k].korNm+'</div>';
+						html += ' ';
+					}
 				}
 			}
 
