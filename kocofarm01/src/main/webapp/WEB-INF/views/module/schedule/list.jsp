@@ -165,10 +165,9 @@ $("#create-project-button").on("click", function(){
 	}
 	
 	// checked : 0이면 private,1이면 public
-	var strPublic = $("#project-public-check").checked
-
+	var strPublic = $("#project-public-check").is(':checked');
 	var bPublic = "0";
-	if(true == bPublic)
+	if(true == strPublic)
 		bPublic = "1";
 	
 	var sendData = {"title":$('#create-project-input').val(), "publicUse":bPublic };
