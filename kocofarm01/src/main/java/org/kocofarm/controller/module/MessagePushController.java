@@ -415,6 +415,10 @@ public class MessagePushController {
 		int size = contexts.size();
 		for(int i = 0; i < size; ++i ){
 		LoginVO loginVO = getLoginVO((HttpServletRequest)contexts.get(i).getRequest());
+			if(null == loginVO){
+				continue;
+			}
+		
 			if(null == loginVO.getEmpId()){
 				continue;
 			}
